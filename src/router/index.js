@@ -27,6 +27,11 @@ const routes = [
     path: '/topbar2',
     name: 'topbar2',
     component: () => import('../components/topbar2')
+  },
+  {
+    path:'/search_outcome',
+    name:'search_outcome',
+    component: () => import('../views/search_outcome')
   }
 ]
 

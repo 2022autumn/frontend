@@ -11,10 +11,10 @@
     <img src="../img/touxiang3.jpg" style="top: 1.5vh;width: 40px;height: 40px;border-radius: 50px;left: 90vw;position: absolute" alt="">
     <div style="position: absolute;width: 45px;height:14px;left:94vw;top:3vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: #2B2B39;">{{this.username}}</div>
     <div style="position: absolute;height: 5vh;width: 100vw;top:5vh"><el-divider></el-divider></div>
-    <div style="position: absolute;width: 35vw;height:40px;left:53.5vw;top:0.6vh;background-color: #75A7EB">
-      <el-input  placeholder="请输入内容" v-model="input3" class="input-with-select" style="background-color: #75A7EB;" >
-        <el-button slot="prepend" icon="el-icon-s-promotion" style="color: #FCFCFF;background-color: #75A7EB;border-radius: 0;border-color: whitesmoke">高级检索</el-button>
-        <el-button slot="append" icon="el-icon-search" style="color: #FCFCFF;background-color: #75A7EB; border-radius: 0;border-color: whitesmoke"></el-button>
+    <div style="position: absolute;width: 35vw;height:40px;left:53.5vw;top:0.6vh;">
+        <el-input  placeholder="请输入内容" v-model="input3" class="input-with-select white--text"  >
+        <el-button slot="prepend" icon="el-icon-s-promotion" style="color: #FCFCFF;background-color: rgba(117, 167, 235, 0.52);border-radius: 0;border-color: whitesmoke">高级检索</el-button>
+        <el-button slot="append" icon="el-icon-search" style="color: #FCFCFF;background-color: rgba(117, 167, 235, 0.52); border-radius: 0;border-color: whitesmoke"></el-button>
       </el-input>
     </div>
     <div style="position: absolute;height: 5vh;width: 100vw;top:5vh"><el-divider></el-divider></div>
@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: "topbar1",
+  name: "topbar2",
   data(){
     return{
       username:"张博皓",
@@ -56,6 +56,6 @@ export default {
   font-size: 15px;
 }
 /deep/.el-input__inner {
-  background-color: #75A7EB;
+  background-color: rgba(117, 167, 235, 0.52);
 }
 </style>
