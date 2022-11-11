@@ -1,7 +1,7 @@
 <!--这个是主页和高级检索界面的顶栏，目前是纯前端-->
 <template>
   <div>
-    <img src="../img/logo.jpg" style="width: 22.52px;height:21.19px;position: absolute;left: 6.81%;right: 91.63%;top: 1.96%;bottom: 97.01%;background: #217BF4;" alt="">
+    <img src="../img/logo.jpg" style="width: 22.52px;height:21.19px;position: absolute;left: 6.81vw;right: 91.63%;top: 1.96vh;bottom: 97.01%;background: #217BF4;" alt="">
     <div style="position: absolute;width: 150px;height: 24px;font-style: normal;font-weight: 600;font-size: 24px;line-height: 24px;color: #2B2B39;left:10vw;top:2vh"><b>I SHARE</b></div>
     <div v-if="this.whichpage===1" style="position: absolute;width: 29px;height:14px;left:25vw;top:2.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: #2B2B39;cursor: pointer" @click="which_page(1)">首页</div>
     <div v-if="this.whichpage!==1" style="position: absolute;width: 29px;height:14px;left:25vw;top:2.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="which_page(1)">首页</div>
