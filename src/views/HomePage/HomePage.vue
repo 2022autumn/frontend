@@ -115,75 +115,236 @@
             </el-row>
           </div>
 
-          <div class="items">
-            <div style="margin-top: 10px">
-              <el-row>
-                <el-col :span="2">
-                  <div class="item-type">期刊</div>
-                </el-col>
-                <el-col :span="22">
-                  <div class="item-title">这是文章的标题位置</div>
-                </el-col>
-              </el-row>
+          <div class="itemlist">
+            <div class="item" style="margin-bottom: 20px">
+              <div style="margin-top: 10px">
+                <el-row>
+                  <el-col :span="2">
+                    <div class="item-type">期刊</div>
+                  </el-col>
+                  <el-col :span="22">
+                    <div class="item-title">这是文章的标题位置</div>
+                  </el-col>
+                </el-row>
+              </div>
+              <div class="item-info" style="text-align: left">
+                <span style="margin-right: 10px">作者</span>
+                <img
+                  src="../../HomePage_svg/info-div.svg"
+                  style="vertical-align: middle"
+                />
+                <span style="margin-left: 10px; margin-right: 10px"
+                  >所属机构名称</span
+                >
+                <img
+                  src="../../HomePage_svg/info-div.svg"
+                  style="vertical-align: middle"
+                />
+                <span style="margin-left: 10px; margin-right: 10px"
+                  >发表时间</span
+                >
+              </div>
+              <div class="item-content">
+                新冠肺炎疫情的出现是个"黑天鹅"事件.通过对疫情影响下的总供给
+                ,总需求及CPI的测算,并综合自然走势和政策效果分析,预计2020年的中国经济增速为5.5%-6.0%,
+                CPI上涨率能够控制在4.0%以内.疫情对中国经济自然走势的负面影响很大,2020年增增速目标的扩...
+              </div>
+              <div style="width: 100%">
+                <el-row>
+                  <el-col :span="3">
+                    <div class="item-keyword">标签/关键词</div>
+                  </el-col>
+                  <el-col :span="3">
+                    <div class="item-keyword">标签/关键词</div>
+                  </el-col>
+                  <el-col :span="3">
+                    <div class="item-keyword">标签/关键词</div>
+                  </el-col>
+                  <el-col :span="9"
+                    ><div class="item-placeholder">a</div></el-col
+                  >
+                  <el-col :span="3">
+                    <div class="item-site" style="margin-top: 17px">
+                      <img
+                        src="../../HomePage_svg/site.svg"
+                        style="vertical-align: top"
+                      />
+                      <span
+                        style="vertical-align: text-bottom; padding-left: 7px"
+                        >引用次数</span
+                      >
+                    </div>
+                  </el-col>
+                  <el-col :span="3">
+                    <div class="item-site" style="margin-top: 13px">
+                      <img
+                        src="../../HomePage_svg/star.svg"
+                        style="vertical-align: middle"
+                      />
+                      <span
+                        style="vertical-align: text-bottom; padding-left: 5px"
+                        >收藏次数</span
+                      >
+                    </div>
+                  </el-col>
+                </el-row>
+              </div>
             </div>
-            <div class="item-info">
-              <span style="margin-right: 10px">作者</span>
-              <img
-                src="../../HomePage_svg/info-div.svg"
-                style="vertical-align: middle"
-              />
-              <span style="margin-left: 10px; margin-right: 10px"
-                >所属机构名称</span
-              >
-              <img
-                src="../../HomePage_svg/info-div.svg"
-                style="vertical-align: middle"
-              />
-              <span style="margin-left: 10px; margin-right: 10px"
-                >发表时间</span
-              >
+
+            <div class="item" style="margin-bottom: 20px">
+              <div style="margin-top: 10px">
+                <el-row>
+                  <el-col :span="2">
+                    <div class="item-type">期刊</div>
+                  </el-col>
+                  <el-col :span="22">
+                    <div class="item-title">这是文章的标题位置</div>
+                  </el-col>
+                </el-row>
+              </div>
+              <div class="item-info" style="text-align: left">
+                <span style="margin-right: 10px">作者</span>
+                <img
+                  src="../../HomePage_svg/info-div.svg"
+                  style="vertical-align: middle"
+                />
+                <span style="margin-left: 10px; margin-right: 10px"
+                  >所属机构名称</span
+                >
+                <img
+                  src="../../HomePage_svg/info-div.svg"
+                  style="vertical-align: middle"
+                />
+                <span style="margin-left: 10px; margin-right: 10px"
+                  >发表时间</span
+                >
+              </div>
+              <div class="item-content">
+                新冠肺炎疫情的出现是个"黑天鹅"事件.通过对疫情影响下的总供给
+                ,总需求及CPI的测算,并综合自然走势和政策效果分析,预计2020年的中国经济增速为5.5%-6.0%,
+                CPI上涨率能够控制在4.0%以内.疫情对中国经济自然走势的负面影响很大,2020年增增速目标的扩...
+              </div>
+              <div style="width: 100%">
+                <el-row>
+                  <el-col :span="3">
+                    <div class="item-keyword">标签/关键词</div>
+                  </el-col>
+                  <el-col :span="3">
+                    <div class="item-keyword">标签/关键词</div>
+                  </el-col>
+                  <el-col :span="3">
+                    <div class="item-keyword">标签/关键词</div>
+                  </el-col>
+                  <el-col :span="9"
+                    ><div class="item-placeholder">a</div></el-col
+                  >
+                  <el-col :span="3">
+                    <div class="item-site" style="margin-top: 17px">
+                      <img
+                        src="../../HomePage_svg/site.svg"
+                        style="vertical-align: top"
+                      />
+                      <span
+                        style="vertical-align: text-bottom; padding-left: 7px"
+                        >引用次数</span
+                      >
+                    </div>
+                  </el-col>
+                  <el-col :span="3">
+                    <div class="item-site" style="margin-top: 13px">
+                      <img
+                        src="../../HomePage_svg/star.svg"
+                        style="vertical-align: middle"
+                      />
+                      <span
+                        style="vertical-align: text-bottom; padding-left: 5px"
+                        >收藏次数</span
+                      >
+                    </div>
+                  </el-col>
+                </el-row>
+              </div>
             </div>
-            <div class="item-content">
-              新冠肺炎疫情的出现是个"黑天鹅"事件.通过对疫情影响下的总供给
-              ,总需求及CPI的测算,并综合自然走势和政策效果分析,预计2020年的中国经济增速为5.5%-6.0%,
-              CPI上涨率能够控制在4.0%以内.疫情对中国经济自然走势的负面影响很大,2020年增增速目标的扩...
-            </div>
-            <div style="width: 100%">
-              <el-row>
-                <el-col :span="3">
-                  <div class="item-keyword">标签/关键词</div>
-                </el-col>
-                <el-col :span="3">
-                  <div class="item-keyword">标签/关键词</div>
-                </el-col>
-                <el-col :span="3">
-                  <div class="item-keyword">标签/关键词</div>
-                </el-col>
-                <el-col :span="9"><div class="item-placeholder">a</div></el-col>
-                <el-col :span="3">
-                  <div class="item-site">
-                    <img
-                      src="../../HomePage_svg/site.svg"
-                      style="vertical-align: middle"
-                    />
-                    引用次数
-                  </div>
-                </el-col>
-                <el-col :span="3">
-                  <div class="item-site">
-                    <img
-                      src="../../HomePage_svg/star.svg"
-                      style="vertical-align: middle"
-                    />
-                    收藏次数
-                  </div>
-                </el-col>
-              </el-row>
+
+            <div class="item" style="margin-bottom: 20px">
+              <div style="margin-top: 10px">
+                <el-row>
+                  <el-col :span="2">
+                    <div class="item-type">期刊</div>
+                  </el-col>
+                  <el-col :span="22">
+                    <div class="item-title">这是文章的标题位置</div>
+                  </el-col>
+                </el-row>
+              </div>
+              <div class="item-info" style="text-align: left">
+                <span style="margin-right: 10px">作者</span>
+                <img
+                  src="../../HomePage_svg/info-div.svg"
+                  style="vertical-align: middle"
+                />
+                <span style="margin-left: 10px; margin-right: 10px"
+                  >所属机构名称</span
+                >
+                <img
+                  src="../../HomePage_svg/info-div.svg"
+                  style="vertical-align: middle"
+                />
+                <span style="margin-left: 10px; margin-right: 10px"
+                  >发表时间</span
+                >
+              </div>
+              <div class="item-content">
+                新冠肺炎疫情的出现是个"黑天鹅"事件.通过对疫情影响下的总供给
+                ,总需求及CPI的测算,并综合自然走势和政策效果分析,预计2020年的中国经济增速为5.5%-6.0%,
+                CPI上涨率能够控制在4.0%以内.疫情对中国经济自然走势的负面影响很大,2020年增增速目标的扩...
+              </div>
+              <div style="width: 100%">
+                <el-row>
+                  <el-col :span="3">
+                    <div class="item-keyword">标签/关键词</div>
+                  </el-col>
+                  <el-col :span="3">
+                    <div class="item-keyword">标签/关键词</div>
+                  </el-col>
+                  <el-col :span="3">
+                    <div class="item-keyword">标签/关键词</div>
+                  </el-col>
+                  <el-col :span="9"
+                    ><div class="item-placeholder">a</div></el-col
+                  >
+                  <el-col :span="3">
+                    <div class="item-site" style="margin-top: 17px">
+                      <img
+                        src="../../HomePage_svg/site.svg"
+                        style="vertical-align: top"
+                      />
+                      <span
+                        style="vertical-align: text-bottom; padding-left: 7px"
+                        >引用次数</span
+                      >
+                    </div>
+                  </el-col>
+                  <el-col :span="3">
+                    <div class="item-site" style="margin-top: 13px">
+                      <img
+                        src="../../HomePage_svg/star.svg"
+                        style="vertical-align: middle"
+                      />
+                      <span
+                        style="vertical-align: text-bottom; padding-left: 5px"
+                        >收藏次数</span
+                      >
+                    </div>
+                  </el-col>
+                </el-row>
+              </div>
             </div>
           </div>
         </el-col>
 
         <el-col :span="7">
+          <!-- 右边栏的标题 -->
           <div class="bar-title1" style="margin-left: 50px">
             I SAHRE
             <img
@@ -198,6 +359,7 @@
           <div class="bar-title2" style="margin-top: 20px; margin-bottom: 20px">
             站内功能
           </div>
+          <!-- 右边栏的导航栏 -->
           <div class="right-item">
             <img
               src="../../HomePage_svg/right-icon1.svg"
@@ -218,6 +380,39 @@
               style="vertical-align: middle; margin-left: -20px"
             />
             <span style="vertical-align: text-top"> 期刊频道 </span>
+          </div>
+
+          <!-- 右边栏的滚动框 -->
+          <el-carousel height="150px" interval="2000" style="margin-top: 20px">
+            <el-carousel-item v-for="item in 4" :key="item">
+              <h3 class="slides">{{ item }}</h3>
+            </el-carousel-item>
+          </el-carousel>
+
+          <!-- 右边栏的热门排行 -->
+          <div class="hot-list" style="margin-top: 20px">
+            <div class="hot-titile1">I SHARE</div>
+            <div class="hot-titile2">热门排行</div>
+            <div class="hot-item">
+              <span class="hot-number" style="color: #FA1616">01 </span>
+              <span class="hot-content"> 疫情冲击下的2020年中国经济形势...</span>
+            </div>
+            <div class="hot-item">
+              <span class="hot-number" style="color: #FD9B40">02 </span>
+              <span class="hot-content"> 疫情冲击下的2020年中国经济形势...</span>
+            </div>
+            <div class="hot-item">
+              <span class="hot-number" style="color: #F6DA95">03 </span>
+              <span class="hot-content"> 疫情冲击下的2020年中国经济形势...</span>
+            </div>
+            <div class="hot-item">
+              <span class="hot-number">04 </span>
+              <span class="hot-content"> 疫情冲击下的2020年中国经济形势...</span>
+            </div>
+            <div class="hot-item">
+              <span class="hot-number">05 </span>
+              <span class="hot-content"> 疫情冲击下的2020年中国经济形势...</span>
+            </div>
           </div>
         </el-col>
       </el-row>
@@ -317,7 +512,8 @@
   padding-right: 10px;
   padding-left: 10px;
 }
-/* 下部右边工具栏 */
+
+/* 右边工具栏 */
 .bar-title1 {
   font-weight: 500;
   font-size: 18px;
@@ -335,7 +531,6 @@
   /* identical to box height, or 112% */
 
   text-align: center;
-
   color: #0a093d;
 }
 .right-item {
@@ -354,6 +549,67 @@
 
   box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
 }
+/* 图片切换slides */
+.slides {
+  width: 75%;
+  height: 100%;
+  margin: auto;
+  background: #accaf1;
+}
+.el-carousel__button {
+  height: 5px;
+  width: 40px;
+  border: none;
+  background-color: rgb(84, 84, 84, 0.3);
+}
+/* 热榜 */
+.hot-list {
+  margin: auto;
+  padding: auto;
+  width: 90%;
+  height: 550px;
+
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 14px;
+}
+.hot-titile1 {
+  padding-top: 20px;
+  padding-bottom: 10px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 18px;
+  text-align: center;
+  color: #217bf4;
+}
+.hot-titile2 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 36px;
+  text-align: center;
+  color: #0A093D;
+}
+.hot-item{
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.hot-number{
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 36px;
+  text-align: center;
+  color: rgba(86, 72, 72, 0.67);
+}
+.hot-content{
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 16px;
+  text-align: center;
+  color: #000000;
+}
+
 /* 下方中间推荐内容 */
 .reference {
   font-family: "Inter";
@@ -393,7 +649,7 @@
   text-align: center;
   letter-spacing: 0.01em;
 }
-.items {
+.item {
   margin: auto;
   margin-left: 3%;
   padding: 15px;
@@ -422,6 +678,7 @@
 }
 .item-title {
   float: left;
+  padding-top: 4px;
   font-weight: 600;
   font-size: 24px;
   line-height: 26px;
@@ -429,22 +686,25 @@
   color: #2f2c4a;
 }
 .item-info {
-  text-align: left;
+  /* text-align: left; */
   vertical-align: top;
-  /* padding-left: 4%; */
+  padding-left: 2%;
   padding-top: 10px;
   padding-bottom: 10px;
   width: 100%;
 
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 26px;
   text-align: center;
   color: rgba(96, 96, 96, 0.69);
 }
 .item-content {
-  margin: 5px;
-  width: 100%;
+  width: auto;
+  /* margin: auto; */
+  padding-left: 15px;
+  padding-bottom: 8px;
+
   align-items: center;
   text-align: left;
 
@@ -477,8 +737,7 @@
   text-align: center;
   color: rgba(96, 96, 96, 0.69);
 }
-
-.item-placeholder{
+.item-placeholder {
   opacity: 0;
   width: 100%;
 }
