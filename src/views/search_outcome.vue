@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="all">
     <topbar2></topbar2>
-    <div style="position: fixed;width:23.2vw;height: 88vh;left:5vw;top:11vh;overflow-y:auto;">
-    <el-card class="box-card" style="position: absolute;width:22vw;height: 99vh;background-color: rgba(99, 162, 247, 0.15);" shadow="hover">
+    <div style="position: absolute;width:23.2vw;height: 88vh;left:5vw;top:11vh;">
+    <el-card class="box-card" style="position: absolute;width:22vw;height: 108vh;background-color: rgba(99, 162, 247, 0.15);" shadow="hover">
       <img src="../img/Fill.svg" style="position: absolute;left:-0.5vw;top:1vh">
       <img src="../img/Funnel.svg" style="position: absolute;left:1.25vw;top:3.4vh">
       <div style="margin-left: 2.5vw"><b>排序条件</b></div>
@@ -16,7 +16,7 @@
       <div>
       <el-checkbox v-model="checked4">
         <div style="width: 5vw;display: inline-block">
-        <el-input v-model="input1" placeholder="" size="mini"></el-input>
+          <el-input v-model="input1" placeholder="" size="mini"></el-input>
         </div>
         <div style="display: inline-block">
           <b>&nbsp;年</b>
@@ -78,9 +78,10 @@
       <el-checkbox v-model="checked19"><b>相关领域二</b></el-checkbox>
       <el-checkbox v-model="checked20"><b>相关领域三</b></el-checkbox>
       <el-divider></el-divider>
+      <div style="margin-left: 6.5vw;margin-top: -2vh"><v-btn style="background-color: #217BF4;" class="white--text">确认</v-btn></div>
     </el-card>
     </div>
-    <div style="position: fixed;left:40vw;height: 88vh;top:11vh;width: 50vw;">
+    <div style="position:absolute;left:40vw;height: 88vh;top:11vh;width: 50vw;">
       <div v-for="item in items" style="width: 50vw;height:27vh;">
       <el-card  style="width: 50vw;height:25vh;background-color: whitesmoke" shadow="hover">
         <el-tag style="display: inline-block">{{item.type}}</el-tag>
@@ -129,6 +130,7 @@
             layout="prev, pager, next"
             :total=this.total_page
             @current-change="handlechange"
+            background
           >
         </el-pagination>
       </div>
@@ -218,6 +220,111 @@ export default {
           numyin:0,
           numstore:0,
         },
+        {
+          type:"期刊",
+          title:"疫情冲击下2020年中国新经济形势与政策",
+          author:"horik",
+          time:"2020/9/23",
+          institution:"北京航空航天大学",
+          zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
+          tags:[
+            "数学",
+            "物理",
+            "化学",
+          ],
+          numyin:0,
+          numstore:0,
+        },
+        {
+          type:"期刊",
+          title:"疫情冲击下2020年中国新经济形势与政策",
+          author:"horik",
+          time:"2020/9/23",
+          institution:"北京航空航天大学",
+          zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
+          tags:[
+            "数学",
+            "物理",
+            "化学",
+          ],
+          numyin:0,
+          numstore:0,
+        },
+        {
+          type:"期刊",
+          title:"疫情冲击下2020年中国新经济形势与政策",
+          author:"horik",
+          time:"2020/9/23",
+          institution:"北京航空航天大学",
+          zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
+          tags:[
+            "数学",
+            "物理",
+            "化学",
+          ],
+          numyin:0,
+          numstore:0,
+        },
+        {
+          type:"期刊",
+          title:"疫情冲击下2020年中国新经济形势与政策",
+          author:"horik",
+          time:"2020/9/23",
+          institution:"北京航空航天大学",
+          zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
+          tags:[
+            "数学",
+            "物理",
+            "化学",
+          ],
+          numyin:0,
+          numstore:0,
+        },
+        {
+          type:"期刊",
+          title:"疫情冲击下2020年中国新经济形势与政策",
+          author:"horik",
+          time:"2020/9/23",
+          institution:"北京航空航天大学",
+          zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
+          tags:[
+            "数学",
+            "物理",
+            "化学",
+          ],
+          numyin:0,
+          numstore:0,
+        },
+        {
+          type:"期刊",
+          title:"疫情冲击下2020年中国新经济形势与政策",
+          author:"horik",
+          time:"2020/9/23",
+          institution:"北京航空航天大学",
+          zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
+          tags:[
+            "数学",
+            "物理",
+            "化学",
+          ],
+          numyin:0,
+          numstore:0,
+        },
+        {
+          type:"期刊",
+          title:"疫情冲击下2020年中国新经济形势与政策",
+          author:"horik",
+          time:"2020/9/23",
+          institution:"北京航空航天大学",
+          zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
+          tags:[
+            "数学",
+            "物理",
+            "化学",
+          ],
+          numyin:0,
+          numstore:0,
+        },
       ]
     }
   },
@@ -227,6 +334,7 @@ export default {
       }
   },
   created() {
+
     if(this.total%4===0){
       this.total_page = this.total/3*10;
     }
@@ -246,5 +354,29 @@ export default {
 </script>
 
 <style scoped>
+.all{
+  width: 100vw;
+  height: 300vh;
+  background: linear-gradient(311.76deg, #D4E7FE -15.24%, #FFFFFF 78.85%);
+}
+.scroll-area::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* --- 滚动条里面的滚动块 --- */
+.scroll-area::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 5px #eee;
+  background: #eee;
+}
+
+/* --- 滚动条里面轨道 --- */
+.scroll-area::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  background: #FFEB3B;
+  /* border: none;
+  background: none; */
+}
 
 </style>

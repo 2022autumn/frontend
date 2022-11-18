@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Topbar1></Topbar1>
     <div class="top-background">
       <el-row style="height: 600px">
         <el-col :span="13">
@@ -12,7 +13,7 @@
             <div style="text-align: center">
               <el-input placeholder="请输入检索内容" v-model="input1">
                 <template slot="prepend">高级检索</template>
-                <i slot="suffix" class="el-input__icon el-icon-search"></i>
+                 <i slot="suffix" class="el-input__icon el-icon-search" @click="j_search_outcome"></i>
               </el-input>
             </div>
           </div>
@@ -419,11 +420,20 @@
     </div>
   </div>
 </template>
-  
+
 <script>
+import Topbar1 from "@/components/topbar1";
+export default {
+  components: {Topbar1},
+  methods:{
+    j_search_outcome(){
+       window.location.replace("/search_outcome");
+    }
+  }
+}
 // @ is an alias to /src
 </script>
-  
+
 <style>
 .top-background {
   display: inline-block;
