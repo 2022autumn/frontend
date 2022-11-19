@@ -1,6 +1,6 @@
 <template >
   <div class="paper-detail">
-    <div width="880px" class="main">
+    <div class="main">
       <div class="paper-header">
           <div class="title">
             <div class="title-txt">疫情冲击下的2020年中国经济形势与政策选择
@@ -53,27 +53,6 @@
             A three-pole 10-T superconducting wiggler was installed in the 8-GeV electron storage ring at SPring-8 for generating high-energy synchrotron radiation. Beam tests were carried out to check its performance and to investigate the effects on a stored beam. A beam was successfully stored at magnetic fields of the wiggler up to 9.7 T. The beam current was limited to 1 mA to avoid unnecessarily high heat-load on photon absorbers and radiation damage to accelerator components. Beam parameters such as a horizontal beam size, a bunch length, betatron tune shifts were measured. A spectrum of high-energy synchrotron radiation from the wiggler was also measured with the NaI scintillator at an extremely low beam current of about 8 pA.
           </div>
         </div>
-        <div class="details">
-          <div class="part">
-            <div class="detail-header1">
-              <div class="row"></div>
-              <div class="detail-header1">引言</div>
-            </div>
-            <div class="detail-content1">To create the needed standards, the antenna equation was introduced by this author in [2]–[5]. The antenna equation simplifies the equations that describe antennas in both the time and frequency domains. However, before new standards are established, it would be helpful to show that the antenna equation applies to a broad spectrum of problems. To that end, 10 fundamental antenna-theory puzzles are solved here on a wide variety of subjects.
-              Besides showing how to describe antenna performance in the time domain, the antenna equation also shows how to characterize phase in more detail in the frequency domain. One might think that the frequency domain description of antennas has been fully developed. However, almost no mention of phase appears in the antenna definitions standard [1], and what is there is incomplete. Once phase is clarified in the frequency domain, expressions in the time domain become straightforward.
-              Other very fundamental problems are addressed. Because an antenna can be described in terms of (something like) scattering parameters, it can be modeled with signal-flow graphs. This makes it easy to solve a wide variety of complicated problems with the aid of Mason’s rule. For example, this approach can be used to reformulate the Friis transmission equation, which normally describes scalar power flow, into a power wave expression that includes both magnitude and phase.
-              Various approaches have been used previously to describe antennas in the time domain [6]–[15]. However, none describes the complete antenna equation, as presented here, and none solves complicated antenna problems using signal-flow graphs. A detailed comparison of this article to previous papers is provided in the “Comparison to Previous Formulations” section.
-            </div>
-          </div>
-          <div class="part">
-            <div class="detail-header1">
-              结论Conclusion
-            </div>
-            <div class="detail-content1">
-              The antenna equation solves a remarkable array of antenna-theory puzzles. It defines the time domain analog of gain, so one can compare the time domain performance of various antennas. It shows how to combine gain with a meaningful phase. It generalizes expressions so they work naturally with waveguide feeds. It allows one to reformulate the Friis transmission equation into a power wave expression that includes both magnitude and phase. It also works naturally with signal-flow graphs to easily solve complicated problems.
-            </div>
-          </div>
-        </div>
       </div>
       <div class="review">
         <div class="commend-title">评论区  Comments</div>
@@ -116,25 +95,28 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
+@import "~@/assets/css/global.scss";
 .paper-detail {
   display: flex;
+  box-sizing: border-box;
   height: 100%;
   width: 100%;
-  left: 0px;
-  top: 0px;
   background: linear-gradient(311.76deg, #D4E7FE, #FFFFFF);
-  padding-bottom: 87px;
+  /*padding-bottom: vh(87);*/
 }
 .main {
-  margin-left: 44px;
-  width: 924px;
+  padding-left: vw(44);
+  display: flex;
+  width: vw(924);
 }
 .paper-header {
-  padding-top: 61px;
-  padding-left: 38px;
-  height: 275px;
-  width: 880px;
+  //float: left;
+  flex: 1;
+  padding-top: vh(61);
+  padding-left: vw(38);
+  height: vh(275);
+  width: vw(880);
   border-bottom: 0.5px solid rgba(171, 169, 169, 0.51);;
 }
 .title {
@@ -144,52 +126,52 @@ export default {
   margin-top: 0;
   text-align: left;
   font-family: Inter;
-  font-size: 36px;
+  font-size: vw(36);
   font-weight: 600;
-  line-height: 44px;
-  width: 672px;
+  line-height: vh(44);
+  width: vw(672);
 }
 
 .paper-type {
   display: inline-block;
-  width: 43px;
-  height: 26px;
+  width: vw(43);
+  height: vh(26);
   border-radius: 8px;
   box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
   background-color: #217BF4;
   color: #FFFFFF;
   text-align: center;
-  font-size: 14px;
+  font-size: vw(14);
   font-weight: 600;
-  line-height: 26px;
+  line-height: vh(26);
   font-family: Inter;
 }
 
 .info {
-  margin-top: 8px;
+  margin-top: vh(8);
   text-align: left;
-  height: 26px;
+  height: vh(26);
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 26px;
+  font-size: vw(16);
+  line-height: vh(26);
 }
 .info2 {
   float: left;
-  margin-top: 8px;
+  margin-top: vh(8);
   text-align: left;
-  height: 26px;
+  height: vh(26);
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 26px;
-  margin-right: 28px;
+  font-size: vw(16);
+  line-height: vh(26);
+  margin-right: vw(28);
 }
 .buttons {
-  padding-top: 22px;
-  height: 40px;
+  padding-top: vh(22);
+  height: vh(40);
 }
 .el-icon-my-origin{
   background: url('~@/assets/paperDetailsImg/Vector.png') center no-repeat;
@@ -197,8 +179,8 @@ export default {
 .original {
   float: left;
   display: inline-block;
-  width: 129px;
-  height: 38px;
+  width: vw(129);
+  height: vh(38);
   background: #217BF4;
   box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
   border-radius: 14px;
@@ -206,76 +188,79 @@ export default {
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 35px;
+  font-size: vw(16);
+  line-height: vh(35);
   color: #FFFFFF;
 }
 .right-buttons {
   float: right;
-  height: 52px;
-  width: 200px;
+  height:vh(52);
+  width: vw(200);
   display: flex;
   justify-content: flex-end;
 }
 .right-button1 {
-  margin-right: 5px;
-  height: 52px;
-  width: 61px;
+  margin-right: vw(5);
+  height: vh(52);
+  width: vw(61);
   background: url('~@/assets/paperDetailsImg/image0.png');
   background-size: 100% 100%;
 }
 .right-button2 {
-  height: 52px;
-  width: 61px;
+  height: vh(52);
+  width: vw(61);
   background: url('~@/assets/paperDetailsImg/image0 (1).png');
   background-size: 100% 100%;
 }
 .right-button3 {
-  height: 52px;
-  width: 61px;
+  height: vh(52);
+  width: vw(61);
   background: url('~@/assets/paperDetailsImg/image0 (2).png');
   background-size: 100% 100%;
 }
 .right-button4 {
-  height: 52px;
-  width: 61px;
+  height: vh(52);
+  width: vw(61);
   background: url('~@/assets/paperDetailsImg/image0 (3).png');
   background-size: 100% 100%;
 }
 .content {
-  margin-top: 30px;
+  margin-top: vh(30);
+  text-align: left;
+  display: inline-block;
+  //flex: 1;
 }
 .abstract {
   text-align: left;
   display: inline-block;
-  margin-top: 32px;
-  padding-left: 38px;
-  padding-bottom: 29px;
-  /*width: 881px;*/
-  height: 353px;
+  margin-top: vh(32);
+  padding-left: vw(38);
+  padding-bottom: vh(29);
+  width: vw(881);
   filter: drop-shadow(0px 3px 4px rgba(0, 0, 0, 0.25));
 }
 .abstract-sider {
   float: left;
-  width: 15px;
-  height: 353px;
+  flex: 1;
+  width: vw(15);
+  height: vh(353);
   background: rgba(67, 127, 236, 0.66);
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .abstract-title {
   text-align: left;
-  height: 39px;
-  margin-bottom: 29px;
+  height: vh(39);
+  margin-bottom: vh(29);
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 400;
-  font-size: 32px;
-  line-height: 26px;
+  font-size: vw(32);
+  line-height: vh(26);
   letter-spacing: 0.02em;
 }
 .abstract-body {
   text-align: left;
-  width: 713px;
+  width: vw(713);
 }
 .row {
   background: url("~@/assets/paperDetailsImg/Vector (1).png");
@@ -283,61 +268,35 @@ export default {
   left: 2.29%;
   right: 96.79%;
 }
-.details {
-  margin-left: 0px;
-}
-.part {
-  padding-bottom: 45px;
-  text-align: left;
-}
-.detail-header1 {
-  height: 26px;
-  text-align: left;
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 30px;
-  line-height: 26px;
-}
-.detail-content1 {
-  padding-top: 19px;
-  padding-left: 35px;
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 26px;
-}
-
 .review {
-  width: 792px;
-  padding-top: 28px;
-  padding-left: 31px;
-  padding-bottom: 34px;
+  width: vw(792);
+  padding-top: vh(28);
+  padding-left: vw(31);
+  padding-bottom: vh(34);
   background: linear-gradient(289.09deg, rgba(233, 235, 246, 0.58) 8.18%, rgba(232, 239, 252, 0.68) 42.83%, rgba(240, 242, 247, 0.68) 70.06%, rgba(228, 231, 251, 0.34) 102.01%);
   box-shadow: 0px 0px 8px #C1C9F0;
   border-radius: 12px;
 }
 .commend-title {
   text-align: left;
-  height: 26px;
+  height: vh(26);
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 600;
-  font-size: 26px;
-  line-height: 26px;
+  font-size: vw(26);
+  line-height: vh(26);
 }
 .comment-tools {
   margin-left: 0;
   margin-right: 0;
   width: 100%;
-  margin-top: 15px;
-  height: 26px;
+  margin-top: vh(15);
+  height: vh(26);
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 26px;
+  font-size: vw(14);
+  line-height: vh(26);
   /* identical to box height, or 186% */
 
   letter-spacing: 0.02em;
@@ -349,26 +308,26 @@ export default {
 }
 .filter-comments {
   display: inline-block;
-  margin-right: 43px;
+  margin-right: vw(43);
 }
 .rank-comments {
   display: inline-block;
-  margin-right: 15px;
+  margin-right: vw(15);
 }
 .commends {
-  margin-top: 34px;
-  height: 26px;
-  width: 710px;
+  margin-top: vh(34);
+  height: vh(26);
+  width: px(710);
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 26px;
+  font-size: vw(14);
+  line-height: vh(26);
 }
 .cards {
-  width: 710px;
-  height: 188px;
-  margin-bottom: 34px;
+  width: vw(710);
+  height: vh(188);
+  margin-bottom: vh(34);
 
   background: #FFFFFF;
   box-shadow: 0px 2px 4px rgba(180, 180, 180, 0.25);
@@ -376,23 +335,23 @@ export default {
 }
 .commending-title {
   text-align: left;
-  width: 85px;
-  height: 26px;
-  margin-top: 36px;
-  margin-bottom: 15px;
+  width: vw(85);
+  height: vh(26);
+  margin-top: vh(36);
+  margin-bottom: vh(15);
 
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 500;
-  font-size: 20px;
-  line-height: 26px;
+  font-size: vw(20);
+  line-height: vh(26);
 }
 .conmmending {
-  margin-top: 15px;
+  margin-top: vh(15);
   background: #FFFFFF;
   box-shadow: 0px 2px 4px rgba(180, 180, 180, 0.25);
   border-radius: 8px;
-  width: 710px;
-  min-height: 149px;
+  width: vw(710);
+  min-height: vh(149);
 }
 </style>
