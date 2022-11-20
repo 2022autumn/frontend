@@ -111,8 +111,11 @@ export default {
   width: vw(924);
 }
 .paper-header {
-  //float: left;
-  flex: 1;
+  float: left;
+  clear: both;
+  //display: flex;
+  //width: 100%;
+  //flex: 1;
   padding-top: vh(61);
   padding-left: vw(38);
   height: vh(275);
@@ -225,9 +228,13 @@ export default {
   background-size: 100% 100%;
 }
 .content {
+  float: left;
+  clear: both;
+  //height: vh(275);
   margin-top: vh(30);
   text-align: left;
-  display: inline-block;
+  display: block;
+  width: vw(880);
   //flex: 1;
 }
 .abstract {
@@ -269,6 +276,7 @@ export default {
   right: 96.79%;
 }
 .review {
+  float: left;
   width: vw(792);
   padding-top: vh(28);
   padding-left: vw(31);
@@ -317,7 +325,7 @@ export default {
 .commends {
   margin-top: vh(34);
   height: vh(26);
-  width: px(710);
+  width: vw(710);
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 400;
