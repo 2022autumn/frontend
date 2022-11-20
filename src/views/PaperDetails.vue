@@ -71,12 +71,17 @@
       </div>
     </div>
     <div>
-
+      <keyword />
+      <reference />
+      <note />
     </div>
   </div>
 </template>
 <script>
 // import leftBody from "../component/paperDetails/main.vue"
+import Note from "@/components/note";
+import Keyword from "@/components/keyword";
+import Reference from "@/components/reference";
 export default {
   name: "paperDetails",
   data() {
@@ -85,12 +90,15 @@ export default {
     };
   },
   components: {
+    Reference,
+    Keyword,
+    Note,
   },
   methods: {
 
 
   },
-  // 挂载时获取团队列表
+  // 挂载时获取
   mounted() {
   },
 };
@@ -120,7 +128,7 @@ export default {
   padding-left: vw(38);
   height: vh(275);
   width: vw(880);
-  border-bottom: 0.5px solid rgba(171, 169, 169, 0.51);;
+  border-bottom: 0.5px solid rgba(171, 169, 169, 0.51);
 }
 .title {
 
@@ -230,7 +238,7 @@ export default {
   float: left;
   clear: both;
   //height: vh(275);
-  margin-top: vh(30);
+  margin-top: vh(40);
   text-align: left;
   display: block;
   width: vw(880);
@@ -276,7 +284,9 @@ export default {
 }
 .review {
   float: left;
-  width: vw(792);
+  display: block;
+  width: 100%;
+  //width: vw(792);
   padding-top: vh(28);
   padding-left: vw(31);
   padding-bottom: vh(34);

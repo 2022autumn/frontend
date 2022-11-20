@@ -17,7 +17,7 @@ import reference from '@/components/reference.vue'
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld
+    HelloWorld,
     reference
   }
 }

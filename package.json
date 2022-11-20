@@ -1,5 +1,4 @@
 {
-  "name": "ishare",
   "name": "untitled1",
   "version": "0.1.0",
   "private": true,
@@ -8,13 +7,12 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
     "core-js": "^3.8.3",
     "element-ui": "^2.15.9",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "vuetify": "^2.6.12"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~5.0.0",
@@ -27,5 +25,17 @@
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "vue-template-compiler": "^2.6.14"
-  }
+  },
+  "description": "软工二前端仓库",
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2022autumn/frontend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/2022autumn/frontend/issues"
+  },
+  "homepage": "https://github.com/2022autumn/frontend#readme"
 }
