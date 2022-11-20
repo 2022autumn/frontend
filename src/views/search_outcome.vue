@@ -82,8 +82,8 @@
     </el-card>
     </div>
     <div style="position:absolute;left:40vw;height: 88vh;top:11vh;width: 50vw;">
-      <div v-for="item in items" style="width: 50vw;height:27vh;">
-      <el-card  style="width: 50vw;height:25vh;background-color: whitesmoke" shadow="hover">
+      <div v-for="item in items" style="width: 50vw;height:35vh;">
+      <el-card  style="width: 50vw;height:30vh;background-color: whitesmoke" shadow="hover">
         <el-tag style="display: inline-block">{{item.type}}</el-tag>
         <div style="display: inline-block;font-size: large;">
           &nbsp;
@@ -171,7 +171,7 @@ export default {
       input3:"",
       input4:"",
       input5:"",
-      num_exact_page:3,
+      num_exact_page:8,
       total: 1000,//返回的检索结果的总量
       total_page:0,
       items:[
@@ -295,36 +295,6 @@ export default {
           numyin:0,
           numstore:0,
         },
-        {
-          type:"期刊",
-          title:"疫情冲击下2020年中国新经济形势与政策",
-          author:"horik",
-          time:"2020/9/23",
-          institution:"北京航空航天大学",
-          zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
-          tags:[
-            "数学",
-            "物理",
-            "化学",
-          ],
-          numyin:0,
-          numstore:0,
-        },
-        {
-          type:"期刊",
-          title:"疫情冲击下2020年中国新经济形势与政策",
-          author:"horik",
-          time:"2020/9/23",
-          institution:"北京航空航天大学",
-          zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
-          tags:[
-            "数学",
-            "物理",
-            "化学",
-          ],
-          numyin:0,
-          numstore:0,
-        },
       ]
     }
   },
@@ -336,10 +306,10 @@ export default {
   created() {
 
     if(this.total%4===0){
-      this.total_page = this.total/3*10;
+      this.total_page = this.total/8*10;
     }
     else{
-      this.total_page = (this.total/3+1)*10;
+      this.total_page = (this.total/8+1)*10;
     }
 
     this.num_exact_page = this.items.length;
