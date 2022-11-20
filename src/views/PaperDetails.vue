@@ -187,7 +187,6 @@ export default {
   background: #217BF4;
   box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
   border-radius: 14px;
-
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 400;
