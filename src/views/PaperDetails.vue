@@ -42,10 +42,9 @@
             </div>
           </div>
         </div>
-      <div class="border"></div>
       <div class="content">
-        <div class="abstract-sider"></div>
         <div class="abstract">
+          <div class="abstract-sider"></div>
           <div class="abstract-title">
             摘要Abstract
           </div>
@@ -61,19 +60,38 @@
           <div class="filter-comments">筛选条件</div>
           <div class="rank-comments">排序条件</div>
         </div>
-        <div class="commends">
-          <div class="cards">
+<!--        <div class="commends">-->
+<!--          <div class="cards">-->
 
+<!--          </div>-->
+<!--        </div>-->
+        <span class="commending-title">发表评论</span>
+        <div class="conmmending">
+          <div class="avators">
+            <el-avatar></el-avatar>
+          </div>
+          <div class="right_comment">
+            <el-input
+                class="input_command"
+                placeholder="请输入评论内容">
+
+            </el-input>
+            <el-button class="submit-btn">发表</el-button>
           </div>
         </div>
-        <span class="commending-title">发表评论</span>
-        <div class="conmmending"></div>
       </div>
     </div>
-    <div>
-      <keyword />
-      <reference />
-      <note />
+    <div class="right-sider">
+      <div class="key">
+        <keyword />
+      </div>
+      <div class="ref">
+        <reference />
+      </div>
+<!--      <div class="notes">-->
+<!--        <note />-->
+<!--      </div>-->
+
     </div>
   </div>
 </template>
@@ -115,19 +133,14 @@ export default {
 }
 .main {
   padding-left: 44px;
-  display: flex;
+  //display: flex;
   width: 924px;
 }
 .paper-header {
-  float: left;
-  clear: both;
-  //display: flex;
-  //width: 100%;
-  //flex: 1;
+  width: 100%;
   padding-top: 61px;
   padding-left: 38px;
-  height: 275px;
-  width: 880px;
+  height: 344px;
   border-bottom: 0.5px solid rgba(171, 169, 169, 0.51);
 }
 .title {
@@ -167,6 +180,7 @@ export default {
   font-weight: 400;
   font-size: 16px;
   line-height: 26px;
+  background: transparent !important;
 }
 .info2 {
   float: left;
@@ -181,6 +195,7 @@ export default {
   margin-right: 28px;
 }
 .buttons {
+  width: 100%;
   padding-top: 22px;
   height: 40px;
 }
@@ -199,13 +214,14 @@ export default {
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
-  line-height: 35px;
+  //line-height: 38px;
   color: #FFFFFF;
 }
 .right-buttons {
   float: right;
   height:52px;
   width: 200px;
+  margin-right: 20px;
   display: flex;
   justify-content: flex-end;
 }
@@ -213,57 +229,66 @@ export default {
   margin-right: 5px;
   height: 52px;
   width: 61px;
+  align-items: center;
+  justify-content: center;
   background: url('~@/assets/paperDetailsImg/image0.png');
-  background-size: 100% 100%;
+  //background-size: 100% 100%;
 }
 .right-button2 {
   height: 52px;
   width: 61px;
   background: url('~@/assets/paperDetailsImg/image0 (1).png');
-  background-size: 100% 100%;
+  //background-size: 100% 100%;
 }
 .right-button3 {
   height: 52px;
-  width: 61px;
+  width: 65px;
   background: url('~@/assets/paperDetailsImg/image0 (2).png');
-  background-size: 100% 100%;
+  //background-size: 100% 100%;
 }
 .right-button4 {
   height: 52px;
-  width: 61px;
+  width: 70px;
   background: url('~@/assets/paperDetailsImg/image0 (3).png');
-  background-size: 100% 100%;
+  //background-size: 100% 100%;
 }
 .content {
-  float: left;
-  clear: both;
-  //height: 275px;
+  width: 100%;
   margin-top: 40px;
   text-align: left;
-  display: block;
-  width: 880px;
-  //flex: 1;
+  position: relative;
+  clear: both;
 }
 .abstract {
   text-align: left;
-  display: inline-block;
   margin-top: 32px;
-  padding-left: 38px;
-  padding-bottom: 29px;
   width: 881px;
+  overflow:hidden;
   filter: drop-shadow(0px 3px 4px rgba(0, 0, 0, 0.25));
+  box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.25);
 }
+
 .abstract-sider {
   float: left;
+  margin-top: 0px;
+  margin-bottom: 0px;
   flex: 1;
   width: 15px;
-  height: 353px;
+  //height: 100%;
+  //height: 353px;
   background: rgba(67, 127, 236, 0.66);
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  //margin-right: 38px;
+  margin-bottom: -10000px;
+  padding-bottom: 10000px;
 }
+
 .abstract-title {
+  padding-top: 13px;
   text-align: left;
   height: 39px;
+  padding-left: 38px;
+  margin-top: 13px;
   margin-bottom: 29px;
   font-family: 'Poppins';
   font-style: normal;
@@ -275,6 +300,8 @@ export default {
 .abstract-body {
   text-align: left;
   width: 713px;
+  padding-bottom: 29px;
+  padding-left: 38px;
 }
 .row {
   background: url("~@/assets/paperDetailsImg/Vector (1).png");
@@ -285,11 +312,14 @@ export default {
 .review {
   float: left;
   display: block;
-  width: 100%;
-  //width: 792px;
+  //width: 100%;
+  min-height: 285px;
+  width: 792px;
+  margin-top: 50px;
   padding-top: 28px;
   padding-left: 31px;
   padding-bottom: 34px;
+  margin-bottom: 34px;
   background: linear-gradient(289.09deg, rgba(233, 235, 246, 0.58) 8.18%, rgba(232, 239, 252, 0.68) 42.83%, rgba(240, 242, 247, 0.68) 70.06%, rgba(228, 231, 251, 0.34) 102.01%);
   box-shadow: 0px 0px 8px #C1C9F0;
   border-radius: 12px;
@@ -325,6 +355,7 @@ export default {
 }
 .filter-comments {
   display: inline-block;
+  margin-left: 380px;
   margin-right: 43px;
 }
 .rank-comments {
@@ -332,7 +363,7 @@ export default {
   margin-right: 15px;
 }
 .commends {
-  margin-top: 34px;
+  margin-top: 7px;
   height: 26px;
   width: 710px;
   font-family: 'Poppins';
@@ -344,8 +375,6 @@ export default {
 .cards {
   width: 710px;
   height: 188px;
-  margin-bottom: 34px;
-
   background: #FFFFFF;
   box-shadow: 0px 2px 4px rgba(180, 180, 180, 0.25);
   border-radius: 8px;
@@ -364,11 +393,85 @@ export default {
   line-height: 26px;
 }
 .conmmending {
+  position: relative;
   margin-top: 15px;
+  padding-top: 24px;
   background: #FFFFFF;
   box-shadow: 0px 2px 4px rgba(180, 180, 180, 0.25);
   border-radius: 8px;
   width: 710px;
   min-height: 149px;
+}
+.avators {
+  display: inline-block;
+  float: left;
+  width: 94px;
+  height: 100%;
+  margin-top: 16px;
+  margin-left: 23px;
+}
+.right-comment {
+  display: inline-block;
+  float: left;
+  margin-left: 5px;
+}
+.input_command {
+  width: 543px;
+  height: 72px;
+  border: 1.4px solid rgba(198, 198, 198, 0.6);
+  border-radius: 8px;
+}
+.submit-btn {
+  float: right;
+  margin-right: 45px;
+  margin-top: 14px;
+  width: 98px;
+  height: 28px;
+  background: linear-gradient(94.95deg, #288CD6 -43.46%, rgba(108, 155, 247, 0.56) 168.08%);
+  box-shadow: 0px 0px 6px rgba(153, 166, 213, 0.57);
+  border-radius: 5px;
+  color: #FFFFFF;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+.right-sider {
+  display: flex;
+  float: right;
+  clear: both;
+  margin-right: 80px;
+  margin-left: 104px;
+  //padding-top: 83px;
+  width: 100%;
+  display: table-cell;
+  vertical-align: middle;
+  flex-direction:column;
+}
+.key {
+  width: 100%;
+  height: 100%;
+  height: auto;
+}
+.ref {
+  float: left;
+  margin-top: 64px;
+  width: 100%;
+  height: auto;
+  margin-right: 0px;
+}
+.notes {
+  width: 100%;
+  height: 100%;
+  margin-top: 64px;
+  clear: both;
+}
+</style>
+<style>
+.el-input__inner {
+  border: none !important;
 }
 </style>
