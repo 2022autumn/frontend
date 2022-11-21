@@ -14,11 +14,11 @@
             <div class="content">{{ item.content }}</div>
             <div class="date">{{ item.date }}</div>
             <div class="like">
-              <img class="like-img" src="../assets/like.png">
+              <img class="like-img" src="../../assets/like.png">
               <div class="number">{{ item.likenum }}</div>
             </div>
           <div class="anti">
-            <img class="anti-img" src="../assets/anti.png">
+            <img class="anti-img" src="../../assets/anti.png">
             <div class="anti-name">举报</div>
           </div>
         </div>

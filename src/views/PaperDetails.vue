@@ -134,9 +134,9 @@
 </template>
 <script>
 // import leftBody from "../component/paperDetails/main.vue"
-import Note from "@/components/note";
-import Keyword from "@/components/keyword";
-import Reference from "@/components/reference";
+import Note from "@/components/xyj/note";
+import Keyword from "@/components/xyj/keyword";
+import Reference from "@/components/xyj/reference";
 export default {
   name: "paperDetails",
   data() {

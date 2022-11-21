@@ -15,8 +15,8 @@ module.exports = {
                 minPixelValue: 1, // 默认值1，小于或等于1px则不进行转换
                 mediaQuery: true, // 是否在媒体查询的css代码中也进行转换，默认false
                 replace: true, // 是否转换后直接更换属性值
-                //exclude: [/node_modules/, /GlobalApi/,/src/], // 设置忽略文件，GlobalApi 只需要写文件名称即可
-                //include: [/\/src\/components\/note\.vue/,/\/src\/components\/reference\.vue/,/\/src\/components\/keyword\.vue/], //设置包含文件只转换当前文件
+                exclude: [/node_modules/, /GlobalApi/,/src/], // 设置忽略文件，GlobalApi 只需要写文件名称即可
+                //include: [/src\/components\/xyj/], //设置包含文件只转换当前文件
                 landscape: false // 是否处理横屏情况
             }
         }
