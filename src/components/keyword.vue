@@ -49,7 +49,7 @@ export default {
   position: absolute;
   width: 392px;
   height: auto;
-  top: 150px;
+  top: 65px;
   background: #FFFFFF;
   box-shadow: -2px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;

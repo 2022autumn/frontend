@@ -125,9 +125,9 @@
       <div class="ref">
         <reference />
       </div>
-<!--      <div class="notes">-->
-<!--        <note />-->
-<!--      </div>-->
+      <div class="notes">
+        <note />
+      </div>
 
     </div>
   </div>
@@ -579,15 +579,16 @@ export default {
 }
 .ref {
   float: left;
-  margin-top: 75.31vh;
+  margin-top: 62.31vh;
   width: 100%;
-  height: auto;
+  max-height: 400px;
   margin-right: 0vw;
 }
 .notes {
   width: 100%;
-  height: 100%;
-  margin-top: 8.31vh;
+  height: auto;
+  margin-top: 118vh;
+  margin-bottom: 10vh;
   clear: both;
 }
 </style>
