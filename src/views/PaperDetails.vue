@@ -125,9 +125,9 @@
       <div class="ref">
         <reference />
       </div>
-<!--      <div class="notes">-->
-<!--        <note />-->
-<!--      </div>-->
+<--      <div class="notes">-->
+<--        <note />-->
+<--      </div>-->
 
     </div>
   </div>

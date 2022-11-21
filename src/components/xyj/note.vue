@@ -251,8 +251,8 @@ export default {
   position: relative;
   width: 141px;
   height: 26px;
-  left: 43px;
-  top: 15px;
+  left: 55px;
+  top: 19px;
 
   font-family: 'Poppins';
   font-style: normal;
@@ -267,7 +267,7 @@ export default {
 }
 .like{
   position: relative;
-  left: 110px;
+  left: 200px;
   top:-5px;
 }
 .like-img{
@@ -278,7 +278,7 @@ export default {
 .number{
   position: relative;
   left: 21px;
-  top:-22px;
+  top:-23px;
 
   font-family: 'Poppins';
   font-style: normal;
@@ -293,8 +293,8 @@ export default {
 }
 .anti{
   position: relative;
-  left: 165px;
-  top:-46px;
+  left: 250px;
+  top:-50px;
 }
 .anti-img{
   position: relative;
@@ -305,8 +305,8 @@ export default {
   position: relative;
   width: 25px;
   height: 22px;
-  left: 158px;
-  top: -22px;
+  left: 20px;
+  top: -26px;
 
   font-family: 'Poppins';
   font-style: normal;
