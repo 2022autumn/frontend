@@ -5,6 +5,7 @@
 </template>
 
 <script>
+
 import axios from "axios";
 
 export default {
@@ -17,7 +18,7 @@ export default {
       alert('click!');
       axios.get('/api/test').then(
          response =>{
-           alert(response.data);
+           console.log(response.data);
          }
       )
     }
