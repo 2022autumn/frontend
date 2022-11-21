@@ -53,6 +53,11 @@ const routes = [
     path:'/testaxios',
     name:'testaxios',
     component:() => import('../views/zbh/test/testaxios')
+  },
+  {
+    path:'/advancedSearch',
+    name:'advancedSearch',
+    component:() => import('../views/AdvancedSearch')
   }
 ]
 
