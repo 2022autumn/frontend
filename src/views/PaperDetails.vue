@@ -32,8 +32,9 @@
           </div>
           <div class="buttons">
             <el-button class="original" icon="el-icon-my-origin">
-              <img src="../assets/paperDetailsImg/original.png"
-              style="margin-left: -1.4vw">
+<!--              <img src="../assets/paperDetailsImg/original.png"-->
+<!--              style="margin-left: -1.4vw">-->
+<!--            <el-button class="original">-->
               原文地址
             </el-button>
             <div class="right-buttons">
@@ -130,15 +131,14 @@
       <div class="notes">
         <note />
       </div>
-
     </div>
   </div>
 </template>
 <script>
 // import leftBody from "../component/paperDetails/main.vue"
-import Note from "@/components/note";
-import Keyword from "@/components/keyword";
-import Reference from "@/components/reference";
+import Note from "@/components/xyj/note";
+import Keyword from "@/components/xyj/keyword";
+import Reference from "@/components/xyj/reference";
 export default {
   name: "paperDetails",
   data() {
@@ -276,6 +276,8 @@ export default {
   border: none;
   height: 6.25vh;
   width: 3.94vw;
+  //height: 52px;
+  //width: 61px;
   align-items: center;
   justify-content: center;
   background: url('~@/assets/paperDetailsImg/image0.png');
@@ -533,7 +535,8 @@ export default {
   box-shadow: 0px 2px 4px rgba(180, 180, 180, 0.25);
   border-radius: 8px;
   width: 45.83vw;
-  min-height: 19.35vh;
+  //min-height: 19.35vh;
+  min-height: 22vh;
 }
 .avators {
   display: inline-block;
@@ -557,9 +560,9 @@ export default {
 .submit-btn {
   float: right;
   margin-right: 2.90vw;
-  margin-top: 1.82vh;
+  margin-top: 1.8vh;
   width: 6.33vw;
-  height: 3.64vh;
+  //height: 3.64vh;
   background: linear-gradient(94.95deg, #288CD6 -43.46%, rgba(108, 155, 247, 0.56) 168.08%);
   box-shadow: 0px 0px 6px rgba(153, 166, 213, 0.57);
   border-radius: 5px;

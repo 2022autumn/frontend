@@ -12,13 +12,13 @@
     <div class="define-box-set">
       <div class="define-box" v-for="(item,index) in definekey" :key="index">
         <div class="self-define-box">
-          <img src="../assets/label.png" class="label">
+          <img src="../../assets/label.png" class="label">
           <div class="define">{{ item }}</div>
         </div>
       </div>
       <div class="define-box">
         <div class="add-self-define-box">
-          <img src="../assets/add.png" class="label">
+          <img src="../../assets/add.png" class="label">
           <div class="define">添加标签...</div>
         </div>
       </div>

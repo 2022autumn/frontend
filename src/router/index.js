@@ -58,6 +58,16 @@ const routes = [
     path:'/advancedSearch',
     name:'advancedSearch',
     component:() => import('../views/AdvancedSearch')
+  },
+  {
+    path:'/signup',
+    name:'signUp',
+    component:() => import('../components/signup')
+  },
+  {
+    path:'/login',
+    name:'login',
+    component:() => import('../components/login')
   }
 ]
 
