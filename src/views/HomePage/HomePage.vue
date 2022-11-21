@@ -10,7 +10,7 @@
           </div>
           <div class="title-text">communicate together</div>
 
-          <div style="margin-top: 50px; display: inline-block">
+          <div style="margin-top: 7vh; margin-bottom: 5vh;display: inline-block">
             <div style="text-align: center">
               <el-input placeholder="请输入检索内容" v-model="input1">
                 <template slot="prepend">高级检索</template>
@@ -19,7 +19,7 @@
             </div>
           </div>
 
-          <div style="margin: 3vh 0vh auto; padding: 3%;">
+          <div style="margin: 3vh auto; padding-left: 5%; padding-right: 5%;">
             <el-row :gutter="20">
               <el-col :span="6">
                 <div>
@@ -212,6 +212,11 @@ import Topbar1 from "@/components/topbar1";
 import PaperItem from "@/components/paperitem";
 export default {
   components: {Topbar1, PaperItem},
+  data(){
+    return{
+      input1:""
+    }
+  },
   methods:{
     j_search_outcome(){
        window.location.replace("/search_outcome");
@@ -249,8 +254,8 @@ export default {
 }
 .icon-text {
   margin-top: -9vh;
-  padding-left: 3%;
-  padding-right: 3%;
+  padding-left: 5%;
+  padding-right: 5%;
   margin: 0 auto;
   text-align: center;
 
@@ -268,7 +273,7 @@ export default {
 /* 搜索框样式 */
 .el-input-group__prepend {
   background: rgba(117, 167, 235, 0.52);
-  font-weight: 600;
+  font-weight: 400;
   font-size: 20px;
   line-height: 24px;
   color: #fcfcff;
@@ -280,7 +285,7 @@ export default {
   border-radius: 7px;
 }
 .el-input__inner::placeholder {
-  font-weight: 500;
+  font-weight: 300;
   font-size: 20px;
   line-height: 24px;
   color: #fcfcff;
