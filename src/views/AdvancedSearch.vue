@@ -2,7 +2,7 @@
     <div>
         <topbar2></topbar2>
         <el-row style="height: 600px" class="background">
-            <el-col :span="10">
+            <el-col :span="7">
                 <div class="left-img" style="margin-top: 100px; margin-left: 30%">
                     <img preview-disabled
                         src="../../public/advanced_img/Advanced Search.svg"
@@ -11,13 +11,13 @@
                 <div class="title-text" style="margin-top: 50px; margin-left: 30%">
                     高级检索
                 </div>
-                 <div class="left-img" style="margin-top: 70px; margin-left: 30%">
+                 <div class="left-img" style="margin-top: 70px; margin-left: 30%;width:100vx;">
                     <img preview-disabled
                         src="../../public/advanced_img/illustration1.svg"
                     />
                 </div>
             </el-col>
-            <el-col :span="14">
+            <el-col :span="17">
                 <div class="hot-list" style="margin-top: 150px">
                     <div>&nbsp;</div>
                     <div class="box-word" style="margin-left: 4%;">
@@ -186,7 +186,7 @@ export default {
 
   /* text-align: left; */
   font-weight: 700;
-  font-size: 65px;
+  font-size: 50px;
   line-height: 48px;
   /* or 118% */
 
