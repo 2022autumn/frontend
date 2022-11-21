@@ -43,6 +43,11 @@ const routes = [
     path:'/paper_details',
     name:'paper_details',
     component: () => import('../views/PaperDetails')
+  },
+  {
+    path:'/cloud',
+    name:'cloud',
+    component:() => import('../views/zbh/trycloud2')
   }
 ]
 
