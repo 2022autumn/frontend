@@ -209,7 +209,7 @@
 
 <script>
 import Topbar1 from "@/components/topbar1";
-import PaperItem from "@/components/paperitem";
+import PaperItem from "@/components/paperItem";
 export default {
   components: {Topbar1, PaperItem},
   data(){
@@ -374,10 +374,10 @@ export default {
   margin: 0 auto;
   margin-top: 5vh;
   margin-bottom: 5vh;
-  width: 90%;
+  width: 80%;
   height: 75vh;
 
-  background: #fafeff;
+  background: rgba(215, 232, 255, 0.10);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 14px;
 }
@@ -412,7 +412,7 @@ export default {
 }
 .hot-content{
   font-weight: 400;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 123%;
   text-align: center;
   color: #000000;
@@ -479,7 +479,7 @@ export default {
 
   font-weight: 700;
   font-size: 14px;
-  line-height: 35px;
+  line-height: 4vh;
   text-align: center;
   letter-spacing: 0.01em;
 
