@@ -14,14 +14,14 @@
       <img src="../img/Vector.svg" style="position: absolute;left:1.4vw;top:22.3vh">
       <div style="margin-left: 2.5vw"><b>发表年份</b></div>
       <div>
-      <el-checkbox v-model="checked4">
-        <div style="width: 5vw;display: inline-block">
-          <el-input v-model="input1" placeholder="" size="mini"></el-input>
-        </div>
-        <div style="display: inline-block">
-          <b>&nbsp;年</b>
-        </div>
-      </el-checkbox>
+        <el-checkbox v-model="checked4">
+          <div style="width: 5vw;display: inline-block">
+            <el-input v-model="input1" placeholder="" size="mini"></el-input>
+          </div>
+          <div style="display: inline-block">
+            <b>&nbsp;年</b>
+          </div>
+        </el-checkbox>
       </div>
       <div>
         <el-checkbox v-model="checked5">
