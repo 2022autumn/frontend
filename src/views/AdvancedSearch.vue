@@ -11,7 +11,7 @@
                 <div class="title-text" style="margin-top: 50px; margin-left: 30%">
                     高级检索
                 </div>
-                 <div class="left-img" style="margin-top: 70px; margin-left: 30%;width:100vx;">
+                 <div class="left-img" style="margin-top: 70px; margin-left: 10%;width:100vx;">
                     <img preview-disabled
                         src="../../public/advanced_img/illustration1.svg"
                     />
@@ -109,11 +109,11 @@
                     <div>
                         <el-button  style="display:block;margin:0 auto" class="search-button">搜索</el-button>
                     </div>
-                    
+
                 </div>
             </el-col>
         </el-row>
-        
+
     </div>
 </template>
 
