@@ -48,6 +48,16 @@ const routes = [
     path:'/cloud',
     name:'cloud',
     component:() => import('../views/zbh/trycloud2')
+  },
+  {
+    path:'/testaxios',
+    name:'testaxios',
+    component:() => import('../views/zbh/test/testaxios')
+  },
+  {
+    path:'/advancedSearch',
+    name:'advancedSearch',
+    component:() => import('../views/AdvancedSearch')
   }
 ]
 

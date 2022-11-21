@@ -3,13 +3,14 @@
     <Topbar1></Topbar1>
     <div class="top-background">
       <el-row style="height: 600px">
+        <!-- 顶部展示页面的左侧 -->
         <el-col :span="13">
-          <div class="title-text" style="margin-top: 100px; margin-left: -12%">
+          <div class="title-text" style="margin-top: 18vh; margin-left: -12%">
             search efficiently &
           </div>
           <div class="title-text">communicate together</div>
 
-          <div style="margin-top: 50px; display: inline-block">
+          <div style="margin-top: 7vh; margin-bottom: 5vh;display: inline-block">
             <div style="text-align: center">
               <el-input placeholder="请输入检索内容" v-model="input1">
                 <template slot="prepend">高级检索</template>
@@ -18,7 +19,7 @@
             </div>
           </div>
 
-          <div style="margin: 70px">
+          <div style="margin: 3vh auto; padding-left: 5%; padding-right: 5%;">
             <el-row :gutter="20">
               <el-col :span="6">
                 <div>
@@ -73,25 +74,29 @@
           </div>
         </el-col>
 
+        <!-- 顶部展示页面的右侧，只有两张图片 -->
         <el-col :span="11" style="display: fix">
           <div>
             <span>
               <img
                 src="../../HomePage_svg/top-left.svg"
-                style="width: 50%; height: 50%; margin-top: 30%"
+                style="width: 50%; height: 50%; margin-top: 40%"
             /></span>
             <span>
               <img
                 src="../../HomePage_svg/top-right.svg"
-                style="width: 50%; height: 50%; margin-bottom: 15%"
+                style="width: 50%; height: 50%; margin-bottom: 14%"
             /></span>
           </div>
         </el-col>
       </el-row>
     </div>
 
+    <!-- 下部内容页 -->
     <div class="content-panel">
       <el-row :gutter="10">
+
+        <!-- 左侧推荐文章栏 -->
         <el-col :span="17">
           <div class="reference">
             <el-row>
@@ -117,235 +122,15 @@
           </div>
 
           <div class="itemlist">
-            <div class="item" style="margin-bottom: 20px">
-              <div style="margin-top: 10px">
-                <el-row>
-                  <el-col :span="2">
-                    <div class="item-type">期刊</div>
-                  </el-col>
-                  <el-col :span="22">
-                    <div class="item-title">这是文章的标题位置</div>
-                  </el-col>
-                </el-row>
-              </div>
-              <div class="item-info" style="text-align: left">
-                <span style="margin-right: 10px">作者</span>
-                <img
-                  src="../../HomePage_svg/info-div.svg"
-                  style="vertical-align: middle"
-                />
-                <span style="margin-left: 10px; margin-right: 10px"
-                  >所属机构名称</span
-                >
-                <img
-                  src="../../HomePage_svg/info-div.svg"
-                  style="vertical-align: middle"
-                />
-                <span style="margin-left: 10px; margin-right: 10px"
-                  >发表时间</span
-                >
-              </div>
-              <div class="item-content">
-                新冠肺炎疫情的出现是个"黑天鹅"事件.通过对疫情影响下的总供给
-                ,总需求及CPI的测算,并综合自然走势和政策效果分析,预计2020年的中国经济增速为5.5%-6.0%,
-                CPI上涨率能够控制在4.0%以内.疫情对中国经济自然走势的负面影响很大,2020年增增速目标的扩...
-              </div>
-              <div style="width: 100%">
-                <el-row>
-                  <el-col :span="3">
-                    <div class="item-keyword">标签/关键词</div>
-                  </el-col>
-                  <el-col :span="3">
-                    <div class="item-keyword">标签/关键词</div>
-                  </el-col>
-                  <el-col :span="3">
-                    <div class="item-keyword">标签/关键词</div>
-                  </el-col>
-                  <el-col :span="9"
-                    ><div class="item-placeholder">a</div></el-col
-                  >
-                  <el-col :span="3">
-                    <div class="item-site" style="margin-top: 17px">
-                      <img
-                        src="../../HomePage_svg/site.svg"
-                        style="vertical-align: top"
-                      />
-                      <span
-                        style="vertical-align: text-bottom; padding-left: 7px"
-                        >引用次数</span
-                      >
-                    </div>
-                  </el-col>
-                  <el-col :span="3">
-                    <div class="item-site" style="margin-top: 13px">
-                      <img
-                        src="../../HomePage_svg/star.svg"
-                        style="vertical-align: middle"
-                      />
-                      <span
-                        style="vertical-align: text-bottom; padding-left: 5px"
-                        >收藏次数</span
-                      >
-                    </div>
-                  </el-col>
-                </el-row>
-              </div>
-            </div>
-
-            <div class="item" style="margin-bottom: 20px">
-              <div style="margin-top: 10px">
-                <el-row>
-                  <el-col :span="2">
-                    <div class="item-type">期刊</div>
-                  </el-col>
-                  <el-col :span="22">
-                    <div class="item-title">这是文章的标题位置</div>
-                  </el-col>
-                </el-row>
-              </div>
-              <div class="item-info" style="text-align: left">
-                <span style="margin-right: 10px">作者</span>
-                <img
-                  src="../../HomePage_svg/info-div.svg"
-                  style="vertical-align: middle"
-                />
-                <span style="margin-left: 10px; margin-right: 10px"
-                  >所属机构名称</span
-                >
-                <img
-                  src="../../HomePage_svg/info-div.svg"
-                  style="vertical-align: middle"
-                />
-                <span style="margin-left: 10px; margin-right: 10px"
-                  >发表时间</span
-                >
-              </div>
-              <div class="item-content">
-                新冠肺炎疫情的出现是个"黑天鹅"事件.通过对疫情影响下的总供给
-                ,总需求及CPI的测算,并综合自然走势和政策效果分析,预计2020年的中国经济增速为5.5%-6.0%,
-                CPI上涨率能够控制在4.0%以内.疫情对中国经济自然走势的负面影响很大,2020年增增速目标的扩...
-              </div>
-              <div style="width: 100%">
-                <el-row>
-                  <el-col :span="3">
-                    <div class="item-keyword">标签/关键词</div>
-                  </el-col>
-                  <el-col :span="3">
-                    <div class="item-keyword">标签/关键词</div>
-                  </el-col>
-                  <el-col :span="3">
-                    <div class="item-keyword">标签/关键词</div>
-                  </el-col>
-                  <el-col :span="9"
-                    ><div class="item-placeholder">a</div></el-col
-                  >
-                  <el-col :span="3">
-                    <div class="item-site" style="margin-top: 17px">
-                      <img
-                        src="../../HomePage_svg/site.svg"
-                        style="vertical-align: top"
-                      />
-                      <span
-                        style="vertical-align: text-bottom; padding-left: 7px"
-                        >引用次数</span
-                      >
-                    </div>
-                  </el-col>
-                  <el-col :span="3">
-                    <div class="item-site" style="margin-top: 13px">
-                      <img
-                        src="../../HomePage_svg/star.svg"
-                        style="vertical-align: middle"
-                      />
-                      <span
-                        style="vertical-align: text-bottom; padding-left: 5px"
-                        >收藏次数</span
-                      >
-                    </div>
-                  </el-col>
-                </el-row>
-              </div>
-            </div>
-
-            <div class="item" style="margin-bottom: 20px">
-              <div style="margin-top: 10px">
-                <el-row>
-                  <el-col :span="2">
-                    <div class="item-type">期刊</div>
-                  </el-col>
-                  <el-col :span="22">
-                    <div class="item-title">这是文章的标题位置</div>
-                  </el-col>
-                </el-row>
-              </div>
-              <div class="item-info" style="text-align: left">
-                <span style="margin-right: 10px">作者</span>
-                <img
-                  src="../../HomePage_svg/info-div.svg"
-                  style="vertical-align: middle"
-                />
-                <span style="margin-left: 10px; margin-right: 10px"
-                  >所属机构名称</span
-                >
-                <img
-                  src="../../HomePage_svg/info-div.svg"
-                  style="vertical-align: middle"
-                />
-                <span style="margin-left: 10px; margin-right: 10px"
-                  >发表时间</span
-                >
-              </div>
-              <div class="item-content">
-                新冠肺炎疫情的出现是个"黑天鹅"事件.通过对疫情影响下的总供给
-                ,总需求及CPI的测算,并综合自然走势和政策效果分析,预计2020年的中国经济增速为5.5%-6.0%,
-                CPI上涨率能够控制在4.0%以内.疫情对中国经济自然走势的负面影响很大,2020年增增速目标的扩...
-              </div>
-              <div style="width: 100%">
-                <el-row>
-                  <el-col :span="3">
-                    <div class="item-keyword">标签/关键词</div>
-                  </el-col>
-                  <el-col :span="3">
-                    <div class="item-keyword">标签/关键词</div>
-                  </el-col>
-                  <el-col :span="3">
-                    <div class="item-keyword">标签/关键词</div>
-                  </el-col>
-                  <el-col :span="9"
-                    ><div class="item-placeholder">a</div></el-col
-                  >
-                  <el-col :span="3">
-                    <div class="item-site" style="margin-top: 17px">
-                      <img
-                        src="../../HomePage_svg/site.svg"
-                        style="vertical-align: top"
-                      />
-                      <span
-                        style="vertical-align: text-bottom; padding-left: 7px"
-                        >引用次数</span
-                      >
-                    </div>
-                  </el-col>
-                  <el-col :span="3">
-                    <div class="item-site" style="margin-top: 13px">
-                      <img
-                        src="../../HomePage_svg/star.svg"
-                        style="vertical-align: middle"
-                      />
-                      <span
-                        style="vertical-align: text-bottom; padding-left: 5px"
-                        >收藏次数</span
-                      >
-                    </div>
-                  </el-col>
-                </el-row>
-              </div>
-            </div>
+            <PaperItem></PaperItem>
+            <PaperItem></PaperItem>
+            <PaperItem></PaperItem>
           </div>
         </el-col>
 
+        <!-- 右侧导航栏 -->
         <el-col :span="7">
-          <!-- 右边栏的标题 -->
+          <!-- 导航栏标题 -->
           <div class="bar-title1" style="margin-left: 50px">
             I SAHRE
             <img
@@ -360,37 +145,38 @@
           <div class="bar-title2" style="margin-top: 20px; margin-bottom: 20px">
             站内功能
           </div>
-          <!-- 右边栏的导航栏 -->
+
+          <!-- 导航栏内容框 -->
           <div class="right-item">
             <img
               src="../../HomePage_svg/right-icon1.svg"
-              style="vertical-align: middle; margin-left: -20px"
+              style="vertical-align: middle;"
             />
             <span style="vertical-align: text-top"> 学者主页 </span>
           </div>
           <div class="right-item">
             <img
               src="../../HomePage_svg/right-icon2.svg"
-              style="vertical-align: middle; margin-left: -20px"
+              style="vertical-align: middle;"
             />
             <span style="vertical-align: text-top"> 学术分析 </span>
           </div>
           <div class="right-item">
             <img
               src="../../HomePage_svg/right-icon3.svg"
-              style="vertical-align: middle; margin-left: -20px"
+              style="vertical-align: middle;"
             />
             <span style="vertical-align: text-top"> 期刊频道 </span>
           </div>
 
-          <!-- 右边栏的滚动框 -->
-          <el-carousel height="150px" interval="2000" style="margin-top: 20px">
+          <!-- 导航栏滚动框 -->
+          <el-carousel height="25vh" interval="2000" style="margin-top: 5vh">
             <el-carousel-item v-for="item in 4" :key="item">
               <h3 class="slides">{{ item }}</h3>
             </el-carousel-item>
           </el-carousel>
 
-          <!-- 右边栏的热门排行 -->
+          <!-- 导航栏热门排行 -->
           <div class="hot-list" style="margin-top: 20px">
             <div class="hot-titile1">I SHARE</div>
             <div class="hot-titile2">热门排行</div>
@@ -423,8 +209,14 @@
 
 <script>
 import Topbar1 from "@/components/topbar1";
+import PaperItem from "@/components/paperitem";
 export default {
-  components: {Topbar1},
+  components: {Topbar1, PaperItem},
+  data(){
+    return{
+      input1:""
+    }
+  },
   methods:{
     j_search_outcome(){
        window.location.replace("/search_outcome");
@@ -461,9 +253,10 @@ export default {
   color: #0a093d;
 }
 .icon-text {
-  margin-top: -20px;
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-top: -9vh;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin: 0 auto;
   text-align: center;
 
   font-family: "Plus Jakarta Sans";
@@ -477,9 +270,10 @@ export default {
   color: #217bf4;
 }
 
+/* 搜索框样式 */
 .el-input-group__prepend {
   background: rgba(117, 167, 235, 0.52);
-  font-weight: 600;
+  font-weight: 400;
   font-size: 20px;
   line-height: 24px;
   color: #fcfcff;
@@ -491,7 +285,7 @@ export default {
   border-radius: 7px;
 }
 .el-input__inner::placeholder {
-  font-weight: 500;
+  font-weight: 300;
   font-size: 20px;
   line-height: 24px;
   color: #fcfcff;
@@ -544,11 +338,13 @@ export default {
   color: #0a093d;
 }
 .right-item {
-  display: inline-block;
+  padding-left: 12%;
+  padding-right: 12%;
 
-  margin: 10px;
-  width: 310px;
-  height: 70px;
+  margin: auto;
+  margin-bottom: 3vh;
+  width: 80%;
+  height: 10vh;
   background: #ffffff;
   border-radius: 14px;
 
@@ -561,31 +357,33 @@ export default {
 }
 /* 图片切换slides */
 .slides {
-  width: 75%;
+  width: 80%;
   height: 100%;
   margin: auto;
   background: #accaf1;
 }
 .el-carousel__button {
   height: 5px;
-  width: 40px;
+  width: 1vw;
   border: none;
-  background-color: rgb(84, 84, 84, 0.3);
+  background-color: rgba(97, 93, 93, 0.3);
 }
+
 /* 热榜 */
 .hot-list {
-  margin: auto;
-  padding: auto;
+  margin: 0 auto;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
   width: 90%;
-  height: 550px;
+  height: 75vh;
 
-  background: #ffffff;
+  background: #fafeff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 14px;
 }
 .hot-titile1 {
-  padding-top: 20px;
-  padding-bottom: 10px;
+  padding-top: 4vh;
+  padding-bottom: 1vh;
   font-weight: 500;
   font-size: 18px;
   line-height: 18px;
@@ -593,8 +391,7 @@ export default {
   color: #217bf4;
 }
 .hot-titile2 {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 3vh;
   font-weight: 700;
   font-size: 24px;
   line-height: 36px;
@@ -602,20 +399,21 @@ export default {
   color: #0A093D;
 }
 .hot-item{
-  margin-top: 5px;
-  margin-bottom: 10px;
+  width: auto;
+  margin-bottom: 1vh;
+  text-align: center;
 }
 .hot-number{
   font-weight: 400;
   font-size: 20px;
-  line-height: 36px;
+  line-height: 180%;
   text-align: center;
   color: rgba(86, 72, 72, 0.67);
 }
 .hot-content{
   font-weight: 400;
   font-size: 18px;
-  line-height: 16px;
+  line-height: 123%;
   text-align: center;
   color: #000000;
 }
@@ -631,8 +429,8 @@ export default {
 }
 .button {
   margin: auto;
-  width: 120px;
-  height: 50px;
+  width: 8vw;
+  height: 6vh;
   background: #217bf4;
   box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
   border-radius: 14px;
@@ -662,9 +460,10 @@ export default {
 .item {
   margin: auto;
   margin-left: 3%;
-  padding: 15px;
+  margin-bottom: 4vh;
+  padding: 1%;
   width: 95%;
-  height: 180px;
+  height: 28vh;
 
   background: linear-gradient(250.39deg, #ffffff 10.13%, #ffffff 94%);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -672,11 +471,11 @@ export default {
 }
 .item-type {
   margin: auto;
-  width: 50px;
-  height: 35px;
+  width: 4vw;
+  height: 4vh;
   background: #217bf4;
   box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
-  border-radius: 14px;
+  border-radius: 12px;
 
   font-weight: 700;
   font-size: 14px;
@@ -691,8 +490,7 @@ export default {
   padding-top: 4px;
   font-weight: 600;
   font-size: 24px;
-  line-height: 26px;
-  /* or 108% */
+  line-height: 108%;
   color: #2f2c4a;
 }
 .item-info {

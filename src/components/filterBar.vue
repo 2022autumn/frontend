@@ -1,0 +1,118 @@
+<template>
+    <div>
+        <el-row style="margin-top: 20px; margin-left: 10%;margin-right: 10%">
+            <el-col :span="4">
+                <div style="margin-top: 10px; margin-left: 5%">
+                    <el-dropdown>
+                        <el-button class="logic-button" type="primary">
+                            AND
+                            <i class="el-icon-arrow-down el-icon--right">
+                            </i>
+                        </el-button>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item>OR</el-dropdown-item>
+                            <el-dropdown-item>NOT</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </div>
+            </el-col>
+            <el-col :span="13">
+                <div style="margin-top: 10px; ">
+                    <el-input v-model="input" placeholder="请输入该条目查询内容"></el-input>
+                </div>
+            </el-col>
+            <el-col :span="1">
+                <div class="box-word" >
+                    in
+                </div>
+            </el-col>
+            <el-col :span="5">
+                <div style="margin-top: 10px; margin-left: 10%">
+                    <el-select v-model="value" placeholder="请选择搜索条目">
+                        <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                        </el-option>
+                    </el-select>
+                    
+                </div>
+            </el-col>
+            <el-col :span="1">
+                <i class="el-icon-delete" style="margin-top: 70%;margin-left: 70%;color:darkgray"></i>
+            </el-col>
+        </el-row>
+    </div>
+    
+</template>
+
+<script>
+export default {
+  name: "filterBar",
+  data() {
+    return {
+        options: [{
+          value: '选项1',
+          label: '作者'
+        }, {
+          value: '选项2',
+          label: '标题'
+        }, {
+          value: '选项3',
+          label: '关键字'
+        }, {
+          value: '选项4',
+          label: '摘要'
+        }, {
+          value: '选项5',
+          label: '作者单位'
+        }, {
+          value: '选项5',
+          label: 'DOI'
+        }],
+        value: ''
+    };
+  },
+  methods: {
+    handleClick() {
+        alert('button click');
+      }
+  },
+}
+</script>
+
+<style scoped>
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
+  .logic-button{
+    float: right;
+    margin: auto;
+    width: 98px;
+    height: 42px;
+    background: linear-gradient(94.95deg, #437FEC -43.46%, #4CD9ED 128.08%);
+    box-shadow: 0px 0px 6px rgba(153, 166, 213, 0.57);
+    border-radius: 19px;
+    color: #FFFFFF;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+  .box-word {
+  margin-top: 20px;
+  width: 43px;
+  height: 30px;
+
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 30px;
+  color: darkgray;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+</style>
