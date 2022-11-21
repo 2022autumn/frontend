@@ -53,3 +53,32 @@ export default {
   }),
 };
 </script>
+<style>
+/* 设置滚动条的样式 */
+
+::-webkit-scrollbar {
+  width: 0.26vw;
+}
+
+/* 滚动槽 */
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: rgba(0, 0, 0, 0.3);
+
+  border-radius: 0.65vw;
+}
+
+/* 滚动条滑块 */
+
+::-webkit-scrollbar-thumb {
+  border-radius: 0.65vw;
+
+  background: rgba(173, 152, 152, 0.1);
+
+  -webkit-box-shadow: rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: #ffd9d966;
+}
+</style>
