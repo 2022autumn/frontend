@@ -31,7 +31,7 @@
             </div>
           </div>
           <div class="buttons">
-            <el-button class="original" icon="el-icon-my-origin">
+            <el-button class="original"><!--here should be icon="el-icon-my-origin"-->
               原文地址
             </el-button>
             <div class="right-buttons">
@@ -268,6 +268,8 @@ export default {
   margin-right: 0.32vw;
   height: 6.75vh;
   width: 3.94vw;
+  //height: 52px;
+  //width: 61px;
   align-items: center;
   justify-content: center;
   background: url('~@/assets/paperDetailsImg/image0.png');
@@ -521,7 +523,8 @@ export default {
   box-shadow: 0px 2px 4px rgba(180, 180, 180, 0.25);
   border-radius: 8px;
   width: 45.83vw;
-  min-height: 19.35vh;
+  //min-height: 19.35vh;
+  min-height: 22vh;
 }
 .avators {
   display: inline-block;
@@ -545,9 +548,9 @@ export default {
 .submit-btn {
   float: right;
   margin-right: 2.90vw;
-  margin-top: 1.82vh;
+  margin-top: 1.8vh;
   width: 6.33vw;
-  height: 3.64vh;
+  //height: 3.64vh;
   background: linear-gradient(94.95deg, #288CD6 -43.46%, rgba(108, 155, 247, 0.56) 168.08%);
   box-shadow: 0px 0px 6px rgba(153, 166, 213, 0.57);
   border-radius: 5px;
