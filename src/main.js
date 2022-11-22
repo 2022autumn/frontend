@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-
+import "vis/dist/vis.css";
 import * as echarts from 'echarts';
 Vue.prototype.$echarts = echarts
 import ElementUI from 'element-ui';

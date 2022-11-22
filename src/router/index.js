@@ -68,6 +68,11 @@ const routes = [
     path:'/login',
     name:'login',
     component:() => import('../components/login')
+  },
+  {
+    path:'/net',
+    name:'net',
+    component:() => import('../views/zbh/test/testnet')
   }
 ]
 
