@@ -12,97 +12,41 @@ export default {
     return {
       worddata: [
         {
-          name: "老婆产假",
+          name: "creative",
           value: 15000,
         },
         {
-          name: "产假",
+          name: "absolute",
           value: 10081,
         },
         {
-          name: "身体不舒服",
+          name: "leader",
           value: 9386,
         },
         {
-          name: "生病",
+          name: "physics",
           value: 7500,
         },
         {
-          name: "休假休息",
+          name: "chemistry",
           value: 7500,
         },
         {
-          name: "亲人去世",
+          name: "hr",
           value: 6500,
         },
         {
-          name: "腹泻",
+          name: "hr",
           value: 6500,
         },
         {
-          name: "头痛",
+          name: "so great",
           value: 6000,
         },
         {
-          name: "朋友婚礼",
+          name: "excellent",
           value: 4500,
         },
-        {
-          name: "亲戚来了",
-          value: 3800,
-        },
-        {
-          name: "办理证件",
-          value: 3000,
-        },
-        {
-          name: "家里有事",
-          value: 2500,
-        },
-        {
-          name: "老婆坐月子",
-          value: 2300,
-        },
-        {
-          name: "急性阑尾炎",
-          value: 2000,
-        },
-        {
-          name: "呕吐",
-          value: 1900,
-        },
-        {
-          name: "感冒",
-          value: 1800,
-        },
-        {
-          name: "拉肚子",
-          value: 1700,
-        },
-        {
-          name: "小孩生病",
-          value: 1600,
-        },
-        {
-          name: "搬家",
-          value: 1500,
-        },
-        {
-          name: "工作疲惫",
-          value: 1200,
-        },
-        {
-          name: "喜酒",
-          value: 1100,
-        },
-        {
-          name: "堵车",
-          value: 900,
-        },
-        {
-          name: "睡过头",
-          value: 800,
-        }
       ],
     };
   },
@@ -129,7 +73,7 @@ export default {
         title: {
           //text: "center"
         },
-        backgroundColor: "#E6E6FA",
+        backgroundColor: "white",//词云的背景颜色
         tooltip: {},
 
         series: [

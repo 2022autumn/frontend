@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="z-index: 9999">
         <el-row style="margin-top: 20px; margin-left: 10%;margin-right: 10%">
             <el-col :span="4">
                 <div style="margin-top: 10px; margin-left: 5%">
@@ -28,7 +28,7 @@
             </el-col>
             <el-col :span="5">
                 <div style="margin-top: 10px; margin-left: 10%">
-                    <el-select v-model="value" placeholder="请选择搜索条目">
+                    <el-select v-model="value" placeholder="请选择搜索条目" >
                         <el-option
                         v-for="item in options"
                         :key="item.value"
@@ -36,7 +36,6 @@
                         :value="item.value">
                         </el-option>
                     </el-select>
-                    
                 </div>
             </el-col>
             <el-col :span="1">
@@ -44,7 +43,7 @@
             </el-col>
         </el-row>
     </div>
-    
+
 </template>
 
 <script>
