@@ -75,6 +75,7 @@ const routes = [
     component:() => import('../views/zbh/test/testnet')
   },
   {
+
     path:'/scholar_page',//学者主页
     name:'scholar_page',
     component:() => import('../views/zbh/scholar_page')
@@ -88,7 +89,14 @@ const routes = [
     path:'/advanced_search_component',
     name:'advanced_search_component',
     component:() => import('../views/advanced_search_component')
-  }
+  },
+
+  {
+    path:'/testadmin',
+    name:'adminCard ',
+    component:() => import('../components/admin')
+  },
+
 ]
 
 const router = new VueRouter({

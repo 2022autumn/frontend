@@ -209,7 +209,7 @@
 
 <script>
 import Topbar1 from "@/components/topbar1";
-import PaperItem from "@/components/paperitem";
+import PaperItem from "@/components/paperItem";
 export default {
   components: {Topbar1, PaperItem},
   data(){
