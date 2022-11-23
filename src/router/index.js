@@ -77,7 +77,30 @@ const routes = [
     path:'/net',
     name:'net',
     component:() => import('../views/zbh/test/testnet')
-  }
+  },
+  {
+
+    path:'/scholar_page',//学者主页
+    name:'scholar_page',
+    component:() => import('../views/zbh/scholar_page')
+  },
+  {
+    path:'/advanced_outcome',//进行高级检索后跳转到的界面
+    name:'advanced_outcome',
+    component:() => import('../views/advanced_outcome')
+  },
+  {
+    path:'/advanced_search_component',
+    name:'advanced_search_component',
+    component:() => import('../views/advanced_search_component')
+  },
+
+  {
+    path:'/testadmin',
+    name:'adminCard ',
+    component:() => import('../components/admin')
+  },
+
 ]
 
 const router = new VueRouter({

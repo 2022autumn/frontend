@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--width,height 画布的宽度，高度。 可以是百分比或像素，一般在dom元素上设置 -->
-    <div id="network_id" class="network" style="height:50vh;width: 100vw"></div>
+    <div id="network_id" class="network" style="position: absolute;top:60vh;width: 100vw;height: 70vh"></div>
     <!--<el-dialog title="测试框" :visible.sync="dialogVisible" width="width">
       <div>xxxxxx</div>
       <div slot="footer">
@@ -29,7 +29,9 @@ export default {
           id: 0,
           label: "黄瑞",
           //background: url('~@/assets/paperDetailsImg/image0 (2).png'),
-          color: { background: "yellow" }
+          //color: { background: "yellow" }
+          image:'http://nj.benqmedicalcenter.com/uploadfile/image/20201214/20201214162432_54714.jpg',
+          shape: 'circularImage'
         },
         {
           id: 1,
@@ -181,7 +183,7 @@ export default {
           selectable: true, //是否可以点击选择
           selectConnectedEdges: true, //选择节点后是否显示连接线
           hoverConnectedEdges: true, //鼠标滑动节点后是否显示连接线
-          zoomView: true //是否能缩放画布
+          zoomView: false //是否能缩放画布
         },
         //操作模块:包括 添加、删除、获取选中点、设置选中点、拖拽系列、点击等等
         manipulation: {
@@ -229,7 +231,7 @@ export default {
     this.init();
     // 点击事件
     this.network.on("click", params => {
-      console.log("点击", params.nodes);
+      console.log("点击", params);
       // this.network.addEdgeMode();
     });
     // 点击鼠标右键事件
