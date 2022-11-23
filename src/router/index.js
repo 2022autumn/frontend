@@ -73,7 +73,12 @@ const routes = [
     path:'/net',
     name:'net',
     component:() => import('../views/zbh/test/testnet')
-  }
+  },
+  {
+    path:'/testadmin',
+    name:'adminCard ',
+    component:() => import('../components/admin')
+  },
 ]
 
 const router = new VueRouter({
