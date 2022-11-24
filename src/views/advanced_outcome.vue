@@ -1,8 +1,8 @@
 <template>
   <div class="all">
     <topbar1></topbar1>
-    <div style="position: fixed;top:7.5vh;width: 100vw;z-index: 9999">
-      <el-collapse>
+    <div style="position: fixed;top:7.5vh;width: 100vw; z-index: 100">
+      <el-collapse style="position:absolute;width:100vw;">
         <el-collapse-item>
           <template slot="title">
             <b>高级检索条件</b>
@@ -157,7 +157,6 @@ export default {
   components: {Topbar2, Topbar1, avc},
   data(){
     return{
-      movedtop:20,
       checked1:false,
       checked2:false,
       checked3:false,
@@ -359,6 +358,39 @@ export default {
   background: #FFEB3B;
   /* border: none;
   background: none; */
+}
+
+.el-icon-arrow-down {
+  font-size: 12px;
+}
+.logic-button{
+  float: right;
+  margin: auto;
+  width: 98px;
+  height: 42px;
+  background: linear-gradient(94.95deg, #437FEC -43.46%, #4CD9ED 128.08%);
+  box-shadow: 0px 0px 6px rgba(153, 166, 213, 0.57);
+  border-radius: 19px;
+  color: #FFFFFF;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+.box-word {
+  margin-top: 20px;
+  width: 43px;
+  height: 30px;
+
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 30px;
+  color: darkgray;
+  text-align: center;
+  letter-spacing: 0.01em;
 }
 
 </style>

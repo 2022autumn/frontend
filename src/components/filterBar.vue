@@ -67,7 +67,7 @@ export default {
           value: '选项5',
           label: '作者单位'
         }, {
-          value: '选项5',
+          value: '选项6',
           label: 'DOI'
         }],
         value: ''
