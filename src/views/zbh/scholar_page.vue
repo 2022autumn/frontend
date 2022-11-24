@@ -7,16 +7,19 @@
       <div class="top_I_am"> I Am </div>
       <div class="top_scholar">Scholar</div>
     </div>
+    <div>
+      <testScolar></testScolar>
+    </div>
     <div class="net_top">. 专家关系网络 .</div>
     <div>
       <testnet></testnet>
     </div>
     <div class="cloud_top">. 词云图 .</div>
     <div>
-      <trycloud style="height: 40vh;position: absolute;top:140vh"></trycloud>
+      <trycloud style="height: 40vh;position: absolute;top:220vh"></trycloud>
     </div>
     <div class="wenxian_top">. 已发表文献 .</div>
-    <div style="position:absolute;left:25vw;height: 95vh;top:195vh;width: 50vw;">
+    <div style="position:absolute;left:25vw;height: 95vh;top:275vh;width: 50vw;">
       <div v-for="item in items" style="width: 50vw;height:35vh;">
         <el-card  style="width: 50vw;height:30vh;background-color: whitesmoke" shadow="hover">
           <el-tag style="display: inline-block">{{item.type}}</el-tag>
@@ -78,11 +81,11 @@ import Topbar1 from "@/components/topbar1";
 import "echarts-wordcloud/dist/echarts-wordcloud";
 import "echarts-wordcloud/dist/echarts-wordcloud.min.js";
 import Trycloud from "@/views/zbh/trycloud2";
-import testnet from "@/views/zbh/test/testnet";
 import Testnet from "@/views/zbh/test/testnet";
+import testScolar from "@/views/testScolar";
 export default {
   name: "scholar_page",
-  components: {Testnet, Trycloud, Topbar1},
+  components: {Testnet, Trycloud, Topbar1, testScolar},
   data(){
     return{
       num_exact_page:8,
@@ -285,7 +288,7 @@ export default {
   width: 196px;
   height: 36px;
   left: 645px;
-  top: 55vh;
+  top: 135vh;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 600;
@@ -299,7 +302,7 @@ export default {
   width: 196px;
   height: 36px;
   left: 675px;
-  top: 135vh;
+  top: 215vh;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 600;
@@ -313,7 +316,7 @@ export default {
   width: 296px;
   height: 36px;
   left: 655px;
-  top: 185vh;
+  top: 265vh;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 600;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--width,height 画布的宽度，高度。 可以是百分比或像素，一般在dom元素上设置 -->
-    <div id="network_id" class="network" style="position: absolute;top:60vh;width: 100vw;height: 70vh"></div>
+    <div id="network_id" class="network" style="position: absolute;top:140vh;width: 100vw;height: 70vh"></div>
     <!--<el-dialog title="测试框" :visible.sync="dialogVisible" width="width">
       <div>xxxxxx</div>
       <div slot="footer">

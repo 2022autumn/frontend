@@ -29,21 +29,22 @@ export default {
 .v1 {
   float: left;
   margin-top: 0px;
-  height: 800px;
-  width: 340px;
+  margin-left: 40px;
+  height: 400px;
+  width: 170px;
 }
 .v2 {
   float: left;
   position: relative;
-  margin-left: 10px;
-  height: 800px;
-  width: 558px;
+  margin-left: 170px;
+  height: 400px;
+  width: 279px;
 }
 .v3 {
   float: left;
   position: relative;
-  margin-left: 10px;
-  height: 800px;
-  width: 455px;
+  margin-left: 340px;
+  height: 400px;
+  width: 227.5px;
 }
 </style>

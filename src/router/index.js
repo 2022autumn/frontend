@@ -100,6 +100,11 @@ const routes = [
     name:'adminCard ',
     component:() => import('../components/admin')
   },
+  {
+    path:'/testscholar',
+    name:'testscholar',
+    component:() => import('../views/testScolar')
+  }
 
 ]
 
