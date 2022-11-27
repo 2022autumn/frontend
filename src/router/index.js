@@ -104,7 +104,7 @@ const routes = [
     path:'/testscholar',
     name:'testscholar',
     component:() => import('../views/testScolar')
-  }
+  },
 
 ]
 
