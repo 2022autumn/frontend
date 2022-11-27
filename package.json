@@ -13,6 +13,7 @@
     "echarts-wordcloud": "^2.0.0",
     "element-ui": "^2.15.10",
     "postcss-px-to-viewport": "^1.1.1",
+    "qs": "^6.11.0",
     "vis": "^4.21.0-EOL",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",

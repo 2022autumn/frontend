@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import "vis/dist/vis.css";
+import axios from 'axios'
+axios.defaults.baseURL = 'http://ishare.horik.cn:8000/api'
+Vue.prototype.$axios = axios;
 import * as echarts from 'echarts';
 Vue.prototype.$echarts = echarts
 import ElementUI from 'element-ui';
@@ -17,6 +20,6 @@ new Vue({
   router,
   store,
   vuetify,
-
+  axios,
   render: h => h(App)
 }).$mount('#app')
