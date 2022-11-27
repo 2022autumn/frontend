@@ -104,8 +104,13 @@ const routes = [
     path:'/testscholar',
     name:'testscholar',
     component:() => import('../views/testScolar')
-  },
 
+  },
+  {
+    path:'/personal_center',
+    name:'personal_center',
+    component:() => import('../views/PersonalCenter')
+  }
 ]
 
 const router = new VueRouter({
