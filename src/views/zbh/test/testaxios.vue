@@ -6,7 +6,8 @@
 
 <script>
 
-import axios from "axios";
+
+import qs from "qs";
 
 export default {
   name: "testaxios",
@@ -15,10 +16,20 @@ export default {
   },
   methods:{
     test_axios(){
-      alert('click!');
-      axios.get('/api/test').then(
+      console.log("testaxios")
+      var stdate = new Date();
+      console.log("now: ",stdate)
+      this.$axios({
+        method:'post',
+        url:'/es/base_query',
+        params:{
+          query_word:"java"
+        }
+      }).then(
          response =>{
            console.log(response.data);
+           var enddate = new Date();
+           console.log(enddate-stdate)
          }
       )
     }

@@ -12,6 +12,10 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  }, {
+  path: '/test',
+    name: 'test',
+    component: () => import(/* webpackChunkName: "about" */ '../views/testScolar.vue')
   },
     {
 
@@ -58,6 +62,54 @@ const routes = [
     path:'/advancedSearch',
     name:'advancedSearch',
     component:() => import('../views/AdvancedSearch')
+  },
+  {
+    path:'/signup',
+    name:'signUp',
+    component:() => import('../components/signup')
+  },
+  {
+    path:'/login',
+    name:'login',
+    component:() => import('../components/login')
+  },
+  {
+    path:'/net',
+    name:'net',
+    component:() => import('../views/zbh/test/testnet')
+  },
+  {
+
+    path:'/scholar_page',//学者主页
+    name:'scholar_page',
+    component:() => import('../views/zbh/scholar_page')
+  },
+  {
+    path:'/advanced_outcome',//进行高级检索后跳转到的界面
+    name:'advanced_outcome',
+    component:() => import('../views/advanced_outcome')
+  },
+  {
+    path:'/advanced_search_component',
+    name:'advanced_search_component',
+    component:() => import('../views/advanced_search_component')
+  },
+
+  {
+    path:'/testadmin',
+    name:'adminCard ',
+    component:() => import('../components/admin')
+  },
+  {
+    path:'/testscholar',
+    name:'testscholar',
+    component:() => import('../views/testScolar')
+
+  },
+  {
+    path:'/personal_center',
+    name:'personal_center',
+    component:() => import('../views/PersonalCenter')
   },
   {
     path:'/collect',

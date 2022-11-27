@@ -31,7 +31,10 @@
             </div>
           </div>
           <div class="buttons">
-            <el-button class="original"><!--here should be icon="el-icon-my-origin"-->
+            <el-button class="original" icon="el-icon-my-origin">
+<!--              <img src="../assets/paperDetailsImg/original.png"-->
+<!--              style="margin-left: -1.4vw">-->
+<!--            <el-button class="original">-->
               原文地址
             </el-button>
             <div class="right-buttons">
@@ -96,8 +99,8 @@
             </div>
             <div class="comment-content">
               The antenna equation also solves other fundamental problems.
+              <div class="comment-divider"></div>
             </div>
-            <div class="comment-divider"></div>
             <div class="reply">
 
             </div>
@@ -125,10 +128,9 @@
       <div class="ref">
         <reference />
       </div>
-<--      <div class="notes">-->
-<--        <note />-->
-<--      </div>-->
-
+      <div class="notes">
+        <note />
+      </div>
     </div>
   </div>
 </template>
@@ -236,15 +238,21 @@ export default {
 .buttons {
   width: 100%;
   padding-top: 2.86vh;
-  height: 5.19vh;
+  height: 8.19vh;
+  vertical-align: center;
+  justify-content: center;
+  line-height: 5.19vh;
 }
 .el-icon-my-origin{
   background: url('~@/assets/paperDetailsImg/Vector.png') center no-repeat;
 }
 .original {
   float: left;
+  align-items: center;
+  vertical-align: center;
+  justify-content: center;
   display: inline-block;
-  width: 8.33vw;
+  width: 9.63vw;
   height: 4.93vh;
   background: #217BF4;
   box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
@@ -253,7 +261,7 @@ export default {
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
-  //line-height: 38px;
+  line-height: 2.93vh;
   color: #FFFFFF;
 }
 .right-buttons {
@@ -265,33 +273,36 @@ export default {
   justify-content: flex-end;
 }
 .right-button1 {
-  margin-right: 0.32vw;
-  height: 6.75vh;
+  border: none;
+  height: 6.25vh;
   width: 3.94vw;
   //height: 52px;
   //width: 61px;
   align-items: center;
   justify-content: center;
   background: url('~@/assets/paperDetailsImg/image0.png');
-  //background-size: 100% 100%;
+  background-size: 100% 100%;
 }
 .right-button2 {
-  height: 6.75vh;
+  border: none;
+  height: 6.25vh;
   width: 3.94vw;
   background: url('~@/assets/paperDetailsImg/image0 (1).png');
-  //background-size: 100% 100%;
+  background-size: 100% 100%;
 }
 .right-button3 {
-  height: 6.75vh;
+  border: none;
+  height: 6.15vh;
   width: 3.94vw;
   background: url('~@/assets/paperDetailsImg/image0 (2).png');
-  //background-size: 100% 100%;
+  background-size: 100% 100%;
 }
 .right-button4 {
-  height: 6.75vh;
-  width: 3.94vw;
+  border: none;
+  height: 6.15vh;
+  width: 4.24vw;
   background: url('~@/assets/paperDetailsImg/image0 (3).png');
-  //background-size: 100% 100%;
+  background-size: 100% 100%;
 }
 .content {
   width: 100%;
@@ -415,6 +426,7 @@ export default {
 }
 .cards {
   display: flex;
+  display: table-cell;
   width: 45.83vw;
   height: 24.41vh;
   padding-left: 1.48vw;
@@ -488,19 +500,19 @@ export default {
 }
 .comment-content {
   position: absolute;
-  display: flex;
+  //display: flex;
   margin-top: 9.61vh;
   margin-left: 1.74vw;
-  width: 41.37vw;
+  width: 39.37vw;
 }
-//.comment-divider {
-//  display: flex;
-//  float: left;
-//  margin-top: 20px;
-//  width: 41.37vw;
-//  height: 1px;
-//  background: #8E8C8C;
-//}
+.comment-divider {
+  position: relative;
+  width: 100%;
+  height: 0px;
+  margin-top: 2.5vh;
+  //top: 5px;
+  border-bottom: 1.4px solid rgba(217, 215, 215, 0.58);
+}
 .commending-title {
   display: flex;
   text-align: left;
@@ -582,15 +594,16 @@ export default {
 }
 .ref {
   float: left;
-  margin-top: 75.31vh;
+  margin-top: 62.31vh;
   width: 100%;
-  height: auto;
+  max-height: 400px;
   margin-right: 0vw;
 }
 .notes {
   width: 100%;
-  height: 100%;
-  margin-top: 8.31vh;
+  height: auto;
+  margin-top: 118vh;
+  margin-bottom: 10vh;
   clear: both;
 }
 </style>
