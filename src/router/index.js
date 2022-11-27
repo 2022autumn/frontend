@@ -58,6 +58,11 @@ const routes = [
     path:'/advancedSearch',
     name:'advancedSearch',
     component:() => import('../views/AdvancedSearch')
+  },
+  {
+    path:'/collect',
+    name:'collect',
+    component:() => import('../components/xyj/collect')
   }
 ]
 
