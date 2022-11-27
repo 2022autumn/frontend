@@ -105,6 +105,13 @@ const routes = [
     name:'testscholar',
     component:() => import('../views/testScolar')
   }
+  ,
+  {
+    path:'/personal_center',
+    name:'personal_center',
+    component:() => import('../views/PersonalCenter')
+  }
+
 
 ]
 
