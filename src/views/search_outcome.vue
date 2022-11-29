@@ -82,7 +82,7 @@
     </el-card>
     </div>
     <div style="position:absolute;left:40vw;height: 88vh;top:11vh;width: 50vw;">
-      <div v-for="item in items" style="width: 50vw;height:35vh;">
+      <div v-for="item in items" v-if="item.id!==''" style="width: 50vw;height:35vh;">
       <el-card  style="width: 50vw;height:30vh;background-color: whitesmoke" shadow="hover">
         <el-tag style="display: inline-block">{{item.type}}</el-tag>
         <div style="display: inline-block;font-size: large;">
@@ -106,12 +106,12 @@
           {{item.zhaiyao}}
         </div>
         <div style="margin-top: 2vh;display: inline-block">
-          <div v-for="tags in item.tags" style="display: inline-block">
+          <div v-for="tags in item.tags" v-if="tags!==''" style="display: inline-block">
             <el-tag>{{tags}}</el-tag>
             &nbsp;
           </div>
         </div>
-        <div style="display: inline-block;color: rgba(96, 96, 96, 0.69);margin-left: 19vw">
+        <div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
           <div style="display: inline-block;top:3vh">
           <img src="../img/yinhao.svg" style="width: 2vw;height: 2vh">
           </div>
@@ -119,7 +119,7 @@
           {{item.numyin}}次被引
           </div>
         </div>
-        <div style="display: inline-block;color: rgba(96, 96, 96, 0.69);margin-left: 3vw">
+        <div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
           <div style="display: inline-block;"><img src="../img/shoucang.svg" style="width: 2vw;height: 2vh"></div>
           <div style="display: inline-block">{{item.numyin}}次收藏</div>
         </div>
@@ -172,23 +172,24 @@ export default {
       input4:"",
       input5:"",
       num_exact_page:8,
-      total: 1000,//返回的检索结果的总量
+      total: 0,//返回的检索结果的总量
       total_page:0,
       items:[
         {
-            type:"期刊",
-            title:"疫情冲击下2020年中国新经济形势与政策",
-            author:"horik",
-            time:"2020/9/23",
-            institution:"北京航空航天大学",
-            zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
-            tags:[
-               "数学",
-                "物理",
-                "化学",
-            ],
-            numyin:0,
-            numstore:0,
+          type:"期刊",
+          title:"疫情冲击下2020年中国新经济形势与政策",
+          author:"horik",
+          time:"2020/9/23",
+          institution:"北京航空航天大学",
+          zhaiyao:"",
+          tags:[
+            "",
+            "",
+            "",
+          ],
+          numyin:0,
+          numstore:0,
+          id:"",
         },
         {
           type:"期刊",
@@ -198,12 +199,13 @@ export default {
           institution:"北京航空航天大学",
           zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
           tags:[
-            "数学",
-            "物理",
-            "化学",
+            "",
+            "",
+            "",
           ],
           numyin:0,
           numstore:0,
+          id:"",
         },
         {
           type:"期刊",
@@ -213,12 +215,13 @@ export default {
           institution:"北京航空航天大学",
           zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
           tags:[
-            "数学",
-            "物理",
-            "化学",
+            "",
+            "",
+            "",
           ],
           numyin:0,
           numstore:0,
+          id:"",
         },
         {
           type:"期刊",
@@ -228,12 +231,13 @@ export default {
           institution:"北京航空航天大学",
           zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
           tags:[
-            "数学",
-            "物理",
-            "化学",
+            "",
+            "",
+            "",
           ],
           numyin:0,
           numstore:0,
+          id:"",
         },
         {
           type:"期刊",
@@ -243,12 +247,13 @@ export default {
           institution:"北京航空航天大学",
           zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
           tags:[
-            "数学",
-            "物理",
-            "化学",
+            "",
+            "",
+            "",
           ],
           numyin:0,
           numstore:0,
+          id:"",
         },
         {
           type:"期刊",
@@ -258,12 +263,13 @@ export default {
           institution:"北京航空航天大学",
           zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
           tags:[
-            "数学",
-            "物理",
-            "化学",
+            "",
+            "",
+            "",
           ],
           numyin:0,
           numstore:0,
+          id:"",
         },
         {
           type:"期刊",
@@ -273,12 +279,13 @@ export default {
           institution:"北京航空航天大学",
           zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
           tags:[
-            "数学",
-            "物理",
-            "化学",
+            "",
+            "",
+            "",
           ],
           numyin:0,
           numstore:0,
+          id:"",
         },
         {
           type:"期刊",
@@ -288,14 +295,15 @@ export default {
           institution:"北京航空航天大学",
           zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
           tags:[
-            "数学",
-            "物理",
-            "化学",
+            "",
+            "",
+            "",
           ],
           numyin:0,
           numstore:0,
-        },
-      ]
+          id:"",
+        }
+      ],
     }
   },
   methods:{
@@ -304,20 +312,76 @@ export default {
       }
   },
   created() {
+    var searchname1 = sessionStorage.getItem('search_name1');
+    var stdate = new Date();
+    console.log("now: ",stdate)
+    this.$axios({//注意是this.$axios
+      method:'post',
+      url:'/es/search/base',
+      data:{//post请求这里是data
+        conds:{
 
+        },
+        kind:"string",
+        page:1,
+        queryWord:searchname1,
+        size:8
+    }
+    }).then(
+        response =>{
+          var enddate = new Date();
+          console.log(enddate-stdate);
+          //console.log(response.data.res.hits.total.value);
+          this.total_page = response.data.res.hits.total.value;
+          //console.log(response.data.res.hits.hits.length);
+          var len = 0;
+          len = response.data.res.hits.hits.length;
+          this.num_exact_page = len;
+          //console.log(response.data.res.hits.hits);
+          for(var i=0;i<len;i++){
+            console.log(response.data.res.hits.hits[i]._source.authorships);
+            this.items[i].id = response.data.res.hits.hits[i]._id;
+            this.items[i].zhaiyao = response.data.res.hits.hits[i]._source.abstract;
+            if(this.items[i].zhaiyao.length>330){//处理一下过长的摘要
+              //console.log(this.items[i].zhaiyao);
+              this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0,330)+"...";
+            }
+            this.items[i].title = response.data.res.hits.hits[i]._source.title;
+            if(this.items[i].title.length>60){//处理一下过长的摘要
+              //console.log(this.items[i].zhaiyao);
+              this.items[i].title = this.items[i].title.substring(0,60)+"...";
+            }
+            //console.log(this.items[i].id);
+            if(response.data.res.hits.hits[i]._source.authorships.length!==0) {
+              this.items[i].author = response.data.res.hits.hits[i]._source.authorships[0].author.display_name;
+            }
+            else{
+              this.items[i].author = "unknown"
+            }
+            this.items[i].institution = response.data.res.hits.hits[i]._source.host_venue.display_name;
+            if(this.items[i].institution===null){
+              this.items[i].institution = "无所属机构";
+            }
+            if(this.items[i].institution.length>50){
+              //console.log(this.items[i].zhaiyao);
+              this.items[i].institution = this.items[i].institution.substring(0,50)+"...";
+            }
+            this.items[i].time = response.data.res.hits.hits[i]._source.publication_date;
+            for(var j=0;j<3&&j<response.data.res.hits.hits[i]._source.concepts.length;j++){
+              this.items[i].tags[j] = response.data.res.hits.hits[i]._source.concepts[j].display_name;
+            }
+            this.items[i].type =  response.data.res.hits.hits[i]._source.type;
+            if(this.items[i].type === null){
+              this.items[i].type = "undefined"
+            }
+          }
+        }
+    )
     if(this.total%4===0){
       this.total_page = this.total/8*10;
     }
     else{
       this.total_page = (this.total/8+1)*10;
-    }
-
-    this.num_exact_page = this.items.length;
-    var i;
-    for(i=0;i<this.num_exact_page;i++){
-      if(this.items[i].zhaiyao.length>100){//处理一下过长的摘要
-        this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0,100)+"...";
-      }
     }
   }
 }

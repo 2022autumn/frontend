@@ -20,11 +20,8 @@ export default {
       var stdate = new Date();
       console.log("now: ",stdate)
       this.$axios({
-        method:'post',
-        url:'/es/base_query',
-        params:{
-          query_word:"java"
-        }
+        method:'get',
+        url:'/es/get/W1678408692',
       }).then(
          response =>{
            console.log(response.data);

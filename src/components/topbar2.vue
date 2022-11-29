@@ -14,7 +14,7 @@
     <div style="position: absolute;width: 35vw;height:40px;left:53.5vw;top:0.6vh;">
         <el-input  placeholder="请输入内容" v-model="input3" class="input-with-select white--text"  >
         <el-button slot="prepend" icon="el-icon-s-promotion" style="color: #FCFCFF;background-color: rgba(117, 167, 235, 0.52);border-radius: 0;border-color: whitesmoke">高级检索</el-button>
-        <el-button slot="append" icon="el-icon-search" style="color: #FCFCFF;background-color: rgba(117, 167, 235, 0.52); border-radius: 0;border-color: whitesmoke"></el-button>
+        <el-button slot="append" icon="el-icon-search" style="color: #FCFCFF;background-color: rgba(117, 167, 235, 0.52); border-radius: 0;border-color: whitesmoke" @click="do_search"></el-button>
       </el-input>
     </div>
     <div style="position: absolute;height: 5vh;width: 100vw;top:5vh"><el-divider></el-divider></div>
@@ -45,6 +45,19 @@ export default {
       else if(ident===4){
         this.whichpage=4;
       }
+    },
+    do_search(){
+      console.log(this.input3);
+      sessionStorage.setItem('search_name1',this.input3);
+      window.location.reload();
+    }
+  },
+  created(){
+    if(sessionStorage.getItem('search_name1')===null){
+      this.input3 = '';
+    }
+    else{
+      this.input3 = sessionStorage.getItem('search_name1');
     }
   }
 }
