@@ -93,8 +93,8 @@
     </div>
 
     <!-- 下部内容页 -->
-    <div class="content-panel">
-      <el-row :gutter="10">
+    <div>
+      <el-row :gutter="10" class="content-panel">
 
         <!-- 左侧推荐文章栏 -->
         <el-col :span="17">
@@ -126,6 +126,16 @@
             <PaperItem></PaperItem>
             <PaperItem></PaperItem>
           </div>
+
+          <div class="pages">
+            <el-pagination
+                layout="prev, pager, next"
+                :total=this.total_page
+                @current-change="handlechange"
+                background="white"
+              >
+            </el-pagination>
+          </div>
         </el-col>
 
         <!-- 右侧导航栏 -->
@@ -152,21 +162,21 @@
               src="../../HomePage_svg/right-icon1.svg"
               style="vertical-align: middle;"
             />
-            <span style="vertical-align: text-top"> 学者主页 </span>
+            <span style="vertical-align: super"> 学者主页 </span>
           </div>
           <div class="right-item">
             <img
               src="../../HomePage_svg/right-icon2.svg"
               style="vertical-align: middle;"
             />
-            <span style="vertical-align: text-top"> 学术分析 </span>
+            <span style="vertical-align: super"> 学术分析 </span>
           </div>
           <div class="right-item">
             <img
               src="../../HomePage_svg/right-icon3.svg"
               style="vertical-align: middle;"
             />
-            <span style="vertical-align: text-top"> 期刊频道 </span>
+            <span style="vertical-align: super"> 期刊频道 </span>
           </div>
 
           <!-- 导航栏滚动框 -->
@@ -177,7 +187,7 @@
           </el-carousel>
 
           <!-- 导航栏热门排行 -->
-          <div class="hot-list" style="margin-top: 20px">
+          <div class="hot-list">
             <div class="hot-titile1">I SHARE</div>
             <div class="hot-titile2">热门排行</div>
             <div class="hot-item">
@@ -209,17 +219,28 @@
 
 <script>
 import Topbar1 from "@/components/topbar1";
-import PaperItem from "@/components/paperitem";
+import PaperItem from "@/components/paperItem";
 export default {
   components: {Topbar1, PaperItem},
   data(){
     return{
-      input1:""
+      input1:"",
+      num_exact_page:8,
+      total: 1000,//返回的检索结果的总量
+      total_page:0,
     }
   },
   methods:{
     j_search_outcome(){
        window.location.replace("/search_outcome");
+    }
+  },
+  created() {
+    if(this.total%4===0){
+      this.total_page = this.total/8*10;
+    }
+    else{
+      this.total_page = (this.total/8+1)*10;
     }
   }
 }
@@ -303,7 +324,7 @@ export default {
   font-style: normal;
 
   width: 100%;
-  height: 600px;
+  /* height: 600px; */
   background: linear-gradient(
     0deg,
     rgba(225, 233, 245, 0) 1.63%,
@@ -338,8 +359,9 @@ export default {
   color: #0a093d;
 }
 .right-item {
-  padding-left: 12%;
-  padding-right: 12%;
+  padding:0% 12%;
+  /* padding-left: 12%;
+  padding-right: 12%; */
 
   margin: auto;
   margin-bottom: 3vh;
@@ -375,9 +397,9 @@ export default {
   margin-top: 5vh;
   margin-bottom: 5vh;
   width: 80%;
-  height: 75vh;
+  height: 80vh;
 
-  background: rgba(215, 232, 255, 0.10);
+  background:#FFFFFF;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 14px;
 }
@@ -457,96 +479,16 @@ export default {
   text-align: center;
   letter-spacing: 0.01em;
 }
-.item {
-  margin: auto;
-  margin-left: 3%;
-  margin-bottom: 4vh;
-  padding: 1%;
-  width: 95%;
-  height: 28vh;
 
-  background: linear-gradient(250.39deg, #ffffff 10.13%, #ffffff 94%);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 11px;
-}
-.item-type {
-  margin: auto;
-  width: 4vw;
-  height: 4vh;
-  background: #217bf4;
-  box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
-  border-radius: 12px;
-
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 4vh;
+/* 翻页器 */
+.pages {
+  width: inherit;
   text-align: center;
-  letter-spacing: 0.01em;
-
-  color: #ffffff;
+  margin: 4vh auto;
 }
-.item-title {
-  float: left;
-  padding-top: 4px;
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 108%;
-  color: #2f2c4a;
-}
-.item-info {
-  /* text-align: left; */
-  vertical-align: top;
-  padding-left: 2%;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  width: 100%;
-
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 26px;
-  text-align: center;
-  color: rgba(96, 96, 96, 0.69);
-}
-.item-content {
-  width: auto;
-  /* margin: auto; */
-  padding-left: 15px;
-  padding-bottom: 8px;
-
-  align-items: center;
-  text-align: left;
-
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
-  color: rgba(96, 96, 96, 0.69);
-}
-.item-keyword {
-  margin: 10px;
-  width: 93px;
-  height: 30px;
-
-  background: rgba(99, 162, 247, 0.1);
-  font-weight: 700;
-  font-size: 13px;
-  line-height: 30px;
-
-  text-align: center;
-  letter-spacing: 0.01em;
-  border-radius: 14px;
-}
-.item-site {
-  float: right;
-  margin: 10px;
-  font-weight: 500;
-  font-size: 15px;
-  line-height: 14px;
-  /* identical to box height, or 93% */
-  text-align: center;
-  color: rgba(96, 96, 96, 0.69);
-}
-.item-placeholder {
-  opacity: 0;
-  width: 100%;
+.el-pagination.is-background .btn-next, 
+.el-pagination.is-background .btn-prev, 
+.el-pagination.is-background .el-pager li {
+  background-color: #fff; /*进行修改未选中背景和字体*/
 }
 </style>
