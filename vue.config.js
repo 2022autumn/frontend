@@ -8,6 +8,7 @@ module.exports = defineConfig({
       '/api': {   // 设置普通的http代理
         target: 'http://ishare.horik.cn',
         changeOrigin: true, // 允许跨域
+        ws: true, // 允许websocket跨域
         pathRewrite: {
           '^/api': '/api' // 重写路径
         }
