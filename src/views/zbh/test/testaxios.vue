@@ -12,7 +12,8 @@ import qs from "qs";
 export default {
   name: "testaxios",
   data(){
-
+    return {
+    }
   },
   methods:{
     test_axios(){
