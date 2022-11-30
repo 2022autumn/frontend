@@ -48,7 +48,10 @@ export default {
     },
     do_search(){
       console.log(this.input3);
+      var cond = {};
+      sessionStorage.setItem('Cond',JSON.stringify(cond));
       sessionStorage.setItem('search_name1',this.input3);
+      sessionStorage.setItem('now_page',JSON.stringify(1));
       window.location.reload();
     }
   },

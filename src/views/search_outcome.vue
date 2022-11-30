@@ -2,83 +2,61 @@
   <div class="all">
     <topbar2></topbar2>
     <div style="position: absolute;width:23.2vw;height: 88vh;left:5vw;top:11vh;">
-    <el-card class="box-card" style="position: absolute;width:22vw;height: 108vh;background-color: rgba(99, 162, 247, 0.15);" shadow="hover">
-      <img src="../img/Fill.svg" style="position: absolute;left:-0.5vw;top:1vh">
-      <img src="../img/Funnel.svg" style="position: absolute;left:1.25vw;top:3.4vh">
-      <div style="margin-left: 2.5vw"><b>排序条件</b></div>
-      <el-checkbox v-model="checked1"><b>按匹配程度递减</b></el-checkbox>
-      <el-checkbox v-model="checked2"><b>按被引用量递减</b></el-checkbox>
-      <el-checkbox v-model="checked3"><b>按发表时间递减</b></el-checkbox>
+    <el-card class="box-card" style="word-break:break-all;position:absolute; width:22vw;background-color: rgba(99, 162, 247, 0.15);" shadow="hover">
+      <!--<img src="../img/Fill.svg" style="position: absolute;left:-0.5vw;top:1vh">
+      <img src="../img/Funnel.svg" style="position: absolute;left:1.25vw;top:3.4vh">-->
+      <!--<div>
+      <div style=""><b>排序条件</b></div>
+      <el-checkbox-group v-model="checklist" :max="1">
+      <el-checkbox label="按匹配程度递减"><b>按匹配程度递减</b></el-checkbox>
+      <el-checkbox label="按被引用量递减"><b>按被引用量递减</b></el-checkbox>
+      <el-checkbox label="按发表时间递减"><b>按发表时间递减</b></el-checkbox>
+      </el-checkbox-group>
       <el-divider></el-divider>
-      <img src="../img/Fill.svg" style="position: absolute;left:-0.5vw;top:20vh">
-      <img src="../img/Vector.svg" style="position: absolute;left:1.4vw;top:22.3vh">
-      <div style="margin-left: 2.5vw"><b>发表年份</b></div>
-      <div>
-        <el-checkbox v-model="checked4">
-          <div style="width: 5vw;display: inline-block">
-            <el-input v-model="input1" placeholder="" size="mini"></el-input>
-          </div>
-          <div style="display: inline-block">
-            <b>&nbsp;年</b>
-          </div>
-        </el-checkbox>
+      </div>-->
+      <div v-if="this.if_authors===1">
+      <div style=""><b>主要作者</b></div>
+      <el-checkbox-group v-model="checklist_author" :max="1">
+      <el-checkbox v-for="item in this.authors"  :label=item.key><b>{{item.key}}</b></el-checkbox>
+      </el-checkbox-group>
+      <el-divider></el-divider>
       </div>
-      <div>
-        <el-checkbox v-model="checked5">
-          <div style="width: 5vw;display: inline-block">
-            <el-input v-model="input2" placeholder="" size="mini"></el-input>
-          </div>
-          <div style="display: inline-block">
-            <b>&nbsp;年&nbsp;&nbsp;~&nbsp;&nbsp;</b>
-          </div>
-          <div style="width: 5vw;display: inline-block">
-            <el-input v-model="input3" placeholder="" size="mini"></el-input>
-          </div>
-          <div style="display: inline-block">
-            <b>&nbsp;年</b>
-          </div>
-        </el-checkbox>
+      <div v-if="this.if_institutions===1">
+      <div style=""><b>主要组织</b></div>
+      <el-checkbox-group v-model="checklist_institutions" :max="1">
+        <el-checkbox v-for="item in this.institutions"  :label=item><b>{{item}}</b></el-checkbox>
+      </el-checkbox-group>
+      <el-divider></el-divider>
       </div>
-      <div>
-        <el-checkbox v-model="checked6">
-          <div style="width: 5vw;display: inline-block">
-            <el-input v-model="input4" placeholder="" size="mini"></el-input>
-          </div>
-          <div style="display: inline-block">
-            <b>&nbsp;年之前</b>
-          </div>
-        </el-checkbox>
+      <div v-if="this.if_publish_years===1">
+      <div style=""><b>发表年份</b></div>
+      <el-checkbox-group v-model="checklist_publish_years" :max="1">
+        <el-checkbox v-for="item in this.publish_years"  :label=item><b>{{item}}</b></el-checkbox>
+      </el-checkbox-group>
+      <el-divider></el-divider>
       </div>
+      <div v-if="if_publishers===1">
+      <div style=""><b>出版单位</b></div>
+      <el-checkbox-group v-model="checklist_publishers" :max="1">
+        <el-checkbox v-for="item in this.publishers"  :label=item><b>{{item}}</b></el-checkbox>
+      </el-checkbox-group>
       <el-divider></el-divider>
-      <img src="../img/Fill.svg" style="position: absolute;left:-0.5vw;top:41vh">
-      <img src="../img/wenhao.svg" style="position: absolute;left:1.4vw;top:43.2vh">
-      <div style="margin-left: 2.5vw"><b>文献类型</b></div>
-      <el-checkbox v-model="checked7"><b>学术期刊</b></el-checkbox>
-      <el-checkbox v-model="checked8"><b>学位论文</b></el-checkbox>
-      <el-checkbox v-model="checked9"><b>会议</b></el-checkbox>
-      <el-checkbox v-model="checked10"><b>图书</b></el-checkbox>
-      <el-checkbox v-model="checked11"><b>报纸</b></el-checkbox>
+      </div>
+      <div v-if="if_types===1">
+      <div style=""><b>论文类型</b></div>
+      <el-checkbox-group v-model="checklist_types" :max="1">
+        <el-checkbox v-for="item in this.types"  :label=item><b>{{item}}</b></el-checkbox>
+      </el-checkbox-group>
       <el-divider></el-divider>
-      <img src="../img/Fill.svg" style="position: absolute;left:-0.5vw;top:57vh">
-      <img src="../img/star.svg" style="position: absolute;left:1.4vw;top:59.4vh">
-      <div style="margin-left: 2.5vw"><b>关键词</b></div>
-      <el-checkbox v-model="checked12"><b>关键词一</b></el-checkbox>
-      <el-checkbox v-model="checked13"><b>关键词二</b></el-checkbox>
-      <el-checkbox v-model="checked14"><b>关键词三</b></el-checkbox>
+      </div>
+      <div v-if="if_venues===1">
+      <div style=""><b>Venues</b></div>
+      <el-checkbox-group v-model="checklist_venues" :max="1">
+        <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all"><b>{{item}}</b></el-checkbox>
+      </el-checkbox-group>
       <el-divider></el-divider>
-      <img src="../img/Fill.svg" style="position: absolute;left:-0.5vw;top:73vh">
-      <img src="../img/jigou.svg" style="position: absolute;left:1.4vw;top:75.4vh">
-      <div style="margin-left: 2.5vw"><b>机构</b></div>
-      <el-checkbox v-model="checked15"><b>高校</b></el-checkbox>
-      <el-checkbox v-model="checked16"><b>研究所</b></el-checkbox>
-      <el-checkbox v-model="checked17"><b>企业</b></el-checkbox>
-      <el-divider></el-divider>
-      <div style="margin-left: 2.5vw"><b>领域</b></div>
-      <el-checkbox v-model="checked18"><b>相关领域一</b></el-checkbox>
-      <el-checkbox v-model="checked19"><b>相关领域二</b></el-checkbox>
-      <el-checkbox v-model="checked20"><b>相关领域三</b></el-checkbox>
-      <el-divider></el-divider>
-      <div style="margin-left: 6.5vw;margin-top: -2vh"><v-btn style="background-color: #217BF4;" class="white--text">确认</v-btn></div>
+      </div>
+      <div style="margin-left: 6.5vw;margin-top: -2vh"><v-btn style="background-color: #217BF4;" class="white--text" @click="shaixuan">确认</v-btn></div>
     </el-card>
     </div>
     <div style="position:absolute;left:40vw;height: 88vh;top:11vh;width: 50vw;">
@@ -130,6 +108,7 @@
             layout="prev, pager, next"
             :total=this.total_page
             @current-change="handlechange"
+            :current-page= this.now_page
             background
           >
         </el-pagination>
@@ -146,31 +125,25 @@ export default {
   components: {Topbar2, Topbar1},
   data(){
     return{
+      checklist:[],
+      checklist_author:[],
+      checklist_institutions:[],
+      checklist_publish_years:[],
+      checklist_publishers:[],
+      checklist_types:[],
+      checklist_venues:[],
+      radio:3,
+      activeNames: ['1'],
       checked1:false,
       checked2:false,
       checked3:false,
-      checked4:false,
-      checked5:false,
-      checked6:false,
-      checked7:false,
-      checked8:false,
-      checked9:false,
-      checked10:false,
-      checked11:false,
-      checked12:false,
-      checked13:false,
-      checked14:false,
-      checked15:false,
-      checked16:false,
-      checked17:false,
-      checked18:false,
-      checked19:false,
-      checked20:false,
+      checkedauthor:[],
       input1:"",
       input2:"",
       input3:"",
       input4:"",
       input5:"",
+      now_page:1,
       num_exact_page:8,
       total: 0,//返回的检索结果的总量
       total_page:0,
@@ -304,85 +277,175 @@ export default {
           id:"",
         }
       ],
+      authors:[],
+      institutions:[],
+      publish_years:[],
+      publishers:[],
+      types:[],
+      venues:[],
+      tmp:0,
+      if_authors:0,
+      if_institutions:0,
+      if_publish_years:0,
+      if_publishers:0,
+      if_types:0,
+      if_venues:0,
     }
   },
   methods:{
+    shaixuan(){
+       console.log(this.checklist_author[0]);
+       var conds = {};
+       conds.author = this.checklist_author[0];
+       conds.type = this.checklist_types[0];
+       conds.institution = this.checklist_institutions[0];
+       conds.publisher = this.checklist_publishers[0];
+       conds.venue = this.checklist_venues[0];
+       conds.publication_year = this.checklist_publish_years[0];
+       console.log(conds);
+       sessionStorage.setItem('Cond',JSON.stringify(conds));
+      window.location.reload();
+    },
       handlechange(page){//处理跳转，page为当前选中的页面
-        //alert(page);
+        sessionStorage.setItem('now_page',JSON.stringify(page));
+        this.search();
+      },
+      search(){
+        var cond = JSON.parse(sessionStorage.getItem('Cond'));
+        console.log(cond);
+        var searchname1 = sessionStorage.getItem('search_name1');
+        var page = JSON.parse(sessionStorage.getItem('now_page'));
+        console.log(this.conds);
+        this.$axios({//注意是this.$axios
+          method:'post',
+          url:'/es/search/base',
+          data:{//post请求这里是data
+            conds:cond,
+            kind:"string",
+            page:page,
+            queryWord:searchname1,
+            size:8
+          }
+        }).then(
+            response =>{
+              //console.log(response.data.res.hits.total.value);
+              this.total_page = response.data.res.Hits/8*10;
+              this.tmp = response.data.res.Hits;
+              //console.log(response.data.res.hits.hits.length);
+              console.log(response.data.res.Aggs
+              );
+              if(response.data.res.Aggs.authors!==undefined) {
+                var author_len = response.data.res.Aggs.authors.length;
+                if(author_len>0){
+                  this.if_authors=1;
+                }
+                for (var i = 0; i < author_len && i < 5; i++) {
+                  var obj = {};
+                  obj.key = response.data.res.Aggs.authors[i].key;
+                  obj.ifchoose = false;
+                  this.authors.push(obj);
+                }
+              }
+              if(response.data.res.Aggs.institutions!==undefined) {
+                var institution_len = response.data.res.Aggs.institutions.length;
+                if(institution_len>0){
+                  this.if_institutions=1;
+                }
+                for (var i = 0; i < institution_len && i < 5; i++) {
+                  this.institutions[i] = response.data.res.Aggs.institutions [i].key;
+                }
+              }
+              if(response.data.res.Aggs.publication_years!==undefined) {
+                var year_len = response.data.res.Aggs.publication_years.length;
+                if(year_len>0){
+                  this.if_publish_years = 1;
+                }
+                for (var i = 0; i < year_len && i < 5; i++) {
+                  this.publish_years[i] = response.data.res.Aggs.publication_years [i].key;
+                }
+              }
+              if(response.data.res.Aggs.publishers!==undefined) {
+                var publisher_len = response.data.res.Aggs.publishers.length;
+                if(publisher_len>0){
+                  this.if_publishers=1;
+                }
+                for (var i = 0; i < publisher_len && i < 5; i++) {
+                  this.publishers[i] = response.data.res.Aggs.publishers [i].key;
+                }
+              }
+              if(response.data.res.Aggs.venues!==undefined) {
+                var venues_len = response.data.res.Aggs.venues.length;
+                if(venues_len>0){
+                  this.if_venues = 1;
+                }
+                for (var i = 0; i < venues_len && i < 5; i++) {
+                  this.venues[i] = response.data.res.Aggs.venues [i].key;
+                }
+              }
+              if(response.data.res.Aggs.types!==undefined) {
+                var types_len = response.data.res.Aggs.types.length;
+                if(types_len>0){
+                  this.if_types=1;
+                }
+                for (var i = 0; i < types_len && i < 5; i++) {
+                  this.types[i] = response.data.res.Aggs.types [i].key;
+                }
+              }
+              var len = 0;
+              len = response.data.res.Works.length;
+              this.num_exact_page = len;
+              //console.log(response.data.res.hits.hits);
+              for(var i=0;i<len;i++){
+                //console.log(response.data.res.Works);
+                this.items[i].id = response.data.res.Works[i].id;
+                this.items[i].zhaiyao = response.data.res.Works[i].abstract;
+                if(this.items[i].zhaiyao.length>330){//处理一下过长的摘要
+                  //console.log(this.items[i].zhaiyao);
+                  this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0,330)+"...";
+                }
+                this.items[i].title = response.data.res.Works[i].title;
+                if(this.items[i].title.length>50){//处理一下过长的摘要
+                  //console.log(this.items[i].zhaiyao);
+                  this.items[i].title = this.items[i].title.substring(0,50)+"...";
+                }
+                //console.log(this.items[i].id);
+                if(response.data.res.Works[i].authorships.length!==0) {
+                  this.items[i].author = response.data.res.Works[i].authorships[0].author.display_name;
+                }
+                else{
+                  this.items[i].author = "unknown"
+                }
+                this.items[i].institution = response.data.res.Works[i].host_venue.display_name;
+                if(this.items[i].institution===null){
+                  this.items[i].institution = "无所属机构";
+                }
+                if(this.items[i].institution.length>50){
+                  //console.log(this.items[i].zhaiyao);
+                  this.items[i].institution = this.items[i].institution.substring(0,50)+"...";
+                }
+                this.items[i].time = response.data.res.Works[i].publication_date;
+                for(var j=0;j<3&&j<response.data.res.Works[i].concepts.length;j++){
+                  this.items[i].tags[j] = response.data.res.Works[i].concepts[j].display_name;
+                }
+                this.items[i].type =  response.data.res.Works[i].type;
+                if(this.items[i].type === null){
+                  this.items[i].type = "undefined"
+                }
+              }
+            }
+        )
       }
   },
   created() {
-    var searchname1 = sessionStorage.getItem('search_name1');
-    var stdate = new Date();
-    console.log("now: ",stdate)
-    this.$axios({//注意是this.$axios
-      method:'post',
-      url:'/es/search/base',
-      data:{//post请求这里是data
-        conds:{
-
-        },
-        kind:"string",
-        page:1,
-        queryWord:searchname1,
-        size:8
-    }
-    }).then(
-        response =>{
-          var enddate = new Date();
-          console.log(enddate-stdate);
-          //console.log(response.data.res.hits.total.value);
-          this.total_page = response.data.res.hits.total.value;
-          //console.log(response.data.res.hits.hits.length);
-          var len = 0;
-          len = response.data.res.hits.hits.length;
-          this.num_exact_page = len;
-          //console.log(response.data.res.hits.hits);
-          for(var i=0;i<len;i++){
-            console.log(response.data.res.hits.hits[i]._source.authorships);
-            this.items[i].id = response.data.res.hits.hits[i]._id;
-            this.items[i].zhaiyao = response.data.res.hits.hits[i]._source.abstract;
-            if(this.items[i].zhaiyao.length>330){//处理一下过长的摘要
-              //console.log(this.items[i].zhaiyao);
-              this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0,330)+"...";
-            }
-            this.items[i].title = response.data.res.hits.hits[i]._source.title;
-            if(this.items[i].title.length>60){//处理一下过长的摘要
-              //console.log(this.items[i].zhaiyao);
-              this.items[i].title = this.items[i].title.substring(0,60)+"...";
-            }
-            //console.log(this.items[i].id);
-            if(response.data.res.hits.hits[i]._source.authorships.length!==0) {
-              this.items[i].author = response.data.res.hits.hits[i]._source.authorships[0].author.display_name;
-            }
-            else{
-              this.items[i].author = "unknown"
-            }
-            this.items[i].institution = response.data.res.hits.hits[i]._source.host_venue.display_name;
-            if(this.items[i].institution===null){
-              this.items[i].institution = "无所属机构";
-            }
-            if(this.items[i].institution.length>50){
-              //console.log(this.items[i].zhaiyao);
-              this.items[i].institution = this.items[i].institution.substring(0,50)+"...";
-            }
-            this.items[i].time = response.data.res.hits.hits[i]._source.publication_date;
-            for(var j=0;j<3&&j<response.data.res.hits.hits[i]._source.concepts.length;j++){
-              this.items[i].tags[j] = response.data.res.hits.hits[i]._source.concepts[j].display_name;
-            }
-            this.items[i].type =  response.data.res.hits.hits[i]._source.type;
-            if(this.items[i].type === null){
-              this.items[i].type = "undefined"
-            }
-          }
-        }
-    )
-    if(this.total%4===0){
+    this.conds = JSON.parse(sessionStorage.getItem('Cond'));
+    this.now_page = JSON.parse(sessionStorage.getItem('now_page'));
+    this.search();
+    /*if(this.total%4===0){
       this.total_page = this.total/8*10;
     }
     else{
       this.total_page = (this.total/8+1)*10;
-    }
+    }*/
   }
 }
 </script>
