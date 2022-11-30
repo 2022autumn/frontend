@@ -16,12 +16,24 @@ export default {
   },
   methods:{
     test_axios(){
+      console.log("test_ping");
+      this.$axios({
+        method: 'get',
+        url: '/test',
+      }).then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        console.log(err);
+      });
       console.log("testaxios")
       var stdate = new Date();
       console.log("now: ",stdate)
       this.$axios({
         method:'get',
-        url:'/es/get/W1678408692',
+        url:'/es/get',
+        params:{
+          "id": "W1678408692"
+        },
       }).then(
          response =>{
            console.log(response.data);
