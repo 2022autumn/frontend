@@ -14,42 +14,42 @@
       </el-checkbox-group>
       <el-divider></el-divider>
       </div>-->
-      <div v-if="this.if_authors===1">
+      <div v-if="this.authors.length>0">
       <div style=""><b>主要作者</b></div>
       <el-checkbox-group v-model="checklist_author" :max="1">
       <el-checkbox v-for="item in this.authors"  :label=item.key><b>{{item.key}}</b></el-checkbox>
       </el-checkbox-group>
       <el-divider></el-divider>
       </div>
-      <div v-if="this.if_institutions===1">
+      <div v-if="this.institutions.length>0">
       <div style=""><b>主要组织</b></div>
       <el-checkbox-group v-model="checklist_institutions" :max="1">
         <el-checkbox v-for="item in this.institutions"  :label=item><b>{{item}}</b></el-checkbox>
       </el-checkbox-group>
       <el-divider></el-divider>
       </div>
-      <div v-if="this.if_publish_years===1">
+      <div v-if="this.publish_years.length>0">
       <div style=""><b>发表年份</b></div>
       <el-checkbox-group v-model="checklist_publish_years" :max="1">
         <el-checkbox v-for="item in this.publish_years"  :label=item><b>{{item}}</b></el-checkbox>
       </el-checkbox-group>
       <el-divider></el-divider>
       </div>
-      <div v-if="if_publishers===1">
+      <div v-if="this.publishers.length>0">
       <div style=""><b>出版单位</b></div>
       <el-checkbox-group v-model="checklist_publishers" :max="1">
         <el-checkbox v-for="item in this.publishers"  :label=item><b>{{item}}</b></el-checkbox>
       </el-checkbox-group>
       <el-divider></el-divider>
       </div>
-      <div v-if="if_types===1">
+      <div v-if="this.types.length>0">
       <div style=""><b>论文类型</b></div>
       <el-checkbox-group v-model="checklist_types" :max="1">
         <el-checkbox v-for="item in this.types"  :label=item><b>{{item}}</b></el-checkbox>
       </el-checkbox-group>
       <el-divider></el-divider>
       </div>
-      <div v-if="if_venues===1">
+      <div v-if="this.venues.length>0">
       <div style=""><b>Venues</b></div>
       <el-checkbox-group v-model="checklist_venues" :max="1">
         <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all"><b>{{item}}</b></el-checkbox>
@@ -296,15 +296,29 @@ export default {
     shaixuan(){
        console.log(this.checklist_author[0]);
        var conds = {};
-       conds.author = this.checklist_author[0];
-       conds.type = this.checklist_types[0];
-       conds.institution = this.checklist_institutions[0];
-       conds.publisher = this.checklist_publishers[0];
-       conds.venue = this.checklist_venues[0];
-       conds.publication_year = this.checklist_publish_years[0];
+       conds = JSON.parse(sessionStorage.getItem('Cond'));
+       if(conds.author===undefined) {
+         conds.author = this.checklist_author[0];
+       }
+       if(conds.type===undefined) {
+         conds.type = this.checklist_types[0];
+       }
+       if(conds.institution===undefined) {
+         conds.institution = this.checklist_institutions[0];
+       }
+       if(conds.publisher===undefined) {
+         conds.publisher = this.checklist_publishers[0];
+       }
+       if(conds.venue===undefined) {
+         conds.venue = this.checklist_venues[0];
+       }
+       if(conds.publication_year===undefined) {
+         conds.publication_year = this.checklist_publish_years[0];
+       }
        console.log(conds);
        sessionStorage.setItem('Cond',JSON.stringify(conds));
-      window.location.reload();
+       this.search();
+       //window.location.reload();
     },
       handlechange(page){//处理跳转，page为当前选中的页面
         sessionStorage.setItem('now_page',JSON.stringify(page));
@@ -334,6 +348,7 @@ export default {
               //console.log(response.data.res.hits.hits.length);
               console.log(response.data.res.Aggs
               );
+              this.authors.length=0;
               if(response.data.res.Aggs.authors!==undefined) {
                 var author_len = response.data.res.Aggs.authors.length;
                 if(author_len>0){
@@ -346,6 +361,7 @@ export default {
                   this.authors.push(obj);
                 }
               }
+              this.institutions.length=0;
               if(response.data.res.Aggs.institutions!==undefined) {
                 var institution_len = response.data.res.Aggs.institutions.length;
                 if(institution_len>0){
@@ -355,6 +371,7 @@ export default {
                   this.institutions[i] = response.data.res.Aggs.institutions [i].key;
                 }
               }
+              this.publish_years.length=0;
               if(response.data.res.Aggs.publication_years!==undefined) {
                 var year_len = response.data.res.Aggs.publication_years.length;
                 if(year_len>0){
@@ -364,6 +381,7 @@ export default {
                   this.publish_years[i] = response.data.res.Aggs.publication_years [i].key;
                 }
               }
+              this.publishers.length=0;
               if(response.data.res.Aggs.publishers!==undefined) {
                 var publisher_len = response.data.res.Aggs.publishers.length;
                 if(publisher_len>0){
@@ -373,6 +391,7 @@ export default {
                   this.publishers[i] = response.data.res.Aggs.publishers [i].key;
                 }
               }
+              this.venues.length=0;
               if(response.data.res.Aggs.venues!==undefined) {
                 var venues_len = response.data.res.Aggs.venues.length;
                 if(venues_len>0){
@@ -382,6 +401,7 @@ export default {
                   this.venues[i] = response.data.res.Aggs.venues [i].key;
                 }
               }
+              this.types.length=0;
               if(response.data.res.Aggs.types!==undefined) {
                 var types_len = response.data.res.Aggs.types.length;
                 if(types_len>0){
@@ -434,6 +454,7 @@ export default {
               }
             }
         )
+        window.scrollTo(0,0);//返回顶部
       }
   },
   created() {

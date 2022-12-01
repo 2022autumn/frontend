@@ -232,7 +232,13 @@ export default {
   },
   methods:{
     j_search_outcome(){
-       window.location.replace("/search_outcome");
+      console.log(this.input1);
+      var cond = {};
+      sessionStorage.setItem('Cond',JSON.stringify(cond));
+      sessionStorage.setItem('search_name1',this.input1);
+      sessionStorage.setItem('now_page',JSON.stringify(1));
+      window.open('/search_outcome');
+       //window.location.replace("/search_outcome");
     }
   },
   created() {
@@ -486,8 +492,8 @@ export default {
   text-align: center;
   margin: 4vh auto;
 }
-.el-pagination.is-background .btn-next, 
-.el-pagination.is-background .btn-prev, 
+.el-pagination.is-background .btn-next,
+.el-pagination.is-background .btn-prev,
 .el-pagination.is-background .el-pager li {
   background-color: #fff; /*进行修改未选中背景和字体*/
 }
