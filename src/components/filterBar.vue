@@ -1,21 +1,38 @@
 <template>
     <div style="z-index: 9999">
         <el-row style="margin-top: 20px; margin-left: 10%;margin-right: 10%">
-            <el-col :span="4">
+            <!--<el-col :span="4">
                 <div style="margin-top: 10px; margin-left: 5%">
-                    <el-dropdown>
+                    <el-dropdown @command = "handleCommand" >
                         <el-button class="logic-button" type="primary">
                             AND
                             <i class="el-icon-arrow-down el-icon--right">
                             </i>
                         </el-button>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>OR</el-dropdown-item>
-                            <el-dropdown-item>NOT</el-dropdown-item>
+                            <el-dropdown-item command="2">OR</el-dropdown-item>
+                            <el-dropdown-item command="3">NOT</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
                 </div>
-            </el-col>
+            </el-col>-->
+          <el-col :span="3">
+            <div style="margin-top: 10px; margin-left: 10%">
+              <el-select v-model="value1" placeholder="AND">
+                <el-option
+                    v-for="item in options1"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                </el-option>
+              </el-select>
+            </div>
+          </el-col>
+          <el-col :span="1">
+            <div class="box-word" >
+              
+            </div>
+          </el-col>
             <el-col :span="13">
                 <div style="margin-top: 10px; ">
                     <el-input v-model="input" placeholder="请输入该条目查询内容"></el-input>
@@ -26,7 +43,7 @@
                     in
                 </div>
             </el-col>
-            <el-col :span="5">
+            <el-col :span="6">
                 <div style="margin-top: 10px; margin-left: 10%">
                     <el-select v-model="value" placeholder="请选择搜索条目" >
                         <el-option
@@ -38,9 +55,9 @@
                     </el-select>
                 </div>
             </el-col>
-            <el-col :span="1">
-                <i class="el-icon-delete" style="margin-top: 70%;margin-left: 70%;color:darkgray"></i>
-            </el-col>
+            <!--<el-col :span="1">
+                <i class="el-icon-delete" style="margin-top: 70%;margin-left: 70%;color:darkgray" ></i>
+            </el-col>-->
         </el-row>
     </div>
 
@@ -51,32 +68,51 @@ export default {
   name: "filterBar",
   data() {
     return {
+        input:"",
+        logicstate:1,
         options: [{
-          value: '选项1',
-          label: '作者'
+          value: 'title',
+          label: 'title'
         }, {
-          value: '选项2',
-          label: '标题'
+          value: 'abstract',
+          label: 'abstract'
         }, {
-          value: '选项3',
-          label: '关键字'
+          value: 'venue',
+          label: 'venue'
         }, {
-          value: '选项4',
-          label: '摘要'
+          value: 'publisher',
+          label: 'publisher'
         }, {
-          value: '选项5',
-          label: '作者单位'
-        }, {
-          value: '选项6',
-          label: 'DOI'
-        }],
-        value: ''
+          value: 'author',
+          label: 'author'
+        },{
+          value: 'institution',
+          label: 'institution'
+        },
+          {
+            value: 'concept',
+            label: 'concept'
+          }],
+        options1:[
+          {
+            value: 'and',
+            label: 'AND'
+          }, {
+            value: 'or',
+            label: 'OR'
+          }, {
+            value: 'not',
+            label: 'NOT'
+          },
+        ],
+        value: '',
+        value1:''
     };
   },
   methods: {
     handleClick() {
         alert('button click');
-      }
+      },
   },
 }
 </script>

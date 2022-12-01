@@ -24,18 +24,18 @@
                             搜索内容
                     </div>
                     <div>
-                        <FilterBar/>
+                        <FilterBar ref="bar1"/>
                     </div>
                     <div>
-                        <FilterBar/>
+                        <FilterBar ref="bar2"/>
                     </div>
                     <div>
-                        <FilterBar/>
+                        <FilterBar ref="bar3"/>
                     </div>
                     <div class="box-word" style="margin-top: 4%;margin-left: 6%;">
                             设定时间范围
                     </div>
-                    <div style="margin-left: 15%;margin-top: 3%;">
+                    <!--<div style="margin-left: 15%;margin-top: 3%;">
                         <el-checkbox v-model="checked4">
                             <div style="display: inline-block;font-size:15px;">
                                 <b>&nbsp;&nbsp&nbsp最早发表时间&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
@@ -105,9 +105,9 @@
                         </el-checkbox>
                     </div>
                     <div>&nbsp;</div>
-                    <div>&nbsp;</div>
+                    <div>&nbsp;</div>-->
                     <div>
-                        <el-button  style="display:block;margin:0 auto" class="search-button">搜索</el-button>
+                        <el-button  style="display:block;margin:0 auto" class="search-button" @click="search">搜索</el-button>
                     </div>
 
                 </div>
@@ -145,13 +145,44 @@ export default {
           value: '选项5',
           label: 'DOI'
         }],
-        value: ''
+        value: '',
+        query:[],
     };
   },
   methods: {
     handleClick() {
         alert('button click');
-      }
+      },
+    search(){
+      var cond = {};
+      sessionStorage.setItem('Cond',JSON.stringify(cond));
+      sessionStorage.setItem('now_page',JSON.stringify(1));
+      //console.log(this.$refs.bar1.value1);
+      //console.log(this.$refs.bar1.input);
+      //console.log(this.$refs.bar1.value);
+      var case1 = {};
+      case1.field = this.$refs.bar1.value;
+      case1.content = this.$refs.bar1.input;
+      case1.logic = this.$refs.bar1.value1;
+      //console.log(case1);
+      var case2 = {};
+      case2.field = this.$refs.bar2.value;
+      case2.content = this.$refs.bar2.input;
+      case2.logic = this.$refs.bar2.value1;
+      //console.log(case2);
+      var case3 = {};
+      case3.field = this.$refs.bar3.value;
+      case3.content = this.$refs.bar3.input;
+      case3.logic = this.$refs.bar3.value1;
+     // console.log(case3);
+      this.query.length=0;
+      this.query.push(case1);
+      this.query.push(case2);
+      this.query.push(case3);
+      console.log(this.query);
+      sessionStorage.setItem('query',JSON.stringify(this.query));
+      window.open('/advanced_outcome');
+    }
   },
   // 挂载时获取
   mounted() {

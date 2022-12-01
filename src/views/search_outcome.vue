@@ -290,6 +290,7 @@ export default {
       if_publishers:0,
       if_types:0,
       if_venues:0,
+      query:[],
     }
   },
   methods:{
@@ -342,6 +343,7 @@ export default {
           }
         }).then(
             response =>{
+              console.log(response.data.res);
               //console.log(response.data.res.hits.total.value);
               this.total_page = response.data.res.Hits/8*10;
               this.tmp = response.data.res.Hits;
