@@ -1,15 +1,19 @@
 <template>
   <div class="scholar_p1">
     <img class="scholar_img" src="../../assets/scholar_avator.svg">
-    <span class="scholar_name">
-        scholar
-    </span>
-    <span class="scholar_institution">
-        所属机构的名字
-    </span>
+<!--    <span class="scholar_name">-->
+<!--        {{scholarInfo.display_name}}-->
+<!--    </span>-->
+<!--    <span class="scholar_institution">-->
+<!--        {{scholarInfo.last_known_institution}}-->
+<!--    </span>-->
     <span class="follow">
-      <el-button class="follow_btn">
-        + FOLLOW
+      <el-button
+          @click="follow"
+          class="follow_btn"
+          :style="{backgroundColor:bg_color, color: ft_color,}"
+          @mouseenter="change" @mouseleave="goback">
+        {{followContent}}
       </el-button>
     </span>
   </div>
@@ -17,9 +21,50 @@
 <script>
 export default {
   name: "scholar_p1",
+  props: {
+    scholarInfo: {
+      type: Object
+    }
+  },
   data() {
     return {
+      isFollow: false,
+      followContent: "+ FOLLOW",
+      followContent1: "+ FOLLOW",
+      followContent2: "√ FOLLWED",
+      bg_color: "#E6EEFF",
+      ft_color: "#0352FF",
+    }
+  },
+  methods: {
+    follow() {
+      this.liked=!this.liked;
+      if(this.liked){
+        this.content="已关注";
+        this.bg_color="#0352FF";
+        this.ft_color="#E6EEFF";
+      }
 
+      else{
+        this.content="+关注"
+        this.bg_color="#E6EEFF";
+        this.ft_color="#0352FF";
+
+      }
+    },
+    change() {
+      this.bg_color="#0352FF";
+      this.ft_color="#E6EEFF";
+    },
+    goback(){
+      if(this.isFollow){
+        this.bg_color="#0352FF";
+        this.ft_color="#E6EEFF";
+      }
+      else{
+        this.bg_color="#E6EEFF";
+        this.ft_color="#0352FF";
+      }
     }
   }
 }
@@ -65,7 +110,6 @@ export default {
   height: 28px;
   margin-top: 18px;
   padding-left: 10px;
-  background: #E6EEFF;
   border-radius: 4px;
   font-family: 'Poppins';
   font-style: normal;
@@ -74,7 +118,6 @@ export default {
   line-height: 5px;
   letter-spacing: 0.04em;
   text-align: center;
-  color: #0352FF;
   justify-content: center;
 }
 </style>

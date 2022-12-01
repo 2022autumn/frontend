@@ -143,6 +143,12 @@ export default {
   name: "paperDetails",
   data() {
     return {
+      paper: {
+        paperTitle: "",
+        paperFrom: "",
+        paperUnit: "",
+      }
+
 
     };
   },
@@ -158,6 +164,29 @@ export default {
   // 挂载时获取
   mounted() {
   },
+  getPapaerDetail() {
+    let that = this;
+    that.$axios({//注意是this.$axios
+      method:'get',
+      url:'/es/get',
+      params:{//get请求这里是params
+        id:"W1678408692"
+      }
+      }).then(
+            response =>{
+              console.log(response.data);
+            }
+        )
+  },
+  getCommentList() {
+
+  },
+  replyComment() {
+
+  },
+  pushComment() {
+
+  }
 };
 </script>
 <style lang="scss" scoped>

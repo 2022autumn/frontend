@@ -1,13 +1,18 @@
 <template>
   <div class="p1">
     <div class="v1">
-      <scholar_p1 />
+      <scholar_p1
+      :scholarInfo="scholarInfo"/>
     </div>
     <div class="v2">
-      <scholar_p2 />
+      <scholar_p2
+      :scholarInfo="scholarInfo"
+      :areas="areas"/>
     </div>
     <div class="v3">
-      <scholar_p3 />
+      <scholar_p3
+      :scholarInfo="scholarInfo"
+      :domain-list="scholarInfo.x_concepts"/>
     </div>
   </div>
 
@@ -17,7 +22,13 @@ import Scholar_p1 from "@/components/ScholarInfo/scholar_p1";
 import Scholar_p2 from "@/components/ScholarInfo/scholar_p2";
 import Scholar_p3 from "@/components/ScholarInfo/scholar_p3";
 export default {
-  components: {Scholar_p3, Scholar_p2, Scholar_p1}
+  components: {Scholar_p3, Scholar_p2, Scholar_p1},
+  props: {
+    scholarInfo: {
+      type: Object
+    },
+    areas: ""
+  }
 }
 </script>
 <style>

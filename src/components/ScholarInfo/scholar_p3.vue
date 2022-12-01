@@ -3,12 +3,12 @@
     <div class="scholar_count">
       <div class="block b1">
         <span class="tit">发表数</span>
-        <span class="num">216</span>
+        <span class="num">{{scholarInfo.works_count}}</span>
       </div>
       <div class="divide"></div>
       <div class="block b2">
         <span class="tit">被引用量</span>
-        <span class="num">5124</span>
+        <span class="num">{{ scholarInfo.cited_by_count }}</span>
       </div>
     </div>
     <div class="history">
@@ -23,46 +23,62 @@
         <div class="domain_boxs" v-for="(item,index) in domainList" :key="index">
           <div class="domain-box">
 <!--            <img src="../../assets/label.png" class="label">-->
-            <div class="domain">{{ item }}</div>
+            <div class="domain">{{ item.display_name }}</div>
           </div>
         </div>
       </div>
     </div>
     <div class="scholar_buttons">
       <span>
-        <el-button
-            class="buttons mag_button"
-              icon="el-icon-my-mag">
-          mag
-        </el-button>
-        <el-button class="buttons orcid_button"
+        <el-button v-if="'orcid' in scholarInfo.ids"
+            class="buttons orcid_button"
                    icon="el-icon-my-orcid">
-          orcid
+          <a
+              :href=scholarInfo.ids.orcid
+              target="_blank"
+              style="color: black;text-decoration-line: none">orcid</a>
         </el-button>
-        <el-button class="buttons openalex_button"
+        <el-button v-if="'scopus' in scholarInfo.ids"
+            class="buttons openalex_button"
                    icon="el-icon-my-openalex">
-          openalex
+          <a
+              :href=scholarInfo.ids.scopus
+              target="_blank"
+              style="color: black;text-decoration-line: none">scopus</a>
         </el-button>
       </span>
     </div>
   </div>
 </template>
 <script>
+import * as echarts from "echarts";
+
 export default {
   name: "scholar_p3",
+  props: {
+    scholarInfo: {
+      type: Object
+    },
+    domainList: []
+  },
   data() {
-    return {
-      domainList: [
-          "带通滤波器",
-          "谐振器滤波器",
-          "传递函数",
-          "SLAM(机器人)",
-          "UHF滤波器",
-          "图论",
-          "卷积神经网络",
-          "微波滤波器"
+    var option = {
+      xAxis: {
+        data: [ '', '', '', '', '', '', '', '', '', '']
+      },
+      yAxis: {},
+      series: [
+        {
+          type: 'bar',
+          data: [0, 0, 0, 0, 0, 0, 0]
+        }
       ]
+    };
+    return {
+      option,
     }
+  },
+  created() {
   }
 }
 </script>
@@ -158,11 +174,14 @@ export default {
 .domain_set {
   display: flex;
   width: 400px;
+  height: 163px;
+  overflow-y: auto;
   padding-top: 17px;
   flex-wrap: wrap;
 }
 .domain_boxs {
   display: flex;
+  max-height: 153px;
   padding-top: 10px;
   padding-left: 12px;
   flex-wrap: wrap;
