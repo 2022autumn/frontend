@@ -12,7 +12,8 @@
     <div class="v3">
       <scholar_p3
       :scholarInfo="scholarInfo"
-      :domain-list="scholarInfo.x_concepts"/>
+      :domain-list="scholarInfo.x_concepts"
+      :counts="counts"/>
     </div>
   </div>
 
@@ -27,7 +28,8 @@ export default {
     scholarInfo: {
       type: Object
     },
-    areas: ""
+    areas: "",
+    counts: []
   }
 }
 </script>

@@ -8,7 +8,7 @@
       <div class="top_scholar">Scholar</div>
     </div>
     <div>
-      <testScolar :scholar-info="scholarInfo" :areas="areas"></testScolar>
+      <testScolar :scholar-info="scholarInfo" :areas="areas" :counts="counts"></testScolar>
     </div>
     <div class="net_top">. 专家关系网络 .</div>
     <div>
@@ -234,7 +234,8 @@ export default {
           numstore:0,
         },
       ],
-      areas: ""
+      areas: "",
+      counts: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
     }
   },
   methods:{
@@ -279,12 +280,14 @@ export default {
           var str = this.areas.substring(0, l-2)
           this.areas= str;
           console.log("areas", this.areas)
+
+          for(var i = 0; i < this.scholarInfo.counts_by_year.length; i++) {
+            this.counts[this.scholarInfo.counts_by_year[i].year-2013]=this.scholarInfo.counts_by_year[i].works_count;
+          }
+          console.log("counts",this.counts);
         }
     )
   },
-  getScholarInfo() {
-
-  }
 }
 </script>
 
