@@ -39,7 +39,8 @@
             <img src="../HomePage_svg/close.svg" />
           </div>
           <div class="inst-background">
-            <div class="inst-title">学者门户认领</div>
+            <!-- <div class="inst-title">学者门户认领</div> -->
+            <img style="margin-top: -8%; margin-left:-1%" src="../assets/admin/scholarSite.svg"/>
 
             <div class="inst-text">机构名称</div>
             <el-input
@@ -101,9 +102,10 @@ export default {
 }
 
 .inst-background {
-  margin: 15% auto;
+  margin: auto;
+  padding: 15% 0;
   width: 70%;
-  height: inherit;
+  height: 583px;
   vertical-align: middle;
   /* height: 70%; */
 
