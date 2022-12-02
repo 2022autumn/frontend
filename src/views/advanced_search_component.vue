@@ -24,13 +24,13 @@
             搜索内容
           </div>
           <div>
-            <FilterBar ref="bar1"/>
+            <FilterBar ref="bar1" :logic="this.params0.logic" :field="this.params0.field" :content="this.params0.content"/>
           </div>
           <div>
-            <FilterBar ref="bar2"/>
+            <FilterBar ref="bar2" :logic="this.params1.logic" :field="this.params1.field" :content="this.params1.content"/>
           </div>
           <div>
-            <FilterBar ref="bar3"/>
+            <FilterBar ref="bar3" :logic="this.params2.logic" :field="this.params2.field" :content="this.params2.content"/>
           </div>
           <!--<div class="box-word" style="margin-top: 4%;margin-left: 6%;">
             设定时间范围
@@ -148,6 +148,9 @@ export default {
       query:[],
       input:"",
       logicstate:1,
+      params0:{},
+      params1:{},
+      params2:{},
     };
   },
   methods: {
@@ -173,6 +176,7 @@ export default {
       case3.content = this.$refs.bar3.input;
       case3.logic = this.$refs.bar3.value1;
       // console.log(case3);
+      this.query.length=0;
       this.query.push(case1);
       this.query.push(case2);
       this.query.push(case3);
@@ -186,7 +190,14 @@ export default {
   mounted() {
   },
   created() {
-
+    var query = JSON.parse(sessionStorage.getItem('query'));
+    this.params0 = query[0];
+    this.params1 = query[1];
+    this.params2 = query[2];
+    console.log("wait params is:");
+    console.log(this.params0);
+    console.log(this.params1);
+    console.log(this.params2);
   }
 }
 </script>

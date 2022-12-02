@@ -30,7 +30,7 @@
           </el-col>
           <el-col :span="1">
             <div class="box-word" >
-              
+
             </div>
           </el-col>
             <el-col :span="13">
@@ -66,8 +66,9 @@
 <script>
 export default {
   name: "filterBar",
-  data() {
-    return {
+  props:['logic','field','content'],
+data() {
+  return {
         input:"",
         logicstate:1,
         options: [{
@@ -106,7 +107,7 @@ export default {
           },
         ],
         value: '',
-        value1:''
+        value1:'',
     };
   },
   methods: {
@@ -114,6 +115,13 @@ export default {
         alert('button click');
       },
   },
+  created() {
+     console.log("test props");
+     console.log(this.content);
+     this.value1 = this.logic;
+     this.value = this.field;
+     this.input = this.content;
+  }
 }
 </script>
 
