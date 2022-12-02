@@ -8,7 +8,7 @@
       <div class="top_scholar">Scholar</div>
     </div>
     <div>
-      <testScolar></testScolar>
+      <testScolar :scholar-info="scholarInfo" :areas="areas" :counts="counts"></testScolar>
     </div>
     <div class="net_top">. 专家关系网络 .</div>
     <div>
@@ -91,6 +91,27 @@ export default {
       num_exact_page:8,
       total: 1000,//返回的检索结果的总量
       total_page:0,
+      id: "A4261893083",
+      scholarInfo: {
+        cited_by_count: 0,
+        counts_by_year: [
+          {
+            cited_by_count: 0,
+            works_count: "",
+            year: ""
+          }
+        ],
+        display_name: "Dharma Yanti",
+        id: "A4220294553",
+        ids: {},
+        last_known_institution: null,
+        most_cited_work: "IDENTIFIKASI SENYAWA ANTI MIKROBA EKSTRAK ETANOL BATANG BROTOWALI (Tinospra crispa (L.) TERHADAP Staphylococcus aureus, Bacillus substillis, DAN Candida albicans DENGAN ... (2022)",
+        works_api_url: "https://api.openalex.org/works?filter=author.id:A4220294553",
+        works_count: 1,
+        x_concepts: [
+        ]
+      },
+
       items:[
         {
           type:"期刊",
@@ -212,7 +233,9 @@ export default {
           numyin:0,
           numstore:0,
         },
-      ]
+      ],
+      areas: "",
+      counts: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
     }
   },
   methods:{
@@ -237,7 +260,34 @@ export default {
     }
   },
   mounted() {
-  }
+    let that = this;
+    that.$axios({
+      method:'get',
+      url:'/es/get',
+      params:{
+        id: this.id
+      }
+    }).then(
+        response=> {
+          console.log("userinfo",response.data);
+          this.scholarInfo = response.data.data;
+          console.log("get userInfo", this.scholarInfo);
+          for (var i = 0; i<this.scholarInfo.x_concepts.length; i++) {
+            this.areas = this.areas + this.scholarInfo.x_concepts[i].display_name;
+            this.areas= this.areas + ", ";
+          }
+          var l = this.areas.length;
+          var str = this.areas.substring(0, l-2)
+          this.areas= str;
+          console.log("areas", this.areas)
+
+          for(var i = 0; i < this.scholarInfo.counts_by_year.length; i++) {
+            this.counts[this.scholarInfo.counts_by_year[i].year-2013]=this.scholarInfo.counts_by_year[i].works_count;
+          }
+          console.log("counts",this.counts);
+        }
+    )
+  },
 }
 </script>
 

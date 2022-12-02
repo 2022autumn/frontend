@@ -3,19 +3,20 @@
     <div class="scholar_count">
       <div class="block b1">
         <span class="tit">发表数</span>
-        <span class="num">216</span>
+        <span class="num">{{scholarInfo.works_count}}</span>
       </div>
       <div class="divide"></div>
       <div class="block b2">
         <span class="tit">被引用量</span>
-        <span class="num">5124</span>
+        <span class="num">{{ scholarInfo.cited_by_count }}</span>
       </div>
     </div>
     <div class="history">
       过去十年发表
     </div>
     <div class="scholar_img">
-
+<!--      <div class="echart" id="mychart" :style="myChartStyle"></div>-->
+      <barGraph :ycounts="counts" :xcounts="xData"/>
     </div>
     <div class="scholar_domain">
       <div>相关领域</div>
@@ -23,45 +24,173 @@
         <div class="domain_boxs" v-for="(item,index) in domainList" :key="index">
           <div class="domain-box">
 <!--            <img src="../../assets/label.png" class="label">-->
-            <div class="domain">{{ item }}</div>
+            <div class="domain">{{ item.display_name }}</div>
           </div>
         </div>
       </div>
     </div>
     <div class="scholar_buttons">
       <span>
-        <el-button
-            class="buttons mag_button"
-              icon="el-icon-my-mag">
-          mag
-        </el-button>
-        <el-button class="buttons orcid_button"
+        <el-button v-if="'orcid' in scholarInfo.ids"
+            class="buttons orcid_button"
                    icon="el-icon-my-orcid">
-          orcid
+          <a
+              :href=scholarInfo.ids.orcid
+              target="_blank"
+              style="color: black;text-decoration-line: none">orcid</a>
         </el-button>
-        <el-button class="buttons openalex_button"
+        <el-button v-if="'scopus' in scholarInfo.ids"
+            class="buttons openalex_button"
                    icon="el-icon-my-openalex">
-          openalex
+          <a
+              :href=scholarInfo.ids.scopus
+              target="_blank"
+              style="color: black;text-decoration-line: none">scopus</a>
         </el-button>
       </span>
     </div>
   </div>
 </template>
 <script>
+import * as echarts from "echarts";
+import barGraph from "@/components/barGraph";
 export default {
   name: "scholar_p3",
+  components: { barGraph},
+  props: {
+    scholarInfo: {
+      type: Object
+    },
+    domainList: [],
+    counts: [],
+  },
   data() {
     return {
-      domainList: [
-          "带通滤波器",
-          "谐振器滤波器",
-          "传递函数",
-          "SLAM(机器人)",
-          "UHF滤波器",
-          "图论",
-          "卷积神经网络",
-          "微波滤波器"
-      ]
+      xData: [ '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'],
+      yData: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 10],
+      myChartStyle: { float: "left", width: "100%", height: "100px"}, //图表样式
+      newYData: []
+    }
+  },
+  watch:{
+    // counts:function(newData,oldData){
+    //   console.log("newdata",newData)  //newData就是orderData
+    //   this.newYData = newData;
+    // },
+    'counts': {
+      handler (newData,oldData) {
+        console.log("newdata",newData)
+        this.newYData = newData;
+      },
+      deep: true,
+      immediate: true,
+    }
+  },
+  mounted() {
+    this.initEcharts();
+  },
+  created() {
+  },
+  methods: {
+    initEcharts() {
+      // 基本柱状图
+      const option = {
+        grid: {
+          x: 0,
+          y: 17,
+          x2: 0,
+          y2: 17
+        },
+        tooltip : {
+          trigger: 'axis',
+          axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+          },
+          formatter : function(params){
+            // console.log("params",params);//打印断点，会看到自己想要的后台数据
+            if(params[0].data < 1) {
+              var num = 0;
+            }
+            else {
+              var num = params[0].data;
+            }
+
+            let html=`<div style="height:auto;width: 50px;">
+                ${params
+                .map(
+                  (
+                    item
+                  ) => `<div style="font-size:14px;color:#808080;display:flex;align-items:center;line-height:2;">
+
+            ${item.axisValue}
+          </div>`
+            )
+            .join("")}
+                <div style="display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight: bold;color:#333;padding-top:4px;margin-bottom:7px;line-height:1;">
+            <span style="display:inline-block;margin-right:2px;border-radius:7px;width:7px;height:7px;background-color:#217BF4;"></span>
+            <span>${num}</span>
+          </div>
+            </div>`
+
+              return html;
+          }
+        },
+        xAxis: {
+          data: this.xData,
+          axisLabel:{ show: false },
+          axisTick: {		//x轴刻度线
+            show: false
+          },
+          splitLine:{
+            show: false
+          },
+          axisLine:{     //x轴坐标轴，false为隐藏，true为显示
+            "show":false
+          },
+        },
+        yAxis: {
+          splitLine:{
+            show: false
+          },
+          axisLabel:{
+            show: false
+          },
+          axisTick: {		//x轴刻度线
+            show: false
+          },
+        },
+        series: [
+          {
+            type: "bar", //形状为柱状图
+            data: this.newYData,
+            itemStyle: {
+              //柱形图圆角，鼠标移上去效果，如果只是一个数字则说明四个参数全部设置为那么多
+              normal: {
+                //柱形图圆角，初始化效果
+                barBorderRadius:[2, 2, 2, 2],
+                color: function (params) {
+                  console.log("parapms",params);
+                  if(params.data < 1) {
+                    return "#DFE7F6"
+                  } else {
+                    return "#217BF4"
+                  }
+                },
+              }
+            },
+            axisLine:{     //x轴坐标轴，false为隐藏，true为显示
+              "show":false
+            },
+          }
+        ],
+        // color: "#217BF4"
+      };
+      const myChart = echarts.init(document.getElementById("mychart"));
+      myChart.setOption(option);
+      //随着屏幕大小调节图表
+      window.addEventListener("resize", () => {
+        myChart.resize();
+      });
     }
   }
 }
@@ -158,13 +287,16 @@ export default {
 .domain_set {
   display: flex;
   width: 400px;
+  height: 163px;
+  overflow-y: auto;
   padding-top: 17px;
   flex-wrap: wrap;
 }
 .domain_boxs {
   display: flex;
+  max-height: 153px;
   padding-top: 10px;
-  padding-left: 12px;
+  padding-right: 12px;
   flex-wrap: wrap;
 }
 .domain-box {

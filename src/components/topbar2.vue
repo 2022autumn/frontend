@@ -13,7 +13,7 @@
     <div style="position: absolute;height: 5vh;width: 100vw;top:5vh"><el-divider></el-divider></div>
     <div style="position: absolute;width: 35vw;height:40px;left:53.5vw;top:0.6vh;">
         <el-input  placeholder="请输入内容" v-model="input3" class="input-with-select white--text"  >
-        <el-button slot="prepend" icon="el-icon-s-promotion" style="color: #FCFCFF;background-color: rgba(117, 167, 235, 0.52);border-radius: 0;border-color: whitesmoke">高级检索</el-button>
+        <el-button slot="prepend" icon="el-icon-s-promotion" style="color: #FCFCFF;background-color: rgba(117, 167, 235, 0.52);border-radius: 0;border-color: whitesmoke" @click="jadvance">高级检索</el-button>
         <el-button slot="append" icon="el-icon-search" style="color: #FCFCFF;background-color: rgba(117, 167, 235, 0.52); border-radius: 0;border-color: whitesmoke" @click="do_search"></el-button>
       </el-input>
     </div>
@@ -32,6 +32,9 @@ export default {
     }
   },
   methods:{
+    jadvance(){
+      this.$router.push('/advancedSearch')
+    },
     which_page(ident){
       if(ident === 1){
         this.whichpage=1;
@@ -52,7 +55,9 @@ export default {
       sessionStorage.setItem('Cond',JSON.stringify(cond));
       sessionStorage.setItem('search_name1',this.input3);
       sessionStorage.setItem('now_page',JSON.stringify(1));
-      window.location.reload();
+      window.open('/search_outcome');
+      //this.$router.push('/search_outcome');
+      //window.location.reload();
     }
   },
   created(){

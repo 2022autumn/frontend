@@ -1,7 +1,8 @@
 <template>
-  <div>
-    <!--<el-row style="height: 600px" class="background">
-      <el-col :span="7">
+  <div style="margin-left: 20vw;margin-top:-20vh">
+    <!--<topbar2></topbar2>-->
+    <el-row style="height: 600px" class="background">
+      <!--<el-col :span="7">
         <div class="left-img" style="margin-top: 100px; margin-left: 30%">
           <img preview-disabled
                src="../../public/advanced_img/Advanced Search.svg"
@@ -15,104 +16,103 @@
                src="../../public/advanced_img/illustration1.svg"
           />
         </div>
-      </el-col>
-      <el-col :span="17">-->
-        <div class="hot-list" style="margin-top: 0px">
+      </el-col>-->
+      <el-col :span="17" >
+        <div class="hot-list" style="margin-top: 150px">
           <div>&nbsp;</div>
           <div class="box-word" style="margin-left: 4%;">
             搜索内容
           </div>
           <div>
-            <FilterBar/>
+            <FilterBar ref="bar1"/>
           </div>
           <div>
-            <FilterBar/>
+            <FilterBar ref="bar2"/>
           </div>
           <div>
-            <FilterBar/>
+            <FilterBar ref="bar3"/>
           </div>
-          <div class="box-word" style="margin-top: 4%;margin-left: 6%;">
+          <!--<div class="box-word" style="margin-top: 4%;margin-left: 6%;">
             设定时间范围
-          </div>
-          <div style="margin-left: 15%;margin-top: 3%;">
-            <el-checkbox v-model="checked4">
-              <div style="display: inline-block;font-size:15px;">
-                <b>&nbsp;&nbsp&nbsp最早发表时间&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
-              </div>
-              <div style="width: 7vw;display: inline-block">
-                <el-input v-model="input1" placeholder="" size="mini" ></el-input>
-              </div>
-              <div style="display: inline-block;font-size:15px;">
-                <b>&nbsp;&nbsp年&nbsp&nbsp&nbsp</b>
-              </div>
-              <div style="width: 7vw;display: inline-block">
-                <el-input v-model="input1" placeholder="" size="mini" ></el-input>
-              </div>
-              <div style="display: inline-block;font-size:15px;">
-                <b>&nbsp;&nbsp月&nbsp</b>
-              </div>
-            </el-checkbox>
-          </div>
-          <div style="margin-left: 15%;margin-top: 2%;">
-            <el-checkbox v-model="checked5">
-              <div style="display: inline-block;font-size:15px;">
-                <b>&nbsp;&nbsp&nbsp发表时间范围&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
-              </div>
-              <div style="width: 5vw;display: inline-block">
-                <el-input v-model="input2" placeholder="" size="mini"></el-input>
-              </div>
-              <div style="display: inline-block;font-size:15px;">
-                <b>&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;</b>
-              </div>
-              <div style="width: 5vw;display: inline-block">
-                <el-input v-model="input3" placeholder="" size="mini"></el-input>
-              </div>
-              <div style="display: inline-block;font-size:15px;">
-                <b>&nbsp;月&nbsp;&nbsp;~&nbsp;&nbsp;</b>
-              </div>
-              <div style="width: 5vw;display: inline-block">
-                <el-input v-model="input3" placeholder="" size="mini"></el-input>
-              </div>
-              <div style="display: inline-block;font-size:15px;">
-                <b>&nbsp;&nbsp;年&nbsp;&nbsp;</b>
-              </div>
-              <div style="width: 5vw;display: inline-block">
-                <el-input v-model="input3" placeholder="" size="mini"></el-input>
-              </div>
-              <div style="display: inline-block;font-size:15px;">
-                <b>&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;</b>
-              </div>
-            </el-checkbox>
+          </div>-->
+          <!--<div style="margin-left: 15%;margin-top: 3%;">
+              <el-checkbox v-model="checked4">
+                  <div style="display: inline-block;font-size:15px;">
+                      <b>&nbsp;&nbsp&nbsp最早发表时间&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
+                  </div>
+                  <div style="width: 7vw;display: inline-block">
+                      <el-input v-model="input1" placeholder="" size="mini" ></el-input>
+                  </div>
+                  <div style="display: inline-block;font-size:15px;">
+                      <b>&nbsp;&nbsp年&nbsp&nbsp&nbsp</b>
+                  </div>
+                  <div style="width: 7vw;display: inline-block">
+                      <el-input v-model="input1" placeholder="" size="mini" ></el-input>
+                  </div>
+                  <div style="display: inline-block;font-size:15px;">
+                      <b>&nbsp;&nbsp月&nbsp</b>
+                  </div>
+              </el-checkbox>
           </div>
           <div style="margin-left: 15%;margin-top: 2%;">
-            <el-checkbox v-model="checked6">
+              <el-checkbox v-model="checked5">
               <div style="display: inline-block;font-size:15px;">
-                <b>&nbsp;&nbsp&nbsp最晚发表时间&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
+                  <b>&nbsp;&nbsp&nbsp发表时间范围&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
               </div>
               <div style="width: 5vw;display: inline-block">
-                <el-input v-model="input4" placeholder="" size="mini"></el-input>
+                  <el-input v-model="input2" placeholder="" size="mini"></el-input>
               </div>
               <div style="display: inline-block;font-size:15px;">
-                <b>&nbsp;&nbsp;年&nbsp;&nbsp;</b>
+                  <b>&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;</b>
               </div>
               <div style="width: 5vw;display: inline-block">
-                <el-input v-model="input3" placeholder="" size="mini"></el-input>
+                  <el-input v-model="input3" placeholder="" size="mini"></el-input>
               </div>
               <div style="display: inline-block;font-size:15px;">
-                <b>&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;</b>
+                  <b>&nbsp;月&nbsp;&nbsp;~&nbsp;&nbsp;</b>
               </div>
-            </el-checkbox>
+              <div style="width: 5vw;display: inline-block">
+                  <el-input v-model="input3" placeholder="" size="mini"></el-input>
+              </div>
+              <div style="display: inline-block;font-size:15px;">
+                  <b>&nbsp;&nbsp;年&nbsp;&nbsp;</b>
+              </div>
+              <div style="width: 5vw;display: inline-block">
+                  <el-input v-model="input3" placeholder="" size="mini"></el-input>
+              </div>
+              <div style="display: inline-block;font-size:15px;">
+                  <b>&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;</b>
+              </div>
+              </el-checkbox>
+          </div>
+          <div style="margin-left: 15%;margin-top: 2%;">
+              <el-checkbox v-model="checked6">
+              <div style="display: inline-block;font-size:15px;">
+                  <b>&nbsp;&nbsp&nbsp最晚发表时间&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
+              </div>
+              <div style="width: 5vw;display: inline-block">
+                  <el-input v-model="input4" placeholder="" size="mini"></el-input>
+              </div>
+              <div style="display: inline-block;font-size:15px;">
+                  <b>&nbsp;&nbsp;年&nbsp;&nbsp;</b>
+              </div>
+              <div style="width: 5vw;display: inline-block">
+                  <el-input v-model="input3" placeholder="" size="mini"></el-input>
+              </div>
+              <div style="display: inline-block;font-size:15px;">
+                  <b>&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;</b>
+              </div>
+              </el-checkbox>
           </div>
           <div>&nbsp;</div>
-          <div>&nbsp;</div>
+          <div>&nbsp;</div>-->
+          <div style="height: 5vh"></div>
           <div>
-            <el-button  style="display:block;margin:0 auto" class="search-button">搜索</el-button>
+            <el-button  style="display:block;margin:0 auto" class="search-button" @click="search">搜索</el-button>
           </div>
-
         </div>
-      <!--</el-col>
-    </el-row>-->
-
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -144,17 +144,50 @@ export default {
         value: '选项5',
         label: 'DOI'
       }],
-      value: ''
+      value: '',
+      query:[],
+      input:"",
+      logicstate:1,
     };
   },
   methods: {
     handleClick() {
       alert('button click');
+    },
+    search(){
+      //console.log(this.$refs.bar1.value1);
+      //console.log(this.$refs.bar1.input);
+      //console.log(this.$refs.bar1.value);
+      var case1 = {};
+      case1.field = this.$refs.bar1.value;
+      case1.content = this.$refs.bar1.input;
+      case1.logic = this.$refs.bar1.value1;
+      //console.log(case1);
+      var case2 = {};
+      case2.field = this.$refs.bar2.value;
+      case2.content = this.$refs.bar2.input;
+      case2.logic = this.$refs.bar2.value1;
+      //console.log(case2);
+      var case3 = {};
+      case3.field = this.$refs.bar3.value;
+      case3.content = this.$refs.bar3.input;
+      case3.logic = this.$refs.bar3.value1;
+      // console.log(case3);
+      this.query.push(case1);
+      this.query.push(case2);
+      this.query.push(case3);
+      console.log("component query is:");
+      console.log(this.query);
+      sessionStorage.setItem('query',JSON.stringify(this.query));
+      window.location.reload();
     }
   },
   // 挂载时获取
   mounted() {
   },
+  created() {
+
+  }
 }
 </script>
 
@@ -192,11 +225,11 @@ export default {
   color: #0a093d;
 }
 .hot-list {
-  margin-top: 0px;
+  margin-top: 100px;
   margin: auto;
   padding: auto;
-  width: 90%;
-  height: 650px;
+  width: 100%;
+  height: 400px;
 
   background: #ffffff;
   box-shadow: 7px 7px 7px 7px rgba(0, 0, 0, 0.25);
@@ -205,13 +238,13 @@ export default {
 .background{
   width: 100%;
   height: 600px;
-  background: linear-gradient(
+  /*background: linear-gradient(
       0deg,
       rgba(225, 233, 245, 0) 1.63%,
       #f1f6fd 20.5%,
       #f1f6fd 58.57%,
       #ffffff 100%
-  );
+  );*/
 
   padding-top: 30px;
   padding-right: 10px;

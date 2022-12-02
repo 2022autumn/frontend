@@ -13,7 +13,7 @@
           <div style="margin-top: 7vh; margin-bottom: 5vh;display: inline-block">
             <div style="text-align: center">
               <el-input placeholder="请输入检索内容" v-model="input1">
-                <template slot="prepend">高级检索</template>
+                <template slot="prepend" @click="jadvance" style="cursor: pointer">高级检索</template>
                  <i slot="suffix" class="el-input__icon el-icon-search" @click="j_search_outcome"></i>
               </el-input>
             </div>
@@ -231,8 +231,17 @@ export default {
     }
   },
   methods:{
+    jadvance(){
+      window.open('/advancedSearch');
+    },
     j_search_outcome(){
-       window.location.replace("/search_outcome");
+      console.log(this.input1);
+      var cond = {};
+      sessionStorage.setItem('Cond',JSON.stringify(cond));
+      sessionStorage.setItem('search_name1',this.input1);
+      sessionStorage.setItem('now_page',JSON.stringify(1));
+      window.open('/search_outcome');
+       //window.location.replace("/search_outcome");
     }
   },
   created() {
@@ -486,8 +495,8 @@ export default {
   text-align: center;
   margin: 4vh auto;
 }
-.el-pagination.is-background .btn-next, 
-.el-pagination.is-background .btn-prev, 
+.el-pagination.is-background .btn-next,
+.el-pagination.is-background .btn-prev,
 .el-pagination.is-background .el-pager li {
   background-color: #fff; /*进行修改未选中背景和字体*/
 }

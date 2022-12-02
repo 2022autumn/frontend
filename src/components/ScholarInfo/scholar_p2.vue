@@ -1,28 +1,40 @@
 <template>
   <div class="scholar_p2">
+    <div>
+      <span class="scholar_name">
+        {{scholarInfo.display_name}}
+    </span>
+      <span class="scholar_institution">
+        {{scholarInfo.last_known_institution.display_name}}
+    </span>
+    </div>
     <div class="info_title">
       个人简介
     </div>
     <div class="border">
-
     </div>
     <div class="personal_info">
-      Dimitra Psychogiou (Senior Member, IEEE) received the Dipl.Eng. degree in electrical and computer engineering from the University of Patras, Patras, Greece, in 2008, and the Ph.D. degree in electrical engineering from the Swiss Federal Institute of Technology (ETH), Zürich, Switzerland, in 2013.,She is currently a Professor of electrical and electronic engineering with University College Cork (UCC), Cork, Ireland, and the Tyndall National Institute, Cork. Prior to joining UCC, she was a Senior Research Scientist with Purdue University, West Lafayette, IN, USA, and an Assistant Professor with the University of Colorado Boulder (UC Boulder), Boulder, CO, USA. Her research has been presented in more than 200 publications...
-
+      I’m {{scholarInfo.display_name}}, I'm interested in areas like {{areas}}, I'm working for {{scholarInfo.last_known_institution?scholarInfo.last_known_institution.display_name:institution}}. I've post {{scholarInfo.most_cited_work}}, which is my most-cited work. I'm looking for highly motivate students.
     </div>
-    <div class="info_bottom">
-      <el-button class="more_btn">
-        查看更多
-      </el-button>
-    </div>
+<!--    <div class="info_bottom">-->
+<!--      <el-button class="more_btn">-->
+<!--        查看更多-->
+<!--      </el-button>-->
+<!--    </div>-->
   </div>
 </template>
 <script>
 export default {
   name: "scholar_p2",
+  props: {
+    scholarInfo: {
+      type: Object
+    },
+    areas: ""
+  },
   data() {
     return {
-
+      institution: "no institution"
     }
   }
 }
@@ -55,6 +67,8 @@ export default {
   background: #4E86FF;
 }
 .personal_info {
+  max-height: 400px;
+  overflow-y: auto;
   margin-top: 20px;
   font-family: 'Poppins';
   font-style: normal;
@@ -72,5 +86,26 @@ export default {
   margin-top: 20px;
   background: #4E86FF;
   color: #FFFFFF;
+}
+
+.scholar_name {
+  float: left;
+  position: relative;
+  width: 100%;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 54px;
+}
+.scholar_institution {
+  float: left;
+  position: relative;
+  width: 100%;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 36px;
 }
 </style>
