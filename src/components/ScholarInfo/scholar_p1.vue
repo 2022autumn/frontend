@@ -7,15 +7,15 @@
 <!--    <span class="scholar_institution">-->
 <!--        {{scholarInfo.last_known_institution}}-->
 <!--    </span>-->
-    <span class="follow">
-      <el-button
-          @click="follow"
-          class="follow_btn"
-          :style="{backgroundColor:bg_color, color: ft_color,}"
-          @mouseenter="change" @mouseleave="goback">
-        {{followContent}}
-      </el-button>
-    </span>
+<!--    <span class="follow">-->
+<!--      <el-button-->
+<!--          @click="follow"-->
+<!--          class="follow_btn"-->
+<!--          :style="{backgroundColor:bg_color, color: ft_color,}"-->
+<!--          @mouseenter="change" @mouseleave="goback">-->
+<!--        {{followContent}}-->
+<!--      </el-button>-->
+<!--    </span>-->
   </div>
 </template>
 <script>

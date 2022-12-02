@@ -2,7 +2,7 @@
   <div class="all">
     <topbar2></topbar2>
     <div style="position: absolute;width:23.2vw;height: 88vh;left:5vw;top:11vh;">
-    <el-card class="box-card" style="word-break:break-all;position:absolute; width:22vw;background-color: rgba(99, 162, 247, 0.15);" shadow="hover">
+    <el-card class="box-card" style="word-break:break-all;position:absolute; width:27vw;background-color: rgba(99, 162, 247, 0.15);" shadow="hover">
       <!--<img src="../img/Fill.svg" style="position: absolute;left:-0.5vw;top:1vh">
       <img src="../img/Funnel.svg" style="position: absolute;left:1.25vw;top:3.4vh">-->
       <!--<div>
@@ -16,52 +16,52 @@
       </div>-->
       <div v-if="this.authors.length>0">
       <div style=""><b>主要作者</b></div>
-      <el-checkbox-group v-model="checklist_author" :max="1">
-      <el-checkbox v-for="item in this.authors"  :label=item.key><b>{{item.key}}</b></el-checkbox>
+      <el-checkbox-group v-model="checklist_author" :max="1" @change="choose_change">
+        <el-checkbox v-for="item in this.authors"  :label=item.key style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item.key}}</b></el-checkbox>
       </el-checkbox-group>
       <el-divider></el-divider>
       </div>
       <div v-if="this.institutions.length>0">
       <div style=""><b>主要组织</b></div>
-      <el-checkbox-group v-model="checklist_institutions" :max="1">
-        <el-checkbox v-for="item in this.institutions"  :label=item><b>{{item}}</b></el-checkbox>
+      <el-checkbox-group v-model="checklist_institutions" :max="1" @change="choose_change">
+        <el-checkbox v-for="item in this.institutions"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
       </el-checkbox-group>
       <el-divider></el-divider>
       </div>
       <div v-if="this.publish_years.length>0">
       <div style=""><b>发表年份</b></div>
-      <el-checkbox-group v-model="checklist_publish_years" :max="1">
-        <el-checkbox v-for="item in this.publish_years"  :label=item><b>{{item}}</b></el-checkbox>
+      <el-checkbox-group v-model="checklist_publish_years" :max="1" @change="choose_change">
+        <el-checkbox v-for="item in this.publish_years"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
       </el-checkbox-group>
       <el-divider></el-divider>
       </div>
       <div v-if="this.publishers.length>0">
       <div style=""><b>出版单位</b></div>
-      <el-checkbox-group v-model="checklist_publishers" :max="1">
-        <el-checkbox v-for="item in this.publishers"  :label=item><b>{{item}}</b></el-checkbox>
+      <el-checkbox-group v-model="checklist_publishers" :max="1" @change="choose_change">
+        <el-checkbox v-for="item in this.publishers"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
       </el-checkbox-group>
       <el-divider></el-divider>
       </div>
       <div v-if="this.types.length>0">
       <div style=""><b>论文类型</b></div>
-      <el-checkbox-group v-model="checklist_types" :max="1">
-        <el-checkbox v-for="item in this.types"  :label=item><b>{{item}}</b></el-checkbox>
+      <el-checkbox-group v-model="checklist_types" :max="1" @change="choose_change">
+        <el-checkbox v-for="item in this.types"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
       </el-checkbox-group>
       <el-divider></el-divider>
       </div>
       <div v-if="this.venues.length>0">
       <div style=""><b>Venues</b></div>
-      <el-checkbox-group v-model="checklist_venues" :max="1">
-        <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all"><b>{{item}}</b></el-checkbox>
+      <el-checkbox-group v-model="checklist_venues" :max="1" @change="choose_change">
+        <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all;display: block;word-wrap: break-word;overflow: hidden;" ><b>{{item}}</b></el-checkbox>
       </el-checkbox-group>
       <el-divider></el-divider>
       </div>
-      <div style="margin-left: 6.5vw;margin-top: -2vh"><v-btn style="background-color: #217BF4;" class="white--text" @click="shaixuan">确认</v-btn></div>
+      <!--<div style="margin-left: 6.5vw;margin-top: -2vh"><v-btn style="background-color: #217BF4;" class="white--text" @click="shaixuan">确认</v-btn></div>-->
     </el-card>
     </div>
-    <div style="position:absolute;left:40vw;height: 88vh;top:11vh;width: 50vw;">
-      <div v-for="item in items" v-if="item.id!==''" style="width: 50vw;height:35vh;">
-      <el-card  style="width: 50vw;height:30vh;background-color: whitesmoke" shadow="hover">
+    <div style="position:absolute;left:40vw;height: 88vh;top:11vh;width: 55vw;">
+      <div v-for="item in items" v-if="item.id!==''" style="width: 50vw;height:35vh;" @click="jdetail(item.id)">
+      <el-card  style="width: 50vw;height:30vh;background-color: lightcyan; cursor: pointer;" shadow="hover">
         <el-tag style="display: inline-block">{{item.type}}</el-tag>
         <div style="display: inline-block;font-size: large;">
           &nbsp;
@@ -99,7 +99,7 @@
         </div>
         <div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
           <div style="display: inline-block;"><img src="../img/shoucang.svg" style="width: 2vw;height: 2vh"></div>
-          <div style="display: inline-block">{{item.numyin}}次收藏</div>
+          <div style="display: inline-block">{{item.numstore}}次收藏</div>
         </div>
       </el-card>
       </div>
@@ -294,40 +294,115 @@ export default {
     }
   },
   methods:{
+    openFullScreen2() {//前端加载效果
+      const loading = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      });
+      setTimeout(() => {
+        loading.close();
+      }, 1100);
+    },
+    jdetail(id){
+      console.log("文章id为:");
+      console.log(id);
+      window.localStorage.setItem('WID',id);
+      window.open('/paper_details');
+    },
+    choose_change(){
+      console.log("shaixuan!");
+      this.shaixuan();
+    },
     shaixuan(){
        console.log(this.checklist_author[0]);
        var conds = {};
        conds = JSON.parse(sessionStorage.getItem('Cond'));
-       if(conds.author===undefined) {
-         conds.author = this.checklist_author[0];
+       //if(conds.author===undefined) {
+       conds.author = this.checklist_author[0];
+       //}
+       if(conds.author!==undefined){
+         this.if_authors=1;
        }
-       if(conds.type===undefined) {
+       else{
+         this.if_authors=0;
+       }
+       //sessionStorage.setItem('if_authors',JSON.stringify(this.if_authors));
+       //if(conds.type===undefined) {
          conds.type = this.checklist_types[0];
+         console.log("当前选择的论文类型为:");
+         console.log(this.checklist_types[0]);
+       //}
+       if(conds.type!==undefined){
+         this.if_types=1;
        }
-       if(conds.institution===undefined) {
+       else{
+         this.if_types=0;
+       }
+      //sessionStorage.setItem('if_types',JSON.stringify(this.if_types));
+       //if(conds.institution===undefined) {
          conds.institution = this.checklist_institutions[0];
+       //}
+       if(conds.institution!==undefined){
+         this.if_institutions=1;
        }
-       if(conds.publisher===undefined) {
+       else{
+         this.if_institutions=0;
+       }
+      //sessionStorage.setItem('if_institutions',JSON.stringify(this.if_institutions));
+       //if(conds.publisher===undefined) {
          conds.publisher = this.checklist_publishers[0];
+       //}
+       if(conds.publisher!==undefined){
+         this.if_publishers=1;
        }
-       if(conds.venue===undefined) {
+       else{
+         this.if_publishers=0;
+       }
+      //sessionStorage.setItem('if_publishers',JSON.stringify(this.if_publishers));
+       //if(conds.venue===undefined) {
          conds.venue = this.checklist_venues[0];
+       //}
+       if(conds.venue!==undefined){
+         this.if_venues=1;
        }
-       if(conds.publication_year===undefined) {
-         conds.publication_year = this.checklist_publish_years[0];
+       else{
+         this.if_venues=0;
        }
+      //sessionStorage.setItem('if_venues',JSON.stringify(this.if_venues));
+       //if(conds.publication_year===undefined) {
+        if(this.checklist_publish_years[0]===undefined){
+          conds.publication_year = undefined;
+        }
+        else {
+          conds.publication_year = this.checklist_publish_years[0].toString();
+        }
+       //}
+       if(conds.publication_year!==undefined){
+         this.if_publish_years=1;
+       }
+       else{
+         this.if_publish_years=0;
+       }
+      //sessionStorage.setItem('if_publish_years',JSON.stringify(this.if_publish_years));
+       console.log("conds is:");
        console.log(conds);
        sessionStorage.setItem('Cond',JSON.stringify(conds));
+       sessionStorage.setItem('now_page',JSON.stringify(1));
+       this.now_page=1;
+       this.openFullScreen2();
        this.search();
        //window.location.reload();
     },
       handlechange(page){//处理跳转，page为当前选中的页面
+        this.now_page = page;
         sessionStorage.setItem('now_page',JSON.stringify(page));
+        this.openFullScreen2();
         this.search();
       },
       search(){
         var cond = JSON.parse(sessionStorage.getItem('Cond'));
-        console.log(cond);
         var searchname1 = sessionStorage.getItem('search_name1');
         var page = JSON.parse(sessionStorage.getItem('now_page'));
         console.log(this.conds);
@@ -350,71 +425,79 @@ export default {
               //console.log(response.data.res.hits.hits.length);
               console.log(response.data.res.Aggs
               );
-              this.authors.length=0;
+              //this.authors.length=0;
               if(response.data.res.Aggs.authors!==undefined) {
                 var author_len = response.data.res.Aggs.authors.length;
-                if(author_len>0){
-                  this.if_authors=1;
-                }
-                for (var i = 0; i < author_len && i < 5; i++) {
-                  var obj = {};
-                  obj.key = response.data.res.Aggs.authors[i].key;
-                  obj.ifchoose = false;
-                  this.authors.push(obj);
+                if(this.if_authors===0) {//如果本来没有选择这个条件就进行更新
+                  this.authors.length=0;
+                  for (var i = 0; i < author_len && i < 5; i++) {
+                    var obj = {};
+                    obj.key = response.data.res.Aggs.authors[i].key;
+                    obj.ifchoose = false;
+                    this.authors.push(obj);
+                  }
                 }
               }
-              this.institutions.length=0;
+              //this.institutions.length=0;
               if(response.data.res.Aggs.institutions!==undefined) {
                 var institution_len = response.data.res.Aggs.institutions.length;
-                if(institution_len>0){
-                  this.if_institutions=1;
-                }
-                for (var i = 0; i < institution_len && i < 5; i++) {
-                  this.institutions[i] = response.data.res.Aggs.institutions [i].key;
+                if(this.if_institutions===0) {
+                  this.institutions.length=0;
+                  for (var i = 0; i < institution_len && i < 5; i++) {
+                    this.institutions[i] = response.data.res.Aggs.institutions [i].key;
+                  }
                 }
               }
-              this.publish_years.length=0;
+              //this.publish_years.length=0;
               if(response.data.res.Aggs.publication_years!==undefined) {
                 var year_len = response.data.res.Aggs.publication_years.length;
-                if(year_len>0){
-                  this.if_publish_years = 1;
-                }
-                for (var i = 0; i < year_len && i < 5; i++) {
-                  this.publish_years[i] = response.data.res.Aggs.publication_years [i].key;
+                if(this.if_publish_years===0) {
+                  this.publish_years.length=0;
+                  for (var i = 0; i < year_len && i < 5; i++) {
+                    this.publish_years[i] = response.data.res.Aggs.publication_years [i].key;
+                  }
                 }
               }
-              this.publishers.length=0;
+              //this.publishers.length=0;
               if(response.data.res.Aggs.publishers!==undefined) {
                 var publisher_len = response.data.res.Aggs.publishers.length;
-                if(publisher_len>0){
-                  this.if_publishers=1;
-                }
-                for (var i = 0; i < publisher_len && i < 5; i++) {
-                  this.publishers[i] = response.data.res.Aggs.publishers [i].key;
+                if(this.if_publishers===0) {
+                  this.publishers.length=0;
+                  for (var i = 0; i < publisher_len && i < 5; i++) {
+                    this.publishers[i] = response.data.res.Aggs.publishers [i].key;
+                  }
                 }
               }
-              this.venues.length=0;
+              //this.venues.length=0;
               if(response.data.res.Aggs.venues!==undefined) {
                 var venues_len = response.data.res.Aggs.venues.length;
                 if(venues_len>0){
-                  this.if_venues = 1;
+                  //this.if_venues = 1;
                 }
-                for (var i = 0; i < venues_len && i < 5; i++) {
-                  this.venues[i] = response.data.res.Aggs.venues [i].key;
+                if(this.if_venues===0) {
+                  this.venues.length=0;
+                  for (var i = 0; i < venues_len && i < 5; i++) {
+                    this.venues[i] = response.data.res.Aggs.venues [i].key;
+                  }
                 }
               }
-              this.types.length=0;
+              //this.types.length=0;
+              console.log("res types is");
+              console.log(response.data.res.Aggs.types);
+              console.log("if_types is "+this.if_types);
               if(response.data.res.Aggs.types!==undefined) {
                 var types_len = response.data.res.Aggs.types.length;
-                if(types_len>0){
-                  this.if_types=1;
-                }
-                for (var i = 0; i < types_len && i < 5; i++) {
-                  this.types[i] = response.data.res.Aggs.types [i].key;
+                if(this.if_types===0) {
+                  this.types.length=0;
+                  for (var i = 0; i < types_len && i < 5; i++) {
+                    this.types[i] = response.data.res.Aggs.types [i].key;
+                  }
                 }
               }
               var len = 0;
               len = response.data.res.Works.length;
+              console.log("搜搜索结果为");
+              console.log(response.data.res.Works);
               this.num_exact_page = len;
               //console.log(response.data.res.hits.hits);
               for(var i=0;i<len;i++){
@@ -453,6 +536,8 @@ export default {
                 if(this.items[i].type === null){
                   this.items[i].type = "undefined"
                 }
+                this.items[i].numyin = response.data.res.Works[i].cited_by_count;
+                this.items[i].numstore = Math.ceil(Math.random()*100);
               }
             }
         )

@@ -181,7 +181,7 @@ export default {
       this.query.push(case3);
       console.log(this.query);
       sessionStorage.setItem('query',JSON.stringify(this.query));
-      window.open('/advanced_outcome');
+      this.$router.push('/advanced_outcome');
     }
   },
   // 挂载时获取
