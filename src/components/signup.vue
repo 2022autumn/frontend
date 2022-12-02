@@ -1,35 +1,57 @@
 <template>
   <div>
     <div style="box-shadow: 6px 6px 4px rgba(0, 0, 0, 0.25)">
-      <div style="height: 583px; width: 327px; float: left">
-        <img src="../HomePage_svg/left-bar.svg" />
-      </div>
-      <div style="height: 583px; width: 40vw; float: left">
-        <div style="float: right">
-          <img src="../HomePage_svg/close.svg" />
+      <el-dialog class="signup"
+        :visible.sync="signup_visible"
+        :showClose="false"
+        width="53.5vw"
+        height="583px"
+        :before-close="handleClose"
+      >
+        <div
+          style="
+            width: 327px;
+            height: 583px;
+            display: inline-block;
+            vertical-align: top;
+          "
+        >
+          <img src="../HomePage_svg/left-bar.svg" />
         </div>
-        <div class="background">
-          <div class="title1">注册</div>
-          <div class="title2">欢迎注册 I Share!</div>
-          <div class="text">用户名</div>
-          <el-input v-model="input_name" placeholder="请输入用户名"></el-input>
-          <div class="text">密码</div>
-          <el-input v-model="input_pwd" placeholder="请输入密码"></el-input>
-          <div class="text">确认密码</div>
-          <el-input
-            v-model="input_confirm"
-            placeholder="请再次输入密码"
-          ></el-input>
+        <div style="width: 32vw; height:583px ;display: inline-block; vertical-align: top">
+          <div style="float: right" @click="close">
+            <img src="../HomePage_svg/close.svg" />
+          </div>
+          <div class="background">
+            <div class="title1">注册</div>
+            <div class="title2">欢迎注册 I Share!</div>
 
-          <div class="button">注册</div>
-          <div class="text" style="text-align: center">
-            已有账号？
-            <span style="color: #217bf4; text-decoration: underline"
-              >去登陆</span
-            >
+            <div class="text">用户名</div>
+            <el-input class="signup-input"
+              v-model="input_name"
+              placeholder="请输入用户名"
+            ></el-input>
+            <div class="text">密码</div>
+            <el-input class="signup-input" 
+              v-model="input_pwd" 
+              placeholder="请输入密码"
+            ></el-input>
+            <div class="text">确认密码</div>
+            <el-input class="signup-input"
+              v-model="input_confirm"
+              placeholder="请再次输入密码"
+            ></el-input>
+
+            <div class="button">注册</div>
+            <div class="text" style="text-align: center">
+              已有账号？
+              <span style="color: #217bf4; text-decoration: underline"
+                @click="goto_login">去登录</span
+              >
+            </div>
           </div>
         </div>
-      </div>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -43,18 +65,40 @@ export default {
       input_name: "",
       input_pwd: "",
       input_confirm: "",
+      signup_visible: false,
     };
   },
   setup() {},
+  methods: {
+    init() {
+      console.log("打开注册组件");
+      this.signup_visible = true;
+    },
+    close() {
+      console.log("关闭注册组件");
+      this.signup_visible = false;
+    },
+    goto_login(){
+      console.log("去登录组件");
+      this.signup_visible = false;
+      this.$parent.open_login();
+    }
+  },
 };
 </script>
 
-<style>
+<style scoped>
+.signup /deep/ .el-dialog__header{
+  padding: 0;
+}
+.signup /deep/ .el-dialog__body{
+  padding: 0;
+}
 .background {
-  margin: 10% 13%;
+  margin: 12% auto;
   padding: 4vh;
   width: 70%;
-  height: 80%;
+  height: 79%;
 
   background: #ffffff;
   box-shadow: 0px 2px 18px rgba(0, 0, 0, 0.1);
@@ -93,7 +137,7 @@ export default {
 
   color: #7f7e83;
 }
-.el-input__inner {
+.signup-input /deep/ .el-input__inner {
   background: #f4f4f4;
   height: 4vh; /*调整inner的高度*/
   width: 100%;

@@ -1,30 +1,38 @@
 <template>
   <div>
     <div style="box-shadow: 6px 6px 4px rgba(0, 0, 0, 0.25)">
-      <div style="height: 583px; width: 327px; float: left">
-        <img src="../HomePage_svg/left-bar.svg" />
-      </div>
-      <div style="height: 583px; width: 40vw; float: left">
-        <div style="float: right">
-          <img src="../HomePage_svg/close.svg" />
+      <el-dialog class="login"
+        :visible.sync="login_visible"
+        :showClose=false
+        width=53.5vw height=583px
+        :before-close="handleClose"
+      >
+        <div style=" width: 327px; height: 583px; display: inline-block; vertical-align: top">
+          <img src="../HomePage_svg/left-bar.svg"/>
         </div>
-        <div class="background">
-          <div class="title1">登录</div>
-          <div class="title2">欢迎登录 I Share!</div>
-          <div class="text">用户名</div>
-          <el-input v-model="input_name" placeholder="请输入用户名"></el-input>
-          <div class="text">密码</div>
-          <el-input v-model="input_pwd" placeholder="请输入密码"></el-input>
+        <div style="width: 32vw; height: 583px; display: inline-block; vertical-align: top">
+          <div style="float: right"  @click="close">
+            <img src="../HomePage_svg/close.svg" />
+          </div>
+          <div class="background">
+            <div class="title1">登录</div>
+            <div class="title2">欢迎登录 I Share!</div>
 
-          <div class="button">登录</div>
-          <div class="text" style="text-align: center">
-            没有账号？
-            <span style="color: #217bf4; text-decoration: underline"
-              >去注册</span
-            >
+            <div class="text">用户名</div>
+            <el-input class="login-input" v-model="input_name" placeholder="请输入用户名"></el-input>
+            <div class="text">密码</div>
+            <el-input class="login-input" v-model="input_pwd" placeholder="请输入密码"></el-input>
+
+            <div class="button">登录</div>
+            <div class="text" style="text-align: center">
+              没有账号？
+              <span style="color: #217bf4; text-decoration: underline"
+                @click="goto_signup">去注册</span
+              >
+            </div>
           </div>
         </div>
-      </div>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -37,15 +45,40 @@ export default {
     return {
       input_name: "",
       input_pwd: "",
+      login_visible: false,
     };
   },
   setup() {},
+
+  methods: {
+    init() {
+      console.log("打开登录组件");
+      this.login_visible = true;
+    },
+    close() {
+      console.log("关闭登录组件");
+      this.login_visible = false;
+    },
+    goto_signup(){
+      console.log("去注册组件");
+      this.login_visible = false;
+      this.$parent.open_signup();
+    }
+  },
 };
 </script>
 
-<style>
+<style scoped>
+.login /deep/ .el-dialog__header{
+  padding: 0;
+}
+.login /deep/ .el-dialog__body{
+  padding: 0;
+}
+
 .background {
-  margin: 15% 13%;
+  margin:16% auto;
+  /* margin: 15% 13%; */
   padding: 4vh;
   width: 70%;
   height: 70%;
@@ -87,7 +120,7 @@ export default {
 
   color: #7f7e83;
 }
-.el-input__inner {
+.login-input /deep/ .el-input__inner {
   background: #f4f4f4;
   height: 4vh; /*调整inner的高度*/
   width: 100%;

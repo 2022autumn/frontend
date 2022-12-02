@@ -90,7 +90,7 @@
 
   font-weight: 700;
   font-size: 14px;
-  line-height: 35px;
+  line-height: 4vh;
   text-align: center;
   letter-spacing: 0.01em;
 
@@ -98,19 +98,17 @@
 }
 .item-title {
   float: left;
-  padding-top: 4px;
   font-weight: 600;
   font-size: 24px;
-  line-height: 26px;
-  /* or 108% */
+  line-height: 108%;
   color: #2f2c4a;
 }
 .item-info {
   /* text-align: left; */
   vertical-align: top;
   padding-left: 2%;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
   width: 100%;
 
   font-weight: 500;
@@ -123,7 +121,7 @@
   width: auto;
   /* margin: auto; */
   padding-left: 15px;
-  padding-bottom: 8px;
+  padding-bottom: 2vh;
 
   align-items: center;
   text-align: left;

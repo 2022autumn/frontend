@@ -96,9 +96,9 @@ const routes = [
   },
 
   {
-    path:'/testadmin',
-    name:'adminCard ',
-    component:() => import('../components/admin')
+    path:'/testzmx',
+    name:'testzmx',
+    component:() => import('../components/scholarSite')
   },
   {
     path:'/testscholar',

@@ -12,8 +12,10 @@
 
           <div style="margin-top: 7vh; margin-bottom: 5vh;display: inline-block">
             <div style="text-align: center">
-              <el-input placeholder="请输入检索内容" v-model="input1">
-                <template slot="prepend" @click="jadvance" style="cursor: pointer">高级检索</template>
+              <el-input class="home-search" placeholder="请输入检索内容" v-model="input1">
+                <template slot="prepend" style="cursor: pointer">
+                  <span @click="jadvance" style="width:inherit">高级检索</span>
+                </template>
                  <i slot="suffix" class="el-input__icon el-icon-search" @click="j_search_outcome"></i>
               </el-input>
             </div>
@@ -85,7 +87,7 @@
             <span>
               <img
                 src="../../HomePage_svg/top-right.svg"
-                style="width: 50%; height: 50%; margin-bottom: 14%"
+                style="width: 50%; height: 50%; margin-bottom: 20%"
             /></span>
           </div>
         </el-col>
@@ -256,7 +258,7 @@ export default {
 // @ is an alias to /src
 </script>
 
-<style>
+<style scoped>
 .top-background {
   display: inline-block;
   text-align: center;
@@ -301,29 +303,33 @@ export default {
 }
 
 /* 搜索框样式 */
-.el-input-group__prepend {
+.home-search /deep/ .el-input-group__prepend {
   background: rgba(117, 167, 235, 0.52);
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
-  color: #fcfcff;
+  /* color: #fcfcff; */
+  color: #ffffff;
 }
-.el-input__inner {
+.home-search /deep/ .el-input__inner {
   background: rgba(117, 167, 235, 0.52);
   height: 45px; /*调整inner的高度*/
   width: 500px;
-  border-radius: 7px;
 }
-.el-input__inner::placeholder {
+.home-search /deep/ .el-input__inner::placeholder {
   font-weight: 300;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 18px;
   color: #fcfcff;
 }
-.el-input__icon {
-  width: 40px;
+.home-search /deep/ .el-input__icon {
+  width: 3vw;
+  font-size: large;
+  line-height: 24px;
 }
-.el-input__suffix {
+.home-search /deep/ :before{
+  vertical-align: middle;
+}
+.home-search /deep/ .el-input__suffix {
   color: white;
 }
 
