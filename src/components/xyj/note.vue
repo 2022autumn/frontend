@@ -31,6 +31,20 @@
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "note",
+  mounted(){
+    this.$axios({//注意是this.$axios
+      method:'get',
+      url:'/es/get',
+      params:{//get请求这里是params
+        id:"W1678408692"
+      }
+    }).then(
+        response =>{
+
+        }
+    )
+
+  },
   methods:{},
   data(){
     return{

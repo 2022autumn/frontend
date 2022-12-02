@@ -1,7 +1,7 @@
 <template>
   <div class="re-total">
-    <div class="title">引用文献</div>
-    <div class="title-en">Reference</div>
+    <div class="title">相关文献</div>
+    <div class="title-en">Related Literature</div>
     <div class="ref-box-set">
       <div class="ref-box" v-for="(item,index) in refer" :key="index">
         <div class="index-box">
@@ -29,11 +29,12 @@ export default {
       method:'get',
       url:'/es/get',
       params:{//get请求这里是params
-        id:"W2914747780"
+        id:"W1678408692"
       }
-    }).then(response => {
+    }).then(
+        response => {
           console.log(response.data);
-          this.refer = response.data.data.referenced_works;
+          this.refer = response.data.data.related_works;
         }
     )
   },
@@ -81,9 +82,9 @@ export default {
 }
 .title-en{
   position: absolute;
-  width: 84px;
+  width: 150px;
   height: 26px;
-  left: 800px;
+  left: 750px;
   top: 32px;
 
   font-family: 'Poppins';
@@ -116,7 +117,7 @@ export default {
   left: 50px;
   top: 50px;
 
-  background: #E7F2FD;
+  background: #EFF1FE;
   border-radius: 4px;
 
 }
@@ -135,7 +136,8 @@ export default {
 
   /* identical to box height, or 144% */
 
-  color: #0E84F4;
+  color: #6C7497;
+
 }
 .content{
   display: flex;
