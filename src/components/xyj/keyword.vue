@@ -2,12 +2,12 @@
   <div class="key-total">
     <div class="title">关键词</div>
     <div class="title-en">Keywords</div>
-    <div class="box-set">
+    <div class="box-set" v-infinite-scroll="load">
       <div class="keyword-box" v-for="(item,index) in keywords" :key="index">
-        <div class="keyword">{{item}}</div>
+        <div class="keyword">{{item.display_name}}</div>
       </div>
     </div>
-    <div class="line"></div>
+    <!--div class="line"></div>
     <div class="define-key">自定义标签</div>
     <div class="define-box-set">
       <div class="define-box" v-for="(item,index) in definekey" :key="index">
@@ -22,7 +22,7 @@
           <div class="define">添加标签...</div>
         </div>
       </div>
-    </div>
+    </div-->
 
   </div>
 </template>
@@ -31,6 +31,20 @@
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'keyword',
+  mounted(){
+    this.$axios({//注意是this.$axios
+      method:'get',
+      url:'/es/get',
+      params:{//get请求这里是params
+        id:"W1678408692"
+  }
+  }).then(
+        response =>{
+          this.keywords=response.data.data.concepts;
+        }
+    )
+
+  },
   methods:{
 
   },
@@ -48,7 +62,7 @@ export default {
 .key-total{
   position: absolute;
   width: 392px;
-  height: auto;
+  height: 350px;
   top: 65px;
   background: #FFFFFF;
   box-shadow: -2px 4px 4px rgba(0, 0, 0, 0.25);
@@ -86,29 +100,46 @@ export default {
 }
 .box-set{
   display: flex;
-  width: 360px;
-  padding-top:71px;
+  position: relative;
+  width: 385px;
   flex-wrap: wrap;
+  padding-left:10px ;
+  top:71px;
+  overflow-y:scroll;
+  overflow-x: hidden;
+  height: 265px;
+  padding-bottom: 20px;
 }
+::-webkit-scrollbar {
 
+  width: 7px;
+  height: 18px;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb {
+  width: 7px;
+  height: 20px;
+  background-color: #E8E8E8;
+  border-radius: 8px;
+}
 .keyword-box{
   display: flex;
   padding-top: 12px;
-  padding-left: 33px;
+  padding-left: 20px;
   flex-wrap: wrap;
 }
 .keyword{
   display: flex;
-  left: 21px;
+  left: 15px;
   padding-top: 6px;
   padding-bottom: 4px;
-  padding-left: 18px;
+  padding-left: 15px;
   padding-right: 18px;
   background: #F5F8FC;
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 10px;
   line-height: 26px;
   align-items: center;
   justify-content: center;

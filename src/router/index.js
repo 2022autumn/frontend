@@ -117,9 +117,9 @@ const routes = [
     component:() => import('../components/xyj/collect')
   },,
   {
-    path:'/collectDetail',
-    name:'collectDetail',
-    component:() => import('../components/xyj/collectDetail')
+    path:'/reference',
+    name:'reference',
+    component:() => import('../components/xyj/related')
   }
 ]
 
