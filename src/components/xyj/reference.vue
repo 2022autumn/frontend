@@ -25,11 +25,12 @@ export default {
 
   },
   mounted(){
+    console.log(window.localStorage.getItem('WID'))
     this.$axios({//注意是this.$axios
       method:'get',
       url:'/es/get',
-      params:{//get请求这里是params
-        id:"W2914747780"
+      params:{//get请求这里是param
+        id:window.localStorage.getItem('WID'),
       }
     }).then(response => {
           console.log(response.data);

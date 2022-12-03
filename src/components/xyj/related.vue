@@ -29,7 +29,7 @@ export default {
       method:'get',
       url:'/es/get',
       params:{//get请求这里是params
-        id:"W1678408692"
+        id:window.localStorage.getItem('WID'),
       }
     }).then(
         response => {
