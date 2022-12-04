@@ -3,7 +3,7 @@
     <div class="main">
       <div class="paper-header">
           <div class="title">
-            <div class="title-txt">疫情冲击下的2020年中国经济形势与政策选择
+            <div class="title-txt">{{ this.paper.paperTitle }}
               <div class="paper-type">期刊</div>
             </div>
           </div>
@@ -155,7 +155,8 @@ export default {
         paperTitle: "",
         paperFrom: "",
         paperUnit: "",
-        height: ""
+        height: "",
+        authors:[],
       }
 
 
@@ -174,6 +175,20 @@ export default {
   // 挂载时获取
   mounted() {
     let height= this.$refs.ref.offsetHeight;  //100
+    this.$axios({//注意是this.$axios
+      method:'get',
+      url:'/es/get',
+      params:{//get请求这里是params
+        id:window.localStorage.getItem('WID')
+      }
+    }).then(
+        response =>{
+          console.log(response.data);
+          this.paper.paperTitle=response.data.data.title
+          this.paper.type=response.data.data.type
+          this.paper.authors=response.data.data.authorships
+        }
+    )
   },
   getPapaerDetail() {
     let that = this;
@@ -181,11 +196,13 @@ export default {
       method:'get',
       url:'/es/get',
       params:{//get请求这里是params
-        id:"W1678408692"
+        id:window.localStorage.getItem('WID')
       }
       }).then(
             response =>{
               console.log(response.data);
+              this.paper.paperTitle=response.data.data.title
+              console.log(response.data.data.title)
             }
         )
   },

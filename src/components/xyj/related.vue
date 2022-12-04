@@ -36,7 +36,7 @@ export default {
       }
     }).then(
         response => {
-          console.log(response.data);
+          //console.log(response.data);
           this.refer = response.data.data.related_works;
           if(this.refer===null){
             this.have_refer=false;

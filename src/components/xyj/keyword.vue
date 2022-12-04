@@ -33,7 +33,7 @@ export default {
   name: 'keyword',
   mounted(){
     var wid=window.localStorage.getItem('WID')
-    console.log(wid)
+    //console.log(wid)
     this.$axios({//注意是this.$axios
       method:'get',
       url:'/es/get',

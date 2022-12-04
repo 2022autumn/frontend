@@ -36,12 +36,12 @@ export default {
         id:window.localStorage.getItem('WID'),
       }
     }).then(response => {
-          console.log(response.data);
+          //console.log(response.data);
           this.refer = response.data.data.referenced_works;
           if(this.refer===null){
             this.have_refer=false;
           }
-          console.log(this.have_refer)
+          //console.log(this.have_refer)
         }
     )
   },
