@@ -56,7 +56,7 @@ export default {
 <style scoped>
 .re-total{
   position: absolute;
-  width: 950px;
+  width: 900px;
   height: auto;
   overflow-y: auto;
   background: #FFFFFF;
