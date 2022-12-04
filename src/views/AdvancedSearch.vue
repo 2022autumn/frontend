@@ -32,9 +32,15 @@
                     <div>
                         <FilterBar ref="bar3"/>
                     </div>
-                    <div class="box-word" style="margin-top: 4%;margin-left: 6%;">
+                  <div>
+                    <FilterBar ref="bar4"/>
+                  </div>
+                  <div>
+                    <FilterBar ref="bar5"/>
+                  </div>
+                   <!--<div class="box-word" style="margin-top: 4%;margin-left: 6%;">
                             设定时间范围
-                    </div>
+                    </div>-->
                     <!--<div style="margin-left: 15%;margin-top: 3%;">
                         <el-checkbox v-model="checked4">
                             <div style="display: inline-block;font-size:15px;">
@@ -107,6 +113,9 @@
                     <div>&nbsp;</div>
                     <div>&nbsp;</div>-->
                     <div>
+                      &nbsp
+                    </div>
+                    <div>
                         <el-button  style="display:block;margin:0 auto" class="search-button" @click="search">搜索</el-button>
                     </div>
 
@@ -175,10 +184,20 @@ export default {
       case3.content = this.$refs.bar3.input;
       case3.logic = this.$refs.bar3.value1;
      // console.log(case3);
+      var case4 = {};
+      case4.field = this.$refs.bar4.value;
+      case4.content = this.$refs.bar4.input;
+      case4.logic = this.$refs.bar4.value1;
+      var case5 = {};
+      case5.field = this.$refs.bar5.value;
+      case5.content = this.$refs.bar5.input;
+      case5.logic = this.$refs.bar5.value1;
       this.query.length=0;
       this.query.push(case1);
       this.query.push(case2);
       this.query.push(case3);
+      this.query.push(case4);
+      this.query.push(case5);
       console.log(this.query);
       sessionStorage.setItem('query',JSON.stringify(this.query));
       this.$router.push('/advanced_outcome');

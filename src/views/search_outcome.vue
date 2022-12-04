@@ -547,6 +547,7 @@ export default {
   created() {
     this.conds = JSON.parse(sessionStorage.getItem('Cond'));
     this.now_page = JSON.parse(sessionStorage.getItem('now_page'));
+    this.openFullScreen2();
     this.search();
     /*if(this.total%4===0){
       this.total_page = this.total/8*10;

@@ -18,7 +18,7 @@
         </div>
       </el-col>-->
       <el-col :span="17" >
-        <div class="hot-list" style="margin-top: 150px">
+        <div class="hot-list" style="margin-top: 130px">
           <div>&nbsp;</div>
           <div class="box-word" style="margin-left: 4%;">
             搜索内容
@@ -31,6 +31,12 @@
           </div>
           <div>
             <FilterBar ref="bar3" :logic="this.params2.logic" :field="this.params2.field" :content="this.params2.content"/>
+          </div>
+          <div>
+            <FilterBar ref="bar4" :logic="this.params3.logic" :field="this.params3.field" :content="this.params3.content"/>
+          </div>
+          <div>
+            <FilterBar ref="bar5" :logic="this.params4.logic" :field="this.params4.field" :content="this.params4.content"/>
           </div>
           <!--<div class="box-word" style="margin-top: 4%;margin-left: 6%;">
             设定时间范围
@@ -106,7 +112,7 @@
           </div>
           <div>&nbsp;</div>
           <div>&nbsp;</div>-->
-          <div style="height: 5vh"></div>
+          <div style="height: 2vh"></div>
           <div>
             <el-button  style="display:block;margin:0 auto" class="search-button" @click="search">搜索</el-button>
           </div>
@@ -151,6 +157,8 @@ export default {
       params0:{},
       params1:{},
       params2:{},
+      params3:{},
+      params4:{},
     };
   },
   methods: {
@@ -175,11 +183,21 @@ export default {
       case3.field = this.$refs.bar3.value;
       case3.content = this.$refs.bar3.input;
       case3.logic = this.$refs.bar3.value1;
+      var case4 = {};
+      case4.field = this.$refs.bar4.value;
+      case4.content = this.$refs.bar4.input;
+      case4.logic = this.$refs.bar4.value1;
+      var case5 = {};
+      case5.field = this.$refs.bar5.value;
+      case5.content = this.$refs.bar5.input;
+      case5.logic = this.$refs.bar5.value1;
       // console.log(case3);
       this.query.length=0;
       this.query.push(case1);
       this.query.push(case2);
       this.query.push(case3);
+      this.query.push(case4);
+      this.query.push(case5);
       console.log("component query is:");
       console.log(this.query);
       sessionStorage.setItem('query',JSON.stringify(this.query));
@@ -194,10 +212,14 @@ export default {
     this.params0 = query[0];
     this.params1 = query[1];
     this.params2 = query[2];
+    this.params3 = query[3];
+    this.params4 = query[4];
     console.log("wait params is:");
     console.log(this.params0);
     console.log(this.params1);
     console.log(this.params2);
+    console.log(this.params3);
+    console.log(this.params4);
   }
 }
 </script>
@@ -240,7 +262,7 @@ export default {
   margin: auto;
   padding: auto;
   width: 100%;
-  height: 400px;
+  height: 500px;
 
   background: #ffffff;
   box-shadow: 7px 7px 7px 7px rgba(0, 0, 0, 0.25);
