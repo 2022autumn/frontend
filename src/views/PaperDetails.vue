@@ -56,6 +56,12 @@
           </div>
         </div>
       </div>
+      <div class="ref">
+        <reference ref="ref"/>
+      </div>
+      <div class="relate">
+        <related />
+      </div>
       <div class="review">
         <div class="commend-title">评论区  Comments</div>
         <div class="comment-tools">
@@ -122,12 +128,13 @@
       </div>
     </div>
     <div class="right-sider">
+      <div class="recent">
+
+      </div>
       <div class="key">
         <keyword />
       </div>
-      <div class="ref">
-        <reference />
-      </div>
+
       <div class="notes">
         <note />
       </div>
@@ -139,6 +146,7 @@
 import Note from "@/components/xyj/note";
 import Keyword from "@/components/xyj/keyword";
 import Reference from "@/components/xyj/reference";
+import Related from "@/components/xyj/related";
 export default {
   name: "paperDetails",
   data() {
@@ -147,6 +155,7 @@ export default {
         paperTitle: "",
         paperFrom: "",
         paperUnit: "",
+        height: ""
       }
 
 
@@ -156,6 +165,7 @@ export default {
     Reference,
     Keyword,
     Note,
+    Related
   },
   methods: {
 
@@ -163,6 +173,7 @@ export default {
   },
   // 挂载时获取
   mounted() {
+    let height= this.$refs.ref.offsetHeight;  //100
   },
   getPapaerDetail() {
     let that = this;
@@ -201,7 +212,7 @@ export default {
 }
 .main {
   //padding-left: 44px; //44px
-  padding-left: 2.84vw;
+  padding-left: 4.84vw;
   //display: flex;
   width: 59.64vw;
 }
@@ -209,7 +220,7 @@ export default {
   width: 100%;
   //padding-top: 61px;
   padding-top: 7.92vh;
-  padding-left: 2.45vw;
+  padding-left: 0.45vw;
   height: 44.66vh;
   border-bottom: 0.5px solid rgba(171, 169, 169, 0.51);
 }
@@ -368,7 +379,7 @@ export default {
   padding-top: 1.69vh;
   text-align: left;
   height: 5.06vh;
-  padding-left: 2.45vw;
+  padding-left: 4.45vw;
   margin-top: 1.69vh;
   margin-bottom: 3.77vh;
   font-family: 'Poppins';
@@ -380,9 +391,9 @@ export default {
 }
 .abstract-body {
   text-align: left;
-  width: 46.02vw;
+  width: 50.02vw;
   padding-bottom: 3.77vh;
-  padding-left: 2.45vw;
+  padding-left: 4.45vw;
 }
 .row {
   background: url("~@/assets/paperDetailsImg/Vector (1).png");
@@ -395,7 +406,7 @@ export default {
   display: block;
   //width: 100%;
   min-height: 37vh;
-  width: 51.12vw;
+  width: 55.12vw;
   margin-top: 6.49vh;
   padding-top: 3.64vh;
   padding-left: 2vw;
@@ -533,6 +544,12 @@ export default {
   margin-top: 9.61vh;
   margin-left: 1.74vw;
   width: 39.37vw;
+
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 26px;
 }
 .comment-divider {
   position: relative;
@@ -622,17 +639,26 @@ export default {
   height: auto;
 }
 .ref {
+  display: block;
   float: left;
-  margin-top: 62.31vh;
+  margin-top: 40px;
   width: 100%;
-  max-height: 400px;
+  height: 450px;
+  margin-right: 0vw;
+}
+.relate {
+  display: block;
+  float: left;
+  margin-top: 80px;
+  width: 100%;
+  height: 450px;
   margin-right: 0vw;
 }
 .notes {
   width: 100%;
   height: auto;
-  margin-top: 118vh;
-  margin-bottom: 10vh;
+  margin-top: 60vh;
+  //margin-bottom: 10vh;
   clear: both;
 }
 </style>
