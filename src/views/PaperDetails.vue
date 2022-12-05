@@ -8,14 +8,18 @@
             </div>
           </div>
           <div class=" info location">
-            <span>北京航空航天大学xx实验室</span>
+            <!--<span>北京航空航天大学xx实验室</span>-->
+            {{this.paper.institution}}
           </div>
-          <div class=" info authors">
-            <span>作者名字1； 作者名字2； 作者名字3；</span>
+          <div class=" info authors" @click="jscholar" style="cursor: pointer">
+            <!--<span>作者名字1； 作者名字2； 作者名字3；</span>-->
+            <!--<span>{{this.paper.authors[0].author.display_name}}</span>-->
+            {{this.author_name}}
           </div>
           <div class="info">
             <div class="info2 time">
-              发表时间：2022年01月06日
+              <!--发表时间：2022年01月06日-->
+              {{this.paper.date}}
             </div>
             <div class="info2 divide">
               |
@@ -24,7 +28,7 @@
               发表期刊：{{ this.paper.host_venue.display_name }}
             </div>
             <div class="info2 divide">
-              |
+
             </div>
             <div class="info2 cite">
               被引次数：{{ this.paper.cited_counts }}
@@ -159,9 +163,11 @@ export default {
         authors:[],
         abstract:"",
         cited_counts:0,
-        host_venue:""
-      }
-
+        host_venue:"",
+        institution:""
+      },
+      author_name:'',
+      author_id:0,
 
     };
   },
@@ -172,7 +178,10 @@ export default {
     Related
   },
   methods: {
-
+    jscholar(){
+      window.localStorage.setItem('SID',this.author_id);
+      window.open('/scholar_page');
+    }
 
   },
   // 挂载时获取
@@ -190,10 +199,21 @@ export default {
           this.paper.paperTitle=response.data.data.title
           this.paper.type=response.data.data.type
           this.paper.authors=response.data.data.authorships
+          console.log(this.paper.authors[0].author.id)
+          this.author_name= this.paper.authors[0].author.display_name//存储作者名称
+          this.author_id = this.paper.authors[0].author.id//存储作者id
           this.paper.date=response.data.data.publication_date
           this.paper.abstract=response.data.data.abstract
           this.paper.cited_counts=response.data.data.cited_by_count
           this.paper.host_venue=response.data.data.host_venue
+          console.log("author institution is:")
+          console.log(this.paper.authors[0].institutions)
+          if(this.paper.authors[0].institutions.length===0){
+            this.paper.institution = "No belonged institution";
+          }
+          else{
+            this.paper.institution = this.paper.authors[0].institutions[0].display_name;
+          }
         }
     )
   },

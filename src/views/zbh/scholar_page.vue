@@ -91,7 +91,8 @@ export default {
       num_exact_page:8,
       total: 1000,//返回的检索结果的总量
       total_page:0,
-      id: "A4261893083",
+      //id: "A4261893083",
+      id: window.localStorage.getItem('SID'),
       scholarInfo: {
         cited_by_count: 0,
         counts_by_year: [
@@ -261,6 +262,7 @@ export default {
   },
   mounted() {
     let that = this;
+    console.log("id is "+this.id);
     that.$axios({
       method:'get',
       url:'/es/get',
@@ -271,6 +273,10 @@ export default {
         response=> {
           console.log("userinfo",response.data);
           this.scholarInfo = response.data.data;
+          //console.log("get userInfo", this.scholarInfo);
+          if(this.scholarInfo.last_known_institution===null){
+            this.scholarInfo.last_known_institution ="No belonged institution";
+          }
           console.log("get userInfo", this.scholarInfo);
           for (var i = 0; i<this.scholarInfo.x_concepts.length; i++) {
             this.areas = this.areas + this.scholarInfo.x_concepts[i].display_name;
