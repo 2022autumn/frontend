@@ -3,7 +3,7 @@
     <div class="main">
       <div class="paper-header">
           <div class="title">
-            <div class="title-txt">疫情冲击下的2020年中国经济形势与政策选择
+            <div class="title-txt">{{ this.paper.paperTitle }}
               <div class="paper-type">期刊</div>
             </div>
           </div>
@@ -21,13 +21,13 @@
               |
             </div>
             <div class="info2 book">
-              发表期刊：Anonymous
+              发表期刊：{{ this.paper.host_venue.display_name }}
             </div>
             <div class="info2 divide">
               |
             </div>
             <div class="info2 cite">
-              被引次数：51
+              被引次数：{{ this.paper.cited_counts }}
             </div>
           </div>
           <div class="buttons">
@@ -52,7 +52,7 @@
             摘要Abstract
           </div>
           <div class="abstract-body">
-            A three-pole 10-T superconducting wiggler was installed in the 8-GeV electron storage ring at SPring-8 for generating high-energy synchrotron radiation. Beam tests were carried out to check its performance and to investigate the effects on a stored beam. A beam was successfully stored at magnetic fields of the wiggler up to 9.7 T. The beam current was limited to 1 mA to avoid unnecessarily high heat-load on photon absorbers and radiation damage to accelerator components. Beam parameters such as a horizontal beam size, a bunch length, betatron tune shifts were measured. A spectrum of high-energy synchrotron radiation from the wiggler was also measured with the NaI scintillator at an extremely low beam current of about 8 pA.
+            {{this.paper.abstract}}
           </div>
         </div>
       </div>
@@ -155,7 +155,11 @@ export default {
         paperTitle: "",
         paperFrom: "",
         paperUnit: "",
-        height: ""
+        height: "",
+        authors:[],
+        abstract:"",
+        cited_counts:0,
+        host_venue:""
       }
 
 
@@ -174,6 +178,24 @@ export default {
   // 挂载时获取
   mounted() {
     let height= this.$refs.ref.offsetHeight;  //100
+    this.$axios({//注意是this.$axios
+      method:'get',
+      url:'/es/get',
+      params:{//get请求这里是params
+        id:window.localStorage.getItem('WID')
+      }
+    }).then(
+        response =>{
+          console.log(response.data);
+          this.paper.paperTitle=response.data.data.title
+          this.paper.type=response.data.data.type
+          this.paper.authors=response.data.data.authorships
+          this.paper.date=response.data.data.publication_date
+          this.paper.abstract=response.data.data.abstract
+          this.paper.cited_counts=response.data.data.cited_by_count
+          this.paper.host_venue=response.data.data.host_venue
+        }
+    )
   },
   getPapaerDetail() {
     let that = this;
@@ -181,11 +203,13 @@ export default {
       method:'get',
       url:'/es/get',
       params:{//get请求这里是params
-        id:"W1678408692"
+        id:window.localStorage.getItem('WID')
       }
       }).then(
             response =>{
               console.log(response.data);
+              this.paper.paperTitle=response.data.data.title
+              console.log(response.data.data.title)
             }
         )
   },
