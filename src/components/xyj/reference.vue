@@ -2,7 +2,7 @@
   <div class="re-total">
     <div class="title">引用文献</div>
     <div class="title-en">Reference</div>
-    <div class="ref-box-set">
+    <div class="ref-box-set" >
       <div class="ref-box" v-for="(item,index) in refer" :key="index">
         <div class="index-box">
           <div class="index">{{ index+1 }}</div>
