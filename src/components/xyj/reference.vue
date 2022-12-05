@@ -4,7 +4,7 @@
     <div class="title-en">Reference</div>
 
     <div class="ref-box-set" v-infinite-scroll="load" v-if="have_refer===true">
- 
+
       <div class="ref-box" v-for="(item,index) in refer" :key="index">
         <div class="index-box">
           <div class="index">{{ index+1 }}</div>
@@ -66,7 +66,7 @@ export default {
 <style scoped>
 .re-total{
   position: absolute;
-  width: 920px;
+  width: 820px;
   height: 400px;
   background: #FFFFFF;
   box-shadow: -2px 4px 4px rgba(0, 0, 0, 0.25);
@@ -94,7 +94,7 @@ export default {
   position: absolute;
   width: 84px;
   height: 26px;
-  left: 790px;
+  left: 690px;
   top: 32px;
 
   font-family: 'Poppins';
