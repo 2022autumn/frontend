@@ -34,11 +34,12 @@
               被引次数：{{ this.paper.cited_counts }}
             </div>
           </div>
+        <div style="clear: both"></div>
           <div class="buttons">
-            <el-button class="original" icon="el-icon-my-origin">
-<!--              <img src="../assets/paperDetailsImg/original.png"-->
-<!--              style="margin-left: -1.4vw">-->
-<!--            <el-button class="original">-->
+<!--            <el-button class="original" icon="el-icon-my-origin">-->
+            <el-button class="original">
+              <img src="../assets/paperDetailsImg/original.png"
+                   style="margin-left: 0vw">
               原文地址
             </el-button>
             <div class="right-buttons">
@@ -265,7 +266,8 @@ export default {
   //padding-top: 61px;
   padding-top: 7.92vh;
   padding-left: 0.45vw;
-  height: 44.66vh;
+  padding-bottom: 3.5vh;
+  height: auto;
   border-bottom: 0.5px solid rgba(171, 169, 169, 0.51);
 }
 .title {
@@ -278,10 +280,11 @@ export default {
   font-size: 2.32vw;
   font-weight: 600;
   line-height: 5.71vh;
-  width: 43.37vw;
+  width: 48.37vw;
 }
 
 .paper-type {
+  margin-top: 0px;
   display: inline-block;
   width: 2.78vw;
   height: 3.38vh;
@@ -299,7 +302,7 @@ export default {
 .info {
   margin-top: 1.04vh;
   text-align: left;
-  height: 3.38vh;
+  min-height: 3.38vh;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
@@ -308,19 +311,30 @@ export default {
   background: transparent !important;
 }
 .info2 {
+
   float: left;
   margin-top: 1.04vh;
   text-align: left;
-  height: 3.38vh;
+  height: auto;
+  min-height: 3.38vh;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-size: 2.08vh;
   line-height: 3.38vh;
   margin-right: 1.81vw;
+  padding: 0 0 0 0;
+}
+.info2 #outer:after{
+content:".";
+height:0;
+visibility:hidden;
+display:block;
+clear:both;
 }
 .buttons {
   width: 100%;
+  margin-top: 2vh;
   padding-top: 2.86vh;
   height: 8.19vh;
   vertical-align: center;
@@ -345,8 +359,13 @@ export default {
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
-  line-height: 2.93vh;
+  line-height: 4.93vh;
   color: #FFFFFF;
+}
+.original img {
+  float: left;
+  padding-left: 10px;
+  margin-top: 6px;
 }
 .right-buttons {
   float: right;
@@ -435,7 +454,7 @@ export default {
 }
 .abstract-body {
   text-align: left;
-  width: 50.02vw;
+  width: 54.02vw;
   padding-bottom: 3.77vh;
   padding-left: 4.45vw;
 }
@@ -709,5 +728,8 @@ export default {
 <style>
 .el-input__inner {
   border: none !important;
+}
+.original {
+  padding: 0 2px 2px 0 !important;
 }
 </style>
