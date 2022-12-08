@@ -70,14 +70,16 @@
           </b>
         </div>
         <div>
-          <div style="display: inline-block;margin-top: 1vh;color: grey">
-            {{item.author}}&nbsp;&nbsp;|
+          <div style="display: inline-block;margin-top: 1vh;color: grey" v-for="aus in item.authors">
+            {{aus}}&nbsp;&nbsp;&nbsp;&nbsp;
           </div>
-          <div style="display: inline-block;color: grey">
-            &nbsp;&nbsp;{{item.institution}}&nbsp;&nbsp;|
+          <div>
+          <div style="display: inline-block; color: grey">
+            {{item.institution}}&nbsp;&nbsp;|
           </div>
           <div style="display: inline-block;color: grey">
             &nbsp;&nbsp;{{item.time}}
+          </div>
           </div>
         </div>
         <div style="font-size: small;color: grey">
@@ -163,6 +165,7 @@ export default {
           numyin:0,
           numstore:0,
           id:"",
+          authors:[]
         },
         {
           type:"期刊",
@@ -179,6 +182,7 @@ export default {
           numyin:0,
           numstore:0,
           id:"",
+          authors:[]
         },
         {
           type:"期刊",
@@ -195,6 +199,7 @@ export default {
           numyin:0,
           numstore:0,
           id:"",
+          authors:[]
         },
         {
           type:"期刊",
@@ -211,6 +216,7 @@ export default {
           numyin:0,
           numstore:0,
           id:"",
+          authors:[]
         },
         {
           type:"期刊",
@@ -227,6 +233,7 @@ export default {
           numyin:0,
           numstore:0,
           id:"",
+          authors:[]
         },
         {
           type:"期刊",
@@ -243,6 +250,7 @@ export default {
           numyin:0,
           numstore:0,
           id:"",
+          authors:[]
         },
         {
           type:"期刊",
@@ -259,6 +267,7 @@ export default {
           numyin:0,
           numstore:0,
           id:"",
+          authors:[]
         },
         {
           type:"期刊",
@@ -275,6 +284,7 @@ export default {
           numyin:0,
           numstore:0,
           id:"",
+          authors:[]
         }
       ],
       authors:[],
@@ -516,6 +526,13 @@ export default {
                 //console.log(this.items[i].id);
                 if(response.data.res.Works[i].authorships.length!==0) {
                   this.items[i].author = response.data.res.Works[i].authorships[0].author.display_name;
+                  var t = response.data.res.Works[i].authorships.length;
+                  if(t>3){
+                    t=3;
+                  }
+                  for(var j=0;j<t;j++){
+                    this.items[i].authors[j] = response.data.res.Works[i].authorships[j].author.display_name;
+                  }
                 }
                 else{
                   this.items[i].author = "unknown"
