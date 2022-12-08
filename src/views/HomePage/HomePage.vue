@@ -13,9 +13,9 @@
           <div style="margin-top: 7vh; margin-bottom: 5vh;display: inline-block">
             <div style="text-align: center">
               <el-input class="home-search" placeholder="请输入检索内容" v-model="input1">
-                <template slot="prepend" style="cursor: pointer">
+                <!--<template slot="prepend" style="cursor: pointer">
                   <span @click="jadvance" style="width:inherit">高级检索</span>
-                </template>
+                </template>-->
                  <i slot="suffix" class="el-input__icon el-icon-search" @click="j_search_outcome"></i>
               </el-input>
             </div>

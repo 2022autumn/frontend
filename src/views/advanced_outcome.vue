@@ -70,7 +70,7 @@
       </el-card>
     </div>
     <div style="position:absolute;left:40vw;height: 88vh;top:20vh;width: 55vw;">
-      <div v-for="item in items" v-if="item.id!==''" style="width: 50vw;height:35vh;" @click="jdetail">
+      <div v-for="item in items" v-if="item.id!==''" style="width: 50vw;height:35vh;" @click="jdetail(item.id)">
         <el-card  style="width: 50vw;height:30vh;background-color: lightcyan;cursor: pointer;" shadow="hover">
           <el-tag style="display: inline-block">{{item.type}}</el-tag>
           <div style="display: inline-block;font-size: large;">
@@ -316,7 +316,10 @@ export default {
         loading.close();
       }, 1100);
     },
-    jdetail(){
+    jdetail(id){
+      console.log("文章id为:");
+      console.log(id);
+      window.localStorage.setItem('WID',id);
       window.open('/paper_details');
     },
     choose_change(){
