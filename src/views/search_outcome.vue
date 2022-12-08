@@ -551,7 +551,7 @@ export default {
                 }
                 this.items[i].type =  response.data.res.Works[i].type;
                 if(this.items[i].type === null){
-                  this.items[i].type = "undefined"
+                  this.items[i].type = "unknown"
                 }
                 this.items[i].numyin = response.data.res.Works[i].cited_by_count;
                 this.items[i].numstore = Math.ceil(Math.random()*100);
