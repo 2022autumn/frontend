@@ -16,9 +16,9 @@
                     </el-dropdown>
                 </div>
             </el-col>-->
-          <el-col :span="3">
-            <div style="margin-top: 10px; margin-left: 10%">
-              <el-select v-model="value1" placeholder="AND">
+          <el-col :span="3" >
+            <div style="margin-top: 10px; margin-left: 10%" >
+              <el-select v-model="value1" placeholder="AND" v-if="this.iftop!==1">
                 <el-option
                     v-for="item in options1"
                     :key="item.value"
@@ -66,7 +66,7 @@
 <script>
 export default {
   name: "filterBar",
-  props:['logic','field','content'],
+  props:['logic','field','content','iftop'],
 data() {
   return {
         input:"",

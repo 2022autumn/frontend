@@ -24,7 +24,7 @@
                             搜索内容
                     </div>
                     <div>
-                        <FilterBar ref="bar1"/>
+                        <FilterBar ref="bar1" :iftop="1"/>
                     </div>
                     <div>
                         <FilterBar ref="bar2"/>
@@ -172,7 +172,7 @@ export default {
       var case1 = {};
       case1.field = this.$refs.bar1.value;
       case1.content = this.$refs.bar1.input;
-      case1.logic = this.$refs.bar1.value1;
+      case1.logic = "and";
       //console.log(case1);
       var case2 = {};
       case2.field = this.$refs.bar2.value;
