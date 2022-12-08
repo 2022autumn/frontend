@@ -5,7 +5,7 @@
         {{scholarInfo.display_name}}
     </span>
       <span class="scholar_institution">
-        {{scholarInfo.last_known_institution.display_name}}
+        {{scholarInfo.last_known_institution===null?"":scholarInfo.last_known_institution.display_name}}
     </span>
     </div>
     <div class="info_title">
@@ -28,7 +28,17 @@ export default {
   name: "scholar_p2",
   props: {
     scholarInfo: {
-      type: Object
+      type: Object,
+      default: {
+        scholarInfo: {
+          display_name: "scholarname",
+          areas: "areas",
+          last_known_institution: {
+            display_name: null
+          },
+          most_cited_work: "most_cited_work",
+        }
+      }
     },
     areas: ""
   },

@@ -66,7 +66,7 @@ export default {
   },
   data() {
     return {
-      xData: [ '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'],
+      xData: "",
       yData: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 10],
       myChartStyle: { float: "left", width: "100%", height: "100px"}, //图表样式
       newYData: []
@@ -87,6 +87,9 @@ export default {
     }
   },
   mounted() {
+    if(this.xData === ""){
+      this.xData = [ '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'];
+    }
     this.initEcharts();
   },
   created() {
@@ -169,7 +172,7 @@ export default {
                 //柱形图圆角，初始化效果
                 barBorderRadius:[2, 2, 2, 2],
                 color: function (params) {
-                  console.log("parapms",params);
+                  // console.log("parapms",params);
                   if(params.data < 1) {
                     return "#DFE7F6"
                   } else {

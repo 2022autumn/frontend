@@ -267,11 +267,11 @@ export default {
       method:'get',
       url:'/es/get',
       params:{
-        id: this.id
+        id: "A4220294553"
       }
     }).then(
         response=> {
-          console.log("userinfo",response.data);
+          // console.log("userinfo",response.data);
           this.scholarInfo = response.data.data;
           //console.log("get userInfo", this.scholarInfo);
           if(this.scholarInfo.last_known_institution===null){
