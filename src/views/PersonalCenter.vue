@@ -39,7 +39,20 @@
                     </div>
                     <div>
                         <div class="content grid1">
-                            <img src="../assets/Avatar.png" alt="">
+                            <img src="../assets/Avatar.png" alt="" v-if="this.ifedit===0">
+                          <el-upload
+                              v-if="this.ifedit===1"
+                              :http-request="upload_img"
+                              class="avatar-uploader"
+                              action="123"
+                              :show-file-list="false"
+                              :on-success="handleAvatarSuccess"
+                              :before-upload="beforeAvatarUpload"
+                              style="margin-left: -4vw;margin-top: 3vh"
+                          >
+                            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                          </el-upload>
                             <div>
                                 <div class="info-text">用户名：admin</div>
                                 <div class="info-text">个性签名：</div>
@@ -50,9 +63,12 @@
                                 <div class="info-text">我的兴趣词：</div>
                             </div>
                         </div>
-                        <div style="text-align: center;margin-top: 6vh">
-                            <el-button icon="el-icon-edit" class="btn" size="medium ">编辑信息</el-button>
+                        <div style="text-align: center;margin-top: 6vh" v-if="this.ifedit===0">
+                            <el-button icon="el-icon-edit" class="btn" size="medium " @click="inedit">编辑信息</el-button>
                         </div>
+                      <div style="text-align: center;margin-top: 6vh" v-if="this.ifedit===1">
+                        <el-button   class="btn" size="medium " @click="outedit">确认</el-button>
+                      </div>
                     </div>
                 </div>
                 <div v-show="activeIndex == 2" class="center">
@@ -183,13 +199,59 @@ export default{
     data(){
         return {
             activeIndex: 1,
-            show1:true
+            show1:true,
+            ifedit:0,
+          imageUrl: '',
+
         }
+    },
+    methods:{
+
+      handleAvatarSuccess(res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+        console.log("上传成功!");
+        //console.log(this.imageUrl);
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+      },
+      upload_img(file){
+        const formData = new FormData();
+        formData.append('file', file.file);
+        console.log(formData.get('file'));
+        this.$axios({//注意是this.$axios
+          method:'post',
+          url:'/user/headshot',
+          data:{//post请求这里是data
+              user_id:1,
+              Headshot:formData,
+          }
+        }).then(
+            res =>{
+              console.log(res.data.msg)
+            }
+        )
+      },
+      inedit(){
+        this.ifedit=1;
+      },
+      outedit(){
+        this.ifedit=0;
+      }
     }
 }
 </script>
 
-<style scoped>
+<style >
 .container-box{
     background-image: url(../assets/base.png);
     background-size: 100%;
@@ -432,4 +494,27 @@ export default{
 
         color: #2F2C4A;
     }
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
 </style>
