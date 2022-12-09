@@ -8,16 +8,16 @@
               <div class="paper-type">{{ this.paper.type }}</div>
             </span>
           </div>
-          <div class=" info location">
+          <div class=" info1 location">
             <!--<span>北京航空航天大学xx实验室</span>-->
             {{this.paper.institution}}
           </div>
-          <div class=" info authors" @click="jscholar" style="cursor: pointer">
+          <div class=" info1 authors" @click="jscholar" style="cursor: pointer">
             <!--<span>作者名字1； 作者名字2； 作者名字3；</span>-->
             <!--<span>{{this.paper.authors[0].author.display_name}}</span>-->
             {{this.author_name}}
           </div>
-          <div class="info">
+          <div class="info1">
             <div class="info2 time">
               <!--发表时间：2022年01月06日-->
               {{this.paper.date}}
@@ -87,7 +87,7 @@
       <div class="review">
         <div class="commend-title">评论区  Comments</div>
         <div class="comment-tools">
-          <div class="total-comments">共 5 条评论</div>
+          <div class="total-comments">共 {{ this.comment_num }} 条评论</div>
 <!--          <el-dropdown>-->
 <!--            <span class="filter-comments">-->
 <!--              筛选条件<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
@@ -107,6 +107,13 @@
               <el-dropdown-item>发布用户</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
+        </div>
+        <div class="commends" v-if="comment_num === 0">
+          <div class="cards">
+            <div class="empty">
+              快来发表评论吧~
+            </div>
+          </div>
         </div>
         <div class="commends">
           <div class="cards" v-for="(item,index) in command" :key="index">
@@ -135,7 +142,8 @@
         </div>
         <span class="commending-title">发表评论</span>
         <div class="conmmending">
-          <div class="avators">
+          <span style="width: 100%">
+            <div class="avators">
             <el-avatar></el-avatar>
           </div>
           <div class="right_comment">
@@ -144,8 +152,12 @@
                 placeholder="请输入评论内容"
                 v-model="myComment">
             </el-input>
-            <el-button class="submit-btn" @click="pushCommand">发表</el-button>
+
           </div>
+          </span>
+          <span class="btn">
+            <el-button class="submit-btn" @click="pushCommand">发表</el-button>
+          </span>
         </div>
       </div>
     </div>
@@ -198,6 +210,7 @@ export default {
       command: {
 
       },
+      comment_num: 0,
       myComment: ""
     };
   },
@@ -224,13 +237,16 @@ export default {
         method:'post',
         url:'/social/comment/list',
         data:{//get请求这里是params
-          paper_id: "W2914747780",
-          user_id: 3
+          // paper_id: "W2914747780",
+          paper_id:window.localStorage.getItem('WID'),
+          user_id: window.localStorage.getItem('SID'),
+          // user_id: 3
         }
       }).then(
           response =>{
             console.log(response.data)
             this.command = response.data.data.comments;
+            this.comment_num = this.command.length;
           }
       )
     },
@@ -240,8 +256,10 @@ export default {
         url:'/social/comment/create',
         data:{//get请求这里是params
           content: this.myComment,
-          paper_id: "W2914747780",
-          user_id: 3
+          // paper_id: "W2914747780",
+          // user_id: 3
+          paper_id:window.localStorage.getItem('WID'),
+          user_id: window.localStorage.getItem('SID'),
         }
       }).then(
           response =>{
@@ -366,7 +384,7 @@ export default {
   font-family: Inter;
 }
 
-.info {
+.info1 {
   margin-top: 1.04vh;
   text-align: left;
   min-height: 3.38vh;
@@ -376,9 +394,9 @@ export default {
   font-size: 16px;
   line-height: 3.38vh;
   background: transparent !important;
+  background-color: transparent !important;
 }
 .info2 {
-
   float: left;
   margin-top: 1.04vh;
   text-align: left;
@@ -550,7 +568,7 @@ clear:both;
   display: block;
   //width: 100%;
   min-height: 37vh;
-  width: 55.12vw;
+  width: 56.92vw;
   margin-top: 6.49vh;
   padding-top: 3.64vh;
   padding-left: 2vw;
@@ -596,7 +614,7 @@ clear:both;
 }
 .rank-comments {
   display: inline-block;
-  margin-left: 34.53vw;
+  margin-left: 39.53vw;
   margin-right: 0.97vw;
 }
 .commends {
@@ -608,13 +626,13 @@ clear:both;
   margin-top: 7px;
   height: auto;
   max-height: 350px;
-  width: 45.83vw;
+  width: 51.83vw;
 }
 .cards {
   position: relative;
   margin-top: 5px;
   display: table-cell;
-  width: 45.83vw;
+  width: 51.83vw;
   height: 150px;
   //height: 24.41vh;
   padding-left: 1.48vw;
@@ -729,14 +747,14 @@ clear:both;
   background: #FFFFFF;
   box-shadow: 0px 2px 4px rgba(180, 180, 180, 0.25);
   border-radius: 8px;
-  width: 45.83vw;
+  width: 51.83vw;
   //min-height: 19.35vh;
   min-height: 22vh;
 }
 .avators {
   display: inline-block;
   float: left;
-  width: 6.07vw;
+  width: 5.07vw;
   height: 100%;
   margin-top: 2.08vh;
   margin-left: 1.48vw;
@@ -747,17 +765,22 @@ clear:both;
   margin-left: 0.32vw;
 }
 .input_command {
-  width: 35.05vw;
-  height: 9.35vh;
+  width: 42.05vw;
+  height: 11.35vh;
   border: 1.4px solid rgba(198, 198, 198, 0.6);
   border-radius: 8px;
+}
+.btn {
+  height: 3.64vh;
+  width: 100%;
 }
 .submit-btn {
   float: right;
   margin-right: 2.90vw;
   margin-top: 1.8vh;
   width: 6.33vw;
-  //height: 3.64vh;
+  height: 3.64vh;
+  line-height: 3.64vh;
   background: linear-gradient(94.95deg, #288CD6 -43.46%, rgba(108, 155, 247, 0.56) 168.08%);
   box-shadow: 0px 0px 6px rgba(153, 166, 213, 0.57);
   border-radius: 5px;
@@ -766,9 +789,6 @@ clear:both;
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
 }
 .right-sider {
   display: flex;
@@ -810,6 +830,18 @@ clear:both;
   //margin-bottom: 10vh;
   clear: both;
 }
+.empty {
+  height: 150px;
+  line-height: 120px;
+  text-align: center;
+  justify-content: center;
+  vertical-align: center;
+  color: #0E84F4;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+}
 </style>
 <style>
 .el-input__inner {
@@ -818,8 +850,7 @@ clear:both;
 .original {
   padding: 0 2px 2px 0 !important;
 }
-.v-application .info {
-  background-color: transparent !important;
-  border-color: transparent !important;
+.submit-btn {
+  padding: 0 2px 2px 0 !important;
 }
 </style>

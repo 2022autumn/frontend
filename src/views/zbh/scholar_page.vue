@@ -103,7 +103,7 @@ export default {
           }
         ],
         display_name: "Dharma Yanti",
-        id: "A4220294553",
+        // id: "A4220294553",
         ids: {},
         last_known_institution: null,
         most_cited_work: "IDENTIFIKASI SENYAWA ANTI MIKROBA EKSTRAK ETANOL BATANG BROTOWALI (Tinospra crispa (L.) TERHADAP Staphylococcus aureus, Bacillus substillis, DAN Candida albicans DENGAN ... (2022)",
