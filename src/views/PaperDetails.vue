@@ -44,13 +44,6 @@
               原文地址
             </el-button>
 
-            <!--是否被收藏的样式-->
-            <div class="like1" v-model="key">
-              <span class="iconfont">
-                  <i v-if = "!isCollection" class="el-icon-star-off" :key="0" @click="onCollection"></i>
-                  <i v-else class="el-icon-star-on" :key="1" @click="onCollection"></i>
-              </span>
-            </div>
             <!--被收藏的次数-->
             <div class="like2" v-if="isCollection">
               <span class="iconfont">&#xe663;</span>
@@ -58,6 +51,13 @@
             </div>
             <div class="like2" v-else>
               {{ this.notCollectionTxt }}
+            </div>
+            <!--是否被收藏的样式-->
+            <div class="like1" v-model="key">
+              <span class="iconfont">
+                  <i v-if = "!isCollection" class="el-icon-star-off" :key="0" @click="onCollection"></i>
+                  <i v-else class="el-icon-star-on" :key="1" @click="onCollection"></i>
+              </span>
             </div>
             <!--            <div class="right-buttons">-->
 <!--              <el-button class="right-button1"></el-button>-->
@@ -108,14 +108,14 @@
             </el-dropdown-menu>
           </el-dropdown>
         </div>
-        <div class="commends" v-if="comment_num === 0">
+        <div class="commends" v-if="comment_num === 0" >
           <div class="cards">
             <div class="empty">
               快来发表评论吧~
             </div>
           </div>
         </div>
-        <div class="commends">
+        <div class="commends" v-infinite-scroll="load">
           <div class="cards" v-for="(item,index) in command" :key="index">
             <div class="user-info">
               <el-avatar class="commenter-avator">
@@ -123,22 +123,22 @@
               </el-avatar>
               <div class="left-info">
                 <span class="commenter-id">
-                  一个不重要的用户id
+                  {{item.user_id}}
+<!--                  一个不重要的用户id-->
                 </span>
                   <span class="commenter-info">
                   个性签名
                 </span>
               </div>
-              <span class="comment-time">{{ item.time }}</span>
+              <span class="comment-time">{{ dateTime(item.time) }}</span>
             </div>
             <div class="comment-content">
               {{item.content}}
 <!--              <div class="comment-divider"></div>-->
             </div>
-            <div class="reply">
-
-            </div>
+            <div style="clear:both;"></div>
           </div>
+          <div style="clear:both;"></div>
         </div>
         <span class="commending-title">发表评论</span>
         <div class="conmmending">
@@ -181,6 +181,7 @@ import Note from "@/components/xyj/note";
 import Keyword from "@/components/xyj/keyword";
 import Reference from "@/components/xyj/reference";
 import Related from "@/components/xyj/related";
+import dateTime from "@/composables/calculationTime";
 export default {
   name: "paperDetails",
   data() {
@@ -211,7 +212,8 @@ export default {
 
       },
       comment_num: 0,
-      myComment: ""
+      myComment: "",
+      dateTime,
     };
   },
   components: {
@@ -227,7 +229,8 @@ export default {
     },
 
     jumpPaper() {
-      this.$router.push(this.paper.url);
+      window.open(this.paper.url,'_blank');
+      // this.$router.push(this.paper.url);
     },
     onCollection() {
 
@@ -237,10 +240,10 @@ export default {
         method:'post',
         url:'/social/comment/list',
         data:{//get请求这里是params
-          // paper_id: "W2914747780",
-          paper_id:window.localStorage.getItem('WID'),
-          user_id: window.localStorage.getItem('SID'),
-          // user_id: 3
+          paper_id: "W2914747780",
+          // paper_id:window.localStorage.getItem('WID'),
+          // user_id: window.localStorage.getItem('SID'),
+          user_id: 3
         }
       }).then(
           response =>{
@@ -256,14 +259,20 @@ export default {
         url:'/social/comment/create',
         data:{//get请求这里是params
           content: this.myComment,
-          // paper_id: "W2914747780",
-          // user_id: 3
-          paper_id:window.localStorage.getItem('WID'),
-          user_id: window.localStorage.getItem('SID'),
+          paper_id: "W2914747780",
+          user_id: 3,
+          // paper_id:window.localStorage.getItem('WID'),
+          // user_id: window.localStorage.getItem('SID'),
         }
       }).then(
           response =>{
             console.log(response.data);
+            this.myComment="";
+            this.$message({
+              type:"success",
+              message: response.data.msg,
+              customClass:'messageIndex'
+            })
             this.getCommentList();
           }
       )
@@ -276,8 +285,8 @@ export default {
       method:'get',
       url:'/es/get',
       params:{//get请求这里是params
-        id:window.localStorage.getItem('WID')
-        // id: "W31001126"
+        // id:window.localStorage.getItem('WID')
+        id: "W2914747780"
       }
     }).then(
         response =>{
@@ -334,9 +343,9 @@ export default {
 }
 .main {
   //padding-left: 44px; //44px
-  padding-left: 4.84vw;
+  padding-left: 5.84vw;
   //display: flex;
-  width: 59.64vw;
+  width: 61vw;
 }
 .paper-header {
   width: 100%;
@@ -358,7 +367,8 @@ export default {
   font-size: 2.32vw;
   font-weight: 600;
   line-height: 5.71vh;
-  width: 48.37vw;
+  width: 100%;
+  //width: 53.37vw;
   vertical-align: center;
   justify-content: center;
 }
@@ -427,12 +437,12 @@ clear:both;
   line-height: 5.19vh;
 }
 .like1 {
-  float: left;
+  float: right;
   margin-left: 2vw;
   color: #FD9B40;
 }
 .like2 {
-  float: left;
+  float: right;
   margin-left: 0.5vw;
   font-family: 'Poppins';
   font-style: normal;
@@ -519,7 +529,7 @@ clear:both;
   width: 56.86vw;
   overflow:hidden;
   filter: drop-shadow(0px 3px 4px rgba(0, 0, 0, 0.25));
-  box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 3px 0px rgba(0, 0, 0, 0.25);
 }
 
 .abstract-sider {
@@ -624,17 +634,33 @@ clear:both;
   display: flex;
   flex-direction: column;
   margin-top: 7px;
-  height: auto;
+  height: 350px;
   max-height: 350px;
   width: 51.83vw;
 }
+::-webkit-scrollbar {
+  width: 7px;
+  height: 18px;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb {
+  width: 7px;
+  height: 20px;
+  background-color: #E8E8E8;
+  border-radius: 8px;
+}
 .cards {
+  float: left;
   position: relative;
-  margin-top: 5px;
-  display: table-cell;
+  margin-top: 10px;
+  display: inline-block;
+  overflow: hidden;
   width: 51.83vw;
-  height: 150px;
+  height: auto;
+  min-height: 135px;
+  //height: 135px;
   //height: 24.41vh;
+  padding-bottom: 20px;
   padding-left: 1.48vw;
   padding-top: 16px;
   background: #FFFFFF;
@@ -643,9 +669,9 @@ clear:both;
 }
 .user-info {
   float: left;
-  position: relative;;
+  position: absolute;;
   height: 7.79vh;
-  width: 41.31vw;
+  width: 47.31vw;
 }
 .commenter-avator {
   float: left;
@@ -684,7 +710,8 @@ clear:both;
   font-size: 12px;
   line-height: 3.38vh;
   /* identical to box height, or 217% */
-
+  padding-bottom: 10px;
+  margin-bottom: 10px;
   letter-spacing: 0.02em;
 
   color: #7D7D7D;
@@ -706,12 +733,14 @@ clear:both;
   color: #8A8A8A;
 }
 .comment-content {
-  position: absolute;
+  float: left;
+  position: relative;
+  height: auto;
+  min-height: 30px;
   //display: flex;
-  margin-top: 7.61vh;
-  margin-left: 1.74vw;
-  width: 39.37vw;
-
+  margin-top: 8.61vh;
+  //margin-left: 0.74vw;
+  width: 47.87vw;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 500;

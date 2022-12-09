@@ -66,7 +66,8 @@ export default {
 <style scoped>
 .re-total{
   position: absolute;
-  width: 850px;
+  /*width: 850px;*/
+  width: 56.86vw;
   height: 400px;
   background: #FFFFFF;
   box-shadow: -2px 4px 4px rgba(0, 0, 0, 0.25);
