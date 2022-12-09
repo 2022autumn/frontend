@@ -44,13 +44,6 @@
               原文地址
             </el-button>
 
-            <!--是否被收藏的样式-->
-            <div class="like1" v-model="key">
-              <span class="iconfont">
-                  <i v-if = "!isCollection" class="el-icon-star-off" :key="0" @click="onCollection"></i>
-                  <i v-else class="el-icon-star-on" :key="1" @click="onCollection"></i>
-              </span>
-            </div>
             <!--被收藏的次数-->
             <div class="like2" v-if="isCollection">
               <span class="iconfont">&#xe663;</span>
@@ -108,14 +101,14 @@
             </el-dropdown-menu>
           </el-dropdown>
         </div>
-        <div class="commends" v-if="comment_num === 0">
+        <div class="commends" v-if="comment_num === 0" >
           <div class="cards">
             <div class="empty">
               快来发表评论吧~
             </div>
           </div>
         </div>
-        <div class="commends">
+        <div class="commends" v-infinite-scroll="load">
           <div class="cards" v-for="(item,index) in command" :key="index">
             <div class="user-info">
               <el-avatar class="commenter-avator">
@@ -123,22 +116,22 @@
               </el-avatar>
               <div class="left-info">
                 <span class="commenter-id">
-                  一个不重要的用户id
+                  {{item.user_id}}
+<!--                  一个不重要的用户id-->
                 </span>
                   <span class="commenter-info">
                   个性签名
                 </span>
               </div>
-              <span class="comment-time">{{ item.time }}</span>
+              <span class="comment-time">{{ dateTime(item.time) }}</span>
             </div>
             <div class="comment-content">
               {{item.content}}
 <!--              <div class="comment-divider"></div>-->
             </div>
-            <div class="reply">
-
-            </div>
+            <div style="clear:both;"></div>
           </div>
+          <div style="clear:both;"></div>
         </div>
         <span class="commending-title">发表评论</span>
         <div class="conmmending">
@@ -181,6 +174,7 @@ import Note from "@/components/xyj/note";
 import Keyword from "@/components/xyj/keyword";
 import Reference from "@/components/xyj/reference";
 import Related from "@/components/xyj/related";
+import dateTime from "@/composables/calculationTime";
 export default {
   name: "paperDetails",
   data() {
@@ -211,7 +205,8 @@ export default {
 
       },
       comment_num: 0,
-      myComment: ""
+      myComment: "",
+      dateTime,
     };
   },
   components: {
@@ -227,7 +222,8 @@ export default {
     },
 
     jumpPaper() {
-      this.$router.push(this.paper.url);
+      window.open(this.paper.url,'_blank');
+      // this.$router.push(this.paper.url);
     },
     onCollection() {
 
@@ -239,8 +235,8 @@ export default {
         data:{//get请求这里是params
           // paper_id: "W2914747780",
           paper_id:window.localStorage.getItem('WID'),
-          user_id: window.localStorage.getItem('SID'),
-          // user_id: 3
+          //user_id: window.localStorage.getItem('SID'),
+          user_id: 3
         }
       }).then(
           response =>{
@@ -257,13 +253,19 @@ export default {
         data:{//get请求这里是params
           content: this.myComment,
           // paper_id: "W2914747780",
-          // user_id: 3
+          user_id: 3,
           paper_id:window.localStorage.getItem('WID'),
-          user_id: window.localStorage.getItem('SID'),
+          //user_id: window.localStorage.getItem('SID'),
         }
       }).then(
           response =>{
             console.log(response.data);
+            this.myComment="";
+            this.$message({
+              type:"success",
+              message: response.data.msg,
+              customClass:'messageIndex'
+            })
             this.getCommentList();
           }
       )
@@ -334,9 +336,9 @@ export default {
 }
 .main {
   //padding-left: 44px; //44px
-  padding-left: 4.84vw;
+  padding-left: 5.84vw;
   //display: flex;
-  width: 59.64vw;
+  width: 61vw;
 }
 .paper-header {
   width: 100%;
@@ -358,7 +360,8 @@ export default {
   font-size: 2.32vw;
   font-weight: 600;
   line-height: 5.71vh;
-  width: 48.37vw;
+  width: 100%;
+  //width: 53.37vw;
   vertical-align: center;
   justify-content: center;
 }
@@ -427,12 +430,12 @@ clear:both;
   line-height: 5.19vh;
 }
 .like1 {
-  float: left;
+  float: right;
   margin-left: 2vw;
   color: #FD9B40;
 }
 .like2 {
-  float: left;
+  float: right;
   margin-left: 0.5vw;
   font-family: 'Poppins';
   font-style: normal;

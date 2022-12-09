@@ -35,21 +35,21 @@ export default {
 </script>
 <style>
 .p1 {
-  margin: 0 0 0 0;
+  margin: 10px 0 0 0;
   width: 100%;
   height: 100%;
 }
 .v1 {
   float: left;
   margin-top: 0px;
-  margin-left: 40px;
+  margin-left: 120px;
   height: 400px;
   width: 170px;
 }
 .v2 {
   float: left;
   position: relative;
-  margin-left: 170px;
+  margin-left: 100px;
   height: 400px;
   width: 279px;
 }
