@@ -12,9 +12,9 @@
     <div style="position: absolute;width: 45px;height:14px;left:94vw;top:3vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: #2B2B39;">{{this.username}}</div>
     <div style="position: absolute;height: 5vh;width: 100vw;top:5vh"><el-divider></el-divider></div>
     <div style="position: absolute;width: 35vw;height:40px;left:53.5vw;top:0.6vh;">
-        <el-input  placeholder="请输入内容" v-model="input3" class="input-with-select white--text"  >
+        <el-input  placeholder="请输入内容" v-model="input3" class="input-with-select white--text" @keyup.enter.native="do_search">
         <!--<el-button slot="prepend" icon="el-icon-s-promotion" style="color: #FCFCFF;background-color: rgba(117, 167, 235, 0.52);border-radius: 0;border-color: whitesmoke" @click="jadvance">高级检索</el-button>-->
-        <el-button slot="append" icon="el-icon-search" style="color: #FCFCFF;background-color: rgba(117, 167, 235, 0.52); border-radius: 0;border-color: whitesmoke" @click="do_search"></el-button>
+        <el-button slot="append" icon="el-icon-search" style="color: #FCFCFF;background-color: rgba(117, 167, 235, 0.52); border-radius: 0;border-color: whitesmoke" @click="do_search" ></el-button>
       </el-input>
     </div>
     <div style="position: absolute;height: 5vh;width: 100vw;top:5vh"><el-divider></el-divider></div>
@@ -61,7 +61,7 @@ export default {
       window.open('/search_outcome');
       //this.$router.push('/search_outcome');
       //window.location.reload();
-    }
+    },
   },
   created(){
     if(sessionStorage.getItem('search_name1')===null){
