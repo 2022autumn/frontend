@@ -258,8 +258,8 @@ export default {
       method:'get',
       url:'/es/get',
       params:{//get请求这里是params
-        // id:window.localStorage.getItem('WID')
-        id: "W31001126"
+        id:window.localStorage.getItem('WID')
+        // id: "W31001126"
       }
     }).then(
         response =>{
@@ -817,5 +817,9 @@ clear:both;
 }
 .original {
   padding: 0 2px 2px 0 !important;
+}
+.v-application .style {
+  background-color: transparent;
+  border-color: transparent;
 }
 </style>
