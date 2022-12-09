@@ -165,7 +165,7 @@ export default {
                 message: "登录成功",
                 type: "success",
               });
-              alert("用户登录成功");
+              //alert("用户登录成功");
             } else if (response.data.status===400) {
               alert("用户名不存在");
             } else if (response.data.status===401) {

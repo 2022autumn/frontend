@@ -117,7 +117,9 @@
                     v-for="item in options"
                     :key="item.value"
                     :label="item.label"
-                    :value="item.value">
+                    :value="item.value"
+                    @click.native="dosort(item.value)"
+                    >
                 </el-option>
               </el-select>
             </el-col>
@@ -206,18 +208,24 @@ export default {
   data(){
     return{
       options: [ {
-        value: '选项2',
+        value: 1,
         label: '按被引用量递减'
       }, {
-        value: '选项3',
+        value: 2,
         label: '按被引用量递增'
       }, {
-        value: '选项4',
+        value: 3,
         label: '按发表时间递减'
       }, {
-        value: '选项5',
+        value: 4,
         label: '按发表时间递增'
-      }],
+      },{
+        value: 5,
+        label: '按匹配程度递减'
+      },{
+        value: 6,
+        label: '按匹配程度递增'
+      },],
       true_total_page:0,
       checklist:[],
       checklist_author:[],
@@ -376,7 +384,7 @@ export default {
           numyin:0,
           numstore:0,
           id:"",
-          authors:[]
+          authors:[],
         }
       ],
       authors:[],
@@ -393,9 +401,45 @@ export default {
       if_types:0,
       if_venues:0,
       query:[],
+      sort:0,
+      asc:true,
     }
   },
   methods:{
+    dosort(value){
+      console.log("选择条件为: "+value);
+      if(value===1){
+        this.sort=1;
+        this.asc = false;
+        this.openFullScreen2();
+      }
+      else if(value===2){
+        this.sort=1;
+        this.asc = true;
+        this.openFullScreen2();
+      }
+      else if(value===3){
+        this.sort=2;
+        this.asc = false;
+        this.openFullScreen2();
+      }
+      else if(value===4){
+        this.sort=2;
+        this.asc = true;
+        this.openFullScreen2();
+      }
+      else if(value===5){
+        this.sort=0;
+        this.asc = false;
+        this.openFullScreen2();
+      }
+      else if(value===6){
+        this.sort=0;
+        this.asc = true;
+        this.openFullScreen2();
+      }
+      this.search();
+    },
     openFullScreen2() {//前端加载效果
       const loading = this.$loading({
         lock: true,
@@ -515,11 +559,11 @@ export default {
         method:'post',
         url:'/es/search/advanced',
         data:{//post请求这里是data
-          asc:true,
+          asc:this.asc,
           conds:cond,
           page:page,
           size:8,
-          sort:0,
+          sort:this.sort,
           query:query,
         }
       }).then(
@@ -649,6 +693,8 @@ export default {
               if(this.items[i].type === null){
                 this.items[i].type = "unknown"
               }
+              this.items[i].numyin = response.data.res.Works[i].cited_by_count;
+              //this.items[i].numstore = Math.ceil(Math.random()*100);
             }
           }
       )
