@@ -3,9 +3,10 @@
     <div class="main">
       <div class="paper-header">
           <div class="title">
-            <div class="title-txt">{{ this.paper.paperTitle }}
-              <div class="paper-type">期刊</div>
-            </div>
+            <span class="title-txt">
+              {{ this.paper.paperTitle }}
+              <div class="paper-type">{{ this.paper.type }}</div>
+            </span>
           </div>
           <div class=" info location">
             <!--<span>北京航空航天大学xx实验室</span>-->
@@ -37,17 +38,33 @@
         <div style="clear: both"></div>
           <div class="buttons">
 <!--            <el-button class="original" icon="el-icon-my-origin">-->
-            <el-button class="original">
+            <el-button class="original" v-if="this.paper.hasIds" @click="jumpPaper">
               <img src="../assets/paperDetailsImg/original.png"
                    style="margin-left: 0vw">
               原文地址
             </el-button>
-            <div class="right-buttons">
-              <el-button class="right-button1"></el-button>
-              <el-button class="right-button2"></el-button>
-              <el-button class="right-button3"></el-button>
-              <el-button class="right-button4"></el-button>
+
+            <!--是否被收藏的样式-->
+            <div class="like1" v-model="key">
+              <span class="iconfont">
+                  <i v-if = "!isCollection" class="el-icon-star-off" :key="0" @click="onCollection"></i>
+                  <i v-else class="el-icon-star-on" :key="1" @click="onCollection"></i>
+              </span>
             </div>
+            <!--被收藏的次数-->
+            <div class="like2" v-if="isCollection">
+              <span class="iconfont">&#xe663;</span>
+              {{ this.isCollectionTxt }}
+            </div>
+            <div class="like2" v-else>
+              {{ this.notCollectionTxt }}
+            </div>
+            <!--            <div class="right-buttons">-->
+<!--              <el-button class="right-button1"></el-button>-->
+<!--              <el-button class="right-button2"></el-button>-->
+<!--              <el-button class="right-button3"></el-button>-->
+<!--              <el-button class="right-button4"></el-button>-->
+<!--            </div>-->
           </div>
         </div>
       <div class="content">
@@ -71,16 +88,16 @@
         <div class="commend-title">评论区  Comments</div>
         <div class="comment-tools">
           <div class="total-comments">共 5 条评论</div>
-          <el-dropdown>
-            <span class="filter-comments">
-              筛选条件<i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>黄金糕</el-dropdown-item>
-              <el-dropdown-item>狮子头</el-dropdown-item>
-              <el-dropdown-item>螺蛳粉</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+<!--          <el-dropdown>-->
+<!--            <span class="filter-comments">-->
+<!--              筛选条件<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
+<!--            </span>-->
+<!--            <el-dropdown-menu slot="dropdown">-->
+<!--              <el-dropdown-item>黄金糕</el-dropdown-item>-->
+<!--              <el-dropdown-item>狮子头</el-dropdown-item>-->
+<!--              <el-dropdown-item>螺蛳粉</el-dropdown-item>-->
+<!--            </el-dropdown-menu>-->
+<!--          </el-dropdown>-->
           <el-dropdown>
             <span class="rank-comments">
               排序条件<i class="el-icon-arrow-down el-icon--right"></i>
@@ -88,7 +105,6 @@
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>发布时间</el-dropdown-item>
               <el-dropdown-item>发布用户</el-dropdown-item>
-              <el-dropdown-item>螺蛳粉</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -165,11 +181,22 @@ export default {
         abstract:"",
         cited_counts:0,
         host_venue:"",
-        institution:""
+        institution:"",
+        cited_by_count: "",
+        ids: {},
+        hasIds: false,
+        url: "",
+        doi: "",
+        type: "unknown",
       },
       author_name:'',
       author_id:0,
+      isCollection: false,
+      isCollectionTxt: "已收藏",
+      notCollectionTxt: "收藏",
+      command: {
 
+      }
     };
   },
   components: {
@@ -182,8 +209,14 @@ export default {
     jscholar(){
       window.localStorage.setItem('SID',this.author_id);
       window.open('/scholar_page');
-    }
+    },
 
+    jumpPaper() {
+      this.$router.push(this.paper.url);
+    },
+    onCollection() {
+
+    }
   },
   // 挂载时获取
   mounted() {
@@ -192,7 +225,8 @@ export default {
       method:'get',
       url:'/es/get',
       params:{//get请求这里是params
-        id:window.localStorage.getItem('WID')
+        // id:window.localStorage.getItem('WID')
+        id: "W31001126"
       }
     }).then(
         response =>{
@@ -207,6 +241,22 @@ export default {
           this.paper.abstract=response.data.data.abstract
           this.paper.cited_counts=response.data.data.cited_by_count
           this.paper.host_venue=response.data.data.host_venue
+          if(response.data.data.type != null) {
+            this.paper.type = response.data.data.type
+          } else{
+            this.paper.type = "unknown";
+          }
+          this.paper.ids = response.data.data.ids
+          this.paper.doi = response.data.data.doi
+          if(this.paper.doi != null) {
+            this.paper.hasIds = true;
+            this.paper.url = this.paper.doi;
+          } else if('pmid' in this.paper.ids) {
+            this.paper.hasIds = true;
+            this.paper.url = this.paper.ids.pmid;
+          } else  {
+            this.paper.hasIds = false;
+          }
           console.log("author institution is:")
           console.log(this.paper.authors[0].institutions)
           if(this.paper.authors[0].institutions.length===0){
@@ -214,6 +264,29 @@ export default {
           }
           else{
             this.paper.institution = this.paper.authors[0].institutions[0].display_name;
+          }
+        }
+    )
+    this.$axios({//注意是this.$axios
+      method:'post',
+      url:'/social/follow/list',
+      data:{//get请求这里是params
+        user_id: 2
+      }
+    }).then(
+        response =>{
+          console.log(response.data);
+          this.followList = response.data.data;
+          console.log("followList", this.followList);
+          for(var i = 0; i < this.followList.length; i++) {
+            if(this.followList[i].author_id == this.scholarInfo.id) {
+              console.log("followed")
+              this.isFollow = true;
+              this.followContent="已关注";
+              this.bg_color="#0352FF";
+              this.ft_color="#E6EEFF";
+              break;
+            }
           }
         }
     )
@@ -274,6 +347,7 @@ export default {
 
 }
 .title-txt {
+  display: inline-block;
   margin-top: 0;
   text-align: left;
   font-family: Inter;
@@ -281,13 +355,20 @@ export default {
   font-weight: 600;
   line-height: 5.71vh;
   width: 48.37vw;
+  vertical-align: center;
+  justify-content: center;
 }
 
 .paper-type {
-  margin-top: 0px;
+  //margin-top: 5px;
   display: inline-block;
-  width: 2.78vw;
+  position: relative;
+  padding-bottom: 5px;
+  width: auto;
   height: 3.38vh;
+  padding-bottom: 6px;
+  padding-left: 0.7vw;
+  padding-right: 0.7vw;
   border-radius: 8px;
   box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
   background-color: #217BF4;
@@ -334,12 +415,26 @@ clear:both;
 }
 .buttons {
   width: 100%;
-  margin-top: 2vh;
+  margin-top: 0vh;
   padding-top: 2.86vh;
   height: 8.19vh;
   vertical-align: center;
   justify-content: center;
   line-height: 5.19vh;
+}
+.like1 {
+  float: left;
+  margin-left: 2vw;
+  color: #FD9B40;
+}
+.like2 {
+  float: left;
+  margin-left: 0.5vw;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  //color: #FD9B40;
 }
 .el-icon-my-origin{
   background: url('~@/assets/paperDetailsImg/Vector.png') center no-repeat;
@@ -350,7 +445,7 @@ clear:both;
   vertical-align: center;
   justify-content: center;
   display: inline-block;
-  width: 9.63vw;
+  width: 8.03vw;
   height: 4.93vh;
   background: #217BF4;
   box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
@@ -515,6 +610,7 @@ clear:both;
 }
 .rank-comments {
   display: inline-block;
+  margin-left: 34.53vw;
   margin-right: 0.97vw;
 }
 .commends {
@@ -706,15 +802,15 @@ clear:both;
   float: left;
   margin-top: 40px;
   width: 100%;
-  height: 450px;
+  height: 383px;
   margin-right: 0vw;
 }
 .relate {
   display: block;
   float: left;
-  margin-top: 80px;
+  margin-top: 40px;
   width: 100%;
-  height: 450px;
+  height: 383px;
   margin-right: 0vw;
 }
 .notes {
