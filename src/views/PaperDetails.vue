@@ -269,53 +269,17 @@ export default {
     )
     this.$axios({//注意是this.$axios
       method:'post',
-      url:'/social/follow/list',
+      url:'/social/comment/list',
       data:{//get请求这里是params
+        paper_id: "",
         user_id: 2
       }
     }).then(
         response =>{
-          console.log(response.data);
-          this.followList = response.data.data;
-          console.log("followList", this.followList);
-          for(var i = 0; i < this.followList.length; i++) {
-            if(this.followList[i].author_id == this.scholarInfo.id) {
-              console.log("followed")
-              this.isFollow = true;
-              this.followContent="已关注";
-              this.bg_color="#0352FF";
-              this.ft_color="#E6EEFF";
-              break;
-            }
-          }
+
         }
     )
   },
-  getPapaerDetail() {
-    let that = this;
-    that.$axios({//注意是this.$axios
-      method:'get',
-      url:'/es/get',
-      params:{//get请求这里是params
-        id:window.localStorage.getItem('WID')
-      }
-      }).then(
-            response =>{
-              console.log(response.data);
-              this.paper.paperTitle=response.data.data.title
-              console.log(response.data.data.title)
-            }
-        )
-  },
-  getCommentList() {
-
-  },
-  replyComment() {
-
-  },
-  pushComment() {
-
-  }
 };
 </script>
 <style lang="scss" scoped>
