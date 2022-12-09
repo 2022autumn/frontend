@@ -53,7 +53,7 @@
 
 <script>
 export default {
-  name: "collect",
+  name: "collectDetail",
   methods:{},
   data(){
     return{
@@ -101,7 +101,7 @@ export default {
    position: absolute;
    width: 62.05vw;
    height: 85vh;
-   left: 325px;
+   left: 550px;
    top: 90px;
 
    background: linear-gradient(250.39deg, #FFFFFF 10.13%, #FFFFFF 94%);

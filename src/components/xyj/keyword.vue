@@ -4,7 +4,8 @@
     <div class="title-en">Keywords</div>
     <div class="box-set" v-infinite-scroll="load">
       <div class="keyword-box" v-for="(item,index) in keywords" :key="index">
-        <div class="keyword">{{item.display_name}}</div>
+        <div class="keyword"  v-if="item.level===1" @click="concern(item)">{{item.display_name}}</div>
+        <div class="keyword1"  v-else-if="0===0" @click="concern(item)">{{item.display_name}}</div>
       </div>
     </div>
     <!--div class="line"></div>
@@ -43,12 +44,20 @@ export default {
   }).then(
         response =>{
           this.keywords=response.data.data.concepts;
+          console.log(this.test)
         }
     )
 
   },
   methods:{
-
+    concern(item){
+      if(item.level===0){
+        item.level=1
+      }else{
+        item.level=0
+      }
+      console.log(item.level)
+    }
   },
   data(){
     return{
@@ -151,6 +160,27 @@ export default {
   /* identical to box height, or 144% */
   letter-spacing: 0.04em;
   color: #858FA0;
+  cursor:pointer;
+}
+.keyword1{
+  display: flex;
+  left: 15px;
+  padding-top: 6px;
+  padding-bottom: 4px;
+  padding-left: 15px;
+  padding-right: 18px;
+  background: #858FA0;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 26px;
+  align-items: center;
+  justify-content: center;
+  /* identical to box height, or 144% */
+  letter-spacing: 0.04em;
+  color: #F5F8FC;
+  cursor:pointer;
 }
 .line{
   position: relative;
