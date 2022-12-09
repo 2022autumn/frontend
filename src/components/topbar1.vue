@@ -1,6 +1,6 @@
 <!--这个是主页和高级检索界面的顶栏，目前是纯前端-->
 <template>
-  <div style="position: fixed;z-index: 9999;width: 100vw;height:9vh; background-color: white;box-shadow: 1.5px 1.5px 1.5px 1.5px rgba(107, 106, 106, 0.25);">
+  <div style="position: fixed;z-index: 9999;width: 100vw;height:9vh; background-color: white;box-shadow: 1px 1px 1px 1px rgba(187, 185, 185, 0.25);">
     <img src="../img/logo.jpg" style="width: 22.52px;height:21.19px;position: absolute;left: 6.81vw;right: 91.63%;top: 1.96vh;bottom: 97.01%;background: #217BF4;" alt="">
     <div style="position: absolute;width: 150px;height: 24px;font-style: normal;font-weight: 600;font-size: 24px;line-height: 24px;color: #2B2B39;left:10vw;top:2vh"><b>I SHARE</b></div>
     <router-link to="/"><div v-if="this.whichpage===1" style="position: absolute;width: 29px;height:14px;left:25vw;top:2.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: #2B2B39;cursor: pointer" @click="which_page(1)">首页</div></router-link>
