@@ -4,9 +4,10 @@
       class="login-dia"
       :visible.sync="login_visible"
       :showClose="false"
+      :append-to-body="true"
+
       width="53.5vw"
       height="583px"
-      :before-close="handleClose"
     >
       <div
         style="
@@ -159,17 +160,28 @@ export default {
           }).then((response) => {
             console.log("response", response);
             console.log(response.data);
+            // console.log(response.data.status);
 
             if (response.data.status===200) {
               this.$message({
                 message: "登录成功",
                 type: "success",
               });
-              alert("用户登录成功");
+              var storage = window.localStorage;
+              storage.setItem("uid",response.data.ID);
+              // console.log(response.data.ID);
+              this.login_visible = false;
             } else if (response.data.status===400) {
-              alert("用户名不存在");
+              this.$message({
+                message: "用户名不存在",
+                type: "error",
+              });
+
             } else if (response.data.status===401) {
-              alert("密码错误");
+              this.$message({
+                message: "密码错误",
+                type: "error",
+              });
             } else {
               this.$message.error("登录出错");
               alert("用户登录出错");
@@ -183,6 +195,8 @@ export default {
     },
     init() {
       console.log("打开登录组件");
+      this.ruleForm.pwd = "";
+      this.ruleForm.name = "";
       this.login_visible = true;
     },
     close() {
@@ -281,4 +295,5 @@ export default {
   );
   border-radius: 10px;
 }
+
 </style>

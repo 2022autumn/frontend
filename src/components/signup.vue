@@ -5,10 +5,11 @@
         class="signup"
         :visible.sync="signup_visible"
         :showClose="false"
+        :append-to-body="true"
+
         width="53.5vw"
         height="583px"
-        :before-close="handleClose"
-      >
+      ><!-- :before-close="handleClose" -->
         <div
           style="
             width: 327px;
@@ -168,38 +169,41 @@ export default {
     submitSignup(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!");
-          if (valid) {
-            // alert("submit signup request correct");
-            this.$axios({
-              //注意是this.$axios
-              method: "post",
-              url: "/register",
-              data: {
-                //post请求这里是data
-                password: this.ruleForm.pwd,
-                username: this.ruleForm.name,
-              },
-            }).then((response) => {
-                console.log(this.ruleForm.name);
-                console.log(this.ruleForm.pwd);
-                console.log("response", response);
-                console.log(response.data);
+          // alert("submit signup request correct");
+          this.$axios({
+            //注意是this.$axios
+            method: "post",
+            url: "/register",
+            data: {
+              //post请求这里是data
+              password: this.ruleForm.pwd,
+              username: this.ruleForm.name,
+            },
+          }).then((response) => {
+            alert("into response");
+            console.log(this.ruleForm.name);
+            console.log(this.ruleForm.pwd);
+            console.log("response", response);
+            console.log(response.data);
 
-                if (response.data.status===200) {
-                  this.$message({
-                    message: "注册成功",
-                    type: "success",
-                  });
-                  alert("用户注册成功");
-                } else if (response.data.status===400) {
-                  alert("用户名已存在");
-                } else {
-                  this.$message.error("注册失败");
-                  alert("用户注册失败");
-                }
+            if (response.data.status === 200) {
+              this.$message({
+                message: "注册成功",
+                type: "success",
               });
-          }
+              this.signup_visible = false;
+            } else if (response.data.status===400) {
+              this.$message({
+                message: "用户名已存在",
+                type: "error",
+              });
+            } else {
+              this.$message({
+                message: "注册失败",
+                type: "error",
+              });
+            }
+          });
         } else {
           console.log("submit signup request error");
           return false;
@@ -209,6 +213,9 @@ export default {
 
     init() {
       console.log("打开注册组件");
+      this.ruleForm.checkPwd = "";
+      this.ruleForm.pwd = "";
+      this.ruleForm.name = "";
       this.signup_visible = true;
     },
     close() {
