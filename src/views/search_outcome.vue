@@ -66,8 +66,8 @@
       </el-col>
       
       <el-col :span="15" style="margin:0 auto">
-        <div v-for="item in items" v-if="item.id!==''" style="width: 50vw;height:32vh; " @click="jdetail(item.id)">
-          <el-card  class="outcome-card" style="width:55vw;height:30vh; " shadow="hover">
+        <div v-for="item in items" v-if="item.id!==''" style="width: 50vw;height:240px; " @click="jdetail(item.id)">
+          <el-card  class="outcome-card" style="width:55vw;height:228px; " shadow="hover">
             <el-tag style="display: inline-block">{{item.type}}</el-tag>
             <div style="display: inline-block;font-size: large;">
               &nbsp;
