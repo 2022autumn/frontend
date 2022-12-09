@@ -72,7 +72,7 @@
             <div v-if="this.venues.length>0">
             <div style="margin-bottom:5px">
               <img src="../assets/search_outcome/Frame6.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
-              <b>&nbsp;期刊名称</b>
+              <b>&nbsp;刊物名称</b>
             </div>
             <el-checkbox-group v-model="checklist_venues" :max="1" @change="choose_change" >
               <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all;display:block;word-wrap: break-word;overflow: hidden;" >
