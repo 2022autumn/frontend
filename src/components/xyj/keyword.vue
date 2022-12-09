@@ -32,12 +32,14 @@ export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'keyword',
   mounted(){
+    var wid=window.localStorage.getItem('WID')
+    //console.log(wid)
     this.$axios({//注意是this.$axios
       method:'get',
       url:'/es/get',
-      params:{//get请求这里是params
-        id:"W1678408692"
-  }
+      params: {
+        id:window.localStorage.getItem('WID')
+      }
   }).then(
         response =>{
           this.keywords=response.data.data.concepts;
@@ -109,6 +111,8 @@ export default {
   overflow-x: hidden;
   height: 265px;
   padding-bottom: 20px;
+  align-items: flex-start;
+  align-content: flex-start;
 }
 ::-webkit-scrollbar {
 
@@ -127,6 +131,7 @@ export default {
   padding-top: 12px;
   padding-left: 20px;
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 .keyword{
   display: flex;

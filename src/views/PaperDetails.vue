@@ -3,38 +3,43 @@
     <div class="main">
       <div class="paper-header">
           <div class="title">
-            <div class="title-txt">疫情冲击下的2020年中国经济形势与政策选择
+            <div class="title-txt">{{ this.paper.paperTitle }}
               <div class="paper-type">期刊</div>
             </div>
           </div>
           <div class=" info location">
-            <span>北京航空航天大学xx实验室</span>
+            <!--<span>北京航空航天大学xx实验室</span>-->
+            {{this.paper.institution}}
           </div>
-          <div class=" info authors">
-            <span>作者名字1； 作者名字2； 作者名字3；</span>
+          <div class=" info authors" @click="jscholar" style="cursor: pointer">
+            <!--<span>作者名字1； 作者名字2； 作者名字3；</span>-->
+            <!--<span>{{this.paper.authors[0].author.display_name}}</span>-->
+            {{this.author_name}}
           </div>
           <div class="info">
             <div class="info2 time">
-              发表时间：2022年01月06日
+              <!--发表时间：2022年01月06日-->
+              {{this.paper.date}}
             </div>
             <div class="info2 divide">
               |
             </div>
             <div class="info2 book">
-              发表期刊：Anonymous
+              发表期刊：{{ this.paper.host_venue.display_name }}
             </div>
             <div class="info2 divide">
-              |
+
             </div>
             <div class="info2 cite">
-              被引次数：51
+              被引次数：{{ this.paper.cited_counts }}
             </div>
           </div>
+        <div style="clear: both"></div>
           <div class="buttons">
-            <el-button class="original" icon="el-icon-my-origin">
-<!--              <img src="../assets/paperDetailsImg/original.png"-->
-<!--              style="margin-left: -1.4vw">-->
-<!--            <el-button class="original">-->
+<!--            <el-button class="original" icon="el-icon-my-origin">-->
+            <el-button class="original">
+              <img src="../assets/paperDetailsImg/original.png"
+                   style="margin-left: 0vw">
               原文地址
             </el-button>
             <div class="right-buttons">
@@ -52,9 +57,15 @@
             摘要Abstract
           </div>
           <div class="abstract-body">
-            A three-pole 10-T superconducting wiggler was installed in the 8-GeV electron storage ring at SPring-8 for generating high-energy synchrotron radiation. Beam tests were carried out to check its performance and to investigate the effects on a stored beam. A beam was successfully stored at magnetic fields of the wiggler up to 9.7 T. The beam current was limited to 1 mA to avoid unnecessarily high heat-load on photon absorbers and radiation damage to accelerator components. Beam parameters such as a horizontal beam size, a bunch length, betatron tune shifts were measured. A spectrum of high-energy synchrotron radiation from the wiggler was also measured with the NaI scintillator at an extremely low beam current of about 8 pA.
+            {{this.paper.abstract}}
           </div>
         </div>
+      </div>
+      <div class="ref">
+        <reference ref="ref"/>
+      </div>
+      <div class="relate">
+        <related />
       </div>
       <div class="review">
         <div class="commend-title">评论区  Comments</div>
@@ -122,12 +133,13 @@
       </div>
     </div>
     <div class="right-sider">
+      <div class="recent">
+
+      </div>
       <div class="key">
         <keyword />
       </div>
-      <div class="ref">
-        <reference />
-      </div>
+
       <div class="notes">
         <note />
       </div>
@@ -139,6 +151,7 @@
 import Note from "@/components/xyj/note";
 import Keyword from "@/components/xyj/keyword";
 import Reference from "@/components/xyj/reference";
+import Related from "@/components/xyj/related";
 export default {
   name: "paperDetails",
   data() {
@@ -147,8 +160,15 @@ export default {
         paperTitle: "",
         paperFrom: "",
         paperUnit: "",
-      }
-
+        height: "",
+        authors:[],
+        abstract:"",
+        cited_counts:0,
+        host_venue:"",
+        institution:""
+      },
+      author_name:'',
+      author_id:0,
 
     };
   },
@@ -156,13 +176,47 @@ export default {
     Reference,
     Keyword,
     Note,
+    Related
   },
   methods: {
-
+    jscholar(){
+      window.localStorage.setItem('SID',this.author_id);
+      window.open('/scholar_page');
+    }
 
   },
   // 挂载时获取
   mounted() {
+    let height= this.$refs.ref.offsetHeight;  //100
+    this.$axios({//注意是this.$axios
+      method:'get',
+      url:'/es/get',
+      params:{//get请求这里是params
+        id:window.localStorage.getItem('WID')
+      }
+    }).then(
+        response =>{
+          console.log(response.data);
+          this.paper.paperTitle=response.data.data.title
+          this.paper.type=response.data.data.type
+          this.paper.authors=response.data.data.authorships
+          console.log(this.paper.authors[0].author.id)
+          this.author_name= this.paper.authors[0].author.display_name//存储作者名称
+          this.author_id = this.paper.authors[0].author.id//存储作者id
+          this.paper.date=response.data.data.publication_date
+          this.paper.abstract=response.data.data.abstract
+          this.paper.cited_counts=response.data.data.cited_by_count
+          this.paper.host_venue=response.data.data.host_venue
+          console.log("author institution is:")
+          console.log(this.paper.authors[0].institutions)
+          if(this.paper.authors[0].institutions.length===0){
+            this.paper.institution = "No belonged institution";
+          }
+          else{
+            this.paper.institution = this.paper.authors[0].institutions[0].display_name;
+          }
+        }
+    )
   },
   getPapaerDetail() {
     let that = this;
@@ -170,11 +224,13 @@ export default {
       method:'get',
       url:'/es/get',
       params:{//get请求这里是params
-        id:"W1678408692"
+        id:window.localStorage.getItem('WID')
       }
       }).then(
             response =>{
               console.log(response.data);
+              this.paper.paperTitle=response.data.data.title
+              console.log(response.data.data.title)
             }
         )
   },
@@ -201,7 +257,7 @@ export default {
 }
 .main {
   //padding-left: 44px; //44px
-  padding-left: 2.84vw;
+  padding-left: 4.84vw;
   //display: flex;
   width: 59.64vw;
 }
@@ -209,8 +265,9 @@ export default {
   width: 100%;
   //padding-top: 61px;
   padding-top: 7.92vh;
-  padding-left: 2.45vw;
-  height: 44.66vh;
+  padding-left: 0.45vw;
+  padding-bottom: 3.5vh;
+  height: auto;
   border-bottom: 0.5px solid rgba(171, 169, 169, 0.51);
 }
 .title {
@@ -223,10 +280,11 @@ export default {
   font-size: 2.32vw;
   font-weight: 600;
   line-height: 5.71vh;
-  width: 43.37vw;
+  width: 48.37vw;
 }
 
 .paper-type {
+  margin-top: 0px;
   display: inline-block;
   width: 2.78vw;
   height: 3.38vh;
@@ -244,7 +302,7 @@ export default {
 .info {
   margin-top: 1.04vh;
   text-align: left;
-  height: 3.38vh;
+  min-height: 3.38vh;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
@@ -253,19 +311,30 @@ export default {
   background: transparent !important;
 }
 .info2 {
+
   float: left;
   margin-top: 1.04vh;
   text-align: left;
-  height: 3.38vh;
+  height: auto;
+  min-height: 3.38vh;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-size: 2.08vh;
   line-height: 3.38vh;
   margin-right: 1.81vw;
+  padding: 0 0 0 0;
+}
+.info2 #outer:after{
+content:".";
+height:0;
+visibility:hidden;
+display:block;
+clear:both;
 }
 .buttons {
   width: 100%;
+  margin-top: 2vh;
   padding-top: 2.86vh;
   height: 8.19vh;
   vertical-align: center;
@@ -290,8 +359,13 @@ export default {
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
-  line-height: 2.93vh;
+  line-height: 4.93vh;
   color: #FFFFFF;
+}
+.original img {
+  float: left;
+  padding-left: 10px;
+  margin-top: 6px;
 }
 .right-buttons {
   float: right;
@@ -368,7 +442,7 @@ export default {
   padding-top: 1.69vh;
   text-align: left;
   height: 5.06vh;
-  padding-left: 2.45vw;
+  padding-left: 4.45vw;
   margin-top: 1.69vh;
   margin-bottom: 3.77vh;
   font-family: 'Poppins';
@@ -380,9 +454,9 @@ export default {
 }
 .abstract-body {
   text-align: left;
-  width: 46.02vw;
+  width: 54.02vw;
   padding-bottom: 3.77vh;
-  padding-left: 2.45vw;
+  padding-left: 4.45vw;
 }
 .row {
   background: url("~@/assets/paperDetailsImg/Vector (1).png");
@@ -395,7 +469,7 @@ export default {
   display: block;
   //width: 100%;
   min-height: 37vh;
-  width: 51.12vw;
+  width: 55.12vw;
   margin-top: 6.49vh;
   padding-top: 3.64vh;
   padding-left: 2vw;
@@ -533,6 +607,12 @@ export default {
   margin-top: 9.61vh;
   margin-left: 1.74vw;
   width: 39.37vw;
+
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 26px;
 }
 .comment-divider {
   position: relative;
@@ -622,22 +702,34 @@ export default {
   height: auto;
 }
 .ref {
+  display: block;
   float: left;
-  margin-top: 62.31vh;
+  margin-top: 40px;
   width: 100%;
-  max-height: 400px;
+  height: 450px;
+  margin-right: 0vw;
+}
+.relate {
+  display: block;
+  float: left;
+  margin-top: 80px;
+  width: 100%;
+  height: 450px;
   margin-right: 0vw;
 }
 .notes {
   width: 100%;
   height: auto;
-  margin-top: 118vh;
-  margin-bottom: 10vh;
+  margin-top: 60vh;
+  //margin-bottom: 10vh;
   clear: both;
 }
 </style>
 <style>
 .el-input__inner {
   border: none !important;
+}
+.original {
+  padding: 0 2px 2px 0 !important;
 }
 </style>
