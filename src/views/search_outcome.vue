@@ -55,7 +55,7 @@
           <el-divider></el-divider>
           </div>
           <div v-if="this.venues.length>0">
-          <div style=""><b>Venues</b></div>
+          <div style=""><b>刊物</b></div>
           <el-checkbox-group v-model="checklist_venues" :max="1" @change="choose_change">
             <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all;display: block;word-wrap: break-word;overflow: hidden;" ><b>{{item}}</b></el-checkbox>
           </el-checkbox-group>
@@ -64,7 +64,7 @@
           <!--<div style="margin-left: 6.5vw;margin-top: -2vh"><v-btn style="background-color: #217BF4;" class="white--text" @click="shaixuan">确认</v-btn></div>-->
         </el-card>
       </el-col>
-      
+
       <el-col :span="15" style="margin:0 auto">
         <div v-for="item in items" v-if="item.id!==''" style="width: 50vw;height:240px; " @click="jdetail(item.id)">
           <el-card  class="outcome-card" style="width:55vw;height:228px; " shadow="hover">
@@ -132,13 +132,13 @@
           </el-col>
         </el-row>
       </el-col>
-      
+
     </el-row>
   </div>
-        
+
  <!-- </div>
     <div style="position:absolute;left:40vw;height: 88vh;top:11vh;width: 55vw;">
-      
+
     </div>
   </div> -->
 </template>

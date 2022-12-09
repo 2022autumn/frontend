@@ -73,26 +73,26 @@ data() {
         logicstate:1,
         options: [{
           value: 'title',
-          label: 'title'
+          label: '标题'
         }, {
           value: 'abstract',
-          label: 'abstract'
+          label: '摘要'
         }, {
           value: 'venue',
-          label: 'venue'
+          label: '刊物'
         }, {
           value: 'publisher',
-          label: 'publisher'
+          label: '出版商'
         }, {
           value: 'author',
-          label: 'author'
+          label: '作者'
         },{
           value: 'institution',
-          label: 'institution'
+          label: '机构'
         },
           {
             value: 'concept',
-            label: 'concept'
+            label: '概念'
           }],
         options1:[
           {

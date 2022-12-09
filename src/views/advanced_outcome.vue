@@ -60,7 +60,7 @@
           <el-divider></el-divider>
         </div>
         <div v-if="this.venues.length>0">
-          <div style=""><b>Venues</b></div>
+          <div style=""><b>刊物</b></div>
           <el-checkbox-group v-model="checklist_venues" :max="1" @change="choose_change">
             <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all;display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
           </el-checkbox-group>
