@@ -5,7 +5,9 @@
       <el-collapse style="position:absolute;width:100vw;">
         <el-collapse-item>
           <template slot="title">
-            <b>高级检索条件</b>
+            <b class="collap-font">高级检索条件
+              <img src="../assets/send-plane-fill.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
+            </b>
           </template>
           <avc></avc>
         </el-collapse-item>
@@ -612,6 +614,22 @@ export default {
   background: #FFEB3B;
   /* border: none;
   background: none; */
+}
+.collap-font{
+  padding-left: 20%;
+  padding-top: 1%;
+  margin: 0 auto;
+  text-align: center;
+
+  font-family: "Plus Jakarta Sans";
+  font-weight: 700;
+  font-size: 20px;
+  
+  /* identical to box height, or 36px */
+
+  letter-spacing: -0.01em;
+
+  color: #217bf4;
 }
 
 </style>
