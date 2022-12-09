@@ -655,7 +655,7 @@
     height: 650px;
   
     background: #ffffff;
-    box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.25);
+    box-shadow: 3px 3px 3px 3px rgba(107, 106, 106, 0.25);
     border-radius: 7px;
   }
   
