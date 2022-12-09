@@ -8,7 +8,7 @@
     <router-link to="/advancedSearch"><div style="position: absolute;width: 57px;height:14px;left:32vw;top:2.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="which_page(2)">高级检索</div></router-link>
     <!--<div style="position: absolute;width: 57px;height:14px;left:39vw;top:2.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="which_page(3)">机构馆</div>-->
     <div style="position: absolute;width: 100px;height:14px;left:39vw;top:2.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="jcenter">我的 I SHARE</div>
-    <img src="../img/touxiang3.jpg" style="top: 1.5vh;width: 40px;height: 40px;border-radius: 50px;left: 90vw;position: absolute" alt="">
+    <img :src="this.photourl" style="top: 1.5vh;width: 40px;height: 40px;border-radius: 50px;left: 90vw;position: absolute" alt="">
     <div style="position: absolute;width: 45px;height:14px;left:94vw;top:3vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: #2B2B39;">{{this.username}}</div>
     <!-- <div style="position: absolute;height: 5vh;width: 100vw;top:5vh"><el-divider></el-divider></div> -->
     <div style="position: absolute;width: 35vw;height:40px;left:53.5vw;top:1.05vh;">
@@ -28,7 +28,9 @@ export default {
     return{
       username:"张博皓",
       whichpage:1,
-      input3:""
+      input3:"",
+      userid:8,
+      photourl:'',
     }
   },
   methods:{
@@ -62,8 +64,24 @@ export default {
       //this.$router.push('/search_outcome');
       //window.location.reload();
     },
+    get_data(){
+      this.$axios({//注意是this.$axios
+        method:'get',
+        url:'/user/info',
+        params:{//get请求这里是params
+          user_id:this.userid.toString()
+        }
+      }).then(
+          response =>{
+            console.log("得到个人信息")
+            console.log(response.data);
+            this.photourl = response.data.data.head_shot
+          }
+      )
+    },
   },
   created(){
+    this.get_data();
     if(sessionStorage.getItem('search_name1')===null){
       this.input3 = '';
     }
