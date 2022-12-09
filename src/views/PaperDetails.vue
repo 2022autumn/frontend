@@ -52,13 +52,6 @@
             <div class="like2" v-else>
               {{ this.notCollectionTxt }}
             </div>
-            <!--是否被收藏的样式-->
-            <div class="like1" v-model="key">
-              <span class="iconfont">
-                  <i v-if = "!isCollection" class="el-icon-star-off" :key="0" @click="onCollection"></i>
-                  <i v-else class="el-icon-star-on" :key="1" @click="onCollection"></i>
-              </span>
-            </div>
             <!--            <div class="right-buttons">-->
 <!--              <el-button class="right-button1"></el-button>-->
 <!--              <el-button class="right-button2"></el-button>-->
@@ -240,9 +233,9 @@ export default {
         method:'post',
         url:'/social/comment/list',
         data:{//get请求这里是params
-          paper_id: "W2914747780",
-          // paper_id:window.localStorage.getItem('WID'),
-          // user_id: window.localStorage.getItem('SID'),
+          // paper_id: "W2914747780",
+          paper_id:window.localStorage.getItem('WID'),
+          //user_id: window.localStorage.getItem('SID'),
           user_id: 3
         }
       }).then(
@@ -259,10 +252,10 @@ export default {
         url:'/social/comment/create',
         data:{//get请求这里是params
           content: this.myComment,
-          paper_id: "W2914747780",
+          // paper_id: "W2914747780",
           user_id: 3,
-          // paper_id:window.localStorage.getItem('WID'),
-          // user_id: window.localStorage.getItem('SID'),
+          paper_id:window.localStorage.getItem('WID'),
+          //user_id: window.localStorage.getItem('SID'),
         }
       }).then(
           response =>{
@@ -285,8 +278,8 @@ export default {
       method:'get',
       url:'/es/get',
       params:{//get请求这里是params
-        // id:window.localStorage.getItem('WID')
-        id: "W2914747780"
+        id:window.localStorage.getItem('WID')
+        // id: "W31001126"
       }
     }).then(
         response =>{
@@ -529,7 +522,7 @@ clear:both;
   width: 56.86vw;
   overflow:hidden;
   filter: drop-shadow(0px 3px 4px rgba(0, 0, 0, 0.25));
-  box-shadow: 0px 3px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.25);
 }
 
 .abstract-sider {
@@ -634,33 +627,17 @@ clear:both;
   display: flex;
   flex-direction: column;
   margin-top: 7px;
-  height: 350px;
+  height: auto;
   max-height: 350px;
   width: 51.83vw;
 }
-::-webkit-scrollbar {
-  width: 7px;
-  height: 18px;
-  border-radius: 8px;
-}
-::-webkit-scrollbar-thumb {
-  width: 7px;
-  height: 20px;
-  background-color: #E8E8E8;
-  border-radius: 8px;
-}
 .cards {
-  float: left;
   position: relative;
-  margin-top: 10px;
-  display: inline-block;
-  overflow: hidden;
+  margin-top: 5px;
+  display: table-cell;
   width: 51.83vw;
-  height: auto;
-  min-height: 135px;
-  //height: 135px;
+  height: 150px;
   //height: 24.41vh;
-  padding-bottom: 20px;
   padding-left: 1.48vw;
   padding-top: 16px;
   background: #FFFFFF;
@@ -669,9 +646,9 @@ clear:both;
 }
 .user-info {
   float: left;
-  position: absolute;;
+  position: relative;;
   height: 7.79vh;
-  width: 47.31vw;
+  width: 41.31vw;
 }
 .commenter-avator {
   float: left;
@@ -710,8 +687,7 @@ clear:both;
   font-size: 12px;
   line-height: 3.38vh;
   /* identical to box height, or 217% */
-  padding-bottom: 10px;
-  margin-bottom: 10px;
+
   letter-spacing: 0.02em;
 
   color: #7D7D7D;
@@ -733,14 +709,12 @@ clear:both;
   color: #8A8A8A;
 }
 .comment-content {
-  float: left;
-  position: relative;
-  height: auto;
-  min-height: 30px;
+  position: absolute;
   //display: flex;
-  margin-top: 8.61vh;
-  //margin-left: 0.74vw;
-  width: 47.87vw;
+  margin-top: 7.61vh;
+  margin-left: 1.74vw;
+  width: 39.37vw;
+
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 500;

@@ -6,7 +6,7 @@
             <div></div>
             <div style="text-align: center">
                 <div class="title-personal">
-                    <div data-text="个人中心" class="title" />
+                    个人中心
                 </div>
                 <div class="left">
                     <div @click="activeIndex = 1" style="display:flex;justify-content:center;align-items:center;cursor: pointer;">
@@ -409,17 +409,27 @@ export default{
 
 <style >
 .container-box{
-    background-image: url(../assets/base.png);
+    background-image: url(../../public/advanced_img/Frame 1.svg);
     background-size: 100%;
     position: relative;
     height: 100vh;
 }
 .title-personal{
-    padding: 20px;
-    height: 90px;
-    border-radius: 16px;
-    text-align: center;
-    background: #ffffff;
+    position: absolute;
+    left: 10vw;
+    top: 8vh;
+    width: 14vw;
+    margin-top: 5vh;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 48px;
+    /* 设置背景色渐变 */
+    background-image: linear-gradient(94.95deg, #437FEC -43.46%, #4CD9ED 128.08%);
+    /* 设置背景以文字进行裁切 */
+    background-clip: text;
+    -webkit-background-clip: text;
+    /* 设置文本颜色透明以露出后面裁切成文本形状的渐变背景 */
+    color: transparent;
 }
 .grid{
     display: grid;
@@ -435,13 +445,16 @@ export default{
     border: 1px solid #cccccc;
 }
 .left{
+    position: absolute;
+    left: 10vw;
+    top: 20vh;
+    width: 14vw;
     display: inline-block;
-    margin-top: 20px;
-    width: 80%;
+    margin-top: 3vh;
     padding: 50px 20px;
     background-color: #ffffff;
-    border-radius: 16px;
-    border: 1px solid #cccccc;
+    box-shadow: 4px 4px 4px 4px rgba(122, 122, 122, 0.25);
+    border-radius: 14px;
 }
 .title::after {
         font-family: 'Poppins';
@@ -483,13 +496,17 @@ export default{
         display: none;
     }
     .center{
+        position: absolute;
+        left: 27vw;
+        top: 2vh;
+        width: 55vw;
         padding: 30px;
-        border: 1px solid #cccccc;
         margin-top: 80px;
-        height: 70vh;
-        border-radius: 16px ;
+        height: 83vh;
         background-color: #ffffff;
         overflow: auto;
+        box-shadow: 6px 6px 6px 6px rgba(122, 122, 122, 0.25);
+        border-radius: 20px;
     }
     .info-title{
         font-family: 'Nunito Sans';

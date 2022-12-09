@@ -1,39 +1,93 @@
 <template>
   <div>
-    <div style="box-shadow: 6px 6px 4px rgba(0, 0, 0, 0.25)">
-      <el-dialog class="login"
-        :visible.sync="login_visible"
-        :showClose=false
-        width=53.5vw height=583px
-        :before-close="handleClose"
+    <el-dialog
+      class="login-dia"
+      :visible.sync="login_visible"
+      :showClose="false"
+      width="53.5vw"
+      height="583px"
+      :before-close="handleClose"
+    >
+      <div
+        style="
+          width: 327px;
+          height: 583px;
+          display: inline-block;
+          vertical-align: top;
+        "
       >
-        <div style=" width: 327px; height: 583px; display: inline-block; vertical-align: top">
-          <img src="../HomePage_svg/left-bar.svg"/>
+        <img src="../HomePage_svg/left-bar.svg" />
+      </div>
+      <div
+        style="
+          width: 32vw;
+          height: 583px;
+          display: inline-block;
+          vertical-align: top;
+        "
+      >
+        <div style="float: right" @click="close">
+          <img src="../HomePage_svg/close.svg" />
         </div>
-        <div style="width: 32vw; height: 583px; display: inline-block; vertical-align: top">
-          <div style="float: right"  @click="close">
-            <img src="../HomePage_svg/close.svg" />
-          </div>
-          <div class="background">
-            <div class="title1">登录</div>
-            <div class="title2">欢迎登录 I Share!</div>
+        <div class="background">
+          <div class="title1">登录</div>
+          <div class="title2">欢迎登录 I Share!</div>
 
-            <div class="text">用户名</div>
-            <el-input class="login-input" v-model="input_name" placeholder="请输入用户名"></el-input>
-            <div class="text">密码</div>
-            <el-input class="login-input" v-model="input_pwd" placeholder="请输入密码"></el-input>
+          <!-- <div class="text">用户名</div>
+          <el-input
+            class="login-input"
+            v-model="input_name"
+            placeholder="请输入用户名"
+          ></el-input>
+          <div class="text">密码</div>
+          <el-input
+            class="login-input"
+            v-model="input_pwd"
+            placeholder="请输入密码"
+          ></el-input> -->
 
-            <div class="button">登录</div>
-            <div class="text" style="text-align: center">
-              没有账号？
-              <span style="color: #217bf4; text-decoration: underline"
-                @click="goto_signup">去注册</span
-              >
-            </div>
+          <el-form
+            :model="ruleForm"
+            status-icon
+            :rules="rules"
+            ref="ruleForm"
+            label-width="100px"
+            class="text"
+            style="margin: 5vh auto"
+          >
+            <el-form-item label="用户名" prop="name" class="litem">
+              <el-input v-model.number="ruleForm.name"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="pwd" class="litem">
+              <el-input
+                type="password"
+                v-model="ruleForm.pwd"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+
+            <!-- <el-form-item>
+                <el-button type="primary" @click="submitForm('ruleForm')"
+                  >提交</el-button
+                >
+                <el-button @click="resetForm('ruleForm')">重置</el-button>
+              </el-form-item> -->
+          </el-form>
+
+          <el-button class="button" @click="submitLogin('ruleForm')"
+            >登录</el-button
+          >
+          <div class="text" style="text-align: center">
+            没有账号？
+            <span
+              style="color: #217bf4; text-decoration: underline"
+              @click="goto_signup"
+              >去注册</span
+            >
           </div>
         </div>
-      </el-dialog>
-    </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -42,15 +96,91 @@
 
 export default {
   data() {
+    var checkName = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("用户名不能为空"));
+      } else {
+        callback();
+      }
+      // setTimeout(() => {
+      //   if (!Number.isInteger(value)) {
+      //     callback(new Error('请输入数字值'));
+      //   } else {
+      //     if (value < 18) {
+      //       callback(new Error('必须年满18岁'));
+      //     } else {
+      //       callback();
+      //     }
+      //   }
+      // }, 1000);
+    };
+    var validatePwd = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        if (this.ruleForm.checkPwd !== "") {
+          this.$refs.ruleForm.validateField("validateCheckPwd");
+        }
+        callback();
+      }
+    };
+
     return {
       input_name: "",
       input_pwd: "",
       login_visible: false,
+
+      ruleForm: {
+        name: "",
+        pwd: "",
+      },
+      rules: {
+        name: [{ validator: checkName, trigger: "blur" }],
+        pwd: [{ validator: validatePwd, trigger: "blur" }],
+      },
     };
   },
   setup() {},
 
   methods: {
+    submitLogin(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          // alert("submit login request correct");
+          this.$axios({
+            //注意是this.$axios
+            method: "post",
+            url: "/login",
+            data: {
+              //post请求这里是data
+              password: this.ruleForm.pwd,
+              username: this.ruleForm.name,
+            },
+          }).then((response) => {
+            console.log("response", response);
+            console.log(response.data);
+
+            if (response.data.status===200) {
+              this.$message({
+                message: "登录成功",
+                type: "success",
+              });
+              //alert("用户登录成功");
+            } else if (response.data.status===400) {
+              alert("用户名不存在");
+            } else if (response.data.status===401) {
+              alert("密码错误");
+            } else {
+              this.$message.error("登录出错");
+              alert("用户登录出错");
+            }
+          });
+        } else {
+          console.log("submit login request error");
+          return false;
+        }
+      });
+    },
     init() {
       console.log("打开登录组件");
       this.login_visible = true;
@@ -59,25 +189,25 @@ export default {
       console.log("关闭登录组件");
       this.login_visible = false;
     },
-    goto_signup(){
+    goto_signup() {
       console.log("去注册组件");
       this.login_visible = false;
       this.$parent.open_signup();
-    }
+    },
   },
 };
 </script>
 
 <style scoped>
-.login /deep/ .el-dialog__header{
+.login-dia /deep/ .el-dialog__header {
   padding: 0;
 }
-.login /deep/ .el-dialog__body{
+.login-dia /deep/ .el-dialog__body {
   padding: 0;
+  display: flex;
 }
-
 .background {
-  margin:16% auto;
+  margin: 16% auto;
   /* margin: 15% 13%; */
   padding: 4vh;
   width: 70%;
