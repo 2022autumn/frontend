@@ -263,7 +263,7 @@ export default {
   display: inline-block;
   text-align: center;
   width: 100%;
-  height: 600px;
+  height: 90vh;
   left: 0px;
   top: 0px;
 
