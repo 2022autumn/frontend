@@ -60,7 +60,7 @@
           <el-divider></el-divider>
         </div>
         <div v-if="this.venues.length>0">
-          <div style=""><b>Venues</b></div>
+          <div style=""><b>刊物</b></div>
           <el-checkbox-group v-model="checklist_venues" :max="1" @change="choose_change">
             <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all;display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
           </el-checkbox-group>
@@ -80,14 +80,16 @@
             </b>
           </div>
           <div>
-            <div style="display: inline-block;margin-top: 1vh;color: grey">
-              {{item.author}}&nbsp;&nbsp;|
+            <div style="display: inline-block;margin-top: 1vh;color: grey" v-for="aus in item.authors">
+              {{aus}}&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
-            <div style="display: inline-block;color: grey">
-              &nbsp;&nbsp;{{item.institution}}&nbsp;&nbsp;|
-            </div>
-            <div style="display: inline-block;color: grey">
-              &nbsp;&nbsp;{{item.time}}
+            <div>
+              <div style="display: inline-block; color: grey">
+                {{item.institution}}&nbsp;&nbsp;|
+              </div>
+              <div style="display: inline-block;color: grey">
+                &nbsp;&nbsp;{{item.time}}
+              </div>
             </div>
           </div>
           <div style="font-size: small;color: grey">
@@ -174,6 +176,7 @@ export default {
           numyin:0,
           numstore:0,
           id:"",
+          authors:[]
         },
         {
           type:"期刊",
@@ -190,6 +193,7 @@ export default {
           numyin:0,
           numstore:0,
           id:"",
+          authors:[]
         },
         {
           type:"期刊",
@@ -206,6 +210,7 @@ export default {
           numyin:0,
           numstore:0,
           id:"",
+          authors:[]
         },
         {
           type:"期刊",
@@ -222,6 +227,7 @@ export default {
           numyin:0,
           numstore:0,
           id:"",
+          authors:[]
         },
         {
           type:"期刊",
@@ -238,6 +244,7 @@ export default {
           numyin:0,
           numstore:0,
           id:"",
+          authors:[]
         },
         {
           type:"期刊",
@@ -254,6 +261,7 @@ export default {
           numyin:0,
           numstore:0,
           id:"",
+          authors:[]
         },
         {
           type:"期刊",
@@ -270,6 +278,7 @@ export default {
           numyin:0,
           numstore:0,
           id:"",
+          authors:[]
         },
         {
           type:"期刊",
@@ -286,6 +295,7 @@ export default {
           numyin:0,
           numstore:0,
           id:"",
+          authors:[]
         }
       ],
       authors:[],
@@ -529,6 +539,13 @@ export default {
               //console.log(this.items[i].id);
               if(response.data.res.Works[i].authorships.length!==0) {
                 this.items[i].author = response.data.res.Works[i].authorships[0].author.display_name;
+                var t = response.data.res.Works[i].authorships.length;
+                if(t>3){
+                  t=3;
+                }
+                for(var j=0;j<t;j++){
+                  this.items[i].authors[j] = response.data.res.Works[i].authorships[j].author.display_name;
+                }
               }
               else{
                 this.items[i].author = "unknown"
@@ -547,7 +564,7 @@ export default {
               }
               this.items[i].type =  response.data.res.Works[i].type;
               if(this.items[i].type === null){
-                this.items[i].type = "undefined"
+                this.items[i].type = "unknown"
               }
             }
           }
@@ -559,6 +576,7 @@ export default {
     this.conds = JSON.parse(sessionStorage.getItem('Cond'));
     this.now_page = JSON.parse(sessionStorage.getItem('now_page'));
     this.query = JSON.parse(sessionStorage.getItem('query'));
+    this.openFullScreen2();
     this.search();
     /*if(this.total%4===0){
       this.total_page = this.total/8*10;
