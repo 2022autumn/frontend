@@ -376,9 +376,9 @@ export default {
   font-size: 16px;
   line-height: 3.38vh;
   background: transparent !important;
+  background-color: transparent !important;
 }
 .info2 {
-
   float: left;
   margin-top: 1.04vh;
   text-align: left;
