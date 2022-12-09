@@ -313,7 +313,7 @@ export default{
           method:'post',
           url:'/user/headshot',
           data:{//post请求这里是data
-              user_id:1,
+              user_id:2,
               Headshot:formData,
           }
         }).then(

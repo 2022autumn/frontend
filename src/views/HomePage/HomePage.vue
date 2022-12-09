@@ -12,7 +12,7 @@
 
           <div style="margin-top: 7vh; margin-bottom: 5vh;display: inline-block">
             <div style="text-align: center">
-              <el-input class="home-search" placeholder="请输入检索内容" v-model="input1">
+              <el-input class="home-search" placeholder="请输入检索内容" v-model="input1" @keyup.enter.native="j_search_outcome">
                 <!--<template slot="prepend" style="cursor: pointer">
                   <span @click="jadvance" style="width:inherit">高级检索</span>
                 </template>-->
