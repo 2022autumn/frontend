@@ -88,6 +88,32 @@
         </el-col>
         
         <el-col :span="15" style="margin:0 auto">
+            <div style="margin-bottom:10px">
+                <el-row :gutter="20" style="margin:auto;">
+                    <el-col :span="6">
+                        <b style="color:gray;font-size: small;">
+                            &ensp; 共找到 条结果
+                        </b>
+                    </el-col>
+                    <el-col :span="8">
+                        <div>&nbsp</div>
+                    </el-col>
+                    <el-col :span="10">
+                        <img src="../assets/search_outcome/Frame7.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
+                        <b style="color:gray;font-size: small;">&nbsp;结果排序&nbsp;&nbsp;</b>
+                        <el-select v-model="value" placeholder="请选择排序方式" size="small">
+                            <el-option
+                            v-for="item in options"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-col>
+                    
+                </el-row>
+                
+            </div>
           <div v-for="item in items" v-if="item.id!==''" style="width: 50vw;height:240px; " @click="jdetail(item.id)">
             <el-card  class="outcome-card" style="width:55vw;height:228px; " shadow="hover">
               <el-tag style="display: inline-block">{{item.type}}</el-tag>
@@ -347,6 +373,22 @@
         if_types:0,
         if_venues:0,
         query:[],
+        options: [{
+          value: '选项1',
+          label: '按匹配程度递减'
+        }, {
+          value: '选项2',
+          label: '按被引用量递减'
+        }, {
+          value: '选项3',
+          label: '按被引用量递增'
+        }, {
+          value: '选项4',
+          label: '按发表时间递减'
+        }, {
+          value: '选项5',
+          label: '按发表时间递增'
+        }],
       }
     },
     methods:{
@@ -625,7 +667,7 @@
   <style scoped>
   .all{
     width: 100vw;
-    height: 300vh;
+    height: 110%;
     background: linear-gradient(311.76deg, #D4E7FE -15.24%, #FFFFFF 78.85%);
   }
   .scroll-area::-webkit-scrollbar {
