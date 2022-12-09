@@ -818,7 +818,7 @@ clear:both;
 .original {
   padding: 0 2px 2px 0 !important;
 }
-.v-application .style {
+.v-application .info {
   background-color: transparent !important;
   border-color: transparent !important;
 }
