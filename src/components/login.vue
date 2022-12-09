@@ -33,7 +33,7 @@
           <div class="title1">登录</div>
           <div class="title2">欢迎登录 I Share!</div>
 
-          <div class="text">用户名</div>
+          <!-- <div class="text">用户名</div>
           <el-input
             class="login-input"
             v-model="input_name"
@@ -44,9 +44,39 @@
             class="login-input"
             v-model="input_pwd"
             placeholder="请输入密码"
-          ></el-input>
+          ></el-input> -->
 
-          <div class="button" @click="login">登录</div>
+          <el-form
+            :model="ruleForm"
+            status-icon
+            :rules="rules"
+            ref="ruleForm"
+            label-width="100px"
+            class="text"
+            style="margin: 5vh auto"
+          >
+            <el-form-item label="用户名" prop="name" class="litem">
+              <el-input v-model.number="ruleForm.name"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="pwd" class="litem">
+              <el-input
+                type="password"
+                v-model="ruleForm.pwd"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+
+            <!-- <el-form-item>
+                <el-button type="primary" @click="submitForm('ruleForm')"
+                  >提交</el-button
+                >
+                <el-button @click="resetForm('ruleForm')">重置</el-button>
+              </el-form-item> -->
+          </el-form>
+
+          <el-button class="button" @click="submitLogin('ruleForm')"
+            >登录</el-button
+          >
           <div class="text" style="text-align: center">
             没有账号？
             <span
@@ -66,51 +96,90 @@
 
 export default {
   data() {
+    var checkName = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("用户名不能为空"));
+      } else {
+        callback();
+      }
+      // setTimeout(() => {
+      //   if (!Number.isInteger(value)) {
+      //     callback(new Error('请输入数字值'));
+      //   } else {
+      //     if (value < 18) {
+      //       callback(new Error('必须年满18岁'));
+      //     } else {
+      //       callback();
+      //     }
+      //   }
+      // }, 1000);
+    };
+    var validatePwd = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        if (this.ruleForm.checkPwd !== "") {
+          this.$refs.ruleForm.validateField("validateCheckPwd");
+        }
+        callback();
+      }
+    };
+
     return {
       input_name: "",
       input_pwd: "",
       login_visible: false,
+
+      ruleForm: {
+        name: "",
+        pwd: "",
+      },
+      rules: {
+        name: [{ validator: checkName, trigger: "blur" }],
+        pwd: [{ validator: validatePwd, trigger: "blur" }],
+      },
     };
   },
   setup() {},
 
   methods: {
-    login() {
-      if (this.input_name == "") {
-        this.$message({
-          message: "请输入用户名",
-          type: "warning",
-        });
-      }
-      if (this.input_pwd == "") {
-        this.$message({
-          message: "请输入密码",
-          type: "warning",
-        });
-      }
-      if (this.input_pwd != "" && this.input_name != "") {
-        this.$axios({
-          //注意是this.$axios
-          method: "post",
-          url: "/login",
-          data: {
-            //post请求这里是data
-            password: "string",
-            username: "string",
-          },
-        }).then((response) => {
-          console.log("response", response);
-          console.log(response.data);
+    submitLogin(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          // alert("submit login request correct");
+          this.$axios({
+            //注意是this.$axios
+            method: "post",
+            url: "/login",
+            data: {
+              //post请求这里是data
+              password: this.ruleForm.pwd,
+              username: this.ruleForm.name,
+            },
+          }).then((response) => {
+            console.log("response", response);
+            console.log(response.data);
 
-          if (response.data?.success) {
-            User.Login = true;
-            User.token = response.data.token;
-            if (modelRef.value.name != null) User.Name = modelRef.value.name;
-            User.Id = response.data.user.user_id;
-            localStorage.setItem("Login", "true");
-          }
-        });
-      }
+            if (response.data.status===200) {
+              this.$message({
+                message: "登录成功",
+                type: "success",
+              });
+              alert("用户登录成功");
+            } else if (response.data.status===400) {
+              alert("用户名不存在");
+            } else if (response.data.status===401) {
+              alert("密码错误");
+            } else {
+              this.$message.error("登录出错");
+              alert("用户登录出错");
+            }
+          });
+        } else {
+          console.log("submit login request error");
+          return false;
+        }
+      });
     },
     init() {
       console.log("打开登录组件");
@@ -135,8 +204,8 @@ export default {
 }
 .login-dia /deep/ .el-dialog__body {
   padding: 0;
+  display: flex;
 }
-
 .background {
   margin: 16% auto;
   /* margin: 15% 13%; */
