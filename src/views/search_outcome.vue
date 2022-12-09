@@ -86,13 +86,13 @@
             <!--<div style="margin-left: 6.5vw;margin-top: -2vh"><v-btn style="background-color: #217BF4;" class="white--text" @click="shaixuan">确认</v-btn></div>-->
           </el-card>
         </el-col>
-        
+
         <el-col :span="15" style="margin:0 auto">
             <div style="margin-bottom:10px">
                 <el-row :gutter="20" style="margin:auto;">
                     <el-col :span="6">
                         <b style="color:gray;font-size: small;">
-                            &ensp; 共找到 条结果
+                            &ensp; 共找到{{this.true_total_page}}条结果
                         </b>
                     </el-col>
                     <el-col :span="8">
@@ -112,7 +112,7 @@
                     </el-col>
 
                 </el-row>
-                
+
             </div>
           <div v-for="item in items" v-if="item.id!==''" style="width: 50vw;height:240px; " @click="jdetail(item.id)">
             <el-card  class="outcome-card" style="width:55vw;height:228px; " shadow="hover">
@@ -180,17 +180,17 @@
             </el-col>
           </el-row>
         </el-col>
-        
+
       </el-row>
     </div>
-          
+
    <!-- </div>
       <div style="position:absolute;left:40vw;height: 88vh;top:11vh;width: 55vw;">
-        
+
       </div>
     </div> -->
   </template>
-  
+
   <script>
   import Topbar2 from "@/components/topbar2";
   import Topbar1 from "@/components/topbar1";
@@ -373,10 +373,7 @@
         if_types:0,
         if_venues:0,
         query:[],
-        options: [{
-          value: '选项1',
-          label: '按匹配程度递减'
-        }, {
+        options: [ {
           value: '选项2',
           label: '按被引用量递减'
         }, {
@@ -389,6 +386,7 @@
           value: '选项5',
           label: '按发表时间递增'
         }],
+        true_total_page:0,
       }
     },
     methods:{
@@ -518,6 +516,8 @@
               response =>{
                 console.log(response.data.res);
                 //console.log(response.data.res.hits.total.value);
+                this.true_total_page = response.data.res.Hits;
+                console.log("搜索得到文章总数为:"+this.true_total_page);
                 this.total_page = response.data.res.Hits/8*10;
                 this.tmp = response.data.res.Hits;
                 //console.log(response.data.res.hits.hits.length);
@@ -663,7 +663,7 @@
     }
   }
   </script>
-  
+
   <style scoped>
   .all{
     width: 100vw;
@@ -673,14 +673,14 @@
   .scroll-area::-webkit-scrollbar {
     width: 10px;
   }
-  
+
   /* --- 滚动条里面的滚动块 --- */
   .scroll-area::-webkit-scrollbar-thumb {
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 5px #eee;
     background: #eee;
   }
-  
+
   /* --- 滚动条里面轨道 --- */
   .scroll-area::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
@@ -695,10 +695,10 @@
     padding: auto;
     width: 90%;
     height: 650px;
-  
+
     background: #ffffff;
     box-shadow: 3px 3px 3px 3px rgba(107, 106, 106, 0.25);
     border-radius: 7px;
   }
-  
+
   </style>

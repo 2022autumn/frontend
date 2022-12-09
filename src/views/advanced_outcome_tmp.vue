@@ -13,186 +13,121 @@
         </el-collapse-item>
       </el-collapse>
     </div>
-    <el-row :gutter="20" style="margin:auto; top:15vh">
-      <el-col :span="3">
-        <div>&nbsp</div>
-      </el-col>
-      <el-col :span="5">
-        <el-card class="box-card" style="word-break:break-all; background-color: rgba(99, 162, 247, 0.15);" shadow="hover">
-          <!--<img src="../img/Fill.svg" style="position: absolute;left:-0.5vw;top:1vh">
-          <img src="../img/Funnel.svg" style="position: absolute;left:1.25vw;top:3.4vh">-->
-          <!--<div>
-          <div style=""><b>排序条件</b></div>
-          <el-checkbox-group v-model="checklist" :max="1">
-          <el-checkbox label="按匹配程度递减"><b>按匹配程度递减</b></el-checkbox>
-          <el-checkbox label="按被引用量递减"><b>按被引用量递减</b></el-checkbox>
-          <el-checkbox label="按发表时间递减"><b>按发表时间递减</b></el-checkbox>
+    <div style="position: absolute;width:23.2vw;height: 88vh;left:5vw;top:20vh;">
+      <el-card class="box-card" style="word-break:break-all;position:absolute; width:27vw;background-color: rgba(99, 162, 247, 0.15);" shadow="hover">
+        <!--<img src="../img/Fill.svg" style="position: absolute;left:-0.5vw;top:1vh">
+        <img src="../img/Funnel.svg" style="position: absolute;left:1.25vw;top:3.4vh">-->
+        <!--<div>
+        <div style=""><b>排序条件</b></div>
+        <el-checkbox-group v-model="checklist" :max="1">
+        <el-checkbox label="按匹配程度递减"><b>按匹配程度递减</b></el-checkbox>
+        <el-checkbox label="按被引用量递减"><b>按被引用量递减</b></el-checkbox>
+        <el-checkbox label="按发表时间递减"><b>按发表时间递减</b></el-checkbox>
+        </el-checkbox-group>
+        <el-divider></el-divider>
+        </div>-->
+        <div v-if="this.authors.length>0">
+          <div style=""><b>主要作者</b></div>
+          <el-checkbox-group v-model="checklist_author" :max="1" @change="choose_change">
+            <el-checkbox v-for="item in this.authors"  :label=item.key style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item.key}}</b></el-checkbox>
           </el-checkbox-group>
           <el-divider></el-divider>
-          </div>-->
-          <div v-if="this.authors.length>0">
-            <div style="margin-bottom:5px">
-              <img src="../assets/search_outcome/Frame1.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
-              <b>&nbsp;主要作者</b>
-            </div>
-            <el-checkbox-group v-model="checklist_author" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.authors"  :label=item.key style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item.key}}</b></el-checkbox>
-            </el-checkbox-group>
-            <el-divider></el-divider>
-          </div>
-          <div v-if="this.institutions.length>0">
-            <div style="">
-              <img src="../assets/search_outcome/Frame5.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
-              <b>&nbsp;主要组织</b>
-            </div>
-            <el-checkbox-group v-model="checklist_institutions" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.institutions"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
-            </el-checkbox-group>
-            <el-divider></el-divider>
-          </div>
-          <div v-if="this.publish_years.length>0">
-            <div style="margin-bottom:5px">
-              <img src="../assets/search_outcome/Frame2.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
-              <b>&nbsp;发表年份</b>
-            </div>
-            <el-checkbox-group v-model="checklist_publish_years" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.publish_years"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
-            </el-checkbox-group>
-            <el-divider></el-divider>
-          </div>
-          <div v-if="this.publishers.length>0">
-            <div style="margin-bottom:5px">
-              <img src="../assets/search_outcome/Frame3.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
-              <b>&nbsp;出版单位</b>
-            </div>
-            <el-checkbox-group v-model="checklist_publishers" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.publishers"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
-            </el-checkbox-group>
-            <el-divider></el-divider>
-          </div>
-          <div v-if="this.types.length>0">
-            <div style="margin-bottom:5px">
-              <img src="../assets/search_outcome/Frame4.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
-              <b>&nbsp;论文类型</b>
-            </div>
-            <el-checkbox-group v-model="checklist_types" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.types"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
-            </el-checkbox-group>
-            <el-divider></el-divider>
-          </div>
-          <div v-if="this.venues.length>0">
-            <div style="margin-bottom:5px">
-              <img src="../assets/search_outcome/Frame6.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
-              <b>&nbsp;刊物名称</b>
-            </div>
-            <el-checkbox-group v-model="checklist_venues" :max="1" @change="choose_change" >
-              <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all;display:block;word-wrap: break-word;overflow: hidden;" >
-                <b>
-                  {{item}}
-                </b>
-              </el-checkbox>
-            </el-checkbox-group>
-            <el-divider></el-divider>
-          </div>
-          <!--<div style="margin-left: 6.5vw;margin-top: -2vh"><v-btn style="background-color: #217BF4;" class="white--text" @click="shaixuan">确认</v-btn></div>-->
-        </el-card>
-      </el-col>
-
-      <el-col :span="15" style="margin:0 auto">
-        <div style="margin-bottom:10px">
-          <el-row :gutter="20" style="margin:auto;">
-            <el-col :span="6">
-              <b style="color:gray;font-size: small;">
-                &ensp; 共找到{{this.true_total_page}}条结果
-              </b>
-            </el-col>
-            <el-col :span="8">
-              <div>&nbsp</div>
-            </el-col>
-            <el-col :span="10">
-              <img src="../assets/search_outcome/Frame7.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
-              <b style="color:gray;font-size: small;">&nbsp;结果排序&nbsp;&nbsp;</b>
-              <el-select v-model="value" placeholder="请选择排序方式" size="small">
-                <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                </el-option>
-              </el-select>
-            </el-col>
-
-          </el-row>
-
         </div>
-        <div v-for="item in items" v-if="item.id!==''" style="width: 50vw;height:240px; " @click="jdetail(item.id)">
-          <el-card  class="outcome-card" style="width:55vw;height:228px; " shadow="hover">
-            <el-tag style="display: inline-block">{{item.type}}</el-tag>
-            <div style="display: inline-block;font-size: large;">
-              &nbsp;
-              <b>
-                {{item.title}}
-              </b>
+        <div v-if="this.institutions.length>0">
+          <div style=""><b>主要组织</b></div>
+          <el-checkbox-group v-model="checklist_institutions" :max="1" @change="choose_change">
+            <el-checkbox v-for="item in this.institutions"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
+          </el-checkbox-group>
+          <el-divider></el-divider>
+        </div>
+        <div v-if="this.publish_years.length>0">
+          <div style=""><b>发表年份</b></div>
+          <el-checkbox-group v-model="checklist_publish_years" :max="1" @change="choose_change">
+            <el-checkbox v-for="item in this.publish_years"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
+          </el-checkbox-group>
+          <el-divider></el-divider>
+        </div>
+        <div v-if="this.publishers.length>0">
+          <div style=""><b>出版单位</b></div>
+          <el-checkbox-group v-model="checklist_publishers" :max="1" @change="choose_change">
+            <el-checkbox v-for="item in this.publishers"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
+          </el-checkbox-group>
+          <el-divider></el-divider>
+        </div>
+        <div v-if="this.types.length>0">
+          <div style=""><b>论文类型</b></div>
+          <el-checkbox-group v-model="checklist_types" :max="1" @change="choose_change">
+            <el-checkbox v-for="item in this.types"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
+          </el-checkbox-group>
+          <el-divider></el-divider>
+        </div>
+        <div v-if="this.venues.length>0">
+          <div style=""><b>刊物</b></div>
+          <el-checkbox-group v-model="checklist_venues" :max="1" @change="choose_change">
+            <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all;display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
+          </el-checkbox-group>
+          <el-divider></el-divider>
+        </div>
+        <!--<div style="margin-left: 6.5vw;margin-top: -2vh"><v-btn style="background-color: #217BF4;" class="white--text" @click="shaixuan">确认</v-btn></div>-->
+      </el-card>
+    </div>
+    <div style="position:absolute;left:40vw;height: 88vh;top:20vh;width: 55vw;">
+      <div v-for="item in items" v-if="item.id!==''" style="width: 50vw;height:35vh;" @click="jdetail(item.id)">
+        <el-card  style="width: 50vw;height:30vh;background-color: lightcyan;cursor: pointer;" shadow="hover">
+          <el-tag style="display: inline-block">{{item.type}}</el-tag>
+          <div style="display: inline-block;font-size: large;">
+            &nbsp;
+            <b>
+              {{item.title}}
+            </b>
+          </div>
+          <div>
+            <div style="display: inline-block;margin-top: 1vh;color: grey" v-for="aus in item.authors">
+              {{aus}}&nbsp;&nbsp;&nbsp;&nbsp;
             </div>
             <div>
-              <div style="display: inline-block;margin-top: 1vh;color: grey" v-for="aus in item.authors">
-                {{aus}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <div style="display: inline-block; color: grey">
+                {{item.institution}}&nbsp;&nbsp;|
               </div>
-              <div>
-                <div style="display: inline-block; color: grey">
-                  {{item.institution}}&nbsp;&nbsp;|
-                </div>
-                <div style="display: inline-block;color: grey">
-                  &nbsp;&nbsp;{{item.time}}
-                </div>
+              <div style="display: inline-block;color: grey">
+                &nbsp;&nbsp;{{item.time}}
               </div>
             </div>
-            <div style="font-size: small;color: grey">
-              {{item.zhaiyao}}
+          </div>
+          <div style="font-size: small;color: grey">
+            {{item.zhaiyao}}
+          </div>
+          <div style="margin-top: 2vh;display: inline-block">
+            <div v-for="tags in item.tags" v-if="tags!==''" style="display: inline-block">
+              <el-tag>{{tags}}</el-tag>
+              &nbsp;
             </div>
-            <div style="margin-top: 2vh;display: inline-block">
-              <div v-for="tags in item.tags" v-if="tags!==''" style="display: inline-block">
-                <el-tag>{{tags}}</el-tag>
-                &nbsp;
-              </div>
+          </div>
+          <div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
+            <div style="display: inline-block;top:3vh">
+              <img src="../img/yinhao.svg" style="width: 2vw;height: 2vh">
             </div>
-            <div style="display: inline-block;color: rgba(96, 96, 96, 0.69);">
-              <div style="display: inline-block;top:3vh">
-                <img src="../img/yinhao.svg" style="width: 2vw;height: 2vh">
-              </div>
-              <div style="display: inline-block;">
-                {{item.numyin}}次被引
-              </div>
+            <div style="display: inline-block">
+              {{item.numyin}}次被引
             </div>
-            <div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
-              <div style="display: inline-block;"><img src="../img/shoucang.svg" style="width: 2vw;height: 2vh"></div>
-              <div style="display: inline-block">{{item.numstore}}次收藏</div>
-            </div>
-          </el-card>
-        </div>
-        <el-row style="margin:auto; top:2vh">
-          <el-col :span="5">
-            <div>&nbsp</div>
-          </el-col>
-          <el-col :span="16">
-            <div class="block">
-              <el-pagination
-                  layout="prev, pager, next"
-                  :total=this.total_page
-                  @current-change="handlechange"
-                  :current-page= this.now_page
-                  background
-              >
-              </el-pagination>
-            </div>
-          </el-col>
-          <el-col :span="3">
-            <div>&nbsp</div>
-          </el-col>
-        </el-row>
-      </el-col>
-
-    </el-row>
+          </div>
+          <div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
+            <div style="display: inline-block;"><img src="../img/shoucang.svg" style="width: 2vw;height: 2vh"></div>
+            <div style="display: inline-block">{{item.numyin}}次收藏</div>
+          </div>
+        </el-card>
+      </div>
+      <div class="block">
+        <el-pagination
+            layout="prev, pager, next"
+            :total=this.total_page
+            @current-change="handlechange"
+            :current-page= this.now_page
+            background
+        >
+        </el-pagination>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -205,20 +140,6 @@ export default {
   components: {Topbar2, Topbar1,avc},
   data(){
     return{
-      options: [ {
-        value: '选项2',
-        label: '按被引用量递减'
-      }, {
-        value: '选项3',
-        label: '按被引用量递增'
-      }, {
-        value: '选项4',
-        label: '按发表时间递减'
-      }, {
-        value: '选项5',
-        label: '按发表时间递增'
-      }],
-      true_total_page:0,
       checklist:[],
       checklist_author:[],
       checklist_institutions:[],
@@ -526,8 +447,6 @@ export default {
           response =>{
             console.log(response.data.res);
             //console.log(response.data.res.hits.total.value);
-            this.true_total_page = response.data.res.Hits;
-            console.log("搜索得到文章总数为:"+this.true_total_page);
             this.total_page = response.data.res.Hits/8*10;
             this.tmp = response.data.res.Hits;
             //console.log(response.data.res.hits.hits.length);
@@ -680,25 +599,6 @@ export default {
 .scroll-area::-webkit-scrollbar {
   width: 10px;
 }
-.collap-font{
-  padding-left: 20%;
-  padding-top: 1%;
-  margin: 0 auto;
-  text-align: center;
-
-  font-family: "Plus Jakarta Sans";
-  font-weight: 700;
-  font-size: 20px;
-
-  /* identical to box height, or 36px */
-
-  letter-spacing: -0.01em;
-
-  color: #217bf4;
-}
-.scroll-area::-webkit-scrollbar {
-  width: 10px;
-}
 
 /* --- 滚动条里面的滚动块 --- */
 .scroll-area::-webkit-scrollbar-thumb {
@@ -715,15 +615,21 @@ export default {
   /* border: none;
   background: none; */
 }
-.outcome-card {
-  margin-top: 100px;
-  margin: auto;
-  padding: auto;
-  width: 90%;
-  height: 650px;
+.collap-font{
+  padding-left: 20%;
+  padding-top: 1%;
+  margin: 0 auto;
+  text-align: center;
 
-  background: #ffffff;
-  box-shadow: 3px 3px 3px 3px rgba(107, 106, 106, 0.25);
-  border-radius: 7px;
+  font-family: "Plus Jakarta Sans";
+  font-weight: 700;
+  font-size: 20px;
+
+  /* identical to box height, or 36px */
+
+  letter-spacing: -0.01em;
+
+  color: #217bf4;
 }
+
 </style>

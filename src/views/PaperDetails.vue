@@ -239,8 +239,8 @@ export default {
         data:{//get请求这里是params
           // paper_id: "W2914747780",
           paper_id:window.localStorage.getItem('WID'),
-          user_id: window.localStorage.getItem('SID'),
-          // user_id: 3
+          //user_id: window.localStorage.getItem('SID'),
+          user_id: 3
         }
       }).then(
           response =>{
@@ -257,9 +257,9 @@ export default {
         data:{//get请求这里是params
           content: this.myComment,
           // paper_id: "W2914747780",
-          // user_id: 3
+          user_id: 3,
           paper_id:window.localStorage.getItem('WID'),
-          user_id: window.localStorage.getItem('SID'),
+          //user_id: window.localStorage.getItem('SID'),
         }
       }).then(
           response =>{
