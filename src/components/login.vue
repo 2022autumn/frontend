@@ -1,39 +1,63 @@
 <template>
   <div>
-    <div style="box-shadow: 6px 6px 4px rgba(0, 0, 0, 0.25)">
-      <el-dialog class="login"
-        :visible.sync="login_visible"
-        :showClose=false
-        width=53.5vw height=583px
-        :before-close="handleClose"
+    <el-dialog
+      class="login-dia"
+      :visible.sync="login_visible"
+      :showClose="false"
+      width="53.5vw"
+      height="583px"
+      :before-close="handleClose"
+    >
+      <div
+        style="
+          width: 327px;
+          height: 583px;
+          display: inline-block;
+          vertical-align: top;
+        "
       >
-        <div style=" width: 327px; height: 583px; display: inline-block; vertical-align: top">
-          <img src="../HomePage_svg/left-bar.svg"/>
+        <img src="../HomePage_svg/left-bar.svg" />
+      </div>
+      <div
+        style="
+          width: 32vw;
+          height: 583px;
+          display: inline-block;
+          vertical-align: top;
+        "
+      >
+        <div style="float: right" @click="close">
+          <img src="../HomePage_svg/close.svg" />
         </div>
-        <div style="width: 32vw; height: 583px; display: inline-block; vertical-align: top">
-          <div style="float: right"  @click="close">
-            <img src="../HomePage_svg/close.svg" />
-          </div>
-          <div class="background">
-            <div class="title1">登录</div>
-            <div class="title2">欢迎登录 I Share!</div>
+        <div class="background">
+          <div class="title1">登录</div>
+          <div class="title2">欢迎登录 I Share!</div>
 
-            <div class="text">用户名</div>
-            <el-input class="login-input" v-model="input_name" placeholder="请输入用户名"></el-input>
-            <div class="text">密码</div>
-            <el-input class="login-input" v-model="input_pwd" placeholder="请输入密码"></el-input>
+          <div class="text">用户名</div>
+          <el-input
+            class="login-input"
+            v-model="input_name"
+            placeholder="请输入用户名"
+          ></el-input>
+          <div class="text">密码</div>
+          <el-input
+            class="login-input"
+            v-model="input_pwd"
+            placeholder="请输入密码"
+          ></el-input>
 
-            <div class="button">登录</div>
-            <div class="text" style="text-align: center">
-              没有账号？
-              <span style="color: #217bf4; text-decoration: underline"
-                @click="goto_signup">去注册</span
-              >
-            </div>
+          <div class="button" @click="login">登录</div>
+          <div class="text" style="text-align: center">
+            没有账号？
+            <span
+              style="color: #217bf4; text-decoration: underline"
+              @click="goto_signup"
+              >去注册</span
+            >
           </div>
         </div>
-      </el-dialog>
-    </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -51,6 +75,43 @@ export default {
   setup() {},
 
   methods: {
+    login() {
+      if (this.input_name == "") {
+        this.$message({
+          message: "请输入用户名",
+          type: "warning",
+        });
+      }
+      if (this.input_pwd == "") {
+        this.$message({
+          message: "请输入密码",
+          type: "warning",
+        });
+      }
+      if (this.input_pwd != "" && this.input_name != "") {
+        this.$axios({
+          //注意是this.$axios
+          method: "post",
+          url: "/login",
+          data: {
+            //post请求这里是data
+            password: "string",
+            username: "string",
+          },
+        }).then((response) => {
+          console.log("response", response);
+          console.log(response.data);
+
+          if (response.data?.success) {
+            User.Login = true;
+            User.token = response.data.token;
+            if (modelRef.value.name != null) User.Name = modelRef.value.name;
+            User.Id = response.data.user.user_id;
+            localStorage.setItem("Login", "true");
+          }
+        });
+      }
+    },
     init() {
       console.log("打开登录组件");
       this.login_visible = true;
@@ -59,25 +120,25 @@ export default {
       console.log("关闭登录组件");
       this.login_visible = false;
     },
-    goto_signup(){
+    goto_signup() {
       console.log("去注册组件");
       this.login_visible = false;
       this.$parent.open_signup();
-    }
+    },
   },
 };
 </script>
 
 <style scoped>
-.login /deep/ .el-dialog__header{
+.login-dia /deep/ .el-dialog__header {
   padding: 0;
 }
-.login /deep/ .el-dialog__body{
+.login-dia /deep/ .el-dialog__body {
   padding: 0;
 }
 
 .background {
-  margin:16% auto;
+  margin: 16% auto;
   /* margin: 15% 13%; */
   padding: 4vh;
   width: 70%;
