@@ -109,7 +109,7 @@
           </el-dropdown>
         </div>
         <div class="commends">
-          <div class="cards">
+          <div class="cards" v-for="(item,index) in command" :key="index">
             <div class="user-info">
               <el-avatar class="commenter-avator">
 
@@ -122,11 +122,11 @@
                   个性签名
                 </span>
               </div>
-              <span class="comment-time">10.17.2022, 19:27</span>
+              <span class="comment-time">{{ item.time }}</span>
             </div>
             <div class="comment-content">
-              The antenna equation also solves other fundamental problems.
-              <div class="comment-divider"></div>
+              {{item.content}}
+<!--              <div class="comment-divider"></div>-->
             </div>
             <div class="reply">
 
@@ -141,9 +141,10 @@
           <div class="right_comment">
             <el-input
                 class="input_command"
-                placeholder="请输入评论内容">
+                placeholder="请输入评论内容"
+                v-model="myComment">
             </el-input>
-            <el-button class="submit-btn">发表</el-button>
+            <el-button class="submit-btn" @click="pushCommand">发表</el-button>
           </div>
         </div>
       </div>
@@ -196,7 +197,8 @@ export default {
       notCollectionTxt: "收藏",
       command: {
 
-      }
+      },
+      myComment: ""
     };
   },
   components: {
@@ -216,6 +218,37 @@ export default {
     },
     onCollection() {
 
+    },
+    getCommentList() {
+      this.$axios({//注意是this.$axios
+        method:'post',
+        url:'/social/comment/list',
+        data:{//get请求这里是params
+          paper_id: "W2914747780",
+          user_id: 3
+        }
+      }).then(
+          response =>{
+            console.log(response.data)
+            this.command = response.data.data.comments;
+          }
+      )
+    },
+    pushCommand() {
+      this.$axios({//注意是this.$axios
+        method:'post',
+        url:'/social/comment/create',
+        data:{//get请求这里是params
+          content: this.myComment,
+          paper_id: "W2914747780",
+          user_id: 3
+        }
+      }).then(
+          response =>{
+            console.log(response.data);
+            this.getCommentList();
+          }
+      )
     }
   },
   // 挂载时获取
@@ -267,17 +300,7 @@ export default {
           }
         }
     )
-    this.$axios({//注意是this.$axios
-      method:'post',
-      url:'/social/comment/list',
-      data:{//get请求这里是params
-        paper_id: "",
-        user_id: 2
-      }
-    }).then(
-        response =>{
-        }
-    )
+    this.getCommentList();
   },
 };
 </script>
@@ -577,20 +600,23 @@ clear:both;
   margin-right: 0.97vw;
 }
 .commends {
+  position: relative;
+  overflow-y:scroll;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
   margin-top: 7px;
-  height: 3.38vh;
+  height: auto;
+  max-height: 350px;
   width: 45.83vw;
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 3.38vh;
 }
 .cards {
-  display: flex;
+  position: relative;
+  margin-top: 5px;
   display: table-cell;
   width: 45.83vw;
-  height: 24.41vh;
+  height: 150px;
+  //height: 24.41vh;
   padding-left: 1.48vw;
   padding-top: 16px;
   background: #FFFFFF;
@@ -611,7 +637,8 @@ clear:both;
 }
 .left-info {
   height: 7.79vh;
-  width: 28vw;
+  //width: 28vw;
+  width: 160px;
   float: left;
   display: table-cell;
   margin-left: 0.9vw;
@@ -663,14 +690,14 @@ clear:both;
 .comment-content {
   position: absolute;
   //display: flex;
-  margin-top: 9.61vh;
+  margin-top: 7.61vh;
   margin-left: 1.74vw;
   width: 39.37vw;
 
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 17px;
   line-height: 26px;
 }
 .comment-divider {
@@ -686,7 +713,7 @@ clear:both;
   text-align: left;
   width: 5.49vw;
   height: 3.38vh;
-  margin-top: 25vh;//4.67vh
+  margin-top: 4.67vh;//4.67vh
   margin-bottom: 1.95vh;
 
   font-family: 'Poppins';
