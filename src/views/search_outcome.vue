@@ -20,44 +20,66 @@
           <el-divider></el-divider>
           </div>-->
           <div v-if="this.authors.length>0">
-          <div style=""><b>主要作者</b></div>
+          <div style="margin-bottom:5px">
+            <img src="../assets/search_outcome/Frame1.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
+            <b>&nbsp;主要作者</b>
+          </div>
           <el-checkbox-group v-model="checklist_author" :max="1" @change="choose_change">
             <el-checkbox v-for="item in this.authors"  :label=item.key style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item.key}}</b></el-checkbox>
           </el-checkbox-group>
           <el-divider></el-divider>
           </div>
           <div v-if="this.institutions.length>0">
-          <div style=""><b>主要组织</b></div>
+          <div style="">
+            <img src="../assets/search_outcome/Frame5.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
+            <b>&nbsp;主要组织</b>
+          </div>
           <el-checkbox-group v-model="checklist_institutions" :max="1" @change="choose_change">
             <el-checkbox v-for="item in this.institutions"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
           </el-checkbox-group>
           <el-divider></el-divider>
           </div>
           <div v-if="this.publish_years.length>0">
-          <div style=""><b>发表年份</b></div>
+          <div style="margin-bottom:5px">
+            <img src="../assets/search_outcome/Frame2.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
+            <b>&nbsp;发表年份</b>
+          </div>
           <el-checkbox-group v-model="checklist_publish_years" :max="1" @change="choose_change">
             <el-checkbox v-for="item in this.publish_years"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
           </el-checkbox-group>
           <el-divider></el-divider>
           </div>
           <div v-if="this.publishers.length>0">
-          <div style=""><b>出版单位</b></div>
+          <div style="margin-bottom:5px">
+            <img src="../assets/search_outcome/Frame3.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
+            <b>&nbsp;出版单位</b>
+          </div>
           <el-checkbox-group v-model="checklist_publishers" :max="1" @change="choose_change">
             <el-checkbox v-for="item in this.publishers"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
           </el-checkbox-group>
           <el-divider></el-divider>
           </div>
           <div v-if="this.types.length>0">
-          <div style=""><b>论文类型</b></div>
+          <div style="margin-bottom:5px">
+            <img src="../assets/search_outcome/Frame4.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
+            <b>&nbsp;论文类型</b>
+          </div>
           <el-checkbox-group v-model="checklist_types" :max="1" @change="choose_change">
             <el-checkbox v-for="item in this.types"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
           </el-checkbox-group>
           <el-divider></el-divider>
           </div>
           <div v-if="this.venues.length>0">
-          <div style=""><b>Venues</b></div>
-          <el-checkbox-group v-model="checklist_venues" :max="1" @change="choose_change">
-            <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all;display: block;word-wrap: break-word;overflow: hidden;" ><b>{{item}}</b></el-checkbox>
+          <div style="margin-bottom:5px">
+            <img src="../assets/search_outcome/Frame6.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
+            <b>&nbsp;期刊名称</b>
+          </div>
+          <el-checkbox-group v-model="checklist_venues" :max="1" @change="choose_change" >
+            <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all;display:block;word-wrap: break-word;overflow: hidden;" >
+              <b>
+                {{item}}
+              </b>
+            </el-checkbox>
           </el-checkbox-group>
           <el-divider></el-divider>
           </div>
