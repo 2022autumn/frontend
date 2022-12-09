@@ -819,7 +819,7 @@ clear:both;
   padding: 0 2px 2px 0 !important;
 }
 .v-application .style {
-  background-color: transparent;
-  border-color: transparent;
+  background-color: transparent !important;
+  border-color: transparent !important;
 }
 </style>
