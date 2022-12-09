@@ -300,7 +300,7 @@ export default {
     align-items: center;
   }
   .box-word {
-  margin-top: 25px;
+  margin-top: 15px;
   width: 193px;
   height: 30px;
 
