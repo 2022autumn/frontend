@@ -104,7 +104,7 @@
                               <el-input
                                   type="text"
                                   placeholder="请输入联系电话"
-                                  v-model="realname"
+                                  v-model="phone"
                                   maxlength="15"
                                   show-word-limit
                                   style="width: 15vw"
@@ -117,7 +117,7 @@
                                   type="text"
                                   placeholder="请输入email"
                                   v-model="email"
-                                  maxlength="15"
+                                  maxlength="30"
                                   show-word-limit
                                   style="width: 15vw"
                               >
@@ -283,7 +283,7 @@ export default{
           phone:'',
           email:'',
           field:'',
-
+          userid:1
         }
     },
     methods:{
@@ -307,25 +307,42 @@ export default{
       },
       upload_img(file){
         const formData = new FormData();
-        formData.append('file', file.file);
-        console.log(formData.get('file'));
-        this.$axios({//注意是this.$axios
-          method:'post',
-          url:'/user/headshot',
-          data:{//post请求这里是data
-              user_id:2,
-              Headshot:formData,
-          }
-        }).then(
-            res =>{
-              console.log(res.data.msg)
-            }
-        )
+        formData.append('Headshot', file.file);
+        formData.append('user_id',this.userid);
+        const config = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+        }
+        this.$axios.post('/user/headshot',formData,config).then(res =>{
+          console.log(res.data.msg)
+           this.$message({
+             type:"success",
+             message: res.data.msg,
+             customClass:'messageIndex'
+           })
+        })
       },
       inedit(){
         this.ifedit=1;
       },
       outedit(){
+        this.$axios({//注意是this.$axios
+          method:'post',
+          url:'/user/mod',
+          data:{//post请求这里是data
+             email:this.email,
+             fields:this.field,
+             name:this.realname,
+             phone:this.phone,
+             user_id:this.userid.toString(),
+             userinfo:this.gexingqianming
+          }
+        }).then(
+            res =>{
+                console.log(res.data)
+            }
+        )
         this.ifedit=0;
       }
     }
@@ -597,5 +614,8 @@ export default{
   width: 178px;
   height: 178px;
   display: block;
+}
+.messageIndex{
+  z-index:9999 !important;
 }
 </style>

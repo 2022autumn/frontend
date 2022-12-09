@@ -1,6 +1,6 @@
 <template>
     <div>
-        <topbar2></topbar2>
+        <topbar1></topbar1>
         <el-row style="height: 600px" class="background">
             <el-col :span="7">
                 <div class="left-img" style="margin-top: 100px; margin-left: 30%">
