@@ -1,6 +1,6 @@
 <!--这个是含有搜索框的顶栏，目前是纯前端-->
 <template>
-  <div style="position: fixed;z-index: 9999;width: 100vw;height:9vh;background-color: white;box-shadow: 1px 1px 1px 1px rgba(187, 185, 185, 0.25);" >
+  <div style="position: fixed;z-index: 9999;width: 100vw;height:8vh;background-color: white;box-shadow: 1px 1px 1px 1px rgba(187, 185, 185, 0.25);" >
     <img src="../img/logo.jpg" style="width: 22.52px;height:21.19px;position: absolute;left: 6.81vw;right: 91.63%;top: 1.96vh;bottom: 97.01%;background: #217BF4;" alt="">
     <div style="position: absolute;width: 150px;height: 24px;font-style: normal;font-weight: 600;font-size: 24px;line-height: 24px;color: #2B2B39;left:10vw;top:2vh"><b>I SHARE</b></div>
     <router-link to="/"><div v-if="this.whichpage===1" style="position: absolute;width: 29px;height:14px;left:25vw;top:2.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: #2B2B39;cursor: pointer" @click="which_page(1)">首页</div></router-link>
@@ -10,8 +10,8 @@
     <div style="position: absolute;width: 100px;height:14px;left:39vw;top:2.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="jcenter">我的 I SHARE</div>
     <img src="../img/touxiang3.jpg" style="top: 1.5vh;width: 40px;height: 40px;border-radius: 50px;left: 90vw;position: absolute" alt="">
     <div style="position: absolute;width: 45px;height:14px;left:94vw;top:3vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: #2B2B39;">{{this.username}}</div>
-    <div style="position: absolute;height: 5vh;width: 100vw;top:5vh"><el-divider></el-divider></div>
-    <div style="position: absolute;width: 35vw;height:40px;left:53.5vw;top:0.6vh;">
+    <!-- <div style="position: absolute;height: 5vh;width: 100vw;top:5vh"><el-divider></el-divider></div> -->
+    <div style="position: absolute;width: 35vw;height:40px;left:53.5vw;top:1.05vh;">
         <el-input  placeholder="请输入检索内容" v-model="input3" class="input-with-select" @keyup.enter.native="do_search">
         <!--<el-button slot="prepend" icon="el-icon-s-promotion" style="color: #FCFCFF;background-color: rgba(117, 167, 235, 0.52);border-radius: 0;border-color: whitesmoke" @click="jadvance">高级检索</el-button>-->
         <el-button slot="append" icon="el-icon-search" style="color:#ffffff;background-color: #217bf4; border-radius: 0;border-color: whitesmoke" @click="do_search" ></el-button>
