@@ -144,7 +144,7 @@
         <el-col :span="7">
           <!-- 导航栏标题 -->
           <div class="bar-title1" style="margin-left: 50px">
-            I SAHRE
+            I SHARE
             <img
               src="../../HomePage_svg/vector5.svg"
               style="
@@ -263,7 +263,7 @@ export default {
   display: inline-block;
   text-align: center;
   width: 100%;
-  height: 600px;
+  height: 90vh;
   left: 0px;
   top: 0px;
 

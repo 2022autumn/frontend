@@ -72,7 +72,7 @@
             <div v-if="this.venues.length>0">
             <div style="margin-bottom:5px">
               <img src="../assets/search_outcome/Frame6.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
-              <b>&nbsp;期刊名称</b>
+              <b>&nbsp;刊物名称</b>
             </div>
             <el-checkbox-group v-model="checklist_venues" :max="1" @change="choose_change" >
               <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all;display:block;word-wrap: break-word;overflow: hidden;" >
@@ -88,6 +88,32 @@
         </el-col>
         
         <el-col :span="15" style="margin:0 auto">
+            <div style="margin-bottom:10px">
+                <el-row :gutter="20" style="margin:auto;">
+                    <el-col :span="6">
+                        <b style="color:gray;font-size: small;">
+                            &ensp; 共找到 条结果
+                        </b>
+                    </el-col>
+                    <el-col :span="8">
+                        <div>&nbsp</div>
+                    </el-col>
+                    <el-col :span="10">
+                        <img src="../assets/search_outcome/Frame7.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
+                        <b style="color:gray;font-size: small;">&nbsp;结果排序&nbsp;&nbsp;</b>
+                        <el-select v-model="value" placeholder="请选择排序方式" size="small">
+                            <el-option
+                            v-for="item in options"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-col>
+
+                </el-row>
+                
+            </div>
           <div v-for="item in items" v-if="item.id!==''" style="width: 50vw;height:240px; " @click="jdetail(item.id)">
             <el-card  class="outcome-card" style="width:55vw;height:228px; " shadow="hover">
               <el-tag style="display: inline-block">{{item.type}}</el-tag>
@@ -119,11 +145,11 @@
                   &nbsp;
                 </div>
               </div>
-              <div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
+              <div style="display: inline-block;color: rgba(96, 96, 96, 0.69);">
                 <div style="display: inline-block;top:3vh">
                 <img src="../img/yinhao.svg" style="width: 2vw;height: 2vh">
                 </div>
-                <div style="display: inline-block">
+                <div style="display: inline-block;">
                 {{item.numyin}}次被引
                 </div>
               </div>
@@ -347,6 +373,22 @@
         if_types:0,
         if_venues:0,
         query:[],
+        options: [{
+          value: '选项1',
+          label: '按匹配程度递减'
+        }, {
+          value: '选项2',
+          label: '按被引用量递减'
+        }, {
+          value: '选项3',
+          label: '按被引用量递增'
+        }, {
+          value: '选项4',
+          label: '按发表时间递减'
+        }, {
+          value: '选项5',
+          label: '按发表时间递增'
+        }],
       }
     },
     methods:{
@@ -625,7 +667,7 @@
   <style scoped>
   .all{
     width: 100vw;
-    height: 300vh;
+    height: 110%;
     background: linear-gradient(311.76deg, #D4E7FE -15.24%, #FFFFFF 78.85%);
   }
   .scroll-area::-webkit-scrollbar {
@@ -655,7 +697,7 @@
     height: 650px;
   
     background: #ffffff;
-    box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.25);
+    box-shadow: 3px 3px 3px 3px rgba(107, 106, 106, 0.25);
     border-radius: 7px;
   }
   
