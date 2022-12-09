@@ -39,7 +39,7 @@
                     </div>
                     <div>
                         <div class="content grid1">
-                            <img src="../assets/Avatar.png" alt="" v-if="this.ifedit===0">
+                          <img src="../assets/Avatar.png" alt="" v-if="this.ifedit===0">
                           <el-upload
                               v-if="this.ifedit===1"
                               :http-request="upload_img"
@@ -48,20 +48,95 @@
                               :show-file-list="false"
                               :on-success="handleAvatarSuccess"
                               :before-upload="beforeAvatarUpload"
-                              style="margin-left: -4vw;margin-top: 3vh"
+                              style="margin-left: -6vw;margin-top: 3vh"
                           >
                             <img v-if="imageUrl" :src="imageUrl" class="avatar">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                           </el-upload>
-                            <div>
-                                <div class="info-text">用户名：admin</div>
-                                <div class="info-text">个性签名：</div>
-                                <div class="info-text">真实姓名：</div>
-                                <div class="info-text">联系电话：</div>
-                                <div class="info-text">Email：</div>
-                                <div class="info-text">研究领域：</div>
-                                <div class="info-text">我的兴趣词：</div>
+                            <div v-if="this.ifedit===0">
+                                <div class="info-text">用户名:</div>
+                                <div class="info-text">个性签名:</div>
+                                <div class="info-text">真实姓名:</div>
+                                <div class="info-text">联系电话:</div>
+                                <div class="info-text">Email:</div>
+                                <div class="info-text">研究领域:</div>
+                                <!--<div class="info-text">我的兴趣词：</div>-->
                             </div>
+                          <div v-if="this.ifedit===1">
+                            <div>
+                            <div class="info-text" style="display: inline-block">用户名:</div>
+                                <el-input
+                                    type="text"
+                                    placeholder="请输入用户名"
+                                    v-model="name"
+                                    maxlength="15"
+                                    show-word-limit
+                                    style="width: 15vw"
+                                >
+                                </el-input>
+                            </div>
+                            <div>
+                            <div class="info-text" style="display: inline-block">个性签名:</div>
+                              <el-input
+                                  type="text"
+                                  placeholder="请输入个性签名"
+                                  v-model="gexingqianming"
+                                  maxlength="15"
+                                  show-word-limit
+                                  style="width: 15vw"
+                              >
+                              </el-input>
+                            </div>
+                            <div>
+                            <div class="info-text" style="display: inline-block">真实姓名:</div>
+                              <el-input
+                                  type="text"
+                                  placeholder="请输入真实姓名"
+                                  v-model="realname"
+                                  maxlength="15"
+                                  show-word-limit
+                                  style="width: 15vw"
+                              >
+                              </el-input>
+                            </div>
+                            <div>
+                            <div class="info-text" style="display: inline-block">联系电话:</div>
+                              <el-input
+                                  type="text"
+                                  placeholder="请输入联系电话"
+                                  v-model="realname"
+                                  maxlength="15"
+                                  show-word-limit
+                                  style="width: 15vw"
+                              >
+                              </el-input>
+                            </div>
+                            <div>
+                            <div class="info-text">Email:</div>
+                              <el-input
+                                  type="text"
+                                  placeholder="请输入email"
+                                  v-model="email"
+                                  maxlength="15"
+                                  show-word-limit
+                                  style="width: 15vw"
+                              >
+                              </el-input>
+                            </div>
+                            <div>
+                            <div class="info-text">研究领域:</div>
+                              <el-input
+                                  type="text"
+                                  placeholder="请输入研究领域"
+                                  v-model="field"
+                                  maxlength="15"
+                                  show-word-limit
+                                  style="width: 15vw"
+                              >
+                              </el-input>
+                            </div>
+                            <!--<div class="info-text">我的兴趣词:</div>-->
+                          </div>
                         </div>
                         <div style="text-align: center;margin-top: 6vh" v-if="this.ifedit===0">
                             <el-button icon="el-icon-edit" class="btn" size="medium " @click="inedit">编辑信息</el-button>
@@ -202,6 +277,12 @@ export default{
             show1:true,
             ifedit:0,
           imageUrl: '',
+          name:'',
+          gexingqianming:'',
+          realname:'',
+          phone:'',
+          email:'',
+          field:'',
 
         }
     },
