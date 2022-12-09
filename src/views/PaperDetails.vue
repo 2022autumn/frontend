@@ -276,7 +276,6 @@ export default {
       }
     }).then(
         response =>{
-
         }
     )
   },
