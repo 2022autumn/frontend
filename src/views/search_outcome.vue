@@ -110,7 +110,7 @@
                             </el-option>
                         </el-select>
                     </el-col>
-                    
+
                 </el-row>
                 
             </div>
@@ -145,11 +145,11 @@
                   &nbsp;
                 </div>
               </div>
-              <div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
+              <div style="display: inline-block;color: rgba(96, 96, 96, 0.69);">
                 <div style="display: inline-block;top:3vh">
                 <img src="../img/yinhao.svg" style="width: 2vw;height: 2vh">
                 </div>
-                <div style="display: inline-block">
+                <div style="display: inline-block;">
                 {{item.numyin}}次被引
                 </div>
               </div>

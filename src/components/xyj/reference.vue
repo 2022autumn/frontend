@@ -66,12 +66,12 @@ export default {
 <style scoped>
 .re-total{
   position: absolute;
-  width: 820px;
+  width: 850px;
   height: 400px;
   background: #FFFFFF;
   box-shadow: -2px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
-  margin-left:20px;
+  /*margin-left:20px;*/
 }
 .title{
   position: absolute;

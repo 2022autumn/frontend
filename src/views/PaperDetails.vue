@@ -3,20 +3,21 @@
     <div class="main">
       <div class="paper-header">
           <div class="title">
-            <div class="title-txt">{{ this.paper.paperTitle }}
-              <div class="paper-type">期刊</div>
-            </div>
+            <span class="title-txt">
+              {{ this.paper.paperTitle }}
+              <div class="paper-type">{{ this.paper.type }}</div>
+            </span>
           </div>
-          <div class=" info location">
+          <div class=" info1 location">
             <!--<span>北京航空航天大学xx实验室</span>-->
             {{this.paper.institution}}
           </div>
-          <div class=" info authors" @click="jscholar" style="cursor: pointer">
+          <div class=" info1 authors" @click="jscholar" style="cursor: pointer">
             <!--<span>作者名字1； 作者名字2； 作者名字3；</span>-->
             <!--<span>{{this.paper.authors[0].author.display_name}}</span>-->
             {{this.author_name}}
           </div>
-          <div class="info">
+          <div class="info1">
             <div class="info2 time">
               <!--发表时间：2022年01月06日-->
               {{this.paper.date}}
@@ -37,17 +38,33 @@
         <div style="clear: both"></div>
           <div class="buttons">
 <!--            <el-button class="original" icon="el-icon-my-origin">-->
-            <el-button class="original">
+            <el-button class="original" v-if="this.paper.hasIds" @click="jumpPaper">
               <img src="../assets/paperDetailsImg/original.png"
                    style="margin-left: 0vw">
               原文地址
             </el-button>
-            <div class="right-buttons">
-              <el-button class="right-button1"></el-button>
-              <el-button class="right-button2"></el-button>
-              <el-button class="right-button3"></el-button>
-              <el-button class="right-button4"></el-button>
+
+            <!--是否被收藏的样式-->
+            <div class="like1" v-model="key">
+              <span class="iconfont">
+                  <i v-if = "!isCollection" class="el-icon-star-off" :key="0" @click="onCollection"></i>
+                  <i v-else class="el-icon-star-on" :key="1" @click="onCollection"></i>
+              </span>
             </div>
+            <!--被收藏的次数-->
+            <div class="like2" v-if="isCollection">
+              <span class="iconfont">&#xe663;</span>
+              {{ this.isCollectionTxt }}
+            </div>
+            <div class="like2" v-else>
+              {{ this.notCollectionTxt }}
+            </div>
+            <!--            <div class="right-buttons">-->
+<!--              <el-button class="right-button1"></el-button>-->
+<!--              <el-button class="right-button2"></el-button>-->
+<!--              <el-button class="right-button3"></el-button>-->
+<!--              <el-button class="right-button4"></el-button>-->
+<!--            </div>-->
           </div>
         </div>
       <div class="content">
@@ -70,17 +87,17 @@
       <div class="review">
         <div class="commend-title">评论区  Comments</div>
         <div class="comment-tools">
-          <div class="total-comments">共 5 条评论</div>
-          <el-dropdown>
-            <span class="filter-comments">
-              筛选条件<i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>黄金糕</el-dropdown-item>
-              <el-dropdown-item>狮子头</el-dropdown-item>
-              <el-dropdown-item>螺蛳粉</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+          <div class="total-comments">共 {{ this.comment_num }} 条评论</div>
+<!--          <el-dropdown>-->
+<!--            <span class="filter-comments">-->
+<!--              筛选条件<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
+<!--            </span>-->
+<!--            <el-dropdown-menu slot="dropdown">-->
+<!--              <el-dropdown-item>黄金糕</el-dropdown-item>-->
+<!--              <el-dropdown-item>狮子头</el-dropdown-item>-->
+<!--              <el-dropdown-item>螺蛳粉</el-dropdown-item>-->
+<!--            </el-dropdown-menu>-->
+<!--          </el-dropdown>-->
           <el-dropdown>
             <span class="rank-comments">
               排序条件<i class="el-icon-arrow-down el-icon--right"></i>
@@ -88,12 +105,18 @@
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>发布时间</el-dropdown-item>
               <el-dropdown-item>发布用户</el-dropdown-item>
-              <el-dropdown-item>螺蛳粉</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
-        <div class="commends">
+        <div class="commends" v-if="comment_num === 0">
           <div class="cards">
+            <div class="empty">
+              快来发表评论吧~
+            </div>
+          </div>
+        </div>
+        <div class="commends">
+          <div class="cards" v-for="(item,index) in command" :key="index">
             <div class="user-info">
               <el-avatar class="commenter-avator">
 
@@ -106,11 +129,11 @@
                   个性签名
                 </span>
               </div>
-              <span class="comment-time">10.17.2022, 19:27</span>
+              <span class="comment-time">{{ item.time }}</span>
             </div>
             <div class="comment-content">
-              The antenna equation also solves other fundamental problems.
-              <div class="comment-divider"></div>
+              {{item.content}}
+<!--              <div class="comment-divider"></div>-->
             </div>
             <div class="reply">
 
@@ -119,16 +142,22 @@
         </div>
         <span class="commending-title">发表评论</span>
         <div class="conmmending">
-          <div class="avators">
+          <span style="width: 100%">
+            <div class="avators">
             <el-avatar></el-avatar>
           </div>
           <div class="right_comment">
             <el-input
                 class="input_command"
-                placeholder="请输入评论内容">
+                placeholder="请输入评论内容"
+                v-model="myComment">
             </el-input>
-            <el-button class="submit-btn">发表</el-button>
+
           </div>
+          </span>
+          <span class="btn">
+            <el-button class="submit-btn" @click="pushCommand">发表</el-button>
+          </span>
         </div>
       </div>
     </div>
@@ -165,11 +194,24 @@ export default {
         abstract:"",
         cited_counts:0,
         host_venue:"",
-        institution:""
+        institution:"",
+        cited_by_count: "",
+        ids: {},
+        hasIds: false,
+        url: "",
+        doi: "",
+        type: "unknown",
       },
       author_name:'',
       author_id:0,
+      isCollection: false,
+      isCollectionTxt: "已收藏",
+      notCollectionTxt: "收藏",
+      command: {
 
+      },
+      comment_num: 0,
+      myComment: ""
     };
   },
   components: {
@@ -182,8 +224,50 @@ export default {
     jscholar(){
       window.localStorage.setItem('SID',this.author_id);
       window.open('/scholar_page');
-    }
+    },
 
+    jumpPaper() {
+      this.$router.push(this.paper.url);
+    },
+    onCollection() {
+
+    },
+    getCommentList() {
+      this.$axios({//注意是this.$axios
+        method:'post',
+        url:'/social/comment/list',
+        data:{//get请求这里是params
+          // paper_id: "W2914747780",
+          paper_id:window.localStorage.getItem('WID'),
+          user_id: window.localStorage.getItem('SID'),
+          // user_id: 3
+        }
+      }).then(
+          response =>{
+            console.log(response.data)
+            this.command = response.data.data.comments;
+            this.comment_num = this.command.length;
+          }
+      )
+    },
+    pushCommand() {
+      this.$axios({//注意是this.$axios
+        method:'post',
+        url:'/social/comment/create',
+        data:{//get请求这里是params
+          content: this.myComment,
+          // paper_id: "W2914747780",
+          // user_id: 3
+          paper_id:window.localStorage.getItem('WID'),
+          user_id: window.localStorage.getItem('SID'),
+        }
+      }).then(
+          response =>{
+            console.log(response.data);
+            this.getCommentList();
+          }
+      )
+    }
   },
   // 挂载时获取
   mounted() {
@@ -193,6 +277,7 @@ export default {
       url:'/es/get',
       params:{//get请求这里是params
         id:window.localStorage.getItem('WID')
+        // id: "W31001126"
       }
     }).then(
         response =>{
@@ -207,6 +292,22 @@ export default {
           this.paper.abstract=response.data.data.abstract
           this.paper.cited_counts=response.data.data.cited_by_count
           this.paper.host_venue=response.data.data.host_venue
+          if(response.data.data.type != null) {
+            this.paper.type = response.data.data.type
+          } else{
+            this.paper.type = "unknown";
+          }
+          this.paper.ids = response.data.data.ids
+          this.paper.doi = response.data.data.doi
+          if(this.paper.doi != null) {
+            this.paper.hasIds = true;
+            this.paper.url = this.paper.doi;
+          } else if('pmid' in this.paper.ids) {
+            this.paper.hasIds = true;
+            this.paper.url = this.paper.ids.pmid;
+          } else  {
+            this.paper.hasIds = false;
+          }
           console.log("author institution is:")
           console.log(this.paper.authors[0].institutions)
           if(this.paper.authors[0].institutions.length===0){
@@ -217,32 +318,8 @@ export default {
           }
         }
     )
+    this.getCommentList();
   },
-  getPapaerDetail() {
-    let that = this;
-    that.$axios({//注意是this.$axios
-      method:'get',
-      url:'/es/get',
-      params:{//get请求这里是params
-        id:window.localStorage.getItem('WID')
-      }
-      }).then(
-            response =>{
-              console.log(response.data);
-              this.paper.paperTitle=response.data.data.title
-              console.log(response.data.data.title)
-            }
-        )
-  },
-  getCommentList() {
-
-  },
-  replyComment() {
-
-  },
-  pushComment() {
-
-  }
 };
 </script>
 <style lang="scss" scoped>
@@ -274,6 +351,7 @@ export default {
 
 }
 .title-txt {
+  display: inline-block;
   margin-top: 0;
   text-align: left;
   font-family: Inter;
@@ -281,13 +359,20 @@ export default {
   font-weight: 600;
   line-height: 5.71vh;
   width: 48.37vw;
+  vertical-align: center;
+  justify-content: center;
 }
 
 .paper-type {
-  margin-top: 0px;
+  //margin-top: 5px;
   display: inline-block;
-  width: 2.78vw;
+  position: relative;
+  padding-bottom: 5px;
+  width: auto;
   height: 3.38vh;
+  padding-bottom: 6px;
+  padding-left: 0.7vw;
+  padding-right: 0.7vw;
   border-radius: 8px;
   box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
   background-color: #217BF4;
@@ -299,7 +384,7 @@ export default {
   font-family: Inter;
 }
 
-.info {
+.info1 {
   margin-top: 1.04vh;
   text-align: left;
   min-height: 3.38vh;
@@ -309,9 +394,9 @@ export default {
   font-size: 16px;
   line-height: 3.38vh;
   background: transparent !important;
+  background-color: transparent !important;
 }
 .info2 {
-
   float: left;
   margin-top: 1.04vh;
   text-align: left;
@@ -334,12 +419,26 @@ clear:both;
 }
 .buttons {
   width: 100%;
-  margin-top: 2vh;
+  margin-top: 0vh;
   padding-top: 2.86vh;
   height: 8.19vh;
   vertical-align: center;
   justify-content: center;
   line-height: 5.19vh;
+}
+.like1 {
+  float: left;
+  margin-left: 2vw;
+  color: #FD9B40;
+}
+.like2 {
+  float: left;
+  margin-left: 0.5vw;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  //color: #FD9B40;
 }
 .el-icon-my-origin{
   background: url('~@/assets/paperDetailsImg/Vector.png') center no-repeat;
@@ -350,7 +449,7 @@ clear:both;
   vertical-align: center;
   justify-content: center;
   display: inline-block;
-  width: 9.63vw;
+  width: 8.03vw;
   height: 4.93vh;
   background: #217BF4;
   box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
@@ -469,7 +568,7 @@ clear:both;
   display: block;
   //width: 100%;
   min-height: 37vh;
-  width: 55.12vw;
+  width: 56.92vw;
   margin-top: 6.49vh;
   padding-top: 3.64vh;
   padding-left: 2vw;
@@ -515,23 +614,27 @@ clear:both;
 }
 .rank-comments {
   display: inline-block;
+  margin-left: 39.53vw;
   margin-right: 0.97vw;
 }
 .commends {
+  position: relative;
+  overflow-y:scroll;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
   margin-top: 7px;
-  height: 3.38vh;
-  width: 45.83vw;
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 3.38vh;
+  height: auto;
+  max-height: 350px;
+  width: 51.83vw;
 }
 .cards {
-  display: flex;
+  position: relative;
+  margin-top: 5px;
   display: table-cell;
-  width: 45.83vw;
-  height: 24.41vh;
+  width: 51.83vw;
+  height: 150px;
+  //height: 24.41vh;
   padding-left: 1.48vw;
   padding-top: 16px;
   background: #FFFFFF;
@@ -552,7 +655,8 @@ clear:both;
 }
 .left-info {
   height: 7.79vh;
-  width: 28vw;
+  //width: 28vw;
+  width: 160px;
   float: left;
   display: table-cell;
   margin-left: 0.9vw;
@@ -604,14 +708,14 @@ clear:both;
 .comment-content {
   position: absolute;
   //display: flex;
-  margin-top: 9.61vh;
+  margin-top: 7.61vh;
   margin-left: 1.74vw;
   width: 39.37vw;
 
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 17px;
   line-height: 26px;
 }
 .comment-divider {
@@ -627,7 +731,7 @@ clear:both;
   text-align: left;
   width: 5.49vw;
   height: 3.38vh;
-  margin-top: 25vh;//4.67vh
+  margin-top: 4.67vh;//4.67vh
   margin-bottom: 1.95vh;
 
   font-family: 'Poppins';
@@ -643,14 +747,14 @@ clear:both;
   background: #FFFFFF;
   box-shadow: 0px 2px 4px rgba(180, 180, 180, 0.25);
   border-radius: 8px;
-  width: 45.83vw;
+  width: 51.83vw;
   //min-height: 19.35vh;
   min-height: 22vh;
 }
 .avators {
   display: inline-block;
   float: left;
-  width: 6.07vw;
+  width: 5.07vw;
   height: 100%;
   margin-top: 2.08vh;
   margin-left: 1.48vw;
@@ -661,17 +765,22 @@ clear:both;
   margin-left: 0.32vw;
 }
 .input_command {
-  width: 35.05vw;
-  height: 9.35vh;
+  width: 42.05vw;
+  height: 11.35vh;
   border: 1.4px solid rgba(198, 198, 198, 0.6);
   border-radius: 8px;
+}
+.btn {
+  height: 3.64vh;
+  width: 100%;
 }
 .submit-btn {
   float: right;
   margin-right: 2.90vw;
   margin-top: 1.8vh;
   width: 6.33vw;
-  //height: 3.64vh;
+  height: 3.64vh;
+  line-height: 3.64vh;
   background: linear-gradient(94.95deg, #288CD6 -43.46%, rgba(108, 155, 247, 0.56) 168.08%);
   box-shadow: 0px 0px 6px rgba(153, 166, 213, 0.57);
   border-radius: 5px;
@@ -680,9 +789,6 @@ clear:both;
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
 }
 .right-sider {
   display: flex;
@@ -706,15 +812,15 @@ clear:both;
   float: left;
   margin-top: 40px;
   width: 100%;
-  height: 450px;
+  height: 383px;
   margin-right: 0vw;
 }
 .relate {
   display: block;
   float: left;
-  margin-top: 80px;
+  margin-top: 40px;
   width: 100%;
-  height: 450px;
+  height: 383px;
   margin-right: 0vw;
 }
 .notes {
@@ -724,12 +830,27 @@ clear:both;
   //margin-bottom: 10vh;
   clear: both;
 }
+.empty {
+  height: 150px;
+  line-height: 120px;
+  text-align: center;
+  justify-content: center;
+  vertical-align: center;
+  color: #0E84F4;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+}
 </style>
 <style>
 .el-input__inner {
   border: none !important;
 }
 .original {
+  padding: 0 2px 2px 0 !important;
+}
+.submit-btn {
   padding: 0 2px 2px 0 !important;
 }
 </style>

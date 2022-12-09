@@ -5,12 +5,11 @@
       <el-row style="height: 600px">
         <!-- 顶部展示页面的左侧 -->
         <el-col :span="13">
-          <div class="title-text" style="margin-top: 18vh; margin-left: -12%">
-            search efficiently &
+          <div class="title-text" style="margin-top: 25vh; margin-left: 3%">
+            Search , then Communicate
           </div>
-          <div class="title-text">communicate together</div>
-
-          <div style="margin-top: 7vh; margin-bottom: 5vh;display: inline-block">
+          
+          <div style="margin-top: 6vh; margin-bottom: 5vh;display: inline-block">
             <div style="text-align: center">
               <el-input class="home-search" placeholder="请输入检索内容" v-model="input1" @keyup.enter.native="j_search_outcome">
                 <!--<template slot="prepend" style="cursor: pointer">
@@ -21,58 +20,43 @@
             </div>
           </div>
 
-          <div style="margin: 3vh auto; padding-left: 5%; padding-right: 5%;">
-            <el-row :gutter="20">
-              <el-col :span="6">
-                <div>
+          <div style="position: absolute;top:58vh;padding-left: 5%; padding-right: 5%;">
+            
+                <div style="position: absolute;left: 7vw;">
                   <img
                     src="../../HomePage_svg/top-icon-1.svg"
                     style="width: 60px; height: 60px; text-align: bottom"
                   />
                 </div>
-              </el-col>
-              <el-col :span="6">
-                <div>
+             
+                <div style="position: absolute;left: 20vw;">
                   <img
                     src="../../HomePage_svg/top-icon-2.svg"
                     style="width: 60px; height: 60px; text-align: bottom"
                   />
                 </div>
-              </el-col>
-              <el-col :span="6">
-                <div>
+              
+                <div style="position: absolute;left: 33vw;">
                   <img
                     src="../../HomePage_svg/top-icon-3.svg"
                     style="width: 60px; height: 60px; text-align: bottom"
                   />
                 </div>
-              </el-col>
-              <el-col :span="6">
-                <div>
+             
+                <div style="position: absolute;left: 46vw;">
                   <img
                     src="../../HomePage_svg/top-icon-4.svg"
                     style="width: 60px; height: 60px; text-align: bottom"
                   />
                 </div>
-              </el-col>
-            </el-row>
+              
           </div>
 
           <div class="icon-text">
-            <el-row :gutter="20">
-              <el-col :span="6">
-                <div>50k+ 学者</div>
-              </el-col>
-              <el-col :span="6">
-                <div>100k+ 论文</div>
-              </el-col>
-              <el-col :span="6">
-                <div>10k+ 期刊</div>
-              </el-col>
-              <el-col :span="6">
-                <div>1k+ 组织</div>
-              </el-col>
-            </el-row>
+            <div style="position: absolute;left: 7vw; white-space:nowrap">50k+学者</div>
+            <div style="position: absolute;left: 20vw; white-space:nowrap">100k+论文</div>
+            <div style="position: absolute;left: 33vw; white-space:nowrap">10k+期刊</div>
+            <div style="position: absolute;left: 46vw; white-space:nowrap">1k+组织</div>
           </div>
         </el-col>
 
@@ -144,7 +128,7 @@
         <el-col :span="7">
           <!-- 导航栏标题 -->
           <div class="bar-title1" style="margin-left: 50px">
-            I SAHRE
+            I SHARE
             <img
               src="../../HomePage_svg/vector5.svg"
               style="
@@ -263,7 +247,7 @@ export default {
   display: inline-block;
   text-align: center;
   width: 100%;
-  height: 600px;
+  height: 80vh;
   left: 0px;
   top: 0px;
 
@@ -273,19 +257,21 @@ export default {
 }
 .title-text {
   /* margin-left: 10%; */
-  margin-top: 30px;
+  margin-top: 30vx;
   /* margin-bottom: 20px; */
 
   /* text-align: left; */
   font-weight: 700;
-  font-size: 52px;
+  font-size: 38px;
   line-height: 48px;
   /* or 118% */
 
   color: #0a093d;
 }
 .icon-text {
-  margin-top: -9vh;
+  /* margin-top: -9vh; */
+  position: absolute;
+  top:70vh;
   padding-left: 5%;
   padding-right: 5%;
   margin: 0 auto;
@@ -293,8 +279,8 @@ export default {
 
   font-family: "Plus Jakarta Sans";
   font-weight: 700;
-  font-size: 24px;
-  line-height: 150%;
+  font-size: 20px;
+  
   /* identical to box height, or 36px */
 
   letter-spacing: -0.01em;

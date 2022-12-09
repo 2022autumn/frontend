@@ -39,7 +39,7 @@
                     </div>
                     <div>
                         <div class="content grid1">
-                          <img src="../assets/Avatar.png" alt="" v-if="this.ifedit===0">
+                          <img :src="this.photourl" alt="" v-if="this.ifedit===0" style="width: 10vw;height: 25vh;margin-left: -10vw">
                           <el-upload
                               v-if="this.ifedit===1"
                               :http-request="upload_img"
@@ -54,12 +54,12 @@
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                           </el-upload>
                             <div v-if="this.ifedit===0">
-                                <div class="info-text">用户名:</div>
-                                <div class="info-text">个性签名:</div>
-                                <div class="info-text">真实姓名:</div>
-                                <div class="info-text">联系电话:</div>
-                                <div class="info-text">Email:</div>
-                                <div class="info-text">研究领域:</div>
+                                <div class="info-text">用户名:张博皓</div>
+                                <div class="info-text">个性签名:{{this.gexingqianming}}</div>
+                                <div class="info-text">真实姓名:{{this.realname}}</div>
+                                <div class="info-text">联系电话:{{this.phone}}</div>
+                                <div class="info-text">Email:{{this.email}}</div>
+                                <div class="info-text">研究领域:{{this.field}}</div>
                                 <!--<div class="info-text">我的兴趣词：</div>-->
                             </div>
                           <div v-if="this.ifedit===1">
@@ -104,7 +104,7 @@
                               <el-input
                                   type="text"
                                   placeholder="请输入联系电话"
-                                  v-model="realname"
+                                  v-model="phone"
                                   maxlength="15"
                                   show-word-limit
                                   style="width: 15vw"
@@ -117,7 +117,7 @@
                                   type="text"
                                   placeholder="请输入email"
                                   v-model="email"
-                                  maxlength="15"
+                                  maxlength="30"
                                   show-word-limit
                                   style="width: 15vw"
                               >
@@ -160,19 +160,28 @@
                                         <span class="admin">admin</span>
                                     </el-form-item>
                                     <el-form-item label="原密码：">
-                                        <el-input></el-input>
+                                        <el-input
+                                            type="text"
+                                            placeholder="请输入原密码"
+                                            v-model="oldpass"
+
+                                        ></el-input>
                                     </el-form-item>
                                     <el-form-item label="新密码：">
-                                        <el-input style="width: 100%"></el-input>
+                                        <el-input style="width: 100%"
+                                                  type="text"
+                                                  placeholder="请输入新密码"
+                                                  v-model="newpass"
+                                        ></el-input>
                                     </el-form-item>
-                                    <el-form-item label="确认新密码：">
+                                    <!--<el-form-item label="确认新密码：">
                                         <el-input style="width: 100%"></el-input>
-                                    </el-form-item>
+                                    </el-form-item>-->
                                 </el-form>
                             </div>
                         </div>
                         <div style="text-align: center;margin-top: 6vh">
-                            <el-button class="btn" size="medium ">确定</el-button>
+                            <el-button class="btn" size="medium " @click="resetpass">确定</el-button>
                         </div>
                     </div>
                 </div>
@@ -283,11 +292,35 @@ export default{
           phone:'',
           email:'',
           field:'',
-
+          userid:8,
+          photourl:'',
+          oldpass:'',
+          newpass:'',
         }
     },
     methods:{
-
+      resetpass(){
+        this.$axios({//注意是this.$axios
+          method:'post',
+          url:'/user/pwd',
+          data:{//post请求这里是data
+            user_id:this.userid.toString(),
+            password_old:this.oldpass,
+            password_new:this.newpass,
+          }
+        }).then(
+            res =>{
+              console.log(res.data.status)
+              if(res.data.status===200){
+                this.$message({
+                  type:"success",
+                  message: "密码修改成功",
+                  customClass:'messageIndex'
+                })
+              }
+            }
+        )
+      },
       handleAvatarSuccess(res, file) {
         this.imageUrl = URL.createObjectURL(file.raw);
         console.log("上传成功!");
@@ -307,27 +340,69 @@ export default{
       },
       upload_img(file){
         const formData = new FormData();
-        formData.append('file', file.file);
-        console.log(formData.get('file'));
-        this.$axios({//注意是this.$axios
-          method:'post',
-          url:'/user/headshot',
-          data:{//post请求这里是data
-              user_id:2,
-              Headshot:formData,
-          }
-        }).then(
-            res =>{
-              console.log(res.data.msg)
-            }
-        )
+        formData.append('Headshot', file.file);
+        formData.append('user_id',this.userid);
+        const config = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+        }
+        this.$axios.post('/user/headshot',formData,config).then(res =>{
+          console.log(res.data)
+          this.photourl = res.data.data.head_shot
+           this.$message({
+             type:"success",
+             message: res.data.msg,
+             customClass:'messageIndex'
+           })
+        })
       },
       inedit(){
         this.ifedit=1;
       },
       outedit(){
+        this.$axios({//注意是this.$axios
+          method:'post',
+          url:'/user/mod',
+          data:{//post请求这里是data
+             email:this.email,
+             fields:this.field,
+             name:this.realname,
+             phone:this.phone,
+             user_id:this.userid.toString(),
+             user_info:this.gexingqianming
+          }
+        }).then(
+            res =>{
+                console.log(res.data)
+            }
+        )
         this.ifedit=0;
+        //this.get_data();
+      },
+      get_data(){
+        this.$axios({//注意是this.$axios
+          method:'get',
+          url:'/user/info',
+          params:{//get请求这里是params
+            user_id:this.userid.toString()
+          }
+        }).then(
+            response =>{
+              console.log("得到个人信息")
+              console.log(response.data);
+              this.email=response.data.data.email;
+              this.field = response.data.data.fields;
+              this.realname = response.data.data.name;
+              this.phone = response.data.data.phone;
+              this.gexingqianming = response.data.data.user_info;
+              this.photourl = response.data.data.head_shot
+            }
+        )
       }
+    },
+    created(){
+       this.get_data();
     }
 }
 </script>
@@ -597,5 +672,8 @@ export default{
   width: 178px;
   height: 178px;
   display: block;
+}
+.messageIndex{
+  z-index:9999 !important;
 }
 </style>
