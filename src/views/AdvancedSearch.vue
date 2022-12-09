@@ -1,30 +1,30 @@
 <template>
     <div>
-        <topbar2></topbar2>
+        <topbar1></topbar1>
         <el-row style="height: 600px" class="background">
-            <el-col :span="7">
-                <div class="left-img" style="margin-top: 100px; margin-left: 30%">
-                    <img preview-disabled
+            <el-col :span="5">
+                <div class="left-img" style="margin-top: 8vh; margin-left: 35%;">
+                    <img preview-disabled style="width:30vw;"
                         src="../../public/advanced_img/Advanced Search.svg"
                     />
                 </div>
-                <div class="title-text" style="margin-top: 50px; margin-left: 30%">
+                <div class="title-text" style="margin-top: 4vh; margin-left: 35% ">
                     高级检索
                 </div>
-                 <div class="left-img" style="margin-top: 70px; margin-left: 10%;width:100vx;">
-                    <img preview-disabled
+                 <div class="left-img" style="margin-top: 10vh; margin-left: 10%;">
+                    <img preview-disabled style="width:30vw;"
                         src="../../public/advanced_img/illustration1.svg"
                     />
                 </div>
             </el-col>
             <el-col :span="17">
-                <div class="hot-list" style="margin-top: 150px">
+                <div class="hot-list" style="margin-top: 15vh">
                     <div>&nbsp;</div>
                     <div class="box-word" style="margin-left: 4%;">
                             搜索内容
                     </div>
                     <div>
-                        <FilterBar ref="bar1"/>
+                        <FilterBar ref="bar1" :iftop="1"/>
                     </div>
                     <div>
                         <FilterBar ref="bar2"/>
@@ -32,9 +32,15 @@
                     <div>
                         <FilterBar ref="bar3"/>
                     </div>
-                    <div class="box-word" style="margin-top: 4%;margin-left: 6%;">
+                  <div>
+                    <FilterBar ref="bar4"/>
+                  </div>
+                  <div>
+                    <FilterBar ref="bar5"/>
+                  </div>
+                   <!--<div class="box-word" style="margin-top: 4%;margin-left: 6%;">
                             设定时间范围
-                    </div>
+                    </div>-->
                     <!--<div style="margin-left: 15%;margin-top: 3%;">
                         <el-checkbox v-model="checked4">
                             <div style="display: inline-block;font-size:15px;">
@@ -107,10 +113,18 @@
                     <div>&nbsp;</div>
                     <div>&nbsp;</div>-->
                     <div>
+                      &nbsp
+                    </div>
+                    <div>
                         <el-button  style="display:block;margin:0 auto" class="search-button" @click="search">搜索</el-button>
                     </div>
 
                 </div>
+            </el-col>
+            <el-col :span="3">
+              <div>
+                &ensp;
+              </div>
             </el-col>
         </el-row>
 
@@ -163,7 +177,7 @@ export default {
       var case1 = {};
       case1.field = this.$refs.bar1.value;
       case1.content = this.$refs.bar1.input;
-      case1.logic = this.$refs.bar1.value1;
+      case1.logic = "and";
       //console.log(case1);
       var case2 = {};
       case2.field = this.$refs.bar2.value;
@@ -175,10 +189,20 @@ export default {
       case3.content = this.$refs.bar3.input;
       case3.logic = this.$refs.bar3.value1;
      // console.log(case3);
+      var case4 = {};
+      case4.field = this.$refs.bar4.value;
+      case4.content = this.$refs.bar4.input;
+      case4.logic = this.$refs.bar4.value1;
+      var case5 = {};
+      case5.field = this.$refs.bar5.value;
+      case5.content = this.$refs.bar5.input;
+      case5.logic = this.$refs.bar5.value1;
       this.query.length=0;
       this.query.push(case1);
       this.query.push(case2);
       this.query.push(case3);
+      this.query.push(case4);
+      this.query.push(case5);
       console.log(this.query);
       sessionStorage.setItem('query',JSON.stringify(this.query));
       this.$router.push('/advanced_outcome');
@@ -212,27 +236,27 @@ export default {
   }
   .title-text {
   /* margin-left: 10%; */
-  margin-top: 30px;
+  margin-top: 0px;
   /* margin-bottom: 20px; */
 
   /* text-align: left; */
   font-weight: 700;
-  font-size: 50px;
+  font-size: 40px;
   line-height: 48px;
   /* or 118% */
 
   color: #0a093d;
 }
 .hot-list {
-  margin-top: 100px;
+  margin-top: 0px;
   margin: auto;
   padding: auto;
   width: 90%;
-  height: 650px;
+  height: 510px;
 
   background: #ffffff;
   box-shadow: 7px 7px 7px 7px rgba(0, 0, 0, 0.25);
-  border-radius: 24px;
+  border-radius: 14px;
 }
 .background{
     width: 100%;
@@ -276,7 +300,7 @@ export default {
     align-items: center;
   }
   .box-word {
-  margin-top: 25px;
+  margin-top: 15px;
   width: 193px;
   height: 30px;
 

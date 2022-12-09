@@ -1,5 +1,5 @@
 <template>
-  <div class="echart" id="mychart" :style="myChartStyle"></div>
+  <div class="echart" id="mychart" ref="ch" :style="myChartStyle"></div>
 </template>
 <script>
 import * as echarts from "echarts";
@@ -27,6 +27,7 @@ export default  {
       handler (newData,oldData) {
         console.log("newdata",newData)
         this.yData = newData;
+        this.initEcharts()
       },
       deep: true,
       immediate: true,
@@ -35,6 +36,7 @@ export default  {
       handler (newData,oldData) {
         console.log("newdata",newData)
         this.xData = newData;
+        this.initEcharts();
       },
       deep: true,
       immediate: true,
@@ -121,7 +123,7 @@ export default  {
                 //柱形图圆角，初始化效果
                 barBorderRadius:[2, 2, 2, 2],
                 color: function (params) {
-                  console.log("parapms",params);
+                  // console.log("parapms",params);
                   if(params.data < 1) {
                     return "#DFE7F6"
                   } else {
@@ -137,8 +139,19 @@ export default  {
         ],
         // color: "#217BF4"
       };
-      const myChart = echarts.init(document.getElementById("mychart"));
-      myChart.setOption(option);
+      // const myChart = this.$echarts.init(this.$refs.ch);
+      // document.getElementById('mychart').removeAttribute('_echarts_instance_');
+      let myChart = echarts.init(document.getElementById("mychart"));
+      //为了好看放了一个加载
+      myChart.showLoading();
+      // 利用setTimeout延迟获取和赋值图表
+      setTimeout(()=>{
+        myChart.hideLoading();
+        myChart.setOption(option, true);
+      },2000)
+
+
+      // myChart.setOption(option, true);
       //随着屏幕大小调节图表
       window.addEventListener("resize", () => {
         myChart.resize();

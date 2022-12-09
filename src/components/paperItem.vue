@@ -74,7 +74,7 @@
   margin-bottom: 4vh;
   padding: 1%;
   width: 95%;
-  height: 30vh;
+  height: 230px;
 
   background: linear-gradient(250.39deg, #ffffff 10.13%, #ffffff 94%);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

@@ -16,9 +16,9 @@
                     </el-dropdown>
                 </div>
             </el-col>-->
-          <el-col :span="3">
-            <div style="margin-top: 10px; margin-left: 10%">
-              <el-select v-model="value1" placeholder="AND">
+          <el-col :span="3" >
+            <div style="margin-top: 5px; margin-left: 10%" >
+              <el-select v-model="value1" placeholder="AND" v-if="this.iftop!==1">
                 <el-option
                     v-for="item in options1"
                     :key="item.value"
@@ -34,7 +34,7 @@
             </div>
           </el-col>
             <el-col :span="13">
-                <div style="margin-top: 10px; ">
+                <div style="margin-top: 5px; ">
                     <el-input v-model="input" placeholder="请输入该条目查询内容"></el-input>
                 </div>
             </el-col>
@@ -44,7 +44,7 @@
                 </div>
             </el-col>
             <el-col :span="6">
-                <div style="margin-top: 10px; margin-left: 10%">
+                <div style="margin-top: 5px; margin-left: 10%">
                     <el-select v-model="value" placeholder="请选择搜索条目" >
                         <el-option
                         v-for="item in options"
@@ -66,33 +66,33 @@
 <script>
 export default {
   name: "filterBar",
-  props:['logic','field','content'],
+  props:['logic','field','content','iftop'],
 data() {
   return {
         input:"",
         logicstate:1,
         options: [{
           value: 'title',
-          label: 'title'
+          label: '标题'
         }, {
           value: 'abstract',
-          label: 'abstract'
+          label: '摘要'
         }, {
           value: 'venue',
-          label: 'venue'
+          label: '刊物'
         }, {
           value: 'publisher',
-          label: 'publisher'
+          label: '出版商'
         }, {
           value: 'author',
-          label: 'author'
+          label: '作者'
         },{
           value: 'institution',
-          label: 'institution'
+          label: '机构'
         },
           {
             value: 'concept',
-            label: 'concept'
+            label: '概念'
           }],
         options1:[
           {
@@ -147,7 +147,7 @@ data() {
     align-items: center;
   }
   .box-word {
-  margin-top: 20px;
+  margin-top: 10px;
   width: 43px;
   height: 30px;
 
