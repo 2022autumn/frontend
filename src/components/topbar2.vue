@@ -82,9 +82,9 @@ export default {
       sessionStorage.setItem('Cond',JSON.stringify(cond));
       sessionStorage.setItem('search_name1',this.input3);
       sessionStorage.setItem('now_page',JSON.stringify(1));
-      window.open('/search_outcome');
+      this.$router.push('/search_outcome');
       //this.$router.push('/search_outcome');
-      //window.location.reload();
+      window.location.reload();
     },
     get_data(){
       this.$axios({//注意是this.$axios
