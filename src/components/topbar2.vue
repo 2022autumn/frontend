@@ -47,12 +47,19 @@ export default {
         method:'post',
         url:'/es/prefix',
         data:{//post请求这里是data
-          name:"title",
-          prefix:value
+          Field:"title",
+          Prefix:value
         }
       }).then(
           response =>{
-
+              console.log("查询成功")
+              console.log(response.data.res);
+              this.restaurants.length=0;
+              for(var i=0;i<response.data.res.length;i++){
+                var tmp = {};
+                tmp.value = response.data.res[i];
+                this.restaurants.push(tmp);
+              }
           }
       )
     },
@@ -103,9 +110,9 @@ export default {
     },
     querySearch(queryString, cb) {
       var restaurants = this.restaurants;
-      var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
+      //var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
       // 调用 callback 返回建议列表的数据
-      cb(results);
+      cb(restaurants);
     },
     createFilter(queryString) {
       return (restaurant) => {
