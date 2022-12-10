@@ -32,11 +32,11 @@
           </div>-->
           <div v-if="this.authors.length>0">
             <div style="margin-bottom:5px">
-              <img src="../assets/search_outcome/Frame1.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
+              <img src="../assets/search_outcome/Frame1.svg" style="width: 26px; height: 26px;vertical-align:-6px;" preview-disabled/>
               <b>&nbsp;主要作者</b>
             </div>
             <el-checkbox-group v-model="checklist_author" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.authors"  :label=item.key style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item.key}}</b></el-checkbox>
+              <el-checkbox v-for="item in this.authors"  :label=item.key style="display: block;word-wrap: break-word;overflow: hidden;left: 0.5vw;"><b>{{item.key}}</b></el-checkbox>
             </el-checkbox-group>
             <el-divider></el-divider>
           </div>
@@ -46,7 +46,7 @@
               <b>&nbsp;主要组织</b>
             </div>
             <el-checkbox-group v-model="checklist_institutions" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.institutions"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
+              <el-checkbox v-for="item in this.institutions"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;left: 0.5vw;"><b>{{item}}</b></el-checkbox>
             </el-checkbox-group>
             <el-divider></el-divider>
           </div>
@@ -56,7 +56,7 @@
               <b>&nbsp;发表年份</b>
             </div>
             <el-checkbox-group v-model="checklist_publish_years" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.publish_years"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
+              <el-checkbox v-for="item in this.publish_years"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;left: 0.5vw;"><b>{{item}}</b></el-checkbox>
             </el-checkbox-group>
             <el-divider></el-divider>
           </div>
@@ -66,7 +66,7 @@
               <b>&nbsp;出版单位</b>
             </div>
             <el-checkbox-group v-model="checklist_publishers" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.publishers"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
+              <el-checkbox v-for="item in this.publishers"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;left: 0.5vw;"><b>{{item}}</b></el-checkbox>
             </el-checkbox-group>
             <el-divider></el-divider>
           </div>
@@ -76,7 +76,7 @@
               <b>&nbsp;论文类型</b>
             </div>
             <el-checkbox-group v-model="checklist_types" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.types"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
+              <el-checkbox v-for="item in this.types"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;left: 0.5vw;"><b>{{item}}</b></el-checkbox>
             </el-checkbox-group>
             <el-divider></el-divider>
           </div>
@@ -86,7 +86,7 @@
               <b>&nbsp;刊物名称</b>
             </div>
             <el-checkbox-group v-model="checklist_venues" :max="1" @change="choose_change" >
-              <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all;display:block;word-wrap: break-word;overflow: hidden;" >
+              <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all;display:block;word-wrap: break-word;overflow: hidden;left: 0.5vw;" >
                 <b>
                   {{item}}
                 </b>
@@ -129,7 +129,7 @@
         </div>
         <div v-for="item in items" v-if="item.id!==''" style="width: 50vw;height:240px; " @click="jdetail(item.id)">
           <el-card  class="outcome-card" style="width:55vw;height:228px; " shadow="hover">
-            <el-tag style="display: inline-block">{{item.type}}</el-tag>
+            <el-tag class="item-type" style="display: inline-block">{{item.type}}</el-tag>
             <div style="display: inline-block;font-size: large;">
               &nbsp;
               <b>
