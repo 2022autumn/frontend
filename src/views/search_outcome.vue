@@ -140,7 +140,8 @@
                 </div>
               </div>
               <div style="font-size: small;color: grey">
-                {{item.zhaiyao}}
+                <!--{{item.zhaiyao}}-->
+                <div style="display: inline-block;" v-html="item.zhaiyao"></div>
               </div>
               <div style="margin-top: 2vh;display: inline-block">
                 <div v-for="tags in item.tags" v-if="tags!==''" style="display: inline-block">
@@ -436,32 +437,32 @@
         if(value===1){
           this.sort=1;
           this.asc = false;
-          this.openFullScreen2();
+          //Screen2();
         }
         else if(value===2){
           this.sort=1;
           this.asc = true;
-          this.openFullScreen2();
+          //this.openFullScreen2();
         }
         else if(value===3){
           this.sort=2;
           this.asc = false;
-          this.openFullScreen2();
+          //this.openFullScreen2();
         }
         else if(value===4){
           this.sort=2;
           this.asc = true;
-          this.openFullScreen2();
+          //this.openFullScreen2();
         }
         else if(value===5){
           this.sort=0;
           this.asc = false;
-          this.openFullScreen2();
+          //this.openFullScreen2();
         }
         else if(value===6){
           this.sort=0;
           this.asc = true;
-          this.openFullScreen2();
+          //this.openFullScreen2();
         }
         this.search();
       },
@@ -562,17 +563,23 @@
          sessionStorage.setItem('Cond',JSON.stringify(conds));
          sessionStorage.setItem('now_page',JSON.stringify(1));
          this.now_page=1;
-         this.openFullScreen2();
+         //this.openFullScreen2();
          this.search();
          //window.location.reload();
       },
         handlechange(page){//处理跳转，page为当前选中的页面
           this.now_page = page;
           sessionStorage.setItem('now_page',JSON.stringify(page));
-          this.openFullScreen2();
+          //this.openFullScreen2();
           this.search();
         },
         search(){
+          const loading = this.$loading({
+            lock: true,
+            text: 'Loading',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+          });
           var cond = JSON.parse(sessionStorage.getItem('Cond'));
           var searchname1 = sessionStorage.getItem('search_name1');
           var page = JSON.parse(sessionStorage.getItem('now_page'));
@@ -681,9 +688,17 @@
                   //console.log(response.data.res.Works);
                   this.items[i].id = response.data.res.Works[i].id;
                   this.items[i].zhaiyao = response.data.res.Works[i].abstract;
+                  var oldzhaiyao = "";
+                  oldzhaiyao = this.items[i].title;
                   if(this.items[i].zhaiyao.length>330){//处理一下过长的摘要
                     //console.log(this.items[i].zhaiyao);
                     this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0,330)+"...";
+                  }
+                  if(this.items[i].zhaiyao!=="") {
+                    this.items[i].zhaiyao = this.RegandRep(this.items[i].zhaiyao, searchname1, pre, post);
+                    if (this.items[i].zhaiyao === -1) {
+                      this.items[i].zhaiyao = oldzhaiyao;
+                    }
                   }
                   this.items[i].title = response.data.res.Works[i].title;
                   var oldtittle = "";
@@ -730,6 +745,7 @@
                   }
                   this.items[i].numyin = response.data.res.Works[i].cited_by_count;
                   //this.items[i].numstore = Math.ceil(Math.random()*100);
+                  loading.close();
                 }
               }
           )
@@ -739,7 +755,7 @@
     created() {
       this.conds = JSON.parse(sessionStorage.getItem('Cond'));
       this.now_page = JSON.parse(sessionStorage.getItem('now_page'));
-      this.openFullScreen2();
+      //this.openFullScreen2();
       this.search();
       /*if(this.total%4===0){
         this.total_page = this.total/8*10;
