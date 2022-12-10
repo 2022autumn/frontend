@@ -14,7 +14,7 @@ export default  {
     return {
       xData: [ '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'],
       yData: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 10],
-      myChartStyle: { float: "left", width: "100%", height: "100px"}, //图表样式
+      myChartStyle: { float: "left", width: "100%", height: "120px"}, //图表样式
       newYData: []
     }
   },
@@ -53,7 +53,7 @@ export default  {
           x: 0,
           y: 17,
           x2: 0,
-          y2: 17
+          y2: 0
         },
         tooltip : {
           trigger: 'axis',
@@ -69,7 +69,7 @@ export default  {
               var num = params[0].data;
             }
 
-            let html=`<div style="height:auto;width: 50px;">
+            let html=`<div style="height:auto;width: 50px;position:relative;z-index: 1000">
                 ${params
                 .map(
                     (

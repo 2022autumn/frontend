@@ -267,7 +267,8 @@ export default {
       method:'get',
       url:'/es/get',
       params:{
-        id: this.id
+        // id: this.id
+        id: "A4220294553"
       }
     }).then(
         response=> {

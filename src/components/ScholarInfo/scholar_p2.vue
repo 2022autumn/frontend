@@ -5,7 +5,7 @@
         {{scholarInfo.display_name}}
     </span>
       <span class="scholar_institution">
-        {{scholarInfo.last_known_institution===null?"":scholarInfo.last_known_institution.display_name}}
+        {{scholarInfo.last_known_institution?scholarInfo.last_known_institution.display_name:institution}}
     </span>
     </div>
     <div class="info_title">
@@ -14,7 +14,8 @@
     <div class="border">
     </div>
     <div class="personal_info">
-      I’m {{scholarInfo.display_name}}, I'm interested in areas like {{areas}}, I'm working for {{scholarInfo.last_known_institution?scholarInfo.last_known_institution.display_name:institution}}. I've post {{scholarInfo.most_cited_work}}, which is my most-cited work. I'm looking for highly motivate students.
+      {{this.description}}
+<!--      I’m {{scholarInfo.display_name}}, I'm interested in areas like {{areas}}, I'm working for {{scholarInfo.last_known_institution?scholarInfo.last_known_institution.display_name:this.institution}}. I've post {{scholarInfo.most_cited_work}}, which is my most-cited work. I'm looking for highly motivate students.-->
     </div>
 <!--    <div class="info_bottom">-->
 <!--      <el-button class="more_btn">-->
@@ -44,8 +45,34 @@ export default {
   },
   data() {
     return {
-      institution: "no institution"
+      info: {},
+      edit: false,
+      description: "",
+      institution: "No belonged institution"
     }
+  },
+  mounted() {
+    let that = this;
+    that.$axios({
+      method: 'get',
+      url: '/es/get',
+      params: {
+        // id: this.id
+        id: "A4220294553"
+      }
+    }).then(
+        response => {
+          // console.log("userinfo",response.data);
+          this.info = response.data.data;
+          if(this.scholarInfo.last_known_institution===null){
+            this.info.last_known_institution.display_name ="no institution";
+          }
+          console.log("get useInfo", this.info);
+          this.description="I’m "+this.info.display_name + ", I'm interested in areas like "+this.areas+", I'm working for " + this.info.last_known_institution + ". I've post "+this.info.most_cited_work+", which is my most-cited work. I'm looking for highly motivate students."
+        console.log(this.description)
+        }
+    )
+
   }
 }
 </script>

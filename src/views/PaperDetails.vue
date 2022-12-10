@@ -12,10 +12,19 @@
             <!--<span>北京航空航天大学xx实验室</span>-->
             {{this.paper.institution}}
           </div>
-          <div class=" info1 authors" @click="jscholar" style="cursor: pointer">
+          <div class=" info1 authors"
+               v-for="(item,index) in this.paper.authors"
+               :key="index"
+               style="cursor: pointer;display: inline-block; position: relative;"
+          >
+            <div class="names" @click="jscholar(index)" style="display: inline; float: left">
+              {{item.author.display_name}}
+              <div class="names" style="float: right">
+                ;{{"\xa0\xa0"}}
+              </div>
+            </div>
             <!--<span>作者名字1； 作者名字2； 作者名字3；</span>-->
             <!--<span>{{this.paper.authors[0].author.display_name}}</span>-->
-            {{this.author_name}}
           </div>
           <div class="info1">
             <div class="info2 time">
@@ -51,6 +60,13 @@
             </div>
             <div class="like2" v-else>
               {{ this.notCollectionTxt }}
+            </div>
+            <!--是否被收藏的样式-->
+            <div class="like1" v-model="key">
+              <span class="iconfont">
+                  <i v-if = "!isCollection" class="el-icon-star-off" :key="0" @click="onCollection"></i>
+                  <i v-else class="el-icon-star-on" :key="1" @click="onCollection"></i>
+              </span>
             </div>
             <!--            <div class="right-buttons">-->
 <!--              <el-button class="right-button1"></el-button>-->
@@ -129,9 +145,8 @@
               {{item.content}}
 <!--              <div class="comment-divider"></div>-->
             </div>
-            <div style="clear:both;"></div>
+            <div style="clear: both;"> </div>
           </div>
-          <div style="clear:both;"></div>
         </div>
         <span class="commending-title">发表评论</span>
         <div class="conmmending">
@@ -142,6 +157,7 @@
           <div class="right_comment">
             <el-input
                 class="input_command"
+                type="textarea"
                 placeholder="请输入评论内容"
                 v-model="myComment">
             </el-input>
@@ -204,9 +220,11 @@ export default {
       command: {
 
       },
+      space: ";",
       comment_num: 0,
       myComment: "",
       dateTime,
+      author_len: 0,
     };
   },
   components: {
@@ -216,8 +234,9 @@ export default {
     Related
   },
   methods: {
-    jscholar(){
-      window.localStorage.setItem('SID',this.author_id);
+    jscholar(index){
+      // window.localStorage.setItem('SID',this.author_id);
+      window.localStorage.setItem('SID',this.paper.authors[index].author_id);
       window.open('/scholar_page');
     },
 
@@ -250,11 +269,11 @@ export default {
       this.$axios({//注意是this.$axios
         method:'post',
         url:'/social/comment/create',
-        data:{//get请求这里是params
+        data: {//get请求这里是params
           content: this.myComment,
           // paper_id: "W2914747780",
           user_id: 3,
-          paper_id:window.localStorage.getItem('WID'),
+          paper_id: window.localStorage.getItem('WID'),
           //user_id: window.localStorage.getItem('SID'),
         }
       }).then(
@@ -278,8 +297,8 @@ export default {
       method:'get',
       url:'/es/get',
       params:{//get请求这里是params
-        id:window.localStorage.getItem('WID')
-        // id: "W31001126"
+        // id:window.localStorage.getItem('WID')
+        id: "W2914747780"
       }
     }).then(
         response =>{
@@ -288,7 +307,16 @@ export default {
           this.paper.type=response.data.data.type
           this.paper.authors=response.data.data.authorships
           console.log(this.paper.authors[0].author.id)
-          this.author_name= this.paper.authors[0].author.display_name//存储作者名称
+          var len = Math.min(3, this.paper.authors.length)
+          for(var i = 0; i < len; i++) {
+            this.author_name += this.paper.authors[i].author.display_name
+            if(i != len-1)
+              this.author_name += ', '
+          }
+          if (len < this.paper.authors.length) {
+            this.author_name += "..."
+          }
+          // this.author_name= this.paper.authors[0].author.display_name//存储作者名称
           this.author_id = this.paper.authors[0].author.id//存储作者id
           this.paper.date=response.data.data.publication_date
           this.paper.abstract=response.data.data.abstract
@@ -522,7 +550,7 @@ clear:both;
   width: 56.86vw;
   overflow:hidden;
   filter: drop-shadow(0px 3px 4px rgba(0, 0, 0, 0.25));
-  box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 3px 0px rgba(0, 0, 0, 0.25);
 }
 
 .abstract-sider {
@@ -628,27 +656,42 @@ clear:both;
   flex-direction: column;
   margin-top: 7px;
   height: auto;
+  //height: 350px;
   max-height: 350px;
   width: 51.83vw;
 }
+::-webkit-scrollbar {
+  width: 7px;
+  height: 18px;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb {
+  width: 7px;
+  height: 20px;
+  background-color: #E8E8E8;
+  border-radius: 8px;
+}
 .cards {
   position: relative;
-  margin-top: 5px;
-  display: table-cell;
+  margin-top: 10px;
+  display: inline-block;
+  overflow: hidden;
   width: 51.83vw;
-  height: 150px;
+  height: auto;
+  min-height: 135px;
   //height: 24.41vh;
   padding-left: 1.48vw;
   padding-top: 16px;
+  padding-bottom: 16px;
   background: #FFFFFF;
   box-shadow: 0px 2px 4px rgba(180, 180, 180, 0.25);
   border-radius: 8px;
 }
 .user-info {
   float: left;
-  position: relative;;
+  position: absolute;;
   height: 7.79vh;
-  width: 41.31vw;
+  width: 47.31vw;
 }
 .commenter-avator {
   float: left;
@@ -687,7 +730,8 @@ clear:both;
   font-size: 12px;
   line-height: 3.38vh;
   /* identical to box height, or 217% */
-
+  padding-bottom: 10px;
+  margin-bottom: 10px;
   letter-spacing: 0.02em;
 
   color: #7D7D7D;
@@ -709,12 +753,20 @@ clear:both;
   color: #8A8A8A;
 }
 .comment-content {
+  display: flex;
   position: absolute;
-  //display: flex;
-  margin-top: 7.61vh;
-  margin-left: 1.74vw;
-  width: 39.37vw;
-
+  width: 47.87vw;
+  height: auto;
+  height: 80px;
+  line-height: 26px;
+  overflow: hidden;
+  word-wrap: break-word;
+  text-justify: distribute;
+  word-break: break-all;
+  min-height: 30px;;
+  margin-top: 8.61vh;
+  margin-bottom: 20px;
+  //margin-left: 0.74vw;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 500;
@@ -855,5 +907,9 @@ clear:both;
 }
 .submit-btn {
   padding: 0 2px 2px 0 !important;
+}
+.el-textarea__inner {
+  border: none;
+  height: 10.35vh;
 }
 </style>

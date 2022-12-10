@@ -12,12 +12,22 @@
       </div>
     </div>
     <div class="history">
-      过去十年发表
+      <el-tabs v-model="activeName" ref="tabs" @tab-click="handleClick">
+        <el-tab-pane label="过去十年发表" name="first">
+          <div class="scholar_img">
+            <!--      <div class="echart" id="mychart" :style="myChartStyle"></div>-->
+            <barGraph class="graph" :ycounts="counts" :xcounts="xData"/>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane class="graph" label="过去十年引用" name="second">
+          <div class="scholar_img">
+            <!--      <div class="echart" id="mychart" :style="myChartStyle"></div>-->
+            <barGraph class="cgraph2" id="graph2" ref="graph2" :ycounts="counts" :xcounts="xData"/>
+          </div>
+        </el-tab-pane>
+      </el-tabs>
     </div>
-    <div class="scholar_img">
-<!--      <div class="echart" id="mychart" :style="myChartStyle"></div>-->
-      <barGraph :ycounts="counts" :xcounts="xData"/>
-    </div>
+
     <div class="scholar_domain">
       <div>相关领域</div>
       <div class="domain_set">
@@ -69,7 +79,8 @@ export default {
       xData: "",
       yData: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 10],
       myChartStyle: { float: "left", width: "100%", height: "100px"}, //图表样式
-      newYData: []
+      newYData: [],
+      activeName: 'first'
     }
   },
   watch:{
@@ -95,6 +106,12 @@ export default {
   created() {
   },
   methods: {
+    handleClick(tab, event) {
+      console.log(tab, event);
+      this.$nextTick(() => {
+        echarts.getInstanceByDom(this.$refs.graph2).resize()
+      })
+    },
     initEcharts() {
       // 基本柱状图
       const option = {
@@ -260,18 +277,20 @@ export default {
 
 }
 .history {
+  position: relative;
   margin-top: 30px;
-  font-family: 'Poppins';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 27px;
-
-  color: #606060;
+  height: 195px;
+  width: 100%;
 }
 .scholar_img {
-  height: 100px;
-  width: 100%;
+  height: 140px;
+  /*width: 100%;*/
+  width: 386px;
+}
+.graph {
+  height: 100%;
+  /*width: 100%;*/
+  width: 386px;
 }
 .scholar_domain {
 
@@ -320,7 +339,6 @@ export default {
   background: #DFE7F6;
   border-radius: 2px
 }
-
 </style>
 <style>
 .block .span{
@@ -350,5 +368,8 @@ export default {
  }
 .el-button+.el-button, .el-checkbox.is-bordered+.el-checkbox.is-bordered {
   margin-left: 0px;
+}
+.graph. .canvas {
+  width: 100% !important;
 }
 </style>
