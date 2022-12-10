@@ -10,13 +10,14 @@
     </div>
     <div class="info_title">
       个人简介
+      <i
+          :class="{'el-icon-edit': !edit, 'el-icon-check': edit}"
+          style="width: 6px"
+          @click="edit = !edit"
+      ></i>
     </div>
     <div class="border">
     </div>
-    <i
-        :class="{'el-icon-edit': !edit, 'el-icon-check': edit}"
-        @click="edit = !edit"
-    ></i>
     <div class="personal_info" v-show="!edit">
       {{this.description}}
 <!--      I’m {{scholarInfo.display_name}}, I'm interested in areas like {{areas}}, I'm working for {{scholarInfo.last_known_institution?scholarInfo.last_known_institution.display_name:this.institution}}. I've post {{scholarInfo.most_cited_work}}, which is my most-cited work. I'm looking for highly motivate students.-->
