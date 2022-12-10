@@ -5,7 +5,7 @@
         {{scholarInfo.display_name}}
     </span>
       <span class="scholar_institution">
-        {{scholarInfo.last_known_institution?scholarInfo.last_known_institution.display_name:institution}}
+        {{this.info.last_known_institution.display_name}}
     </span>
     </div>
     <div class="info_title">
@@ -13,10 +13,15 @@
     </div>
     <div class="border">
     </div>
-    <div class="personal_info">
+    <i
+        :class="{'el-icon-edit': !edit, 'el-icon-check': edit}"
+        @click="edit = !edit"
+    ></i>
+    <div class="personal_info" v-show="!edit">
       {{this.description}}
 <!--      I’m {{scholarInfo.display_name}}, I'm interested in areas like {{areas}}, I'm working for {{scholarInfo.last_known_institution?scholarInfo.last_known_institution.display_name:this.institution}}. I've post {{scholarInfo.most_cited_work}}, which is my most-cited work. I'm looking for highly motivate students.-->
     </div>
+    <el-input class="edit_info" v-show="edit" type="textarea" v-model="description"></el-input>
 <!--    <div class="info_bottom">-->
 <!--      <el-button class="more_btn">-->
 <!--        查看更多-->
@@ -145,5 +150,27 @@ export default {
   font-weight: 500;
   font-size: 24px;
   line-height: 36px;
+}
+.edit_info{
+  height: auto;
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 20px;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 29px;
+  /* or 161% */
+
+  color: #606060;
+  word-wrap: break-word;
+  word-break: break-all;
+  display: flex;
+}
+.edit_info .el-textarea__inner {
+  word-wrap: break-word;
+  word-break: break-all;
+  height: auto;
 }
 </style>
