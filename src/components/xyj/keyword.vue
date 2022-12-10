@@ -4,8 +4,8 @@
     <div class="title-en">Keywords</div>
     <div class="box-set" v-infinite-scroll="load">
       <div class="keyword-box" v-for="(item,index) in keywords" :key="index">
-        <div class="keyword"  v-if="item.level===1" @click="concern(item)">{{item.display_name}}</div>
-        <div class="keyword1"  v-else-if="0===0" @click="concern(item)">{{item.display_name}}</div>
+        <div class="keyword1"  v-if="item.islike===true" @click="concern(item)">{{item.display_name}}</div>
+        <div class="keyword"  v-else @click="concern(item)">{{item.display_name}}</div>
       </div>
     </div>
     <!--div class="line"></div>
@@ -39,50 +39,57 @@ export default {
       method:'get',
       url:'/es/get',
       headers:{
-        token:3,
+        token:this.uid,
       },
       params: {
-        id:window.localStorage.getItem('WID')
+        id:window.localStorage.getItem('WID'),
+        userid:this.uid
       }
   }).then(
         response =>{
           this.keywords=response.data.data.concepts;
-          console.log(response)
+          console.log(response.data.data.concepts)
         }
     )
 
   },
   methods:{
     concern(item){
-      if(item.level===0){
-        item.level=1
-      }else{
-        item.level=0
-      }
-      console.log(item.display_name)
-      this.$axios({//注意是this.$axios
-        method:'post',
-        url:'/scholar/concept',
-        headers:{
-          token:3,
-          //x: window.localStorage.getItem('SID'),
-        },
-        data:{//get请求这里是params
-          concept_id: item.id,
-          user_id: 3,
-          //user_id: window.localStorage.getItem('SID'),
+      console.log(item.islike+this.uid)
+      if(this.uid!=null){
+        if(item.islike===false){
+          item.islike=true
+        }else if(item.islike===true){
+          item.islike=false
         }
-      }).then(
-          response =>{
-            console.log(response.data);
-            console.log(response)
+        console.log(item.display_name)
+        this.$axios({//注意是this.$axios
+          method:'post',
+          url:'/scholar/concept',
+          headers:{
+            //token:3,
+            token: this.uid,
+          },
+          data:{//get请求这里是params
+            concept_id: item.id,
+            user_id: this.uid,
+            //user_id: window.localStorage.getItem('SID'),
           }
-      )
-      console.log(item.level)
+        }).then(
+            response =>{
+              console.log(response.data);
+              console.log(response)
+            }
+        )
+      }else{
+        this.$message.error("请登录后再操作！");
+        console.log("未登录");
+      }
     }
   },
   data(){
     return{
+      uid:3,
       keywords:["核电厂","电厂设备","电气贯穿件(EPA)","延寿","再鉴定",],
       definekey:["经济报告","疫情相关","能源经济","换行测试"],
     }
