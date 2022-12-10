@@ -54,16 +54,16 @@
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                           </el-upload>
                             <div v-if="this.ifedit===0">
-                                <div class="info-text">用户名:张博皓</div>
-                                <div class="info-text">个性签名:{{this.gexingqianming}}</div>
-                                <div class="info-text">真实姓名:{{this.realname}}</div>
-                                <div class="info-text">联系电话:{{this.phone}}</div>
-                                <div class="info-text">Email:{{this.email}}</div>
-                                <div class="info-text">研究领域:{{this.field}}</div>
+                              <div class="info-text"><span>用户名:</span>张博皓</div>
+                              <div class="info-text"><span>个性签名:</span>{{this.gexingqianming}}</div>
+                              <div class="info-text"><span>真实姓名:</span>{{this.realname}}</div>
+                                <div class="info-text"><span>联系电话:</span>{{this.phone}}</div>
+                              <div class="info-text"><span>Email:</span>{{this.email}}</div>
+                              <div class="info-text"><span>研究领域:</span>{{this.field}}</div>
                                 <!--<div class="info-text">我的兴趣词：</div>-->
                             </div>
                           <div v-if="this.ifedit===1">
-                            
+
                             <el-row :gutter="0" style="margin:auto;">
                                 <el-col :span="10">
                                     <div class="info-text2" style="display: inline-block;white-space:nowrap">用户名:</div>
@@ -181,7 +181,7 @@
                                 <div class="change-password">修改密码</div>
                                 <el-form size="small" label-position="left" label-width="120px">
                                     <el-form-item label="用户名：">
-                                        <span class="admin">admin</span>
+                                        <span class="admin">张博皓</span>
                                     </el-form-item>
                                     <el-form-item label="原密码：">
                                         <el-input
@@ -210,14 +210,15 @@
                     </div>
                 </div>
                 <div v-show="activeIndex == 3" class="center">
-                    <div style="display:flex;align-items:center;justify-content:space-between">
+                  <collect-detail></collect-detail>
+                    <!---div style="display:flex;align-items:center;justify-content:space-between">
                         <div style="display:flex;align-items:center">
                             <img src="../assets/Star.png" alt="">
                             <span class="info-title">收藏夹</span>
                         </div>
                         <el-button v-if="show1" icon="el-icon-plus" class="btn">新建</el-button>
                         <el-button v-else icon="el-icon-back" @click="show1 = !show1" class="btn">返回</el-button>
-                    </div>
+                    </---div>
                     <div v-if="show1">
                         <div class="content2">
                             <div style="width: 100%">
@@ -258,7 +259,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div--->
                 </div>
                 <div v-show="activeIndex == 4" class="center">
                     <div style="display:flex;align-items:center;justify-content:space-between">
@@ -302,8 +303,10 @@
 
 <script>
 import topbar1 from "@/components/topbar1";
+import collect from "@/components/xyj/collect";
+import collectDetail from "@/components/xyj/collectDetail";
 export default{
-    components:{topbar1},
+    components:{collect, topbar1,collectDetail},
     data(){
         return {
             activeIndex: 1,
@@ -316,7 +319,7 @@ export default{
           phone:'',
           email:'',
           field:'',
-          userid:8,
+          userid:window.localStorage.getItem('uid'),
           photourl:'',
           oldpass:'',
           newpass:'',
@@ -532,6 +535,9 @@ export default{
         box-shadow: 6px 6px 6px 6px rgba(122, 122, 122, 0.25);
         border-radius: 20px;
     }
+.center1{
+  left: 20px;
+}
     .info-title{
         font-family: 'Nunito Sans';
         font-style: normal;
@@ -554,13 +560,16 @@ export default{
     .info-text{
         margin-top: 3vh;
         margin-left: 3vw;
-        
+
         font-family: 'Nunito Sans';
         font-style: normal;
         font-weight: 550;
         font-size: 18px;
         line-height: 27px;
         letter-spacing: 0.02em;
+    }
+    .info-text span{
+      color: #8c939d;
     }
     .info-text2{
         margin-top: 0.5vw;

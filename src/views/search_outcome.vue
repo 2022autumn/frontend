@@ -75,8 +75,8 @@
               <b>&nbsp;刊物名称</b>
             </div>
             <el-checkbox-group v-model="checklist_venues" :max="1" @change="choose_change" >
-              <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all;display:block;word-wrap: break-word;overflow: hidden;" >
-                <b>
+              <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all;display:block;word-wrap: break-word;" >
+                <b style="width: 22vw;word-break: break-all;display:block;word-wrap: break-word;">
                   {{item}}
                 </b>
               </el-checkbox>
@@ -126,8 +126,9 @@
                 </b>
               </div>
               <div>
-                <div style="display: inline-block;margin-top: 1vh;color: grey" v-for="aus in item.authors">
-                  {{aus}}&nbsp;&nbsp;&nbsp;&nbsp;
+                <div style="display: inline-block;margin-top: 1vh;color: grey" v-for="(aus,index) in item.authors">
+                  <div style="display: inline-block" v-if="index<item.authors.length-1"><b>{{aus}}</b>&nbsp;;&nbsp;&nbsp</div>
+                  <div style="display: inline-block" v-if="index===item.authors.length-1"><b>{{aus}}</b>&nbsp;&nbsp;&nbsp</div>
                 </div>
                 <div>
                 <div style="display: inline-block; color: grey">
@@ -155,10 +156,10 @@
                 {{item.numyin}}次被引
                 </div>
               </div>
-              <div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
+              <!--<div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
                 <div style="display: inline-block;"><img src="../img/shoucang.svg" style="width: 2vw;height: 2vh"></div>
                 <div style="display: inline-block">{{item.numstore}}次收藏</div>
-              </div>
+              </div>-->
             </el-card>
           </div>
           <el-row style="margin:auto; top:2vh">
@@ -397,6 +398,7 @@
         true_total_page:0,
         sort:0,
         asc:true,
+        ifjiazai:0,
       }
     },
     methods:{
@@ -405,32 +407,32 @@
         if(value===1){
           this.sort=1;
           this.asc = false;
-          this.openFullScreen2();
+          //this.openFullScreen2();
         }
         else if(value===2){
           this.sort=1;
           this.asc = true;
-          this.openFullScreen2();
+          //this.openFullScreen2();
         }
         else if(value===3){
           this.sort=2;
           this.asc = false;
-          this.openFullScreen2();
+          //this.openFullScreen2();
         }
         else if(value===4){
           this.sort=2;
           this.asc = true;
-          this.openFullScreen2();
+          //this.openFullScreen2();
         }
         else if(value===5){
           this.sort=0;
           this.asc = false;
-          this.openFullScreen2();
+          //this.openFullScreen2();
         }
         else if(value===6){
           this.sort=0;
           this.asc = true;
-          this.openFullScreen2();
+          //this.openFullScreen2();
         }
         this.search();
       },
@@ -441,9 +443,13 @@
           spinner: 'el-icon-loading',
           background: 'rgba(0, 0, 0, 0.7)'
         });
-        setTimeout(() => {
+        loading.close();
+        if(this.ifjiazai===1){
           loading.close();
-        }, 1100);
+        }
+        //setTimeout(() => {
+         // loading.close();
+        //}, 1100);
       },
       jdetail(id){
         console.log("文章id为:");
@@ -531,17 +537,23 @@
          sessionStorage.setItem('Cond',JSON.stringify(conds));
          sessionStorage.setItem('now_page',JSON.stringify(1));
          this.now_page=1;
-         this.openFullScreen2();
+         //this.openFullScreen2();
          this.search();
          //window.location.reload();
       },
         handlechange(page){//处理跳转，page为当前选中的页面
           this.now_page = page;
           sessionStorage.setItem('now_page',JSON.stringify(page));
-          this.openFullScreen2();
+          //this.openFullScreen2();
           this.search();
         },
         search(){
+          const loading = this.$loading({
+            lock: true,
+            text: 'Loading',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+          });
           var cond = JSON.parse(sessionStorage.getItem('Cond'));
           var searchname1 = sessionStorage.getItem('search_name1');
           var page = JSON.parse(sessionStorage.getItem('now_page'));
@@ -622,6 +634,10 @@
                     this.venues.length=0;
                     for (var i = 0; i < venues_len && i < 5; i++) {
                       this.venues[i] = response.data.res.Aggs.venues [i].key;
+                      if(this.venues[i].length>28){//处理一下过长的摘要
+                        //console.log(this.items[i].zhaiyao);
+                        this.venues[i] = this.venues[i].substring(0,28)+"...";
+                      }
                     }
                   }
                 }
@@ -661,8 +677,8 @@
                   if(response.data.res.Works[i].authorships.length!==0) {
                     this.items[i].author = response.data.res.Works[i].authorships[0].author.display_name;
                     var t = response.data.res.Works[i].authorships.length;
-                    if(t>3){
-                      t=3;
+                    if(t>5){
+                      t=5;
                     }
                     for(var j=0;j<t;j++){
                       this.items[i].authors[j] = response.data.res.Works[i].authorships[j].author.display_name;
@@ -690,6 +706,7 @@
                   this.items[i].numyin = response.data.res.Works[i].cited_by_count;
                   //this.items[i].numstore = Math.ceil(Math.random()*100);
                 }
+                loading.close();
               }
           )
           window.scrollTo(0,0);//返回顶部
@@ -698,7 +715,7 @@
     created() {
       this.conds = JSON.parse(sessionStorage.getItem('Cond'));
       this.now_page = JSON.parse(sessionStorage.getItem('now_page'));
-      this.openFullScreen2();
+
       this.search();
       /*if(this.total%4===0){
         this.total_page = this.total/8*10;

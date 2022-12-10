@@ -13,7 +13,8 @@
       <scholar_p3
       :scholarInfo="scholarInfo"
       :domain-list="scholarInfo.x_concepts"
-      :counts="counts"/>
+      :counts="counts"
+      :counts2="counts2"/>
     </div>
   </div>
 
@@ -29,7 +30,8 @@ export default {
       type: Object
     },
     areas: "",
-    counts: []
+    counts: [],
+    counts2: []
   }
 }
 </script>

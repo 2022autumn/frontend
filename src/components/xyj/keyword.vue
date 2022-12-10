@@ -4,7 +4,8 @@
     <div class="title-en">Keywords</div>
     <div class="box-set" v-infinite-scroll="load">
       <div class="keyword-box" v-for="(item,index) in keywords" :key="index">
-        <div class="keyword">{{item.display_name}}</div>
+        <div class="keyword1"  v-if="item.islike===true" @click="concern(item)">{{item.display_name}}</div>
+        <div class="keyword"  v-else @click="concern(item)">{{item.display_name}}</div>
       </div>
     </div>
     <!--div class="line"></div>
@@ -37,21 +38,58 @@ export default {
     this.$axios({//注意是this.$axios
       method:'get',
       url:'/es/get',
+      headers:{
+        token:this.uid,
+      },
       params: {
-        id:window.localStorage.getItem('WID')
+        id:window.localStorage.getItem('WID'),
+        userid:this.uid
       }
   }).then(
         response =>{
           this.keywords=response.data.data.concepts;
+          console.log(response.data.data.concepts)
         }
     )
 
   },
   methods:{
-
+    concern(item){
+      console.log(item.islike+this.uid)
+      if(this.uid!=null){
+        if(item.islike===false){
+          item.islike=true
+        }else if(item.islike===true){
+          item.islike=false
+        }
+        console.log(item.display_name)
+        this.$axios({//注意是this.$axios
+          method:'post',
+          url:'/scholar/concept',
+          headers:{
+            //token:3,
+            token: this.uid,
+          },
+          data:{//get请求这里是params
+            concept_id: item.id,
+            user_id: this.uid,
+            //user_id: window.localStorage.getItem('SID'),
+          }
+        }).then(
+            response =>{
+              console.log(response.data);
+              console.log(response)
+            }
+        )
+      }else{
+        this.$message.error("请登录后再操作！");
+        console.log("未登录");
+      }
+    }
   },
   data(){
     return{
+      uid:window.localStorage.getItem('uid'),
       keywords:["核电厂","电厂设备","电气贯穿件(EPA)","延寿","再鉴定",],
       definekey:["经济报告","疫情相关","能源经济","换行测试"],
     }
@@ -151,6 +189,27 @@ export default {
   /* identical to box height, or 144% */
   letter-spacing: 0.04em;
   color: #858FA0;
+  cursor:pointer;
+}
+.keyword1{
+  display: flex;
+  left: 15px;
+  padding-top: 6px;
+  padding-bottom: 4px;
+  padding-left: 15px;
+  padding-right: 18px;
+  background: #858FA0;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 26px;
+  align-items: center;
+  justify-content: center;
+  /* identical to box height, or 144% */
+  letter-spacing: 0.04em;
+  color: #F5F8FC;
+  cursor:pointer;
 }
 .line{
   position: relative;

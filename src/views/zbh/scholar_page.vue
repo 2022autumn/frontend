@@ -8,7 +8,7 @@
       <div class="top_scholar">Scholar</div>
     </div>
     <div>
-      <testScolar :scholar-info="scholarInfo" :areas="areas" :counts="counts"></testScolar>
+      <testScolar :scholar-info="scholarInfo" :areas="areas" :counts="counts" :counts2="counts2"></testScolar>
     </div>
     <div class="net_top">. 专家关系网络 .</div>
     <div>
@@ -235,8 +235,10 @@ export default {
           numstore:0,
         },
       ],
+      empty: false,
       areas: "",
       counts: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
+      counts2: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
     }
   },
   methods:{
@@ -268,29 +270,42 @@ export default {
       url:'/es/get',
       params:{
         id: this.id
+        // id: "A4221478216"
       }
     }).then(
         response=> {
-          // console.log("userinfo",response.data);
-          this.scholarInfo = response.data.data;
-          //console.log("get userInfo", this.scholarInfo);
-          if(this.scholarInfo.last_known_institution===null){
-            this.scholarInfo.last_known_institution ="No belonged institution";
+          if(response.data.errno === 502) {
+            this.empty = true;
+          } else {
+            // console.log("userinfo",response.data);
+            this.scholarInfo = response.data.data;
+            //console.log("get userInfo", this.scholarInfo);
+            if(this.scholarInfo.last_known_institution===null){
+              this.scholarInfo.last_known_institution ="No belonged institution";
+            }
+            console.log("get userInfo", this.scholarInfo);
+            //获取领域字符串
+            for (var i = 0; i<this.scholarInfo.x_concepts.length; i++) {
+              this.areas = this.areas + this.scholarInfo.x_concepts[i].display_name;
+              this.areas= this.areas + ", ";
+            }
+            var l = this.areas.length;
+            var str = this.areas.substring(0, l-2)
+            this.areas= str;
+            console.log("areas", this.areas)
+            //获取近十年引用、发表
+            for(var i = 0; i < this.scholarInfo.counts_by_year.length; i++) {
+              if(this.scholarInfo.counts_by_year[i].works_count != 0) {
+                this.counts[this.scholarInfo.counts_by_year[i].year-2013]=this.scholarInfo.counts_by_year[i].works_count;
+              }
+              if(this.scholarInfo.counts_by_year[i].cited_by_count != 0) {
+                this.counts2[this.scholarInfo.counts_by_year[i].year-2013]=this.scholarInfo.counts_by_year[i].cited_by_count;
+              }
+            }
+            console.log("counts",this.counts);
+            console.log("counts2",this.counts2);
           }
-          console.log("get userInfo", this.scholarInfo);
-          for (var i = 0; i<this.scholarInfo.x_concepts.length; i++) {
-            this.areas = this.areas + this.scholarInfo.x_concepts[i].display_name;
-            this.areas= this.areas + ", ";
-          }
-          var l = this.areas.length;
-          var str = this.areas.substring(0, l-2)
-          this.areas= str;
-          console.log("areas", this.areas)
 
-          for(var i = 0; i < this.scholarInfo.counts_by_year.length; i++) {
-            this.counts[this.scholarInfo.counts_by_year[i].year-2013]=this.scholarInfo.counts_by_year[i].works_count;
-          }
-          console.log("counts",this.counts);
         }
     )
   },

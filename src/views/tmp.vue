@@ -1,606 +1,154 @@
-<template><!-- search_outcome version1_1.0 留存 -->
-    <div class="all">
-      <topbar2></topbar2>
-      <div style="position: absolute;width:23.2vw;height: 88vh;left:5vw;top:11vh;">
-      <el-card class="box-card" style="word-break:break-all;position:absolute; width:27vw;background-color: rgba(99, 162, 247, 0.15);" shadow="hover">
-        <!--<img src="../img/Fill.svg" style="position: absolute;left:-0.5vw;top:1vh">
-        <img src="../img/Funnel.svg" style="position: absolute;left:1.25vw;top:3.4vh">-->
-        <!--<div>
-        <div style=""><b>排序条件</b></div>
-        <el-checkbox-group v-model="checklist" :max="1">
-        <el-checkbox label="按匹配程度递减"><b>按匹配程度递减</b></el-checkbox>
-        <el-checkbox label="按被引用量递减"><b>按被引用量递减</b></el-checkbox>
-        <el-checkbox label="按发表时间递减"><b>按发表时间递减</b></el-checkbox>
-        </el-checkbox-group>
-        <el-divider></el-divider>
-        </div>-->
-        <div v-if="this.authors.length>0">
-        <div style=""><b>主要作者</b></div>
-        <el-checkbox-group v-model="checklist_author" :max="1" @change="choose_change">
-          <el-checkbox v-for="item in this.authors"  :label=item.key style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item.key}}</b></el-checkbox>
-        </el-checkbox-group>
-        <el-divider></el-divider>
-        </div>
-        <div v-if="this.institutions.length>0">
-        <div style=""><b>主要组织</b></div>
-        <el-checkbox-group v-model="checklist_institutions" :max="1" @change="choose_change">
-          <el-checkbox v-for="item in this.institutions"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
-        </el-checkbox-group>
-        <el-divider></el-divider>
-        </div>
-        <div v-if="this.publish_years.length>0">
-        <div style=""><b>发表年份</b></div>
-        <el-checkbox-group v-model="checklist_publish_years" :max="1" @change="choose_change">
-          <el-checkbox v-for="item in this.publish_years"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
-        </el-checkbox-group>
-        <el-divider></el-divider>
-        </div>
-        <div v-if="this.publishers.length>0">
-        <div style=""><b>出版单位</b></div>
-        <el-checkbox-group v-model="checklist_publishers" :max="1" @change="choose_change">
-          <el-checkbox v-for="item in this.publishers"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
-        </el-checkbox-group>
-        <el-divider></el-divider>
-        </div>
-        <div v-if="this.types.length>0">
-        <div style=""><b>论文类型</b></div>
-        <el-checkbox-group v-model="checklist_types" :max="1" @change="choose_change">
-          <el-checkbox v-for="item in this.types"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
-        </el-checkbox-group>
-        <el-divider></el-divider>
-        </div>
-        <div v-if="this.venues.length>0">
-        <div style=""><b>Venues</b></div>
-        <el-checkbox-group v-model="checklist_venues" :max="1" @change="choose_change">
-          <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all;display: block;word-wrap: break-word;overflow: hidden;" ><b>{{item}}</b></el-checkbox>
-        </el-checkbox-group>
-        <el-divider></el-divider>
-        </div>
-        <!--<div style="margin-left: 6.5vw;margin-top: -2vh"><v-btn style="background-color: #217BF4;" class="white--text" @click="shaixuan">确认</v-btn></div>-->
-      </el-card>
-      </div>
-      <div style="position:absolute;left:40vw;height: 88vh;top:11vh;width: 55vw;">
-        <div v-for="item in items" v-if="item.id!==''" style="width: 50vw;height:35vh;" @click="jdetail(item.id)">
-        <el-card  style="width: 50vw;height:30vh;background-color: lightcyan; cursor: pointer;" shadow="hover">
-          <el-tag style="display: inline-block">{{item.type}}</el-tag>
-          <div style="display: inline-block;font-size: large;">
-            &nbsp;
-            <b>
-            {{item.title}}
-            </b>
-          </div>
-          <div>
-            <div style="display: inline-block;margin-top: 1vh;color: grey" v-for="aus in item.authors">
-              {{aus}}&nbsp;&nbsp;&nbsp;&nbsp;
-            </div>
-            <div>
-            <div style="display: inline-block; color: grey">
-              {{item.institution}}&nbsp;&nbsp;|
-            </div>
-            <div style="display: inline-block;color: grey">
-              &nbsp;&nbsp;{{item.time}}
-            </div>
-            </div>
-          </div>
-          <div style="font-size: small;color: grey">
-            {{item.zhaiyao}}
-          </div>
-          <div style="margin-top: 2vh;display: inline-block">
-            <div v-for="tags in item.tags" v-if="tags!==''" style="display: inline-block">
-              <el-tag>{{tags}}</el-tag>
-              &nbsp;
-            </div>
-          </div>
-          <div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
-            <div style="display: inline-block;top:3vh">
-            <img src="../img/yinhao.svg" style="width: 2vw;height: 2vh">
-            </div>
-            <div style="display: inline-block">
-            {{item.numyin}}次被引
-            </div>
-          </div>
-          <div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
-            <div style="display: inline-block;"><img src="../img/shoucang.svg" style="width: 2vw;height: 2vh"></div>
-            <div style="display: inline-block">{{item.numstore}}次收藏</div>
-          </div>
-        </el-card>
-        </div>
-        <div class="block">
-          <el-pagination
-              layout="prev, pager, next"
-              :total=this.total_page
-              @current-change="handlechange"
-              :current-page= this.now_page
-              background
-            >
-          </el-pagination>
-        </div>
-      </div>
+<!--这个是含有搜索框的顶栏，目前是纯前端-->
+<template>
+  <div style="position: fixed;z-index: 9999;width: 100vw;height:8vh;background-color: white;box-shadow: 1px 1px 1px 1px rgba(187, 185, 185, 0.25);" >
+    <img src="../img/logo.jpg" style="width: 22.52px;height:21.19px;position: absolute;left: 6.81vw;right: 91.63%;top: 2.56vh;bottom: 97.01%;background: #217BF4;" alt="">
+    <div style="position: absolute;width: 150px;height: 24px;font-style: normal;font-weight: 600;font-size: 24px;line-height: 24px;color: #2B2B39;left:10vw;top:2.5vh"><b>I SHARE</b></div>
+    <router-link to="/"><div v-if="this.whichpage===1" style="position: absolute;width: 29px;height:14px;left:25vw;top:3.1vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: #2B2B39;cursor: pointer" @click="which_page(1)">首页</div></router-link>
+    <router-link to="/"><div v-if="this.whichpage!==1" style="position: absolute;width: 29px;height:14px;left:25vw;top:3.1vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="which_page(1)">首页</div></router-link>
+    <router-link to="/advancedSearch"><div style="position: absolute;width: 57px;height:14px;left:32vw;top:3.1vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="which_page(2)">高级检索</div></router-link>
+    <!--<div style="position: absolute;width: 57px;height:14px;left:39vw;top:2.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="which_page(3)">机构馆</div>-->
+    <div style="position: absolute;width: 100px;height:14px;left:40vw;top:3.1vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="jcenter">我的 I SHARE</div>
+    <img v-if="this.iflogin===1" :src="this.photourl" style="top: 1.5vh;width: 40px;height: 40px;border-radius: 50px;left: 90.5vw;position: absolute" alt="">
+    <div v-if="this.iflogin===1"  style="position: absolute;width: 45px;height:14px;left:94vw;top:3.5vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: #2B2B39;">{{this.username}}</div>
+    <!-- <div style="position: absolute;height: 5vh;width: 100vw;top:5vh"><el-divider></el-divider></div> -->
+    <!--class="input-with-select"-->
+    <div style="position: absolute;width: 35vw;height:40px;left:53.5vw;top:1.2vh;">
+        <el-autocomplete  :trigger-on-focus="false" :fetch-suggestions="querySearch" @select="handleSelect" class="inline-input"  placeholder="请输入检索内容" v-model="input3"   @keyup.enter.native="do_search" @input="inputchange" style="width: 35vw">
+        <!--<el-button slot="prepend" icon="el-icon-s-promotion" style="color: #FCFCFF;background-color: rgba(117, 167, 235, 0.52);border-radius: 0;border-color: whitesmoke" @click="jadvance">高级检索</el-button>-->
+        <el-button slot="append" icon="el-icon-search" style="color:#ffffff;background-color: #217bf4; border-radius: 0;border-color: whitesmoke" @click="do_search" ></el-button>
+      </el-autocomplete>
     </div>
-  </template>
-  
-  <script>
-  import Topbar2 from "@/components/topbar2";
-  import Topbar1 from "@/components/topbar1";
-  export default {
-    name: "search_outcome",
-    components: {Topbar2, Topbar1},
-    data(){
-      return{
-        checklist:[],
-        checklist_author:[],
-        checklist_institutions:[],
-        checklist_publish_years:[],
-        checklist_publishers:[],
-        checklist_types:[],
-        checklist_venues:[],
-        radio:3,
-        activeNames: ['1'],
-        checked1:false,
-        checked2:false,
-        checked3:false,
-        checkedauthor:[],
-        input1:"",
-        input2:"",
-        input3:"",
-        input4:"",
-        input5:"",
-        now_page:1,
-        num_exact_page:8,
-        total: 0,//返回的检索结果的总量
-        total_page:0,
-        items:[
-          {
-            type:"期刊",
-            title:"疫情冲击下2020年中国新经济形势与政策",
-            author:"horik",
-            time:"2020/9/23",
-            institution:"北京航空航天大学",
-            zhaiyao:"",
-            tags:[
-              "",
-              "",
-              "",
-            ],
-            numyin:0,
-            numstore:0,
-            id:"",
-            authors:[]
-          },
-          {
-            type:"期刊",
-            title:"疫情冲击下2020年中国新经济形势与政策",
-            author:"horik",
-            time:"2020/9/23",
-            institution:"北京航空航天大学",
-            zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
-            tags:[
-              "",
-              "",
-              "",
-            ],
-            numyin:0,
-            numstore:0,
-            id:"",
-            authors:[]
-          },
-          {
-            type:"期刊",
-            title:"疫情冲击下2020年中国新经济形势与政策",
-            author:"horik",
-            time:"2020/9/23",
-            institution:"北京航空航天大学",
-            zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
-            tags:[
-              "",
-              "",
-              "",
-            ],
-            numyin:0,
-            numstore:0,
-            id:"",
-            authors:[]
-          },
-          {
-            type:"期刊",
-            title:"疫情冲击下2020年中国新经济形势与政策",
-            author:"horik",
-            time:"2020/9/23",
-            institution:"北京航空航天大学",
-            zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
-            tags:[
-              "",
-              "",
-              "",
-            ],
-            numyin:0,
-            numstore:0,
-            id:"",
-            authors:[]
-          },
-          {
-            type:"期刊",
-            title:"疫情冲击下2020年中国新经济形势与政策",
-            author:"horik",
-            time:"2020/9/23",
-            institution:"北京航空航天大学",
-            zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
-            tags:[
-              "",
-              "",
-              "",
-            ],
-            numyin:0,
-            numstore:0,
-            id:"",
-            authors:[]
-          },
-          {
-            type:"期刊",
-            title:"疫情冲击下2020年中国新经济形势与政策",
-            author:"horik",
-            time:"2020/9/23",
-            institution:"北京航空航天大学",
-            zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
-            tags:[
-              "",
-              "",
-              "",
-            ],
-            numyin:0,
-            numstore:0,
-            id:"",
-            authors:[]
-          },
-          {
-            type:"期刊",
-            title:"疫情冲击下2020年中国新经济形势与政策",
-            author:"horik",
-            time:"2020/9/23",
-            institution:"北京航空航天大学",
-            zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
-            tags:[
-              "",
-              "",
-              "",
-            ],
-            numyin:0,
-            numstore:0,
-            id:"",
-            authors:[]
-          },
-          {
-            type:"期刊",
-            title:"疫情冲击下2020年中国新经济形势与政策",
-            author:"horik",
-            time:"2020/9/23",
-            institution:"北京航空航天大学",
-            zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
-            tags:[
-              "",
-              "",
-              "",
-            ],
-            numyin:0,
-            numstore:0,
-            id:"",
-            authors:[]
-          }
-        ],
-        authors:[],
-        institutions:[],
-        publish_years:[],
-        publishers:[],
-        types:[],
-        venues:[],
-        tmp:0,
-        if_authors:0,
-        if_institutions:0,
-        if_publish_years:0,
-        if_publishers:0,
-        if_types:0,
-        if_venues:0,
-        query:[],
-      }
-    },
-    methods:{
-      openFullScreen2() {//前端加载效果
-        const loading = this.$loading({
-          lock: true,
-          text: 'Loading',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        });
-        setTimeout(() => {
-          loading.close();
-        }, 1100);
-      },
-      jdetail(id){
-        console.log("文章id为:");
-        console.log(id);
-        window.localStorage.setItem('WID',id);
-        window.open('/paper_details');
-      },
-      choose_change(){
-        console.log("shaixuan!");
-        this.shaixuan();
-      },
-      shaixuan(){
-         console.log(this.checklist_author[0]);
-         var conds = {};
-         conds = JSON.parse(sessionStorage.getItem('Cond'));
-         //if(conds.author===undefined) {
-         conds.author = this.checklist_author[0];
-         //}
-         if(conds.author!==undefined){
-           this.if_authors=1;
-         }
-         else{
-           this.if_authors=0;
-         }
-         //sessionStorage.setItem('if_authors',JSON.stringify(this.if_authors));
-         //if(conds.type===undefined) {
-           conds.type = this.checklist_types[0];
-           console.log("当前选择的论文类型为:");
-           console.log(this.checklist_types[0]);
-         //}
-         if(conds.type!==undefined){
-           this.if_types=1;
-         }
-         else{
-           this.if_types=0;
-         }
-        //sessionStorage.setItem('if_types',JSON.stringify(this.if_types));
-         //if(conds.institution===undefined) {
-           conds.institution = this.checklist_institutions[0];
-         //}
-         if(conds.institution!==undefined){
-           this.if_institutions=1;
-         }
-         else{
-           this.if_institutions=0;
-         }
-        //sessionStorage.setItem('if_institutions',JSON.stringify(this.if_institutions));
-         //if(conds.publisher===undefined) {
-           conds.publisher = this.checklist_publishers[0];
-         //}
-         if(conds.publisher!==undefined){
-           this.if_publishers=1;
-         }
-         else{
-           this.if_publishers=0;
-         }
-        //sessionStorage.setItem('if_publishers',JSON.stringify(this.if_publishers));
-         //if(conds.venue===undefined) {
-           conds.venue = this.checklist_venues[0];
-         //}
-         if(conds.venue!==undefined){
-           this.if_venues=1;
-         }
-         else{
-           this.if_venues=0;
-         }
-        //sessionStorage.setItem('if_venues',JSON.stringify(this.if_venues));
-         //if(conds.publication_year===undefined) {
-          if(this.checklist_publish_years[0]===undefined){
-            conds.publication_year = undefined;
-          }
-          else {
-            conds.publication_year = this.checklist_publish_years[0].toString();
-          }
-         //}
-         if(conds.publication_year!==undefined){
-           this.if_publish_years=1;
-         }
-         else{
-           this.if_publish_years=0;
-         }
-        //sessionStorage.setItem('if_publish_years',JSON.stringify(this.if_publish_years));
-         console.log("conds is:");
-         console.log(conds);
-         sessionStorage.setItem('Cond',JSON.stringify(conds));
-         sessionStorage.setItem('now_page',JSON.stringify(1));
-         this.now_page=1;
-         this.openFullScreen2();
-         this.search();
-         //window.location.reload();
-      },
-        handlechange(page){//处理跳转，page为当前选中的页面
-          this.now_page = page;
-          sessionStorage.setItem('now_page',JSON.stringify(page));
-          this.openFullScreen2();
-          this.search();
-        },
-        search(){
-          var cond = JSON.parse(sessionStorage.getItem('Cond'));
-          var searchname1 = sessionStorage.getItem('search_name1');
-          var page = JSON.parse(sessionStorage.getItem('now_page'));
-          console.log(this.conds);
-          this.$axios({//注意是this.$axios
-            method:'post',
-            url:'/es/search/base',
-            data:{//post请求这里是data
-              conds:cond,
-              kind:"string",
-              page:page,
-              queryWord:searchname1,
-              size:8
-            }
-          }).then(
-              response =>{
-                console.log(response.data.res);
-                //console.log(response.data.res.hits.total.value);
-                this.total_page = response.data.res.Hits/8*10;
-                this.tmp = response.data.res.Hits;
-                //console.log(response.data.res.hits.hits.length);
-                console.log(response.data.res.Aggs
-                );
-                //this.authors.length=0;
-                if(response.data.res.Aggs.authors!==undefined) {
-                  var author_len = response.data.res.Aggs.authors.length;
-                  if(this.if_authors===0) {//如果本来没有选择这个条件就进行更新
-                    this.authors.length=0;
-                    for (var i = 0; i < author_len && i < 5; i++) {
-                      var obj = {};
-                      obj.key = response.data.res.Aggs.authors[i].key;
-                      obj.ifchoose = false;
-                      this.authors.push(obj);
-                    }
-                  }
-                }
-                //this.institutions.length=0;
-                if(response.data.res.Aggs.institutions!==undefined) {
-                  var institution_len = response.data.res.Aggs.institutions.length;
-                  if(this.if_institutions===0) {
-                    this.institutions.length=0;
-                    for (var i = 0; i < institution_len && i < 5; i++) {
-                      this.institutions[i] = response.data.res.Aggs.institutions [i].key;
-                    }
-                  }
-                }
-                //this.publish_years.length=0;
-                if(response.data.res.Aggs.publication_years!==undefined) {
-                  var year_len = response.data.res.Aggs.publication_years.length;
-                  if(this.if_publish_years===0) {
-                    this.publish_years.length=0;
-                    for (var i = 0; i < year_len && i < 5; i++) {
-                      this.publish_years[i] = response.data.res.Aggs.publication_years [i].key;
-                    }
-                  }
-                }
-                //this.publishers.length=0;
-                if(response.data.res.Aggs.publishers!==undefined) {
-                  var publisher_len = response.data.res.Aggs.publishers.length;
-                  if(this.if_publishers===0) {
-                    this.publishers.length=0;
-                    for (var i = 0; i < publisher_len && i < 5; i++) {
-                      this.publishers[i] = response.data.res.Aggs.publishers [i].key;
-                    }
-                  }
-                }
-                //this.venues.length=0;
-                if(response.data.res.Aggs.venues!==undefined) {
-                  var venues_len = response.data.res.Aggs.venues.length;
-                  if(venues_len>0){
-                    //this.if_venues = 1;
-                  }
-                  if(this.if_venues===0) {
-                    this.venues.length=0;
-                    for (var i = 0; i < venues_len && i < 5; i++) {
-                      this.venues[i] = response.data.res.Aggs.venues [i].key;
-                    }
-                  }
-                }
-                //this.types.length=0;
-                console.log("res types is");
-                console.log(response.data.res.Aggs.types);
-                console.log("if_types is "+this.if_types);
-                if(response.data.res.Aggs.types!==undefined) {
-                  var types_len = response.data.res.Aggs.types.length;
-                  if(this.if_types===0) {
-                    this.types.length=0;
-                    for (var i = 0; i < types_len && i < 5; i++) {
-                      this.types[i] = response.data.res.Aggs.types [i].key;
-                    }
-                  }
-                }
-                var len = 0;
-                len = response.data.res.Works.length;
-                console.log("搜搜索结果为");
-                console.log(response.data.res.Works);
-                this.num_exact_page = len;
-                //console.log(response.data.res.hits.hits);
-                for(var i=0;i<len;i++){
-                  //console.log(response.data.res.Works);
-                  this.items[i].id = response.data.res.Works[i].id;
-                  this.items[i].zhaiyao = response.data.res.Works[i].abstract;
-                  if(this.items[i].zhaiyao.length>330){//处理一下过长的摘要
-                    //console.log(this.items[i].zhaiyao);
-                    this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0,330)+"...";
-                  }
-                  this.items[i].title = response.data.res.Works[i].title;
-                  if(this.items[i].title.length>50){//处理一下过长的摘要
-                    //console.log(this.items[i].zhaiyao);
-                    this.items[i].title = this.items[i].title.substring(0,50)+"...";
-                  }
-                  //console.log(this.items[i].id);
-                  if(response.data.res.Works[i].authorships.length!==0) {
-                    this.items[i].author = response.data.res.Works[i].authorships[0].author.display_name;
-                    var t = response.data.res.Works[i].authorships.length;
-                    if(t>3){
-                      t=3;
-                    }
-                    for(var j=0;j<t;j++){
-                      this.items[i].authors[j] = response.data.res.Works[i].authorships[j].author.display_name;
-                    }
-                  }
-                  else{
-                    this.items[i].author = "unknown"
-                  }
-                  this.items[i].institution = response.data.res.Works[i].host_venue.display_name;
-                  if(this.items[i].institution===null){
-                    this.items[i].institution = "无所属机构";
-                  }
-                  if(this.items[i].institution.length>50){
-                    //console.log(this.items[i].zhaiyao);
-                    this.items[i].institution = this.items[i].institution.substring(0,50)+"...";
-                  }
-                  this.items[i].time = response.data.res.Works[i].publication_date;
-                  for(var j=0;j<3&&j<response.data.res.Works[i].concepts.length;j++){
-                    this.items[i].tags[j] = response.data.res.Works[i].concepts[j].display_name;
-                  }
-                  this.items[i].type =  response.data.res.Works[i].type;
-                  if(this.items[i].type === null){
-                    this.items[i].type = "unknown"
-                  }
-                  this.items[i].numyin = response.data.res.Works[i].cited_by_count;
-                  this.items[i].numstore = Math.ceil(Math.random()*100);
-                }
-              }
-          )
-          window.scrollTo(0,0);//返回顶部
+    <!-- <div style="position: absolute;height: 5vh;width: 100vw;top:5vh"><el-divider></el-divider></div> -->
+  </div>
+</template>
+
+<script>
+export default {
+  name: "topbar2",
+  data(){
+    return{
+      restaurants: [
+        {
+          "value":"java"
         }
-    },
-    created() {
-      this.conds = JSON.parse(sessionStorage.getItem('Cond'));
-      this.now_page = JSON.parse(sessionStorage.getItem('now_page'));
-      this.openFullScreen2();
-      this.search();
-      /*if(this.total%4===0){
-        this.total_page = this.total/8*10;
-      }
-      else{
-        this.total_page = (this.total/8+1)*10;
-      }*/
+      ],
+      username:"张博皓",
+      whichpage:1,
+      input3:"",
+      photourl:'',
+      userid:window.localStorage.getItem('uid'),
+      iflogin:JSON.parse(window.localStorage.getItem('iflogin'))
     }
+  },
+  methods:{
+    inputchange(value){//搜索的内容改变
+      console.log(value);
+      this.$axios({//注意是this.$axios
+        method:'post',
+        url:'/es/prefix',
+        data:{//post请求这里是data
+          Field:"title",
+          Prefix:value
+        }
+      }).then(
+          response =>{
+              console.log("查询成功")
+              console.log(response.data.res);
+              this.restaurants.length=0;
+              for(var i=0;i<response.data.res.length;i++){
+                var tmp = {};
+                tmp.value = response.data.res[i];
+                this.restaurants.push(tmp);
+              }
+          }
+      )
+    },
+    jcenter(){
+      this.$router.push('/personal_center');
+    },
+    jadvance(){
+      this.$router.push('/advancedSearch')
+    },
+    which_page(ident){
+      if(ident === 1){
+        this.whichpage=1;
+      }
+      else if(ident===2){
+        this.whichpage=2;
+      }
+      else if(ident===3){
+        this.whichpage=3;
+      }
+      else if(ident===4){
+        this.whichpage=4;
+      }
+    },
+    do_search(){
+      console.log(this.input3);
+      var cond = {};
+      sessionStorage.setItem('Cond',JSON.stringify(cond));
+      sessionStorage.setItem('search_name1',this.input3);
+      sessionStorage.setItem('now_page',JSON.stringify(1));
+      this.$router.push('/search_outcome');
+      //this.$router.push('/search_outcome');
+      window.location.reload();
+    },
+    get_data(){
+      this.$axios({//注意是this.$axios
+        method:'get',
+        url:'/user/info',
+        params:{//get请求这里是params
+          user_id:this.userid.toString()
+        }
+      }).then(
+          response =>{
+            console.log("得到个人信息")
+            console.log(response.data);
+            this.photourl = response.data.data.head_shot
+          }
+      )
+    },
+    querySearch(queryString, cb) {
+      var restaurants = this.restaurants;
+      //var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
+      // 调用 callback 返回建议列表的数据
+      cb(restaurants);
+    },
+    createFilter(queryString) {
+      return (restaurant) => {
+        return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
+    },
+    loadAll() {
+      return [
+        { "value": "三全鲜食（北新泾店）"},
+      ];
+    },
+    handleSelect(item) {
+      console.log(item);
+    }
+  },
+  created(){
+    //this.restaurants = this.loadAll();
+    this.get_data();
+    if(sessionStorage.getItem('search_name1')===null){
+      this.input3 = '';
+    }
+    else{
+      this.input3 = sessionStorage.getItem('search_name1');
+    }
+    console.log("选择数组为:")
+    console.log(this.restaurants);
   }
-  </script>
-  
-  <style scoped>
-  .all{
-    width: 100vw;
-    height: 300vh;
-    background: linear-gradient(311.76deg, #D4E7FE -15.24%, #FFFFFF 78.85%);
-  }
-  .scroll-area::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  /* --- 滚动条里面的滚动块 --- */
-  .scroll-area::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 5px #eee;
-    background: #eee;
-  }
-  
-  /* --- 滚动条里面轨道 --- */
-  .scroll-area::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-    border-radius: 10px;
-    background: #FFEB3B;
-    /* border: none;
-    background: none; */
-  }
-  
-  </style>
-  
+}
+</script>
+
+<style scoped>
+/deep/input::-webkit-input-placeholder {
+  color: rgba(28, 28, 29, 0.15);
+  font-size: 15px;
+}
+/deep/.el-input__inner {
+  background-color: rgba(185, 186, 189, 0.15);
+}
+</style>
