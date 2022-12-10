@@ -64,11 +64,12 @@ export default {
         response => {
           // console.log("userinfo",response.data);
           this.info = response.data.data;
-          if(this.scholarInfo.last_known_institution===null){
+          console.log("get useInfo", this.info);
+          if(response.data.data.last_known_institution===null){
+            this.info.last_known_institution=new Object();
             this.info.last_known_institution.display_name ="no institution";
           }
-          console.log("get useInfo", this.info);
-          this.description="I’m "+this.info.display_name + ", I'm interested in areas like "+this.areas+", I'm working for " + this.info.last_known_institution + ". I've post "+this.info.most_cited_work+", which is my most-cited work. I'm looking for highly motivate students."
+          this.description="I’m "+this.info.display_name + ", I'm interested in areas like "+this.areas+", I'm working for " + this.info.last_known_institution.display_name + ". I've post "+this.info.most_cited_work+", which is my most-cited work. I'm looking for highly motivate students."
         console.log(this.description)
         }
     )
