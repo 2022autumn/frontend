@@ -181,7 +181,7 @@
                                 <div class="change-password">修改密码</div>
                                 <el-form size="small" label-position="left" label-width="120px">
                                     <el-form-item label="用户名：">
-                                        <span class="admin">张博皓</span>
+                                        <span class="admin" >张博皓</span>
                                     </el-form-item>
                                     <el-form-item label="原密码：">
                                         <el-input
@@ -323,6 +323,7 @@ export default{
           photourl:'',
           oldpass:'',
           newpass:'',
+          test:"Electronic Attendance Recorder and Confirmation System Using Facial Identification Modules in Python"
         }
     },
     methods:{
