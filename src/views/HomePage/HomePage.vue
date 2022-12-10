@@ -162,13 +162,15 @@
               src="../../HomePage_svg/right-icon3.svg"
               style="vertical-align: middle;"
             />
-            <span style="vertical-align: super"> 期刊频道 </span>
+            <span style="vertical-align: super"> 高级检索 </span>
           </div>
 
           <!-- 导航栏滚动框 -->
           <el-carousel height="25vh" interval="2000" style="margin-top: 5vh">
             <el-carousel-item v-for="item in 4" :key="item">
-              <h3 class="slides">{{ item }}</h3>
+              <h3 class="slides"><img preview-disabled style="width:23vw;"
+                        src="../../../public/advanced_img/Frame 8.svg"
+                    /></h3>
             </el-carousel-item>
           </el-carousel>
 
@@ -178,8 +180,8 @@
             <div class="hot-titile2">热门排行</div>
             <div class="hot-item-set" v-for="(item, index) in hot_list" :key="index">
               <div class="hot-item">
-                <span v-if="index!=9" class="hot-number" style="color: #FA1616">{{ "0"+(index+1) }} </span>
-                <span v-else class="hot-number" style="color: #FA1616">{{ (index+1) }} </span>
+                <span v-if="index!=9" class="hot-number">{{ "0"+(index+1) }} </span>
+                <span v-else class="hot-number">{{ (index+1) }} </span>
                 <span class="hot-content" @click="jpaper(index)"> {{ item.work_title }}.</span>
               </div>
             </div>
@@ -488,20 +490,22 @@ export default {
   text-align: left;
 }
 .hot-number{
-  font-weight: 400;
+  padding-left: 20px;
+  font-weight: 800;
   font-size: 18px;
   line-height: 180%;
   text-align: center;
-  color: rgba(86, 72, 72, 0.67);
+  color: rgba(238, 80, 18, 0.67);
 }
 .hot-content{
+  padding: 10px,10px;
   cursor: pointer;
-  font-weight: 400;
+  font-weight: 700;
   font-size: 16px;
   line-height: 123%;
   text-align: center;
   /*color: #000000;*/
-  color: #778192;
+  color: #5c5e5f;
 }
 .hot-content:hover {
   /*text-decoration: underline;*/
