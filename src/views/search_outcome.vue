@@ -126,8 +126,9 @@
                 </b>
               </div>
               <div>
-                <div style="display: inline-block;margin-top: 1vh;color: grey" v-for="aus in item.authors">
-                  {{aus}}&nbsp;&nbsp;&nbsp;&nbsp;
+                <div style="display: inline-block;margin-top: 1vh;color: grey" v-for="(aus,index) in item.authors">
+                  <div style="display: inline-block" v-if="index<item.authors.length-1"><b>{{aus}}</b>&nbsp;;&nbsp;&nbsp</div>
+                  <div style="display: inline-block" v-if="index===item.authors.length-1"><b>{{aus}}</b>&nbsp;&nbsp;&nbsp</div>
                 </div>
                 <div>
                 <div style="display: inline-block; color: grey">
@@ -155,10 +156,10 @@
                 {{item.numyin}}次被引
                 </div>
               </div>
-              <div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
+              <!--<div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
                 <div style="display: inline-block;"><img src="../img/shoucang.svg" style="width: 2vw;height: 2vh"></div>
                 <div style="display: inline-block">{{item.numstore}}次收藏</div>
-              </div>
+              </div>-->
             </el-card>
           </div>
           <el-row style="margin:auto; top:2vh">
@@ -661,8 +662,8 @@
                   if(response.data.res.Works[i].authorships.length!==0) {
                     this.items[i].author = response.data.res.Works[i].authorships[0].author.display_name;
                     var t = response.data.res.Works[i].authorships.length;
-                    if(t>3){
-                      t=3;
+                    if(t>5){
+                      t=5;
                     }
                     for(var j=0;j<t;j++){
                       this.items[i].authors[j] = response.data.res.Works[i].authorships[j].author.display_name;
