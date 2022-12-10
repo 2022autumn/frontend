@@ -1,15 +1,15 @@
 <template>
   <div class="all">
     <topbar1></topbar1>
-    <div style="position: fixed;top:7.5vh;width: 100vw; z-index: 100">
-      <el-collapse style="position:absolute;width:100vw;">
-        <el-collapse-item>
+    <div style="position: fixed;top:7vh;width: 100vw; z-index: 100">
+      <el-collapse style="position:absolute;width:100vw;" >
+        <el-collapse-item >
           <template slot="title">
             <b class="collap-font">高级检索条件
-              <img src="../assets/send-plane-fill.svg" style="width: 26px; height: 26px;vertical-align:-6px" preview-disabled/>
+              <img src="../assets/send-plane-fill.svg" style="width: 22px; height: 22px;vertical-align:-6px" preview-disabled/>
             </b>
           </template>
-          <avc></avc>
+          <avc class="background"></avc>
         </el-collapse-item>
       </el-collapse>
     </div>
@@ -752,13 +752,20 @@ export default {
 
   font-family: "Plus Jakarta Sans";
   font-weight: 700;
-  font-size: 20px;
+  font-size: 18px;
 
   /* identical to box height, or 36px */
 
   letter-spacing: -0.01em;
 
   color: #217bf4;
+  /* 设置背景色渐变 */
+    background-image: linear-gradient(94.95deg, #217bf4 -3.46%, #4CD9ED 180.08%);
+    /* 设置背景以文字进行裁切 */
+    background-clip: text;
+    -webkit-background-clip: text;
+    /* 设置文本颜色透明以露出后面裁切成文本形状的渐变背景 */
+    color: transparent;
 }
 .scroll-area::-webkit-scrollbar {
   width: 10px;
@@ -804,5 +811,11 @@ export default {
   letter-spacing: 0.01em;
 
   color: #ffffff;
+}
+.background{
+  background-image: url(../../public/advanced_img/Frame 1.svg);
+  background-size: 100%;
+    position: relative;
+    height: 100vh;
 }
 </style>

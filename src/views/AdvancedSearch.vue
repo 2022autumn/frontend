@@ -296,6 +296,7 @@ export default {
     font-weight: 600;
     font-size: 14px;
     text-align: center;
+    
     justify-content: center;
     align-items: center;
   }
