@@ -176,25 +176,12 @@
           <div class="hot-list">
             <div class="hot-titile1">I SHARE</div>
             <div class="hot-titile2">热门排行</div>
-            <div class="hot-item">
-              <span class="hot-number" style="color: #FA1616">01 </span>
-              <span class="hot-content"> 疫情冲击下的2020年中国经济形势...</span>
-            </div>
-            <div class="hot-item">
-              <span class="hot-number" style="color: #FD9B40">02 </span>
-              <span class="hot-content"> 疫情冲击下的2020年中国经济形势...</span>
-            </div>
-            <div class="hot-item">
-              <span class="hot-number" style="color: #F6DA95">03 </span>
-              <span class="hot-content"> 疫情冲击下的2020年中国经济形势...</span>
-            </div>
-            <div class="hot-item">
-              <span class="hot-number">04 </span>
-              <span class="hot-content"> 疫情冲击下的2020年中国经济形势...</span>
-            </div>
-            <div class="hot-item">
-              <span class="hot-number">05 </span>
-              <span class="hot-content"> 疫情冲击下的2020年中国经济形势...</span>
+            <div class="hot-item-set" v-for="(item, index) in hot_list" :key="index">
+              <div class="hot-item">
+                <span v-if="index!=9" class="hot-number" style="color: #FA1616">{{ "0"+(index+1) }} </span>
+                <span v-else class="hot-number" style="color: #FA1616">{{ (index+1) }} </span>
+                <span class="hot-content" @click="jpaper(index)"> {{ item.work_title }}.</span>
+              </div>
             </div>
           </div>
         </el-col>
@@ -214,9 +201,28 @@ export default {
       num_exact_page:8,
       total: 1000,//返回的检索结果的总量
       total_page:0,
+      hot_list:[],
     }
   },
+  mounted() {
+    let that = this;
+    that.$axios({//注意是this.$axios
+      method:'get',
+      url:'/scholar/hot',
+      params:{//get请求这里是params
+      }
+    }).then(
+        response =>{
+          console.log("get hot",response.data)
+          this.hot_list = response.data.data;
+        }
+    )
+  },
   methods:{
+    jpaper(index) {
+      window.localStorage.setItem('WID',this.hot_list[index].work_id);
+      window.open('/paper_details');
+    },
     jadvance(){
       window.open('/advancedSearch');
     },
@@ -398,7 +404,10 @@ export default {
   margin-top: 5vh;
   margin-bottom: 5vh;
   width: 80%;
-  height: 80vh;
+  height: auto;
+  min-height: 80px;
+  padding-bottom: 10px;
+  padding-left: 10px;
 
   background:#FFFFFF;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -414,7 +423,7 @@ export default {
   color: #217bf4;
 }
 .hot-titile2 {
-  margin-bottom: 3vh;
+  margin-bottom: 0.5vh;
   font-weight: 700;
   font-size: 24px;
   line-height: 36px;
@@ -422,25 +431,31 @@ export default {
   color: #0A093D;
 }
 .hot-item{
+  /*margin-left: 6px;*/
   width: auto;
-  margin-bottom: 1vh;
-  text-align: center;
+  margin-bottom: 1.5vh;
+  text-align: left;
 }
 .hot-number{
   font-weight: 400;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 180%;
   text-align: center;
   color: rgba(86, 72, 72, 0.67);
 }
 .hot-content{
+  cursor: pointer;
   font-weight: 400;
   font-size: 16px;
   line-height: 123%;
   text-align: center;
-  color: #000000;
+  /*color: #000000;*/
+  color: #778192;
 }
-
+.hot-content:hover {
+  /*text-decoration: underline;*/
+  color: #53a2e3;
+}
 /* 下方中间推荐内容 */
 .reference {
   font-family: "Inter";

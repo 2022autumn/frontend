@@ -105,7 +105,8 @@ export default {
         method:'post',
         url:'/social/follow',
         data:{//get请求这里是params
-          author_id: window.localStorage.getItem('SID'),
+          author_id: "A4221478216",
+          // author_id: window.localStorage.getItem('SID'),
           // user_id:window.localStorage.getItem('WID')
           user_id: 8
         },

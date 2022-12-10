@@ -14,15 +14,15 @@
     <div class="history">
       <el-tabs v-model="activeName" ref="tabs" @tab-click="handleClick">
         <el-tab-pane label="过去十年发表" name="first">
-          <div class="scholar_img">
+          <div class="scholar_img" v-if="activeName=='first'">
             <!--      <div class="echart" id="mychart" :style="myChartStyle"></div>-->
             <barGraph class="graph" :ycounts="counts" :xcounts="xData"/>
           </div>
         </el-tab-pane>
         <el-tab-pane class="graph" label="过去十年引用" name="second">
-          <div class="scholar_img">
+          <div class="scholar_img" v-if="activeName=='second'">
             <!--      <div class="echart" id="mychart" :style="myChartStyle"></div>-->
-            <barGraph class="cgraph2" id="graph2" ref="graph2" :ycounts="counts" :xcounts="xData"/>
+            <barGraph class="cgraph2" id="graph2" ref="graph2" :ycounts="counts2" :xcounts="xData"/>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -73,6 +73,7 @@ export default {
     },
     domainList: [],
     counts: [],
+    counts2: [],
   },
   data() {
     return {
@@ -80,6 +81,7 @@ export default {
       yData: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 10],
       myChartStyle: { float: "left", width: "100%", height: "100px"}, //图表样式
       newYData: [],
+      newYData2: [],
       activeName: 'first'
     }
   },
@@ -90,8 +92,16 @@ export default {
     // },
     'counts': {
       handler (newData,oldData) {
-        console.log("newdata",newData)
+        console.log("newdata22",newData)
         this.newYData = newData;
+      },
+      deep: true,
+      immediate: true,
+    },
+    'counts2': {
+      handler (newData,oldData) {
+        console.log("newdata2",newData)
+        this.newYData2 = newData;
       },
       deep: true,
       immediate: true,
@@ -108,6 +118,7 @@ export default {
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
+      this.activeName=tab.name;
       this.$nextTick(() => {
         echarts.getInstanceByDom(this.$refs.graph2).resize()
       })
