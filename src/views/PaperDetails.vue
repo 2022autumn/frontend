@@ -24,7 +24,6 @@
             <!--<span>北京航空航天大学xx实验室</span>-->
             {{this.paper.institution}}
           </div>
-
           <div class="info1">
             <div class="info2 time">
               <!--发表时间：2022年01月06日-->
@@ -240,7 +239,8 @@ export default {
   methods: {
     jscholar(index){
       // window.localStorage.setItem('SID',this.author_id);
-      window.localStorage.setItem('SID',this.paper.authors[index].author_id);
+      console.log(this.paper.authors[index].author.id)
+      window.localStorage.setItem('SID',this.paper.authors[index].author.id);
       window.open('/scholar_page');
     },
 
@@ -310,22 +310,26 @@ export default {
           this.paper.paperTitle=response.data.data.title
           this.paper.type=response.data.data.type
           this.paper.authors=response.data.data.authorships
-          console.log(this.paper.authors[0].author.id)
-          var len = Math.min(3, this.paper.authors.length)
-          for(var i = 0; i < len; i++) {
-            this.author_name += this.paper.authors[i].author.display_name
-            if(i != len-1)
-              this.author_name += ', '
-          }
-          if (len < this.paper.authors.length) {
-            this.author_name += "..."
-          }
+          // var len = Math.min(3, this.paper.authors.length)
+          // for(var i = 0; i < len; i++) {
+          //   this.author_name += this.paper.authors[i].author.display_name
+          //   if(i != len-1)
+          //     this.author_name += ', '
+          // }
+          // if (len < this.paper.authors.length) {
+          //   this.author_name += "..."
+          // }
           // this.author_name= this.paper.authors[0].author.display_name//存储作者名称
-          this.author_id = this.paper.authors[0].author.id//存储作者id
+          // this.author_id = this.paper.authors[0].author.id//存储作者id
           this.paper.date=response.data.data.publication_date
           this.paper.abstract=response.data.data.abstract
           this.paper.cited_counts=response.data.data.cited_by_count
-          this.paper.host_venue=response.data.data.host_venue
+          if(response.data.data.host_venue.display_name != null) {
+            this.paper.host_venue=response.data.data.host_venue
+          }else {
+            this.paper.host_venue = new Object();
+            this.paper.host_venue.display_name = "Unknown";
+          }
           if(response.data.data.type != null) {
             this.paper.type = response.data.data.type
           } else{
@@ -377,7 +381,7 @@ export default {
   //padding-top: 61px;
   padding-top: 7.92vh;
   padding-left: 0.45vw;
-  padding-bottom: 3.5vh;
+  padding-bottom: 2.5vh;
   height: auto;
   border-bottom: 0.5px solid rgba(171, 169, 169, 0.51);
 }
