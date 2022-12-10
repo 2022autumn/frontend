@@ -54,16 +54,16 @@
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                           </el-upload>
                             <div v-if="this.ifedit===0">
-                                <div class="info-text">用户名:张博皓</div>
-                                <div class="info-text">个性签名:{{this.gexingqianming}}</div>
-                                <div class="info-text">真实姓名:{{this.realname}}</div>
-                                <div class="info-text">联系电话:{{this.phone}}</div>
-                                <div class="info-text">Email:{{this.email}}</div>
-                                <div class="info-text">研究领域:{{this.field}}</div>
+                              <div class="info-text"><span>用户名:</span>张博皓</div>
+                              <div class="info-text"><span>个性签名:</span>{{this.gexingqianming}}</div>
+                              <div class="info-text"><span>真实姓名:</span>{{this.realname}}</div>
+                                <div class="info-text"><span>联系电话:</span>{{this.phone}}</div>
+                              <div class="info-text"><span>Email:</span>{{this.email}}</div>
+                              <div class="info-text"><span>研究领域:</span>{{this.field}}</div>
                                 <!--<div class="info-text">我的兴趣词：</div>-->
                             </div>
                           <div v-if="this.ifedit===1">
-                            
+
                             <el-row :gutter="0" style="margin:auto;">
                                 <el-col :span="10">
                                     <div class="info-text2" style="display: inline-block;white-space:nowrap">用户名:</div>
@@ -316,7 +316,7 @@ export default{
           phone:'',
           email:'',
           field:'',
-          userid:8,
+          userid:window.localStorage.getItem('uid'),
           photourl:'',
           oldpass:'',
           newpass:'',
@@ -554,13 +554,16 @@ export default{
     .info-text{
         margin-top: 3vh;
         margin-left: 3vw;
-        
+
         font-family: 'Nunito Sans';
         font-style: normal;
         font-weight: 550;
         font-size: 18px;
         line-height: 27px;
         letter-spacing: 0.02em;
+    }
+    .info-text span{
+      color: #8c939d;
     }
     .info-text2{
         margin-top: 0.5vw;

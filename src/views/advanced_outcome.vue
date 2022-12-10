@@ -167,10 +167,10 @@
                 {{item.numyin}}次被引
               </div>
             </div>
-            <div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
+            <!--<div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
               <div style="display: inline-block;"><img src="../img/shoucang.svg" style="width: 2vw;height: 2vh"></div>
               <div style="display: inline-block">{{item.numstore}}次收藏</div>
-            </div>
+            </div>-->
           </el-card>
         </div>
         <el-row style="margin:auto; top:2vh">

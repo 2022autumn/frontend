@@ -8,9 +8,10 @@
     <router-link to="/advancedSearch"><div style="position: absolute;width: 57px;height:14px;left:32vw;top:2.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="which_page(2)">高级检索</div></router-link>
     <!--<div style="position: absolute;width: 57px;height:14px;left:39vw;top:2.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="which_page(3)">机构馆</div>-->
     <div style="position: absolute;width: 100px;height:14px;left:39vw;top:2.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="jcenter">我的 I SHARE</div>
-    <div style="position: absolute; left:75vw;top:1.3vh;box-shadow: 0 7px 22px -6px rgba(33, 123, 244, 0.34);color: white"><v-btn style="background-color: #217BF4;" class="white--text" @click="open_login()">登 录</v-btn></div>
-    <img :src="this.photourl" style="top: 1.5vh;width: 40px;height: 40px;border-radius: 50px;left: 90vw;position: absolute" alt="">
-    <div style="position: absolute;width: 45px;height:14px;left:94vw;top:3vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: #2B2B39;">{{this.username}}</div>
+    <div v-if="this.iflogin!==1" style="position: absolute; left:75vw;top:1.3vh;box-shadow: 0 7px 22px -6px rgba(33, 123, 244, 0.34);color: white"><v-btn style="background-color: #217BF4;" class="white--text" @click="open_login()">登 录</v-btn></div>
+    <div v-if="this.iflogin===1" style="position: absolute; left:75vw;top:1.3vh;box-shadow: 0 7px 22px -6px rgba(33, 123, 244, 0.34);color: white"><v-btn style="background-color: #217BF4;" class="white--text" @click="logout()">退出登录</v-btn></div>
+    <img v-if="this.iflogin===1" :src="this.photourl" style="top: 1.5vh;width: 40px;height: 40px;border-radius: 50px;left: 90vw;position: absolute" alt="">
+    <div v-if="this.iflogin===1" style="position: absolute;width: 45px;height:14px;left:94vw;top:3vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: #2B2B39;">{{this.username}}</div>
     <!-- <div style="position: absolute;height: 5vh;width: 100vw;top:5vh"><el-divider></el-divider></div> -->
     <LoginWindow ref="login"></LoginWindow>
     <SignUpWindow ref="signup"></SignUpWindow>
@@ -30,8 +31,9 @@ export default {
     return{
       username:"张博皓",
       whichpage:1,
-      userid:8,
+      userid:window.localStorage.getItem('uid'),
       photourl:'',
+      iflogin:JSON.parse(window.localStorage.getItem('iflogin'))
     }
   },
   methods:{
@@ -74,9 +76,20 @@ export default {
     open_signup(){
       console.log("去注册");
       this.$refs.signup.init();
+    },
+    logout(){
+      this.iflogin=0;
+      window.localStorage.setItem('iflogin',JSON.stringify(0));
+      this.$router.push('/');
     }
   },
   created() {
+    if(this.iflogin!==1){
+      console.log("未登录")
+    }
+    else{
+      console.log("已登录")
+    }
     this.get_data();
   }
 }

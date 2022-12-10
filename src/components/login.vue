@@ -169,8 +169,10 @@ export default {
               });
               var storage = window.localStorage;
               storage.setItem("uid",response.data.ID);
+              storage.setItem("iflogin",JSON.stringify(1));
               // console.log(response.data.ID);
               this.login_visible = false;
+              window.location.reload();
             } else if (response.data.status===400) {
               this.$message({
                 message: "用户名不存在",
