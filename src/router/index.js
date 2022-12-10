@@ -115,11 +115,16 @@ const routes = [
     path:'/collect',
     name:'collect',
     component:() => import('../components/xyj/collect')
-  },,
+  },
   {
     path:'/reference',
     name:'reference',
     component:() => import('../components/xyj/related')
+  },
+  {
+    path:'/shenqing',
+    name:'shenqing',
+    component:() => import('../components/scholarSite')
   }
 ]
 

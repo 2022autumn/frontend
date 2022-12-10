@@ -38,7 +38,12 @@ export default {
   },
   methods:{
     jcenter(){
-      this.$router.push('/personal_center');
+      if(this.iflogin===0){
+        this.$message.warning("请先登录")
+      }
+      else {
+        this.$router.push('/personal_center');
+      }
     },
     which_page(ident){
       if(ident === 1){
