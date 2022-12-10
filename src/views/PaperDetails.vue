@@ -8,24 +8,23 @@
               <div class="paper-type">{{ this.paper.type }}</div>
             </span>
           </div>
+        <div class=" info1 authors"
+             v-for="(item,index) in this.paper.authors"
+             :key="index"
+             style="cursor: pointer;display: inline-block; position: relative;"
+        >
+          <div class="names" @click="jscholar(index)">
+            {{item.author.display_name}};
+          </div>
+          {{"\xa0\xa0"}}
+          <!--<span>作者名字1； 作者名字2； 作者名字3；</span>-->
+          <!--<span>{{this.paper.authors[0].author.display_name}}</span>-->
+        </div>
           <div class=" info1 location">
             <!--<span>北京航空航天大学xx实验室</span>-->
             {{this.paper.institution}}
           </div>
-          <div class=" info1 authors"
-               v-for="(item,index) in this.paper.authors"
-               :key="index"
-               style="cursor: pointer;display: inline-block; position: relative;"
-          >
-            <div class="names" @click="jscholar(index)" style="display: inline; float: left">
-              {{item.author.display_name}}
-              <div class="names" style="float: right">
-                ;{{"\xa0\xa0"}}
-              </div>
-            </div>
-            <!--<span>作者名字1； 作者名字2； 作者名字3；</span>-->
-            <!--<span>{{this.paper.authors[0].author.display_name}}</span>-->
-          </div>
+
           <div class="info1">
             <div class="info2 time">
               <!--发表时间：2022年01月06日-->
@@ -38,7 +37,7 @@
               发表期刊：{{ this.paper.host_venue.display_name }}
             </div>
             <div class="info2 divide">
-
+              |
             </div>
             <div class="info2 cite">
               被引次数：{{ this.paper.cited_counts }}
@@ -127,16 +126,15 @@
         <div class="commends" v-infinite-scroll="load">
           <div class="cards" v-for="(item,index) in command" :key="index">
             <div class="user-info">
-              <el-avatar class="commenter-avator">
-
+              <el-avatar class="commenter-avator" :src="item.headshot">
               </el-avatar>
               <div class="left-info">
                 <span class="commenter-id">
-                  {{item.user_id}}
+                  {{item.username}}
 <!--                  一个不重要的用户id-->
                 </span>
                   <span class="commenter-info">
-                  个性签名
+                  {{ item.userinfo }}
                 </span>
               </div>
               <span class="comment-time">{{ dateTime(item.time) }}</span>
@@ -255,11 +253,11 @@ export default {
           // paper_id: "W2914747780",
           paper_id:window.localStorage.getItem('WID'),
           //user_id: window.localStorage.getItem('SID'),
-          user_id: 3
+          user_id: 8
         }
       }).then(
           response =>{
-            console.log(response.data)
+            console.log("get comment",response.data)
             this.command = response.data.data.comments;
             this.comment_num = this.command.length;
           }
@@ -272,7 +270,7 @@ export default {
         data: {//get请求这里是params
           content: this.myComment,
           // paper_id: "W2914747780",
-          user_id: 3,
+          user_id: 8,
           paper_id: window.localStorage.getItem('WID'),
           //user_id: window.localStorage.getItem('SID'),
         }
@@ -297,8 +295,8 @@ export default {
       method:'get',
       url:'/es/get',
       params:{//get请求这里是params
-        // id:window.localStorage.getItem('WID')
-        id: "W2914747780"
+        id:window.localStorage.getItem('WID')
+        // id: "W2914747780"
       }
     }).then(
         response =>{
@@ -426,6 +424,15 @@ export default {
   line-height: 3.38vh;
   background: transparent !important;
   background-color: transparent !important;
+}
+.names {
+  display: inline;
+  float: left;
+  color: #778192;
+}
+.names:hover {
+  text-decoration: underline;
+  color: #53a2e3;
 }
 .info2 {
   float: left;
