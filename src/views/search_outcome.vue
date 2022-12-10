@@ -122,12 +122,13 @@
               <div style="display: inline-block;font-size: large;">
                 &nbsp;
                 <b>
-                {{item.title}}
+                  <div style="display: inline-block;" v-html="item.title"></div>
                 </b>
               </div>
               <div>
-                <div style="display: inline-block;margin-top: 1vh;color: grey" v-for="aus in item.authors">
-                  {{aus}}&nbsp;&nbsp;&nbsp;&nbsp;
+                <div style="display: inline-block;margin-top: 1vh;color: grey" v-for="(aus,index) in item.authors">
+                  <div style="display: inline-block" v-if="index<item.authors.length-1"><b>{{aus}}</b>&nbsp;;&nbsp;&nbsp</div>
+                  <div style="display: inline-block" v-if="index===item.authors.length-1"><b>{{aus}}</b>&nbsp;&nbsp;&nbsp</div>
                 </div>
                 <div>
                 <div style="display: inline-block; color: grey">
@@ -139,7 +140,8 @@
                 </div>
               </div>
               <div style="font-size: small;color: grey">
-                {{item.zhaiyao}}
+                <!--{{item.zhaiyao}}-->
+                <div style="display: inline-block;" v-html="item.zhaiyao"></div>
               </div>
               <div style="margin-top: 2vh;display: inline-block">
                 <div v-for="tags in item.tags" v-if="tags!==''" style="display: inline-block">
@@ -400,37 +402,67 @@
       }
     },
     methods:{
+      RegandRep(src, dst,pre,post) {
+        // 对传入的字符串src进行不区分大小写的正则匹配,匹配dst，indexs中存匹配的所有位置
+        // 例如：reg("abcabc", "bc") 返回1和4
+        var reg = new RegExp(dst, "i");
+        var indexs = [];
+        var index = 0;
+        while (index < src.length) {
+          var match = reg.exec(src.slice(index));
+          if (match) {
+            indexs.push(index + match.index);
+            index += match.index + 1;
+          } else {
+            break;
+          }
+        }
+        if (indexs.length === 0) {
+          return -1;
+        }
+        // 对匹配的位置进行处理，将匹配的位置前后插入字符串a和b
+        var result = "";
+        var last = 0;
+        for (var i = 0; i < indexs.length; i++) {
+          var len = dst.length
+          var inner = src.slice(indexs[i], indexs[i] + len)
+          result += src.slice(last, indexs[i]) + pre + inner + post;
+          last = indexs[i] + dst.length;
+        }
+        result += src.slice(last);
+        return result;
+      },
       dosort(value){
         console.log("选择条件为: "+value);
         if(value===1){
           this.sort=1;
           this.asc = false;
-          this.openFullScreen2();
+          //Screen2();
         }
         else if(value===2){
           this.sort=1;
           this.asc = true;
-          this.openFullScreen2();
+          //this.openFullScreen2();
         }
         else if(value===3){
           this.sort=2;
           this.asc = false;
-          this.openFullScreen2();
+          //this.openFullScreen2();
         }
         else if(value===4){
           this.sort=2;
           this.asc = true;
-          this.openFullScreen2();
+          //this.openFullScreen2();
         }
         else if(value===5){
           this.sort=0;
           this.asc = false;
-          this.openFullScreen2();
+          //this.openFullScreen2();
         }
         else if(value===6){
           this.sort=0;
           this.asc = true;
-          this.openFullScreen2();
+          //this.openFullScreen2();
         }
         this.search();
       },
@@ -531,20 +563,28 @@
          sessionStorage.setItem('Cond',JSON.stringify(conds));
          sessionStorage.setItem('now_page',JSON.stringify(1));
          this.now_page=1;
-         this.openFullScreen2();
+         //this.openFullScreen2();
          this.search();
          //window.location.reload();
       },
         handlechange(page){//处理跳转，page为当前选中的页面
           this.now_page = page;
           sessionStorage.setItem('now_page',JSON.stringify(page));
-          this.openFullScreen2();
+          //this.openFullScreen2();
           this.search();
         },
         search(){
+          const loading = this.$loading({
+            lock: true,
+            text: 'Loading',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+          });
           var cond = JSON.parse(sessionStorage.getItem('Cond'));
           var searchname1 = sessionStorage.getItem('search_name1');
           var page = JSON.parse(sessionStorage.getItem('now_page'));
+          var pre = "<span style='color: red;'>";
+          var post = "</span>"
           console.log(this.conds);
           this.$axios({//注意是this.$axios
             method:'post',
@@ -648,21 +688,37 @@
                   //console.log(response.data.res.Works);
                   this.items[i].id = response.data.res.Works[i].id;
                   this.items[i].zhaiyao = response.data.res.Works[i].abstract;
+                  var oldzhaiyao = "";
+                  oldzhaiyao = this.items[i].title;
                   if(this.items[i].zhaiyao.length>330){//处理一下过长的摘要
                     //console.log(this.items[i].zhaiyao);
                     this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0,330)+"...";
                   }
+                  if(this.items[i].zhaiyao!=="") {
+                    this.items[i].zhaiyao = this.RegandRep(this.items[i].zhaiyao, searchname1, pre, post);
+                    if (this.items[i].zhaiyao === -1) {
+                      this.items[i].zhaiyao = oldzhaiyao;
+                    }
+                  }
                   this.items[i].title = response.data.res.Works[i].title;
-                  if(this.items[i].title.length>50){//处理一下过长的摘要
+                  var oldtittle = "";
+                  oldtittle = this.items[i].title;
+                  if(this.items[i].title.length>50){//处理一下过长的题目
                     //console.log(this.items[i].zhaiyao);
                     this.items[i].title = this.items[i].title.substring(0,50)+"...";
                   }
+                  this.items[i].title = this.RegandRep(this.items[i].title,searchname1,pre,post);
+                  if(this.items[i].title===-1){
+                    this.items[i].title = oldtittle;
+                  }
+                  console.log("题目为")
+                  console.log(this.items[i].title);
                   //console.log(this.items[i].id);
                   if(response.data.res.Works[i].authorships.length!==0) {
                     this.items[i].author = response.data.res.Works[i].authorships[0].author.display_name;
                     var t = response.data.res.Works[i].authorships.length;
-                    if(t>3){
-                      t=3;
+                    if(t>5){
+                      t=5;
                     }
                     for(var j=0;j<t;j++){
                       this.items[i].authors[j] = response.data.res.Works[i].authorships[j].author.display_name;
@@ -689,6 +745,7 @@
                   }
                   this.items[i].numyin = response.data.res.Works[i].cited_by_count;
                   //this.items[i].numstore = Math.ceil(Math.random()*100);
+                  loading.close();
                 }
               }
           )
@@ -698,7 +755,7 @@
     created() {
       this.conds = JSON.parse(sessionStorage.getItem('Cond'));
       this.now_page = JSON.parse(sessionStorage.getItem('now_page'));
-      this.openFullScreen2();
+      //this.openFullScreen2();
       this.search();
       /*if(this.total%4===0){
         this.total_page = this.total/8*10;
