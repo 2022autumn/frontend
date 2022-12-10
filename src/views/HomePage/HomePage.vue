@@ -220,6 +220,7 @@ export default {
   },
   methods:{
     jpaper(index) {
+      console.log("paper_id",this.hot_list[index].work_id )
       window.localStorage.setItem('WID',this.hot_list[index].work_id);
       window.open('/paper_details');
     },
