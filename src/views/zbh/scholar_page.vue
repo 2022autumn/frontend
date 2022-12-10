@@ -7,8 +7,12 @@
       <div class="top_I_am"> I Am </div>
       <div class="top_scholar">Scholar</div>
     </div>
+    <div v-if="empty" class="empty-page">
+        404 未找到该学者
+    </div>
+    <div v-else>
     <div>
-      <testScolar :scholar-info="scholarInfo" :areas="areas" :counts="counts" :counts2="counts2"></testScolar>
+      <testScolar v-if="this.show" :scholar-info="scholarInfo" :areas="areas" :counts="counts" :counts2="counts2"></testScolar>
     </div>
     <div class="net_top">. 专家关系网络 .</div>
     <div>
@@ -72,6 +76,7 @@
         >
         </el-pagination>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -236,6 +241,7 @@ export default {
         },
       ],
       empty: false,
+      show: false,
       areas: "",
       counts: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
       counts2: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
@@ -263,6 +269,16 @@ export default {
     }
   },
   mounted() {
+    // const loading = this.$loading({
+    //   lock: true,
+    //   text: 'Loading',
+    //   spinner: 'el-icon-loading',
+    //   background: 'rgba(0, 0, 0, 0.7)'
+    // });
+    setTimeout(() => {
+      this.show=true;
+      loading.close();
+    }, 300);
     let that = this;
     console.log("id is "+this.id);
     that.$axios({
@@ -274,12 +290,8 @@ export default {
       }
     }).then(
         response=> {
-          if(response.data.errno === 502) {
-            this.empty = true;
-          } else {
             // console.log("userinfo",response.data);
             this.scholarInfo = response.data.data;
-            //console.log("get userInfo", this.scholarInfo);
             if(this.scholarInfo.last_known_institution===null){
               this.scholarInfo.last_known_institution ="No belonged institution";
             }
@@ -304,10 +316,14 @@ export default {
             }
             console.log("counts",this.counts);
             console.log("counts2",this.counts2);
-          }
-
         }
-    )
+    ).catch(error=> {
+      console.log("error", error)
+      console.log("error", error.response.status)
+      if(error.response.status === 404) {
+        this.empty = true;
+      }
+    })
   },
 }
 </script>
@@ -395,5 +411,17 @@ export default {
   line-height: 36px;
   /* identical to box height */
   color: #0352FF;
+}
+.empty-page {
+  height: 150px;
+  line-height: 120px;
+  text-align: center;
+  justify-content: center;
+  vertical-align: center;
+  color: #0E84F4;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
 }
 </style>

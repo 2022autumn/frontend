@@ -19,7 +19,6 @@
     </div>
     <div class="personal_info" v-show="!edit">
       {{this.description}}
-<!--      I’m {{scholarInfo.display_name}}, I'm interested in areas like {{areas}}, I'm working for {{scholarInfo.last_known_institution?scholarInfo.last_known_institution.display_name:this.institution}}. I've post {{scholarInfo.most_cited_work}}, which is my most-cited work. I'm looking for highly motivate students.-->
     </div>
     <el-input class="edit_info" v-show="edit" type="textarea" v-model="description"></el-input>
 <!--    <div class="info_bottom">-->
@@ -46,6 +45,8 @@ export default {
       institution: "No belonged institution"
     }
   },
+  created() {
+  },
   mounted() {
     let that = this;
     that.$axios({
@@ -61,9 +62,10 @@ export default {
           // console.log("userinfo",response.data);
           this.info = response.data.data;
           console.log("get useInfo", this.info);
-          if(response.data.data.last_known_institution.display_name===null){
-            // this.info.last_known_institution=new Object();
-            this.info.last_known_institution.display_name ="no institution";
+          if(response.data.data.last_known_institution==null){
+            let obj = new Object();
+            obj.display_name ="no institution";
+            this.info.last_known_institution= obj;
           }
           this.description="I’m "+this.info.display_name + ", I'm interested in areas like "+this.areas+", I'm working for " + this.info.last_known_institution.display_name + ". I've post "+this.info.most_cited_work+", which is my most-cited work. I'm looking for highly motivate students."
         console.log(this.description)

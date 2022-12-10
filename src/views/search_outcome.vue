@@ -25,7 +25,7 @@
               <b>&nbsp;主要作者</b>
             </div>
             <el-checkbox-group v-model="checklist_author" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.authors"  :label=item.key style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item.key}}</b></el-checkbox>
+              <el-checkbox v-for="item in this.authors"  :label=item.key style="display: block;word-wrap: break-word;overflow: hidden;left: 0.5vw;"><b>{{item.key}}</b></el-checkbox>
             </el-checkbox-group>
             <el-divider></el-divider>
             </div>
@@ -35,7 +35,7 @@
               <b>&nbsp;主要组织</b>
             </div>
             <el-checkbox-group v-model="checklist_institutions" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.institutions"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
+              <el-checkbox v-for="item in this.institutions"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;left: 0.5vw;"><b>{{item}}</b></el-checkbox>
             </el-checkbox-group>
             <el-divider></el-divider>
             </div>
@@ -45,7 +45,7 @@
               <b>&nbsp;发表年份</b>
             </div>
             <el-checkbox-group v-model="checklist_publish_years" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.publish_years"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
+              <el-checkbox v-for="item in this.publish_years"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;left: 0.5vw;"><b>{{item}}</b></el-checkbox>
             </el-checkbox-group>
             <el-divider></el-divider>
             </div>
@@ -55,7 +55,7 @@
               <b>&nbsp;出版单位</b>
             </div>
             <el-checkbox-group v-model="checklist_publishers" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.publishers"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
+              <el-checkbox v-for="item in this.publishers"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;left: 0.5vw;"><b>{{item}}</b></el-checkbox>
             </el-checkbox-group>
             <el-divider></el-divider>
             </div>
@@ -65,7 +65,7 @@
               <b>&nbsp;论文类型</b>
             </div>
             <el-checkbox-group v-model="checklist_types" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.types"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
+              <el-checkbox v-for="item in this.types"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;left: 0.5vw;"><b>{{item}}</b></el-checkbox>
             </el-checkbox-group>
             <el-divider></el-divider>
             </div>
@@ -75,8 +75,8 @@
               <b>&nbsp;刊物名称</b>
             </div>
             <el-checkbox-group v-model="checklist_venues" :max="1" @change="choose_change" >
-              <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all;display:block;word-wrap: break-word;" >
-                <b style="width: 22vw;word-break: break-all;display:block;word-wrap: break-word;">
+              <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all;display:block;word-wrap: break-word;overflow: hidden;left: 0.5vw;" >
+                <b>
                   {{item}}
                 </b>
               </el-checkbox>
@@ -118,7 +118,7 @@
             </div>
           <div v-for="item in items" v-if="item.id!==''" style="width: 50vw;height:240px; " @click="jdetail(item.id)">
             <el-card  class="outcome-card" style="width:55vw;height:228px; " shadow="hover">
-              <el-tag style="display: inline-block">{{item.type}}</el-tag>
+              <el-tag class="item-type" style="display: inline-block;vertical-align: middle;">{{item.type}}</el-tag>
               <div style="display: inline-block;font-size: large;">
                 &nbsp;
                 <b>
@@ -126,9 +126,8 @@
                 </b>
               </div>
               <div>
-                <div style="display: inline-block;margin-top: 1vh;color: grey" v-for="(aus,index) in item.authors">
-                  <div style="display: inline-block" v-if="index<item.authors.length-1"><b>{{aus}}</b>&nbsp;;&nbsp;&nbsp</div>
-                  <div style="display: inline-block" v-if="index===item.authors.length-1"><b>{{aus}}</b>&nbsp;&nbsp;&nbsp</div>
+                <div style="display: inline-block;margin-top: 1vh;color: grey" v-for="aus in item.authors">
+                  {{aus}}&nbsp;&nbsp;&nbsp;&nbsp;
                 </div>
                 <div>
                 <div style="display: inline-block; color: grey">
@@ -156,10 +155,10 @@
                 {{item.numyin}}次被引
                 </div>
               </div>
-              <!--<div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
+              <div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
                 <div style="display: inline-block;"><img src="../img/shoucang.svg" style="width: 2vw;height: 2vh"></div>
                 <div style="display: inline-block">{{item.numstore}}次收藏</div>
-              </div>-->
+              </div>
             </el-card>
           </div>
           <el-row style="margin:auto; top:2vh">
@@ -398,7 +397,6 @@
         true_total_page:0,
         sort:0,
         asc:true,
-        ifjiazai:0,
       }
     },
     methods:{
@@ -407,32 +405,32 @@
         if(value===1){
           this.sort=1;
           this.asc = false;
-          //this.openFullScreen2();
+          this.openFullScreen2();
         }
         else if(value===2){
           this.sort=1;
           this.asc = true;
-          //this.openFullScreen2();
+          this.openFullScreen2();
         }
         else if(value===3){
           this.sort=2;
           this.asc = false;
-          //this.openFullScreen2();
+          this.openFullScreen2();
         }
         else if(value===4){
           this.sort=2;
           this.asc = true;
-          //this.openFullScreen2();
+          this.openFullScreen2();
         }
         else if(value===5){
           this.sort=0;
           this.asc = false;
-          //this.openFullScreen2();
+          this.openFullScreen2();
         }
         else if(value===6){
           this.sort=0;
           this.asc = true;
-          //this.openFullScreen2();
+          this.openFullScreen2();
         }
         this.search();
       },
@@ -443,13 +441,9 @@
           spinner: 'el-icon-loading',
           background: 'rgba(0, 0, 0, 0.7)'
         });
-        loading.close();
-        if(this.ifjiazai===1){
+        setTimeout(() => {
           loading.close();
-        }
-        //setTimeout(() => {
-         // loading.close();
-        //}, 1100);
+        }, 1100);
       },
       jdetail(id){
         console.log("文章id为:");
@@ -537,23 +531,17 @@
          sessionStorage.setItem('Cond',JSON.stringify(conds));
          sessionStorage.setItem('now_page',JSON.stringify(1));
          this.now_page=1;
-         //this.openFullScreen2();
+         this.openFullScreen2();
          this.search();
          //window.location.reload();
       },
         handlechange(page){//处理跳转，page为当前选中的页面
           this.now_page = page;
           sessionStorage.setItem('now_page',JSON.stringify(page));
-          //this.openFullScreen2();
+          this.openFullScreen2();
           this.search();
         },
         search(){
-          const loading = this.$loading({
-            lock: true,
-            text: 'Loading',
-            spinner: 'el-icon-loading',
-            background: 'rgba(0, 0, 0, 0.7)'
-          });
           var cond = JSON.parse(sessionStorage.getItem('Cond'));
           var searchname1 = sessionStorage.getItem('search_name1');
           var page = JSON.parse(sessionStorage.getItem('now_page'));
@@ -634,10 +622,6 @@
                     this.venues.length=0;
                     for (var i = 0; i < venues_len && i < 5; i++) {
                       this.venues[i] = response.data.res.Aggs.venues [i].key;
-                      if(this.venues[i].length>28){//处理一下过长的摘要
-                        //console.log(this.items[i].zhaiyao);
-                        this.venues[i] = this.venues[i].substring(0,28)+"...";
-                      }
                     }
                   }
                 }
@@ -677,8 +661,8 @@
                   if(response.data.res.Works[i].authorships.length!==0) {
                     this.items[i].author = response.data.res.Works[i].authorships[0].author.display_name;
                     var t = response.data.res.Works[i].authorships.length;
-                    if(t>5){
-                      t=5;
+                    if(t>3){
+                      t=3;
                     }
                     for(var j=0;j<t;j++){
                       this.items[i].authors[j] = response.data.res.Works[i].authorships[j].author.display_name;
@@ -706,7 +690,6 @@
                   this.items[i].numyin = response.data.res.Works[i].cited_by_count;
                   //this.items[i].numstore = Math.ceil(Math.random()*100);
                 }
-                loading.close();
               }
           )
           window.scrollTo(0,0);//返回顶部
@@ -715,7 +698,7 @@
     created() {
       this.conds = JSON.parse(sessionStorage.getItem('Cond'));
       this.now_page = JSON.parse(sessionStorage.getItem('now_page'));
-
+      this.openFullScreen2();
       this.search();
       /*if(this.total%4===0){
         this.total_page = this.total/8*10;
@@ -763,5 +746,19 @@
     box-shadow: 3px 3px 3px 3px rgba(107, 106, 106, 0.25);
     border-radius: 7px;
   }
+  .item-type {
+  margin: auto;
+  padding:0.5vw,0.2vh;
+  background: #217bf4;
+  box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
+  border-radius: 9px;
 
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 4vh;
+  text-align: center;
+  letter-spacing: 0.01em;
+
+  color: #ffffff;
+}
   </style>
