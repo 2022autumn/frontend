@@ -1,10 +1,7 @@
 <template>
   <div style="margin-left: 0vw;margin-top:-15vh;">
-        <div class="hot-list" style="margin-top: 100px">
+        <div class="hot-list" style="margin-top: 13vh">
           <div>&nbsp;</div>
-          <div class="box-word" style="margin-left: 1%;">
-            搜索内容
-          </div>
           <div>
             <FilterBar ref="bar1"  :iftop="1" :logic="this.params0.logic" :field="this.params0.field" :content="this.params0.content"/>
           </div>
@@ -238,11 +235,10 @@ export default {
   color: #0a093d;
 }
 .hot-list {
-  margin-top: 100px;
   margin: auto;
   padding: auto;
   width: 60%;
-  height: 75vh;
+  height: 60vh;
 
   background: #ffffff;
   box-shadow: 5px 5px 5px 5px rgba(114, 112, 112, 0.25);
@@ -302,6 +298,8 @@ export default {
   letter-spacing: 0.01em;
 }
 .search-button{
+  margin-bottom: 10vh;
+  margin-left:0 auto;
   width: 198px;
   height: 42px;
   background: linear-gradient(94.95deg, #437FEC -43.46%, #4CD9ED 128.08%);

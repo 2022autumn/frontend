@@ -252,7 +252,7 @@ export default {
   margin: auto;
   padding: auto;
   width: 90%;
-  height: 510px;
+  height: 75vh;
 
   background: #ffffff;
   box-shadow: 7px 7px 7px 7px rgba(0, 0, 0, 0.25);
@@ -315,6 +315,8 @@ export default {
 .search-button{
     width: 198px;
     height: 42px;
+    margin-bottom:100vh;
+    margin-left:0 auto;
     background: linear-gradient(94.95deg, #437FEC -43.46%, #4CD9ED 128.08%);
     box-shadow: 0px 0px 6px rgba(153, 166, 213, 0.57);
     border-radius: 19px;

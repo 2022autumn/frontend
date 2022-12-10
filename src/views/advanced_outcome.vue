@@ -863,7 +863,7 @@ export default {
 .background{
   background-image: url(../../public/advanced_img/Frame 1.svg);
   background-size: 100%;
-    position: relative;
-    height: 100vh;
+  position: relative;
+  height: 75vh;
 }
 </style>
