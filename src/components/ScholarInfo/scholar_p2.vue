@@ -12,7 +12,6 @@
       个人简介
       <i
           :class="{'el-icon-edit': !edit, 'el-icon-check': edit}"
-          style="width: 6px"
           @click="edit = !edit"
       ></i>
     </div>
@@ -153,8 +152,7 @@ export default {
   line-height: 36px;
 }
 .edit_info{
-  height: auto;
-  max-height: 400px;
+  height: 400px;
   overflow-y: auto;
   margin-top: 20px;
   font-family: 'Poppins';
@@ -168,10 +166,5 @@ export default {
   word-wrap: break-word;
   word-break: break-all;
   display: flex;
-}
-.edit_info .el-textarea__inner {
-  word-wrap: break-word;
-  word-break: break-all;
-  height: auto;
 }
 </style>
