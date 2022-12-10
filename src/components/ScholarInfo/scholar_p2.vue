@@ -2,7 +2,7 @@
   <div class="scholar_p2">
     <div>
       <span class="scholar_name">
-        {{scholarInfo.display_name}}
+        {{this.info.display_name}}
     </span>
       <span class="scholar_institution">
         {{this.info.last_known_institution.display_name}}
@@ -35,16 +35,6 @@ export default {
   props: {
     scholarInfo: {
       type: Object,
-      default: {
-        scholarInfo: {
-          display_name: "scholarname",
-          areas: "areas",
-          last_known_institution: {
-            display_name: null
-          },
-          most_cited_work: "most_cited_work",
-        }
-      }
     },
     areas: ""
   },
@@ -62,16 +52,17 @@ export default {
       method: 'get',
       url: '/es/get',
       params: {
+        id: window.localStorage.getItem('SID'),
         // id: this.id
-        id: "A4220294553"
+        // id: "A4220294553"
       }
     }).then(
         response => {
           // console.log("userinfo",response.data);
           this.info = response.data.data;
           console.log("get useInfo", this.info);
-          if(response.data.data.last_known_institution===null){
-            this.info.last_known_institution=new Object();
+          if(response.data.data.last_known_institution.display_name===null){
+            // this.info.last_known_institution=new Object();
             this.info.last_known_institution.display_name ="no institution";
           }
           this.description="I’m "+this.info.display_name + ", I'm interested in areas like "+this.areas+", I'm working for " + this.info.last_known_institution.display_name + ". I've post "+this.info.most_cited_work+", which is my most-cited work. I'm looking for highly motivate students."

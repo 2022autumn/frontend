@@ -24,7 +24,6 @@
             <!--<span>北京航空航天大学xx实验室</span>-->
             {{this.paper.institution}}
           </div>
-
           <div class="info1">
             <div class="info2 time">
               <!--发表时间：2022年01月06日-->
@@ -50,6 +49,11 @@
               <img src="../assets/paperDetailsImg/original.png"
                    style="margin-left: 0vw">
               原文地址
+            </el-button>
+            <el-button class="original2" v-else disabled>
+              <img src="../assets/paperDetailsImg/original.png"
+                   style="margin-left: 0vw">
+              暂无原文地址
             </el-button>
 
             <!--被收藏的次数-->
@@ -89,9 +93,9 @@
       <div class="ref">
         <reference ref="ref"/>
       </div>
-      <div class="relate">
-        <related />
-      </div>
+<!--      <div class="relate">-->
+<!--        <related />-->
+<!--      </div>-->
       <div class="review">
         <div class="commend-title">评论区  Comments</div>
         <div class="comment-tools">
@@ -133,11 +137,12 @@
                   {{item.username}}
 <!--                  一个不重要的用户id-->
                 </span>
+                <span class="comment-time">{{ dateTime(item.time) }}</span>
                   <span class="commenter-info">
                   {{ item.userinfo }}
                 </span>
               </div>
-              <span class="comment-time">{{ dateTime(item.time) }}</span>
+
             </div>
             <div class="comment-content">
               {{item.content}}
@@ -176,8 +181,8 @@
         <keyword />
       </div>
 
-      <div class="notes">
-        <note />
+      <div class="relate">
+        <related />
       </div>
     </div>
   </div>
@@ -234,7 +239,8 @@ export default {
   methods: {
     jscholar(index){
       // window.localStorage.setItem('SID',this.author_id);
-      window.localStorage.setItem('SID',this.paper.authors[index].author_id);
+      console.log(this.paper.authors[index].author.id)
+      window.localStorage.setItem('SID',this.paper.authors[index].author.id);
       window.open('/scholar_page');
     },
 
@@ -295,7 +301,7 @@ export default {
       method:'get',
       url:'/es/get',
       params:{//get请求这里是params
-        id:window.localStorage.getItem('WID')
+        id: window.localStorage.getItem('WID')
         // id: "W2914747780"
       }
     }).then(
@@ -304,22 +310,26 @@ export default {
           this.paper.paperTitle=response.data.data.title
           this.paper.type=response.data.data.type
           this.paper.authors=response.data.data.authorships
-          console.log(this.paper.authors[0].author.id)
-          var len = Math.min(3, this.paper.authors.length)
-          for(var i = 0; i < len; i++) {
-            this.author_name += this.paper.authors[i].author.display_name
-            if(i != len-1)
-              this.author_name += ', '
-          }
-          if (len < this.paper.authors.length) {
-            this.author_name += "..."
-          }
+          // var len = Math.min(3, this.paper.authors.length)
+          // for(var i = 0; i < len; i++) {
+          //   this.author_name += this.paper.authors[i].author.display_name
+          //   if(i != len-1)
+          //     this.author_name += ', '
+          // }
+          // if (len < this.paper.authors.length) {
+          //   this.author_name += "..."
+          // }
           // this.author_name= this.paper.authors[0].author.display_name//存储作者名称
-          this.author_id = this.paper.authors[0].author.id//存储作者id
+          // this.author_id = this.paper.authors[0].author.id//存储作者id
           this.paper.date=response.data.data.publication_date
           this.paper.abstract=response.data.data.abstract
           this.paper.cited_counts=response.data.data.cited_by_count
-          this.paper.host_venue=response.data.data.host_venue
+          if(response.data.data.host_venue.display_name != null) {
+            this.paper.host_venue=response.data.data.host_venue
+          }else {
+            this.paper.host_venue = new Object();
+            this.paper.host_venue.display_name = "Unknown";
+          }
           if(response.data.data.type != null) {
             this.paper.type = response.data.data.type
           } else{
@@ -371,7 +381,7 @@ export default {
   //padding-top: 61px;
   padding-top: 7.92vh;
   padding-left: 0.45vw;
-  padding-bottom: 3.5vh;
+  padding-bottom: 2.5vh;
   height: auto;
   border-bottom: 0.5px solid rgba(171, 169, 169, 0.51);
 }
@@ -499,7 +509,29 @@ clear:both;
   line-height: 4.93vh;
   color: #FFFFFF;
 }
+.original2 {
+  background-color: #C8C9CC;
+  color: #FFFFFF;
+  float: left;
+  align-items: center;
+  vertical-align: center;
+  justify-content: center;
+  display: inline-block;
+  width: 9.53vw;
+  height: 4.93vh;
+  box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
+  border-radius: 14px;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 4.93vh;
+}
 .original img {
+  float: left;
+  padding-left: 10px;
+  margin-top: 6px;
+}.original2 img {
   float: left;
   padding-left: 10px;
   margin-top: 6px;
@@ -709,15 +741,16 @@ clear:both;
 .left-info {
   height: 7.79vh;
   //width: 28vw;
-  width: 160px;
+  width: 230px;
+  width: 43.7vw;
   float: left;
-  display: table-cell;
+  display: inline;
   margin-left: 0.9vw;
 }
 .commenter-id {
   position: relative;
   display: inline-block;
-  width: 100%;
+  width: 45%;
   height: 3.38vh;
   margin-left: 0.9vw;
   font-family: 'Poppins';
@@ -727,6 +760,7 @@ clear:both;
   line-height: 3.38vh;
 }
 .commenter-info {
+  float: left;
   position: relative;
   margin-left: 0.9vw;
   height: 3.38vh;
@@ -745,8 +779,10 @@ clear:both;
 }
 .comment-time {
   position: relative;
-  display: flex;
+  width: auto;
+  //display: flex;
   float: right;
+  text-align: right;
   //margin-right: 2.58vw;
   font-family: 'Poppins';
   font-style: normal;
@@ -882,7 +918,8 @@ clear:both;
   float: left;
   margin-top: 40px;
   width: 100%;
-  height: 383px;
+  margin-top: 60vh;
+  //height: 383px;
   margin-right: 0vw;
 }
 .notes {
@@ -911,6 +948,14 @@ clear:both;
 }
 .original {
   padding: 0 2px 2px 0 !important;
+}
+.original2 {
+  padding: 0 2px 2px 0 !important;
+  border: none;
+}
+.original2 .el-button.is-disabled, .el-button.is-disabled:focus, .el-button.is-disabled:hover {
+  background-color: #C8C9CC !important;
+  color: #FFFFFF !important;
 }
 .submit-btn {
   padding: 0 2px 2px 0 !important;
