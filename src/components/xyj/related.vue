@@ -172,7 +172,7 @@ export default {
   color: #6C7497;
 
 }
-.content{
+.content {
   display: flex;
   width: 750px;
   margin-left: 90px;

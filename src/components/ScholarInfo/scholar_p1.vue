@@ -1,6 +1,19 @@
 <template>
   <div class="scholar_p1">
     <img class="scholar_img" src="../../assets/scholar_avator.svg">
+    <el-upload
+        ref="upload"
+        class="upload-demo"
+        action="http://49.232.100.137/api/user/edit_user_photo"
+        :show-file-list="false"
+        list-type="picture-card"
+        :on-change="handlePictureCardPreview"
+        :on-success="handleAvatarSuccess"
+        :http-request="submitAvatarHttp"
+        accept=".jpg"
+    >
+      <img width="100%" :src="userinfo.photo" class="avatar" />
+    </el-upload>
 <!--    <span class="scholar_name">-->
 <!--        {{scholarInfo.display_name}}-->
 <!--    </span>-->
@@ -37,6 +50,9 @@ export default {
   },
   data() {
     return {
+      userinfo: {
+        photo: ""
+      },
       followList: [],
       isFollow: false,
       followContent: "+ 关注",
@@ -58,9 +74,12 @@ export default {
       method:'post',
       url:'/social/follow/list',
       data:{//get请求这里是params
-        // user_id: 2
-        ser_id:window.localStorage.getItem('WID')
-      }
+        user_id: 8
+        // user_id:window.localStorage.getItem('SID')
+      },
+      headers: {
+        'token': 8
+      },
     }).then(
         response =>{
           console.log(response.data);
@@ -86,10 +105,14 @@ export default {
         method:'post',
         url:'/social/follow',
         data:{//get请求这里是params
-          author_id: this.scholarInfo.id,
-          user_id:window.localStorage.getItem('WID')
-          // user_id: 2
-        }
+          author_id: "A4221478216",
+          // author_id: window.localStorage.getItem('SID'),
+          // user_id:window.localStorage.getItem('WID')
+          user_id: 8
+        },
+        headers: {
+          'token': 8
+        },
       }).then(
           response =>{
             console.log(response.data);

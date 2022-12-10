@@ -8,14 +8,15 @@
     <router-link to="/advancedSearch"><div style="position: absolute;width: 57px;height:14px;left:32vw;top:2.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="which_page(2)">高级检索</div></router-link>
     <!--<div style="position: absolute;width: 57px;height:14px;left:39vw;top:2.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="which_page(3)">机构馆</div>-->
     <div style="position: absolute;width: 100px;height:14px;left:39vw;top:2.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="jcenter">我的 I SHARE</div>
-    <img :src="this.photourl" style="top: 1.5vh;width: 40px;height: 40px;border-radius: 50px;left: 90vw;position: absolute" alt="">
-    <div style="position: absolute;width: 45px;height:14px;left:94vw;top:3vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: #2B2B39;">{{this.username}}</div>
+    <img v-if="this.iflogin===1" :src="this.photourl" style="top: 1.5vh;width: 40px;height: 40px;border-radius: 50px;left: 90vw;position: absolute" alt="">
+    <div v-if="this.iflogin===1"  style="position: absolute;width: 45px;height:14px;left:94vw;top:3vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: #2B2B39;">{{this.username}}</div>
     <!-- <div style="position: absolute;height: 5vh;width: 100vw;top:5vh"><el-divider></el-divider></div> -->
+    <!--class="input-with-select"-->
     <div style="position: absolute;width: 35vw;height:40px;left:53.5vw;top:1.05vh;">
-        <el-input  placeholder="请输入检索内容" v-model="input3" class="input-with-select" @keyup.enter.native="do_search">
+        <el-autocomplete  :trigger-on-focus="false" :fetch-suggestions="querySearch" @select="handleSelect" class="inline-input"  placeholder="请输入检索内容" v-model="input3"   @keyup.enter.native="do_search" @input="inputchange" style="width: 35vw">
         <!--<el-button slot="prepend" icon="el-icon-s-promotion" style="color: #FCFCFF;background-color: rgba(117, 167, 235, 0.52);border-radius: 0;border-color: whitesmoke" @click="jadvance">高级检索</el-button>-->
         <el-button slot="append" icon="el-icon-search" style="color:#ffffff;background-color: #217bf4; border-radius: 0;border-color: whitesmoke" @click="do_search" ></el-button>
-      </el-input>
+      </el-autocomplete>
     </div>
     <!-- <div style="position: absolute;height: 5vh;width: 100vw;top:5vh"><el-divider></el-divider></div> -->
   </div>
@@ -26,14 +27,35 @@ export default {
   name: "topbar2",
   data(){
     return{
+      restaurants: [
+        {
+          "value":"java"
+        }
+      ],
       username:"张博皓",
       whichpage:1,
       input3:"",
-      userid:8,
       photourl:'',
+      userid:window.localStorage.getItem('uid'),
+      iflogin:JSON.parse(window.localStorage.getItem('iflogin'))
     }
   },
   methods:{
+    inputchange(value){//搜索的内容改变
+      console.log(value);
+      this.$axios({//注意是this.$axios
+        method:'post',
+        url:'/es/prefix',
+        data:{//post请求这里是data
+          name:"title",
+          prefix:value
+        }
+      }).then(
+          response =>{
+
+          }
+      )
+    },
     jcenter(){
       this.$router.push('/personal_center');
     },
@@ -79,8 +101,28 @@ export default {
           }
       )
     },
+    querySearch(queryString, cb) {
+      var restaurants = this.restaurants;
+      var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
+      // 调用 callback 返回建议列表的数据
+      cb(results);
+    },
+    createFilter(queryString) {
+      return (restaurant) => {
+        return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
+    },
+    loadAll() {
+      return [
+        { "value": "三全鲜食（北新泾店）"},
+      ];
+    },
+    handleSelect(item) {
+      console.log(item);
+    }
   },
   created(){
+    //this.restaurants = this.loadAll();
     this.get_data();
     if(sessionStorage.getItem('search_name1')===null){
       this.input3 = '';
@@ -88,6 +130,8 @@ export default {
     else{
       this.input3 = sessionStorage.getItem('search_name1');
     }
+    console.log("选择数组为:")
+    console.log(this.restaurants);
   }
 }
 </script>
