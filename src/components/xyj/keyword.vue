@@ -38,13 +38,16 @@ export default {
     this.$axios({//注意是this.$axios
       method:'get',
       url:'/es/get',
+      headers:{
+        token:3,
+      },
       params: {
         id:window.localStorage.getItem('WID')
       }
   }).then(
         response =>{
           this.keywords=response.data.data.concepts;
-          console.log(this.test)
+          console.log(response)
         }
     )
 
@@ -56,6 +59,25 @@ export default {
       }else{
         item.level=0
       }
+      console.log(item.display_name)
+      this.$axios({//注意是this.$axios
+        method:'post',
+        url:'/scholar/concept',
+        headers:{
+          token:3,
+          //x: window.localStorage.getItem('SID'),
+        },
+        data:{//get请求这里是params
+          concept_id: item.id,
+          user_id: 3,
+          //user_id: window.localStorage.getItem('SID'),
+        }
+      }).then(
+          response =>{
+            console.log(response.data);
+            console.log(response)
+          }
+      )
       console.log(item.level)
     }
   },
