@@ -113,9 +113,9 @@ export default {
 
   position: absolute;
   width: 397px;
-  /*height: 868px;*/
+  height: 868px;
   /*max-height: 400px;*/
-  overflow-y: auto;
+
   background: #FFFFFF;
   box-shadow: -2px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;

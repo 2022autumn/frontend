@@ -43,14 +43,14 @@ export default {
 
 <style scoped>
   .temp{
-    height: 1000px;
+
   }
  .total-board{
    position: absolute;
-   width: 62.05vw;
-   height: 85vh;
-   left: 325px;
-   top: 90px;
+   width: 50.05vw;
+   height: 70vh;
+   left: 550px;
+   top: 147px;
 
    background: linear-gradient(250.39deg, #FFFFFF 10.13%, #FFFFFF 94%);
    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -108,8 +108,8 @@ export default {
  }
  .set-btn-locat{
    position: absolute;
-   margin-top:2.1vh;
-   margin-left:53vw;
+   margin-top:3.1vh;
+   margin-left:40vw;
  }
  .line{
    position: relative;
@@ -129,6 +129,7 @@ export default {
    width: 92px;
    height: 92px;
    filter: drop-shadow(0px 5px 20px rgba(75, 148, 248, 0.25));
+   top:21px;
  }
  .right{
    position: absolute;

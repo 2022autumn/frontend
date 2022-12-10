@@ -4,11 +4,13 @@
     <div class="title-en">Related Literature</div>
     <div class="ref-box-set" v-infinite-scroll="load" v-if="have_refer===true">
       <div class="ref-box" v-for="(item,index) in refer" :key="index">
-        <div class="index-box">
-          <div class="index">{{ index+1 }}</div>
+        <div class="ref" @click="jdetail(item.id)">
+          <div class="index-box">
+            <div class="index">{{ index+1 }}</div>
+          </div>
+          <div class="content">{{ item.cited }}</div>
+          <div class="line"></div>
         </div>
-        <div class="content">{{ item.cited }}</div>
-        <div class="line"></div>
       </div>
     </div>
     <div class="null" v-if="have_refer===false">
@@ -22,7 +24,12 @@ export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "related",
   methods:{
-
+    jdetail(id){
+      console.log("文章id为:");
+      console.log(id);
+      window.localStorage.setItem('WID',id);
+      window.open('/paper_details');
+    }
   },
   created() {
 
@@ -38,7 +45,7 @@ export default {
         response => {
           //console.log(response.data);
           this.refer = response.data.data.related_works;
-          if(this.refer===null){
+          if(this.refer.length===0){
             this.have_refer=false;
           }
         }
@@ -92,7 +99,7 @@ export default {
   position: absolute;
   width: 150px;
   height: 26px;
-  left: 640px;
+  left: 740px;
   top: 32px;
 
   font-family: 'Poppins';
@@ -196,5 +203,8 @@ export default {
   font-size: 40px;
   top:150px;
   left: 300px;
+}
+.ref{
+  cursor: pointer;
 }
 </style>

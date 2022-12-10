@@ -8,48 +8,48 @@
           <div class="title-text" style="margin-top: 25vh; margin-left: 3%">
             Search , then Communicate
           </div>
-          
+
           <div style="margin-top: 6vh; margin-bottom: 5vh;display: inline-block">
             <div style="text-align: center">
-              <el-input class="home-search" placeholder="请输入检索内容" v-model="input1" @keyup.enter.native="j_search_outcome">
+              <el-input class="home-search" placeholder="请输入检索内容" v-model="input1" @keyup.enter.native="j_search_outcome" @input="change">
                 <!--<template slot="prepend" style="cursor: pointer">
                   <span @click="jadvance" style="width:inherit">高级检索</span>
                 </template>-->
-                 <i slot="suffix" class="el-input__icon el-icon-search" @click="j_search_outcome"></i>
+                 <i slot="suffix" class="el-input__icon el-icon-search" @click="j_search_outcome" ></i>
               </el-input>
             </div>
           </div>
 
           <div style="position: absolute;top:58vh;padding-left: 5%; padding-right: 5%;">
-            
+
                 <div style="position: absolute;left: 7vw;">
                   <img
                     src="../../HomePage_svg/top-icon-1.svg"
                     style="width: 60px; height: 60px; text-align: bottom"
                   />
                 </div>
-             
+
                 <div style="position: absolute;left: 20vw;">
                   <img
                     src="../../HomePage_svg/top-icon-2.svg"
                     style="width: 60px; height: 60px; text-align: bottom"
                   />
                 </div>
-              
+
                 <div style="position: absolute;left: 33vw;">
                   <img
                     src="../../HomePage_svg/top-icon-3.svg"
                     style="width: 60px; height: 60px; text-align: bottom"
                   />
                 </div>
-             
+
                 <div style="position: absolute;left: 46vw;">
                   <img
                     src="../../HomePage_svg/top-icon-4.svg"
                     style="width: 60px; height: 60px; text-align: bottom"
                   />
                 </div>
-              
+
           </div>
 
           <div class="icon-text">
@@ -219,10 +219,15 @@ export default {
     )
   },
   methods:{
+
+    change(value) {
+      console.log("现在输入框内为" + value);
+    },
     jpaper(index) {
       console.log("paper_id",this.hot_list[index].work_id )
       window.localStorage.setItem('WID',this.hot_list[index].work_id);
       window.open('/paper_details');
+
     },
     jadvance(){
       window.open('/advancedSearch');
@@ -287,7 +292,7 @@ export default {
   font-family: "Plus Jakarta Sans";
   font-weight: 700;
   font-size: 20px;
-  
+
   /* identical to box height, or 36px */
 
   letter-spacing: -0.01em;

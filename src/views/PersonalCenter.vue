@@ -210,14 +210,15 @@
                     </div>
                 </div>
                 <div v-show="activeIndex == 3" class="center">
-                    <div style="display:flex;align-items:center;justify-content:space-between">
+                  <collect-detail></collect-detail>
+                    <!---div style="display:flex;align-items:center;justify-content:space-between">
                         <div style="display:flex;align-items:center">
                             <img src="../assets/Star.png" alt="">
                             <span class="info-title">收藏夹</span>
                         </div>
                         <el-button v-if="show1" icon="el-icon-plus" class="btn">新建</el-button>
                         <el-button v-else icon="el-icon-back" @click="show1 = !show1" class="btn">返回</el-button>
-                    </div>
+                    </---div>
                     <div v-if="show1">
                         <div class="content2">
                             <div style="width: 100%">
@@ -258,7 +259,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div--->
                 </div>
                 <div v-show="activeIndex == 4" class="center">
                     <div style="display:flex;align-items:center;justify-content:space-between">
@@ -302,8 +303,10 @@
 
 <script>
 import topbar1 from "@/components/topbar1";
+import collect from "@/components/xyj/collect";
+import collectDetail from "@/components/xyj/collectDetail";
 export default{
-    components:{topbar1},
+    components:{collect, topbar1,collectDetail},
     data(){
         return {
             activeIndex: 1,
@@ -532,6 +535,9 @@ export default{
         box-shadow: 6px 6px 6px 6px rgba(122, 122, 122, 0.25);
         border-radius: 20px;
     }
+.center1{
+  left: 20px;
+}
     .info-title{
         font-family: 'Nunito Sans';
         font-style: normal;
