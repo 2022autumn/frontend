@@ -5,10 +5,9 @@
     <div class="ref-box-set" v-infinite-scroll="load" v-if="have_refer===true">
       <div class="ref-box" v-for="(item,index) in refer" :key="index">
         <div class="ref" @click="jdetail(item.id)">
-          <div class="index-box">
-            <div class="index">{{ index+1 }}</div>
-          </div>
-          <div class="content">{{ item.cited }}</div>
+          <div class="content">{{ item.title }}</div>
+          <div class="host_venue" v-show="item.host_venue!=null">{{item.host_venue}}</div>
+          <div class="publication_year">{{item.publication_year}}</div>
           <div class="line"></div>
         </div>
       </div>
@@ -71,8 +70,8 @@ export default {
 .re-total{
   position: absolute;
   /*width: 850px;*/
-  width: 56.86vw;
-  height: 400px;
+  width: 397px;
+  height: 847px;
   background: #FFFFFF;
   box-shadow: -2px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
@@ -82,7 +81,7 @@ export default {
   position: absolute;
   width: 110px;
   height: 26px;
-  left: 48px;
+  left: 24px;
   top:32px;
   font-family: 'Poppins';
   font-style: normal;
@@ -99,7 +98,7 @@ export default {
   position: absolute;
   width: 150px;
   height: 26px;
-  left: 740px;
+  left: 222px;
   top: 32px;
 
   font-family: 'Poppins';
@@ -122,7 +121,7 @@ export default {
   margin-bottom: 110px;
   overflow-y:scroll;
   overflow-x: hidden;
-  height: 265px;
+  height: 800px;
   padding-bottom: 20px;
 }
 ::-webkit-scrollbar {
@@ -139,7 +138,7 @@ export default {
 }
 .ref-box{
   position: relative;
-  width: 600px;
+  width: 356px;
   top:-50px;
 }
 .index-box{
@@ -174,19 +173,68 @@ export default {
 }
 .content {
   display: flex;
-  width: 750px;
-  margin-left: 90px;
-  padding-left:17px;
+  width: 356px;
+  margin-left: 29px;
+  padding-right:20px;
   margin-top:50px;
   text-align: justify;
   text-justify: distribute;
   word-break: break-all;
+
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  /* or 122% */
+
+  letter-spacing: 0.02em;
+
+  color: #000000;
+}
+.host_venue{
+  display: flex;
+  position: relative;
+  width: 345px;
+  height: auto;
+  left: 29px;
+  top: 8px;
+
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 26px;
+  /* identical to box height, or 186% */
+
+  letter-spacing: 0.02em;
+
+  color: #8A8A8A;
+}
+.publication_year{
+  display: flex;
+  position: relative;
+  width: 345px;
+  height: 26px;
+  left: 27px;
+  top: 8px;
+
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 26px;
+  /* identical to box height, or 186% */
+
+  letter-spacing: 0.02em;
+
+  color: #8A8A8A;
 }
 .line{
   position: relative;
-  width: 800px;
+  width: 346px;
   height: 0px;
-  left: 50px;
+  left: 24px;
   top: 22px;
 
   border: 1.4px solid rgba(217, 215, 215, 0.58);
