@@ -122,7 +122,7 @@
               <div style="display: inline-block;font-size: large;">
                 &nbsp;
                 <b>
-                {{item.title}}
+                  <div style="display: inline-block;" v-html="item.title"></div>
                 </b>
               </div>
               <div>
@@ -401,6 +401,36 @@
       }
     },
     methods:{
+      RegandRep(src, dst,pre,post) {
+        // 对传入的字符串src进行不区分大小写的正则匹配,匹配dst，indexs中存匹配的所有位置
+        // 例如：reg("abcabc", "bc") 返回1和4
+        var reg = new RegExp(dst, "i");
+        var indexs = [];
+        var index = 0;
+        while (index < src.length) {
+          var match = reg.exec(src.slice(index));
+          if (match) {
+            indexs.push(index + match.index);
+            index += match.index + 1;
+          } else {
+            break;
+          }
+        }
+        if (indexs.length === 0) {
+          return -1;
+        }
+        // 对匹配的位置进行处理，将匹配的位置前后插入字符串a和b
+        var result = "";
+        var last = 0;
+        for (var i = 0; i < indexs.length; i++) {
+          var len = dst.length
+          var inner = src.slice(indexs[i], indexs[i] + len)
+          result += src.slice(last, indexs[i]) + pre + inner + post;
+          last = indexs[i] + dst.length;
+        }
+        result += src.slice(last);
+        return result;
+      },
       dosort(value){
         console.log("选择条件为: "+value);
         if(value===1){
@@ -546,6 +576,8 @@
           var cond = JSON.parse(sessionStorage.getItem('Cond'));
           var searchname1 = sessionStorage.getItem('search_name1');
           var page = JSON.parse(sessionStorage.getItem('now_page'));
+          var pre = "<span style='color: red;'>";
+          var post = "</span>"
           console.log(this.conds);
           this.$axios({//注意是this.$axios
             method:'post',
@@ -654,10 +686,18 @@
                     this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0,330)+"...";
                   }
                   this.items[i].title = response.data.res.Works[i].title;
-                  if(this.items[i].title.length>50){//处理一下过长的摘要
+                  var oldtittle = "";
+                  oldtittle = this.items[i].title;
+                  if(this.items[i].title.length>50){//处理一下过长的题目
                     //console.log(this.items[i].zhaiyao);
                     this.items[i].title = this.items[i].title.substring(0,50)+"...";
                   }
+                  this.items[i].title = this.RegandRep(this.items[i].title,searchname1,pre,post);
+                  if(this.items[i].title===-1){
+                    this.items[i].title = oldtittle;
+                  }
+                  console.log("题目为")
+                  console.log(this.items[i].title);
                   //console.log(this.items[i].id);
                   if(response.data.res.Works[i].authorships.length!==0) {
                     this.items[i].author = response.data.res.Works[i].authorships[0].author.display_name;
