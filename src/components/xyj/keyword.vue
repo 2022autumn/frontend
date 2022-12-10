@@ -89,7 +89,7 @@ export default {
   },
   data(){
     return{
-      uid:3,
+      uid:window.localStorage.getItem('uid'),
       keywords:["核电厂","电厂设备","电气贯穿件(EPA)","延寿","再鉴定",],
       definekey:["经济报告","疫情相关","能源经济","换行测试"],
     }

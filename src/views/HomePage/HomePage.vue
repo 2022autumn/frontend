@@ -11,12 +11,12 @@
 
           <div style="margin-top: 6vh; margin-bottom: 5vh;display: inline-block">
             <div style="text-align: center">
-              <el-input class="home-search" placeholder="请输入检索内容" v-model="input1" @keyup.enter.native="j_search_outcome" @input="change">
+              <el-autocomplete :trigger-on-focus="false" :fetch-suggestions="querySearch" @select="handleSelect" class="home-search" placeholder="请输入检索内容" v-model="input1" @keyup.enter.native="j_search_outcome" @input="inputchange">
                 <!--<template slot="prepend" style="cursor: pointer">
                   <span @click="jadvance" style="width:inherit">高级检索</span>
                 </template>-->
                  <i slot="suffix" class="el-input__icon el-icon-search" @click="j_search_outcome" ></i>
-              </el-input>
+              </el-autocomplete>
             </div>
           </div>
 
@@ -197,6 +197,11 @@ export default {
   components: {Topbar1, PaperItem},
   data(){
     return{
+      restaurants: [
+        {
+          "value":"java"
+        }
+      ],
       input1:"",
       num_exact_page:8,
       total: 1000,//返回的检索结果的总量
@@ -219,7 +224,47 @@ export default {
     )
   },
   methods:{
-
+    inputchange(value){//搜索的内容改变
+      console.log(value);
+      this.$axios({//注意是this.$axios
+        method:'post',
+        url:'/es/prefix',
+        data:{//post请求这里是data
+          Field:"title",
+          Prefix:value
+        }
+      }).then(
+          response =>{
+            console.log("查询成功")
+            console.log(response.data.res);
+            this.restaurants.length=0;
+            for(var i=0;i<response.data.res.length;i++){
+              var tmp = {};
+              tmp.value = response.data.res[i];
+              this.restaurants.push(tmp);
+            }
+          }
+      )
+    },
+    querySearch(queryString, cb) {
+      var restaurants = this.restaurants;
+      //var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
+      // 调用 callback 返回建议列表的数据
+      cb(restaurants);
+    },
+    createFilter(queryString) {
+      return (restaurant) => {
+        return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
+    },
+    loadAll() {
+      return [
+        { "value": "三全鲜食（北新泾店）"},
+      ];
+    },
+    handleSelect(item) {
+      console.log(item);
+    },
     change(value) {
       console.log("现在输入框内为" + value);
     },

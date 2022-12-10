@@ -790,4 +790,19 @@ export default {
   box-shadow: 3px 3px 3px 3px rgba(107, 106, 106, 0.25);
   border-radius: 7px;
 }
+.item-type {
+  margin: auto;
+  padding:0vw,0.2vh;
+  background: #217bf4;
+  box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
+  border-radius: 9px;
+
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 4vh;
+  text-align: center;
+  letter-spacing: 0.01em;
+
+  color: #ffffff;
+}
 </style>
