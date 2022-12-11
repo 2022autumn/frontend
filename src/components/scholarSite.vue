@@ -248,7 +248,7 @@ export default {
     init() {
       console.log("打开门户申请组件");
       this.dialogVisible = true;
-      this.user_id = localStorage.getItem("uid");
+      this.user_id = window.localStorage.getItem("uid");
       // alert("user_id is " + this.user_id);
     },
     close() {

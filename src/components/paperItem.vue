@@ -1,32 +1,32 @@
 <template>
   <div class="item">
-    <div style="margin-top: 2vh">
-      <el-row>
+    <div style="margin-top: 1vh">
+        <div class="item-type" style="display: inline-block">
+          {{ this.type }}
+        </div>
+        <div class="item-title" style="display: inline-block">
+          {{ this.title }}
+        </div>
+      <!-- <el-row>
         <el-col :span="2">
           <div class="item-type">{{ this.type }}</div>
         </el-col>
         <el-col :span="22">
           <div class="item-title">{{this.title}}</div>
         </el-col>
-      </el-row>
+      </el-row> -->
     </div>
     <div class="item-info" style="text-align: left">
-      <span style="margin-right: 10px">{{this.author}}</span>
-      <img
-        src="../HomePage_svg/info-div.svg"
-        style="vertical-align: middle"
-      />
-      <span style="margin-left: 10px; margin-right: 10px">{{this.jigou}}</span>
-      <img
-        src="../HomePage_svg/info-div.svg"
-        style="vertical-align: middle"
-      />
-      <span style="margin-left: 10px; margin-right: 10px">{{this.time}}</span>
+      <span style="margin-right: 10px">{{ this.author }}</span>
+      <img src="../HomePage_svg/info-div.svg" style="vertical-align: middle" />
+      <span style="margin-left: 10px; margin-right: 10px">{{
+        this.jigou
+      }}</span>
+      <img src="../HomePage_svg/info-div.svg" style="vertical-align: middle" />
+      <span style="margin-left: 10px; margin-right: 10px">{{ this.time }}</span>
     </div>
     <div class="item-content">
-      {{
-        this.abstract
-      }}
+      {{ this.abstract }}
     </div>
     <!--<div style="width: 100%">
       <el-row>
@@ -69,14 +69,11 @@
 <script>
 export default {
   name: "paperItem",
-  props:['title','author','jigou','time','abstract','type'],
+  props: ["title", "author", "jigou", "time", "abstract", "type"],
   data() {
-    return {
-
-    };
+    return {};
   },
-
-}
+};
 </script>
 
 <style>
@@ -85,7 +82,7 @@ export default {
   margin: auto;
   margin-left: 3%;
   margin-bottom: 4vh;
-  padding: 1%;
+  padding: 2%;
   width: 95%;
   height: 230px;
 
@@ -95,29 +92,27 @@ export default {
 }
 .item-type {
   margin: auto;
-  width:4vw;
+  padding: 6px 5px;
   height: 4vh;
   background: #217bf4;
   box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
-  border-radius: 12px;
+  border-radius: 6px;
 
   font-weight: 700;
-  font-size: 14px;
-  line-height: 4vh;
-  text-align: center;
+  font-size: 16px;
   letter-spacing: 0.01em;
   color: #ffffff;
 }
 .item-title {
-  float: left;
+  margin-left: 1vw;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 108%;
   color: #2f2c4a;
 }
 .item-info {
   vertical-align: top;
-  padding-left: 2%;
+  /* padding-left: 2%; */
   padding-top: 2vh;
   padding-bottom: 2vh;
   width: 100%;
@@ -131,7 +126,7 @@ export default {
 .item-content {
   width: auto;
   /* margin: auto; */
-  padding-left: 15px;
+  /* padding-left: 15px; */
   padding-bottom: 2vh;
 
   align-items: center;
