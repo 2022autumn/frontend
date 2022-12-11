@@ -55,6 +55,7 @@ export default {
   },
   methods:{
     concern(item){
+
       console.log(item.islike+this.uid)
       if(this.uid!=null){
         if(item.islike===false){

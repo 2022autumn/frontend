@@ -11,10 +11,16 @@
 
           <div style="margin-top: 6vh; margin-bottom: 5vh;display: inline-block">
             <div style="text-align: center">
-              <el-autocomplete :trigger-on-focus="false" :fetch-suggestions="querySearch" @select="handleSelect" class="home-search" placeholder="请输入检索内容" v-model="input1" @keyup.enter.native="j_search_outcome" @input="inputchange">
+              <el-autocomplete :trigger-on-focus="false" :fetch-suggestions="querySearch" @select="handleSelect" class="home-search" placeholder="请输入检索内容" v-model="input1" @keyup.enter.native="j_search_outcome" @input="inputchange" style="width: 40vw">
                 <!--<template slot="prepend" style="cursor: pointer">
                   <span @click="jadvance" style="width:inherit">高级检索</span>
                 </template>-->
+                <el-select v-model="select" slot="prepend" placeholder="请选择字段" style="width: 10vw">
+                  <el-option label="标题" value="1"></el-option>
+                  <el-option label="摘要" value="2"></el-option>
+                  <el-option label="刊物" value="3"></el-option>
+                  <el-option label="机构" value="4"></el-option>
+                </el-select>
                  <i slot="suffix" class="el-input__icon el-icon-search" @click="j_search_outcome" ></i>
               </el-autocomplete>
             </div>
@@ -87,7 +93,7 @@
           <div class="reference">
             <el-row>
               <el-col :span="6">
-                <div class="button">推荐</div>
+                <div class="button" style="cursor: pointer">主题词</div>
               </el-col>
               <el-col :span="18">
                 <div class="ref-tag">
@@ -99,7 +105,7 @@
                       margin-top: 5px;"
                   />
                   <span style="vertical-align: top">
-                    订阅主题词，相关内容主页推荐~</span
+                    选择主题词，相关内容主页推荐~</span
                   >
                 </div>
               </el-col>
@@ -205,6 +211,7 @@ export default {
   components: {Topbar1, PaperItem},
   data(){
     return{
+      select:'',
       restaurants: [
         {
           "value":"java"
@@ -469,7 +476,7 @@ export default {
 .home-search /deep/ .el-input__inner {
   background: rgba(117, 167, 235, 0.52);
   height: 45px; /*调整inner的高度*/
-  width: 500px;
+  /*width: 500px;*/
 }
 .home-search /deep/ .el-input__inner::placeholder {
   font-weight: 300;

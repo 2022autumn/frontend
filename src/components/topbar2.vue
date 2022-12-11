@@ -17,6 +17,12 @@
     <div style="position: absolute;width: 35vw;height:40px;left:53.5vw;top:1.2vh;">
         <el-autocomplete  :trigger-on-focus="false" :fetch-suggestions="querySearch" @select="handleSelect" class="inline-input"  placeholder="请输入检索内容" v-model="input3"   @keyup.enter.native="do_search" @input="inputchange" style="width: 35vw">
         <!--<el-button slot="prepend" icon="el-icon-s-promotion" style="color: #FCFCFF;background-color: rgba(117, 167, 235, 0.52);border-radius: 0;border-color: whitesmoke" @click="jadvance">高级检索</el-button>-->
+          <el-select v-model="select" slot="prepend" placeholder="请选择字段" style="width: 8vw">
+            <el-option label="标题" value="1"></el-option>
+            <el-option label="摘要" value="2"></el-option>
+            <el-option label="刊物" value="3"></el-option>
+            <el-option label="机构" value="4"></el-option>
+          </el-select>
         <el-button slot="append" icon="el-icon-search" style="color:#ffffff;background-color: #217bf4; border-radius: 0;border-color: whitesmoke" @click="do_search" ></el-button>
       </el-autocomplete>
     </div>
@@ -29,6 +35,7 @@ export default {
   name: "topbar2",
   data(){
     return{
+      select:'',
       restaurants: [
         {
           "value":"java"
