@@ -209,8 +209,8 @@
                         </div>
                     </div>
                 </div>
-                <div v-show="activeIndex == 3" class="center">
-                  <collect-detail></collect-detail>
+                <div v-show="activeIndex == 3" class="center2">
+                  <collect></collect>
                     <!---div style="display:flex;align-items:center;justify-content:space-between">
                         <div style="display:flex;align-items:center">
                             <img src="../assets/Star.png" alt="">
@@ -535,6 +535,18 @@ export default{
         box-shadow: 6px 6px 6px 6px rgba(122, 122, 122, 0.25);
         border-radius: 20px;
     }
+  .center2{
+       position: absolute;
+       left: 27vw;
+       top: 2vh;
+       width: 55vw;
+       padding: 30px;
+       margin-top: 80px;
+       height: 83vh;
+       background-color: #ffffff;
+       box-shadow: 6px 6px 6px 6px rgba(122, 122, 122, 0.25);
+       border-radius: 20px;
+     }
 .center1{
   left: 20px;
 }

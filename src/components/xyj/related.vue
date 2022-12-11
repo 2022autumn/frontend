@@ -71,7 +71,7 @@ export default {
   position: absolute;
   /*width: 850px;*/
   width: 397px;
-  height: 847px;
+  height: 890px;
   background: #FFFFFF;
   box-shadow: -2px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
@@ -242,6 +242,7 @@ export default {
 }
 .null{
   position: relative;
+  width: 100%;
   height:20px;
   bottom: 10px;
   color: #0E84F4;
@@ -250,7 +251,7 @@ export default {
   font-weight: 600;
   font-size: 40px;
   top:150px;
-  left: 300px;
+  left: 55px;
 }
 .ref{
   cursor: pointer;
