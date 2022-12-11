@@ -93,7 +93,7 @@
           <div class="reference">
             <el-row>
               <el-col :span="6">
-                <div class="button" style="cursor: pointer">主题词</div>
+                <div class="button" >主题词</div>
               </el-col>
               <el-col :span="18">
                 <div class="ref-tag">
@@ -104,9 +104,18 @@
                       margin-left: -10%;
                       margin-top: 5px;"
                   />
-                  <span style="vertical-align: top">
-                    选择主题词，相关内容主页推荐~</span
-                  >
+                  <el-popover
+                      placement="right"
+                      title="我订阅的主题词"
+                      width="500"
+                      height="500"
+                      trigger="hover"
+                     >
+                  <div v-for="item in this.testkey" style="display: inline-block;margin-left: 10px;margin-top: 8px">
+                    <el-button style="width: auto;" @click="choosekey(item)">{{item.name}}</el-button>
+                  </div>
+                  <span style="vertical-align: top;cursor: pointer" slot="reference">
+                    选择主题词，相关内容主页推荐~</span></el-popover>
                 </div>
               </el-col>
             </el-row>
@@ -229,6 +238,29 @@ export default {
           "c","c","c","c"
       ],
       tuijianlist:[],
+      testkey:[{
+        name:"java",
+        id:1,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,}],
+      keyname:'',
+      keyid:0,
     }
   },
   mounted() {
@@ -247,6 +279,10 @@ export default {
     this.gettuijian();
   },
   methods:{
+    choosekey(item){
+      console.log(item.name);
+      console.log(item.id);
+    },
     gettuijian(){
       this.$axios({//注意是this.$axios
         method: 'get',
