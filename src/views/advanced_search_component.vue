@@ -1,28 +1,7 @@
 <template>
-  <div style="margin-left: 20vw;margin-top:-20vh">
-    <!--<topbar2></topbar2>-->
-    <el-row style="height: 600px" class="background">
-      <!--<el-col :span="7">
-        <div class="left-img" style="margin-top: 100px; margin-left: 30%">
-          <img preview-disabled
-               src="../../public/advanced_img/Advanced Search.svg"
-          />
-        </div>
-        <div class="title-text" style="margin-top: 50px; margin-left: 30%">
-          高级检索
-        </div>
-        <div class="left-img" style="margin-top: 70px; margin-left: 10%;width:100vx;">
-          <img preview-disabled
-               src="../../public/advanced_img/illustration1.svg"
-          />
-        </div>
-      </el-col>-->
-      <el-col :span="17" >
-        <div class="hot-list" style="margin-top: 130px">
+  <div style="margin-left: 0vw;margin-top:-15vh;">
+        <div class="hot-list" style="margin-top: 13vh">
           <div>&nbsp;</div>
-          <div class="box-word" style="margin-left: 4%;">
-            搜索内容
-          </div>
           <div>
             <FilterBar ref="bar1"  :iftop="1" :logic="this.params0.logic" :field="this.params0.field" :content="this.params0.content"/>
           </div>
@@ -117,8 +96,6 @@
             <el-button  style="display:block;margin:0 auto" class="search-button" @click="search">搜索</el-button>
           </div>
         </div>
-      </el-col>
-    </el-row>
   </div>
 </template>
 
@@ -258,14 +235,13 @@ export default {
   color: #0a093d;
 }
 .hot-list {
-  margin-top: 100px;
   margin: auto;
   padding: auto;
-  width: 100%;
-  height: 500px;
+  width: 60%;
+  height: 60vh;
 
   background: #ffffff;
-  box-shadow: 7px 7px 7px 7px rgba(0, 0, 0, 0.25);
+  box-shadow: 5px 5px 5px 5px rgba(114, 112, 112, 0.25);
   border-radius: 24px;
 }
 .background{
@@ -310,7 +286,7 @@ export default {
   align-items: center;
 }
 .box-word {
-  margin-top: 25px;
+  margin-top: 5px;
   width: 193px;
   height: 30px;
 
@@ -322,6 +298,8 @@ export default {
   letter-spacing: 0.01em;
 }
 .search-button{
+  margin-bottom: 10vh;
+  margin-left:0 auto;
   width: 198px;
   height: 42px;
   background: linear-gradient(94.95deg, #437FEC -43.46%, #4CD9ED 128.08%);

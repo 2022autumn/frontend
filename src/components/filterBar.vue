@@ -1,6 +1,6 @@
 <template>
     <div style="z-index: 9999">
-        <el-row style="margin-top: 20px; margin-left: 10%;margin-right: 10%">
+        <el-row style="margin-top: 10px; margin-left: 10%;margin-right: 10%">
             <!--<el-col :span="4">
                 <div style="margin-top: 10px; margin-left: 5%">
                     <el-dropdown @command = "handleCommand" >
@@ -154,7 +154,7 @@ data() {
   font-weight: 700;
   font-size: 17px;
   line-height: 30px;
-  color: darkgray;
+  color: rgb(122, 119, 119);
   text-align: center;
   letter-spacing: 0.01em;
 }
