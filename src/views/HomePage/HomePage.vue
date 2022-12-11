@@ -267,6 +267,10 @@ export default {
     }
   },
   mounted() {
+    this.userid = window.localStorage.getItem('uid');
+    if(this.userid===null||this.userid===undefined||this.userid===0||this.userid===""){
+      this.userid = 1;
+    }
     let that = this;
     that.$axios({//注意是this.$axios
       method:'get',
