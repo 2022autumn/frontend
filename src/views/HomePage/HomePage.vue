@@ -212,6 +212,7 @@ export default {
       total: 1000,//返回的检索结果的总量
       total_page:0,
       hot_list:[],
+      oldtime:'',
     }
   },
   mounted() {
@@ -231,25 +232,31 @@ export default {
   methods:{
     inputchange(value){//搜索的内容改变
       console.log(value);
-      this.$axios({//注意是this.$axios
-        method:'post',
-        url:'/es/prefix',
-        data:{//post请求这里是data
-          Field:"title",
-          Prefix:value
-        }
-      }).then(
-          response =>{
-            console.log("查询成功")
-            console.log(response.data.res);
-            this.restaurants.length=0;
-            for(var i=0;i<response.data.res.length;i++){
-              var tmp = {};
-              tmp.value = response.data.res[i];
-              this.restaurants.push(tmp);
-            }
+      console.log(this.oldtime);
+      var newtime = new Date();
+      console.log(newtime-this.oldtime);
+      if(newtime-this.oldtime>=1000) {
+        this.$axios({//注意是this.$axios
+          method: 'post',
+          url: '/es/prefix',
+          data: {//post请求这里是data
+            Field: "title",
+            Prefix: value
           }
-      )
+        }).then(
+            response => {
+              console.log("查询成功")
+              console.log(response.data.res);
+              this.restaurants.length = 0;
+              for (var i = 0; i < response.data.res.length; i++) {
+                var tmp = {};
+                tmp.value = response.data.res[i];
+                this.restaurants.push(tmp);
+              }
+            }
+        )
+        this.oldtime = new Date();
+      }
     },
     querySearch(queryString, cb) {
       var restaurants = this.restaurants;
@@ -293,6 +300,7 @@ export default {
     }
   },
   created() {
+    this.oldtime = new Date();
     if(this.total%4===0){
       this.total_page = this.total/8*10;
     }
