@@ -192,7 +192,7 @@ export default {
             url: "/register",
             data: {
               //post请求这里是data
-              author_id: "0",
+              author_id: this.author_id,
               author_name: this.ruleForm.name,
               content: this.ruleForm.others,
               email: this.ruleForm.email,
@@ -210,6 +210,7 @@ export default {
                 type: "success",
               });
               this.signup_visible = false;
+              this.$parent.isClaim = true;
             }
             // } else if (response.data.status===400) {
             //   this.$message({
@@ -248,8 +249,10 @@ export default {
     init() {
       console.log("打开门户申请组件");
       this.dialogVisible = true;
-      this.user_id = window.localStorage.getItem("uid");
-      // alert("user_id is " + this.user_id);
+      var tmp = window.localStorage.getItem("uid");
+      this.user_id = parseInt(tmp);
+      this.author_id = window.localStorage.getItem("SID");
+      // alert("user_id is " + this.user_id+"\n"+"author_id is " + this.author_id);
     },
     close() {
       console.log("关闭门户申请组件");

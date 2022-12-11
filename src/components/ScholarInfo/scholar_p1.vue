@@ -37,11 +37,17 @@
         {{claimContent}}
       </el-button>
     </span>
+    <Site ref="site"></Site>
   </div>
 </template>
 <script>
+import Site from "@/components/scholarSite.vue";
 export default {
   name: "scholar_p1",
+  components: {
+      //挂载组件
+      Site,//自定义的标签
+  },
   props: {
     scholarInfo: {
       type: Object
@@ -169,7 +175,9 @@ export default {
       )
     },
     claim() {
-      this.isClaim=!this.isClaim;
+      console.log("去申请门户");
+      this.$refs.site.init();
+      // this.isClaim=!this.isClaim;
       if(this.isClaim){
         this.claimContent="已认领";
         this.bg_color2="#0352FF";
