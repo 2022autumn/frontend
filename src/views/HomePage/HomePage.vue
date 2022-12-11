@@ -107,12 +107,15 @@
           </div>
 
           <div class="itemlist">
-            <PaperItem></PaperItem>
-            <PaperItem></PaperItem>
-            <PaperItem></PaperItem>
+            <PaperItem :title="this.tuijianlist[0].work.title" :author="this.tuijianlist[0].work.authorships[0].author.display_name" :jigou="this.tuijianlist[0].work.host_venue.display_name" :time="this.tuijianlist[0].work.publication_date" :abstract="this.tuijianlist[0].work.abstract" :type="this.tuijianlist[0].work.type"></PaperItem>
+            <PaperItem :title="this.tuijianlist[1].work.title" :author="this.tuijianlist[1].work.authorships[0].author.display_name" :jigou="this.tuijianlist[1].work.host_venue.display_name" :time="this.tuijianlist[1].work.publication_date" :abstract="this.tuijianlist[1].work.abstract" :type="this.tuijianlist[1].work.type"></PaperItem>
+            <PaperItem :title="this.tuijianlist[2].work.title" :author="this.tuijianlist[2].work.authorships[0].author.display_name" :jigou="this.tuijianlist[2].work.host_venue.display_name" :time="this.tuijianlist[2].work.publication_date" :abstract="this.tuijianlist[2].work.abstract" :type="this.tuijianlist[2].work.type"></PaperItem>
+            <PaperItem :title="this.tuijianlist[3].work.title" :author="this.tuijianlist[3].work.authorships[0].author.display_name" :jigou="this.tuijianlist[3].work.host_venue.display_name" :time="this.tuijianlist[3].work.publication_date" :abstract="this.tuijianlist[3].work.abstract" :type="this.tuijianlist[3].work.type"></PaperItem>
+            <PaperItem :title="this.tuijianlist[4].work.title" :author="this.tuijianlist[4].work.authorships[0].author.display_name" :jigou="this.tuijianlist[4].work.host_venue.display_name" :time="this.tuijianlist[4].work.publication_date" :abstract="this.tuijianlist[4].work.abstract" :type="this.tuijianlist[4].work.type"></PaperItem>
+            <PaperItem :title="this.tuijianlist[5].work.title" :author="this.tuijianlist[5].work.authorships[0].author.display_name" :jigou="this.tuijianlist[5].work.host_venue.display_name" :time="this.tuijianlist[5].work.publication_date" :abstract="this.tuijianlist[5].work.abstract" :type="this.tuijianlist[5].work.type"></PaperItem>
           </div>
 
-          <div class="pages">
+          <!--<div class="pages">
             <el-pagination
                 layout="prev, pager, next"
                 :total=this.total_page
@@ -120,7 +123,7 @@
                 background="white"
               >
             </el-pagination>
-          </div>
+          </div>-->
         </el-col>
 
         <!-- 右侧导航栏 -->
@@ -213,6 +216,12 @@ export default {
       total_page:0,
       hot_list:[],
       oldtime:'',
+      titles:[
+          "c",
+          "c",
+          "c","c","c","c"
+      ],
+      tuijianlist:[],
     }
   },
   mounted() {
@@ -228,8 +237,47 @@ export default {
           this.hot_list = response.data.data;
         }
     )
+    this.gettuijian();
   },
   methods:{
+    gettuijian(){
+      this.$axios({//注意是this.$axios
+        method: 'get',
+        url: '/scholar/roll',
+        params: {//post请求这里是data
+           userid:8
+        }
+      }).then(
+          response => {
+              console.log("推荐论文为");
+              console.log(response.data.data);
+              this.tuijianlist = response.data.data;
+              console.log(this.tuijianlist);
+              for(var i=0;i<this.tuijianlist.length;i++){
+                console.log(this.tuijianlist[i].work.title.length);
+                if(this.tuijianlist[i].work.title.length>65){//处理一下过长的题目
+                  //console.log(this.items[i].zhaiyao);
+                  console.log("过长")
+                  this.tuijianlist[i].work.title = this.tuijianlist[i].work.title.substring(0,65)+"...";
+                }
+                if(this.tuijianlist[i].work.abstract.length>230){
+                  this.tuijianlist[i].work.abstract = this.tuijianlist[i].work.abstract.substring(0,230)+"...";
+                }
+                console.log(this.tuijianlist[i].work.abstract)
+                if(this.tuijianlist[i].work.abstract===""){
+                  this.tuijianlist[i].work.abstract = "This paper has no abstract."
+                }
+                if(this.tuijianlist[i].work.authorships.length===0){
+                  this.tuijianlist[i].work.authorships[0].author.display_name = "unknown";
+                }
+                console.log(this.tuijianlist[i].work.type)
+                if(this.tuijianlist[i].work.type===null){
+                  this.tuijianlist[i].work.type = "unknown";
+                }
+              }
+          }
+      )
+    },
     inputchange(value){//搜索的内容改变
       console.log(value);
       console.log(this.oldtime);
@@ -300,6 +348,9 @@ export default {
     }
   },
   created() {
+    //this.gettuijian();
+    console.log("titles为")
+    console.log(this.titles);
     this.oldtime = new Date();
     if(this.total%4===0){
       this.total_page = this.total/8*10;

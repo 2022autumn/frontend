@@ -3,31 +3,32 @@
     <div style="margin-top: 2vh">
       <el-row>
         <el-col :span="2">
-          <div class="item-type">期刊</div>
+          <div class="item-type">{{ this.type }}</div>
         </el-col>
         <el-col :span="22">
-          <div class="item-title">这是文章的标题位置</div>
+          <div class="item-title">{{this.title}}</div>
         </el-col>
       </el-row>
     </div>
     <div class="item-info" style="text-align: left">
-      <span style="margin-right: 10px">作者</span>
+      <span style="margin-right: 10px">{{this.author}}</span>
       <img
         src="../HomePage_svg/info-div.svg"
         style="vertical-align: middle"
       />
-      <span style="margin-left: 10px; margin-right: 10px">所属机构名称</span>
+      <span style="margin-left: 10px; margin-right: 10px">{{this.jigou}}</span>
       <img
         src="../HomePage_svg/info-div.svg"
         style="vertical-align: middle"
       />
-      <span style="margin-left: 10px; margin-right: 10px">发表时间</span>
+      <span style="margin-left: 10px; margin-right: 10px">{{this.time}}</span>
     </div>
     <div class="item-content">
-      新冠肺炎疫情的出现是个"黑天鹅"事件.通过对疫情影响下的总供给,总需求及CPI的测算,并综合自然走势和政策效果分析,预计2020年的中国经济增速为5.5%-6.0%,
-      CPI上涨率能够控制在4.0%以内.疫情对中国经济自然走势的负面影响很大,2020年增增速目标的扩...
+      {{
+        this.abstract
+      }}
     </div>
-    <div style="width: 100%">
+    <!--<div style="width: 100%">
       <el-row>
         <el-col :span="3">
           <div class="item-keyword">标签/关键词</div>
@@ -62,9 +63,21 @@
           </div>
         </el-col>
       </el-row>
-    </div>
+    </div>-->
   </div>
 </template>
+<script>
+export default {
+  name: "paperItem",
+  props:['title','author','jigou','time','abstract','type'],
+  data() {
+    return {
+
+    };
+  },
+
+}
+</script>
 
 <style>
 /* 下方中间推荐内容 */
@@ -82,7 +95,7 @@
 }
 .item-type {
   margin: auto;
-  width: 4vw;
+  width:4vw;
   height: 4vh;
   background: #217bf4;
   box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
@@ -93,7 +106,6 @@
   line-height: 4vh;
   text-align: center;
   letter-spacing: 0.01em;
-
   color: #ffffff;
 }
 .item-title {
@@ -104,7 +116,6 @@
   color: #2f2c4a;
 }
 .item-info {
-  /* text-align: left; */
   vertical-align: top;
   padding-left: 2%;
   padding-top: 2vh;
