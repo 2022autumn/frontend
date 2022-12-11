@@ -705,12 +705,12 @@ export default {
               //console.log(response.data.res.Works);
               this.items[i].id = response.data.res.Works[i].id;
               this.items[i].zhaiyao = response.data.res.Works[i].abstract;
-              var oldzhaiyao = "";
-              oldzhaiyao = this.items[i].title;
               if(this.items[i].zhaiyao.length>330){//处理一下过长的摘要
                 //console.log(this.items[i].zhaiyao);
                 this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0,330)+"...";
               }
+              var oldzhaiyao = "";
+              oldzhaiyao = this.items[i].zhaiyao;
               if(this.items[i].zhaiyao!=="") {
                 this.items[i].zhaiyao = this.RegandRep(this.items[i].zhaiyao, searchname1, pre, post);
                 if (this.items[i].zhaiyao === -1) {
@@ -718,12 +718,12 @@ export default {
                 }
               }
               this.items[i].title = response.data.res.Works[i].title;
-              var oldtittle = "";
-              oldtittle = this.items[i].title;
               if(this.items[i].title.length>50){//处理一下过长的题目
                 //console.log(this.items[i].zhaiyao);
                 this.items[i].title = this.items[i].title.substring(0,50)+"...";
               }
+              var oldtittle = "";
+              oldtittle = this.items[i].title;
               this.items[i].title = this.RegandRep(this.items[i].title,searchname1,pre,post);
               if(this.items[i].title===-1){
                 this.items[i].title = oldtittle;
