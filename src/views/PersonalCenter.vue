@@ -472,7 +472,7 @@ export default {
       oldpass: "",
       newpass: "",
       test: "Electronic Attendance Recorder and Confirmation System Using Facial Identification Modules in Python",
-    
+
     };
   },
   methods: {
@@ -555,6 +555,7 @@ export default {
         console.log(res.data);
       });
       this.ifedit = 0;
+      window.location.reload();
       //this.get_data();
     },
     get_data() {
@@ -575,6 +576,9 @@ export default {
         this.phone = response.data.data.phone;
         this.gexingqianming = response.data.data.user_info;
         this.photourl = response.data.data.head_shot;
+        console.log("头像为")
+        console.log(this.photourl)
+        this.photourl = 'https://ishare.horik.cn/api/media/headshot/'+this.photourl;
       });
     },
     get_application() {
