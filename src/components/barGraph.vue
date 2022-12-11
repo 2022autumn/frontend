@@ -60,6 +60,7 @@ export default  {
           axisPointer : {            // 坐标轴指示器，坐标轴触发有效
             type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
           },
+          confine: true,  //解决浮窗被截断问题
           formatter : function(params){
             // console.log("params",params);//打印断点，会看到自己想要的后台数据
             if(params[0].data < 1) {

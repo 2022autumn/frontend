@@ -14,15 +14,15 @@
     <div class="history">
       <el-tabs v-model="activeName" ref="tabs" @tab-click="handleClick">
         <el-tab-pane label="过去十年发表" name="first">
-          <div class="scholar_img" v-if="activeName=='first'">
+          <div class="scholar_img" v-if="activeName=='first'" :lazy="true">
             <!--      <div class="echart" id="mychart" :style="myChartStyle"></div>-->
-            <barGraph class="graph" :ycounts="counts" :xcounts="xData"/>
+            <barGraph class="graph" ref="graph1" :ycounts="counts" :xcounts="xData"/>
           </div>
         </el-tab-pane>
-        <el-tab-pane class="graph" label="过去十年引用" name="second">
+        <el-tab-pane label="过去十年引用" name="second" :lazy="true">
           <div class="scholar_img" v-if="activeName=='second'">
             <!--      <div class="echart" id="mychart" :style="myChartStyle"></div>-->
-            <barGraph class="cgraph2" id="graph2" ref="graph2" :ycounts="counts2" :xcounts="xData"/>
+            <div id="mychart" :style="myChartStyle"></div>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -79,9 +79,8 @@ export default {
     return {
       xData: "",
       yData: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 10],
-      myChartStyle: { float: "left", width: "100%", height: "100px"}, //图表样式
+      myChartStyle: { float: "left", width: "100%", height: "120px"}, //图表样式
       newYData: [],
-      newYData2: [],
       activeName: 'first'
     }
   },
@@ -90,18 +89,18 @@ export default {
     //   console.log("newdata",newData)  //newData就是orderData
     //   this.newYData = newData;
     // },
-    'counts': {
-      handler (newData,oldData) {
-        console.log("newdata22",newData)
-        this.newYData = newData;
-      },
-      deep: true,
-      immediate: true,
-    },
+    // 'counts': {
+    //   handler (newData,oldData) {
+    //     console.log("newdata22",newData)
+    //     this.newYData = newData;
+    //   },
+    //   deep: true,
+    //   immediate: true,
+    // },
     'counts2': {
       handler (newData,oldData) {
         console.log("newdata2",newData)
-        this.newYData2 = newData;
+        this.newYData = newData;
       },
       deep: true,
       immediate: true,
@@ -120,7 +119,12 @@ export default {
       console.log(tab, event);
       this.activeName=tab.name;
       this.$nextTick(() => {
-        echarts.getInstanceByDom(this.$refs.graph2).resize()
+        if(this.activeName === 'second') {
+          this.initEcharts();
+          echarts.getInstanceByDom(this.$refs.graph2).resize()
+        } else if(this.activeName === 'first') {
+          echarts.getInstanceByDom(this.$refs.graph1).resize()
+        }
       })
     },
     initEcharts() {
@@ -130,13 +134,14 @@ export default {
           x: 0,
           y: 17,
           x2: 0,
-          y2: 17
+          y2: 0
         },
         tooltip : {
           trigger: 'axis',
           axisPointer : {            // 坐标轴指示器，坐标轴触发有效
             type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
           },
+          confine: true,  //解决浮窗被截断问题
           formatter : function(params){
             // console.log("params",params);//打印断点，会看到自己想要的后台数据
             if(params[0].data < 1) {
