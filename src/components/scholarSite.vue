@@ -163,7 +163,7 @@ export default {
     return {
       user_id: 0,
       author_id: "",
-      dialogVisible: true,
+      dialogVisible: false,
 
       ruleForm: {
         name: "",
@@ -189,7 +189,7 @@ export default {
           this.$axios({
             //注意是this.$axios
             method: "post",
-            url: "/register",
+            url: "/application/create",
             data: {
               //post请求这里是data
               author_id: this.author_id,
@@ -209,7 +209,7 @@ export default {
                 message: response.data.msg,
                 type: "success",
               });
-              this.signup_visible = false;
+              this.dialogVisible = false;
               this.$parent.isClaim = true;
             }
             // } else if (response.data.status===400) {

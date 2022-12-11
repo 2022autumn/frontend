@@ -769,6 +769,7 @@ export default {
        box-shadow: 6px 6px 6px 6px rgba(122, 122, 122, 0.25);
        border-radius: 20px;
      }
+    }
 .center1{
   left: 20px;
 }
