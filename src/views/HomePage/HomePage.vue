@@ -53,10 +53,10 @@
           </div>
 
           <div class="icon-text">
-            <div style="position: absolute;left: 7vw; white-space:nowrap">50k+学者</div>
-            <div style="position: absolute;left: 20vw; white-space:nowrap">100k+论文</div>
-            <div style="position: absolute;left: 33vw; white-space:nowrap">10k+期刊</div>
-            <div style="position: absolute;left: 46vw; white-space:nowrap">1k+组织</div>
+            <div style="position: absolute;left: 4vw; white-space:nowrap">216,389,416学者</div>
+            <div style="position: absolute;left: 17vw; white-space:nowrap">170,358,065论文</div>
+            <div style="position: absolute;left: 31vw; white-space:nowrap">226,726期刊</div>
+            <div style="position: absolute;left: 44vw; white-space:nowrap">108,618组织</div>
           </div>
         </el-col>
 
