@@ -10,7 +10,7 @@
     </div>
     <div class="info_title">
       个人简介
-      <i
+      <i id="editIcon"
           :class="{'el-icon-edit': !edit, 'el-icon-check': edit}"
           @click="this.editInfo"
       ></i>
@@ -191,5 +191,9 @@ export default {
   word-wrap: break-word;
   word-break: break-all;
   display: flex;
+}
+#editIcon {
+  cursor: pointer;
+  color: #4E86FF;
 }
 </style>

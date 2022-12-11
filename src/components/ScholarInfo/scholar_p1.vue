@@ -313,6 +313,7 @@ export default {
 .upload_btn {
   font-size: 14px;
   border: none;
+  background: transparent;
   text-decoration: underline;
 }
 .upload_btn:hover {
