@@ -1,5 +1,8 @@
 <template >
+  <div>
+  <Topbar1 ref="topbar"></Topbar1>
   <div class="paper-detail">
+
     <div class="main">
       <div class="paper-header">
           <div class="title">
@@ -186,6 +189,7 @@
       </div>
     </div>
   </div>
+  </div>
 </template>
 <script>
 // import leftBody from "../component/paperDetails/main.vue"
@@ -194,6 +198,7 @@ import Keyword from "@/components/xyj/keyword";
 import Reference from "@/components/xyj/reference";
 import Related from "@/components/xyj/related";
 import dateTime from "@/composables/calculationTime";
+import Topbar1 from "@/components/topbar1.vue";
 export default {
   name: "paperDetails",
   data() {
@@ -234,7 +239,8 @@ export default {
     Reference,
     Keyword,
     Note,
-    Related
+    Related,
+    Topbar1
   },
   methods: {
     strcatHeadshot(item) {
@@ -283,7 +289,10 @@ export default {
           user_id: parseInt(window.localStorage.getItem('uid')),
           paper_id: window.localStorage.getItem('WID'),
           //user_id: window.localStorage.getItem('SID'),
-        }
+        },
+        headers: {
+          'token': parseInt(window.localStorage.getItem('uid'))
+        },
       }).then(
           response =>{
             console.log(response.data);
@@ -375,6 +384,7 @@ export default {
   /*padding-bottom: 87px;*/
 }
 .main {
+  paddong-top: 9vw;
   //padding-left: 44px; //44px
   padding-left: 5.84vw;
   //display: flex;

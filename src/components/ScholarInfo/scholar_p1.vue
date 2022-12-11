@@ -89,8 +89,8 @@ export default {
     }).then(
         response =>{
           console.log(response.data);
-          this.followList = response.data.data;
-          console.log("followList", this.followList);
+          // this.followList = response.data.data;
+          // console.log("followList", this.followList);
           for(var i = 0; i < this.followList.length; i++) {
             if(this.followList[i].author_id == this.scholarInfo.id) {
               console.log("followed")
@@ -117,15 +117,34 @@ export default {
           response=> {
             this.userinfo = response.data.info;
             this.avator_url = "https://ishare.horik.cn/api/media/headshot/"+this.userinfo.headshot
+
             if(this.userinfo.verified === true) {
               this.isClaim = true;
               this.loadClaim()
             } else {
               this.loadClaim()
             }
+
+            if(this.userinfo.isFollow === true) {
+              this.isFollow = true;
+              this.loadFollow()
+            } else {
+              this.loadFollow()
+            }
           }
       )
     } ,
+    loadFollow() {
+      if(this.isFollow === true) {
+        this.followContent = "已认证";
+        this.bg_color = "#0352FF"
+        this.ft_color="#E6EEFF";
+      } else {
+        this.followContent = "+ 认证";
+        this.bg_color = "#E6EEFF"
+        this.ft_color="#0352FF";
+      }
+    },
     loadClaim() {
       if(this.isClaim === true) {
         this.claimContent = "已认证";
