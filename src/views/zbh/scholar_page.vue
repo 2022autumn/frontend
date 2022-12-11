@@ -285,7 +285,7 @@ export default {
       method:'get',
       url:'/es/get',
       params:{
-        id: "this.id"
+        id: this.id
         // id: "A4221478216"
       }
     }).then(

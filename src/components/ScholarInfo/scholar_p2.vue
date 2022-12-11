@@ -12,15 +12,15 @@
       个人简介
       <i
           :class="{'el-icon-edit': !edit, 'el-icon-check': edit}"
-          @click="edit = !edit"
+          @click="this.editInfo"
       ></i>
     </div>
     <div class="border">
     </div>
     <div class="personal_info" v-show="!edit">
-      {{this.description}}
+      {{this.scholar.intro}}
     </div>
-    <el-input class="edit_info" v-show="edit" type="textarea" v-model="description"></el-input>
+    <el-input class="edit_info" v-show="edit" type="textarea" v-model="scholar.intro"></el-input>
 <!--    <div class="info_bottom">-->
 <!--      <el-button class="more_btn">-->
 <!--        查看更多-->
@@ -40,6 +40,7 @@ export default {
   data() {
     return {
       info: {},
+      scholar: {},
       edit: false,
       description: "",
       institution: "No belonged institution"
@@ -61,7 +62,10 @@ export default {
         response => {
           // console.log("userinfo",response.data);
           this.info = response.data.data;
+          this.scholar = response.data.info;
           console.log("get useInfo", this.info);
+          console.log("get data", response.data);
+          console.log("get info", this.scholar);
           if(response.data.data.last_known_institution==null){
             let obj = new Object();
             obj.display_name ="no institution";
@@ -72,6 +76,31 @@ export default {
         }
     )
 
+  },
+  methods: {
+    editInfo() {
+      let that = this;
+      if(this.edit === true) {
+        that.$axios({
+          method:'post',
+          url:'/scholar/author/intro',
+          params:{
+            author_id: window.localStorage.getItem('SID'),
+            intro: this.scholar.intro,
+          }
+        }).then(
+            response=> {
+              console.log(this.scholar.intro)
+              this.$message({
+                type:"success",
+                message: response.data.msg,
+                customClass:'messageIndex'
+              })
+            }
+        )
+      }
+      this.edit = !this.edit;
+    }
   }
 }
 </script>

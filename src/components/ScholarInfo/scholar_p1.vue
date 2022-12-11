@@ -1,18 +1,17 @@
 <template>
   <div class="scholar_p1">
-    <img class="scholar_img" src="../../assets/scholar_avator.svg">
+    <img class="scholar_img" :src="scholarInfo.info.headshot">
     <el-upload
         ref="upload"
         class="upload-demo"
-        action="http://49.232.100.137/api/user/edit_user_photo"
+        action="123"
         :show-file-list="false"
-        list-type="picture-card"
         :on-change="handlePictureCardPreview"
         :on-success="handleAvatarSuccess"
         :http-request="submitAvatarHttp"
         accept=".jpg"
     >
-      <img width="100%" :src="userinfo.photo" class="avatar" />
+      <el-button size="small">点击上传照片</el-button>
     </el-upload>
 <!--    <span class="scholar_name">-->
 <!--        {{scholarInfo.display_name}}-->
@@ -111,8 +110,8 @@ export default {
         method:'post',
         url:'/social/follow',
         data:{//get请求这里是params
-          author_id: "A4221478216",
-          // author_id: window.localStorage.getItem('SID'),
+          // author_id: "A4221478216",
+          author_id: window.localStorage.getItem('SID'),
           // user_id:window.localStorage.getItem('WID')
           user_id: 8
         },
@@ -181,7 +180,66 @@ export default {
         this.bg_color2="#E6EEFF";
         this.ft_color2="#0352FF";
       }
-    }
+    },
+    submitAvatarHttp(val) {
+      let that=this;
+      console.log("in!");
+      console.log(val.file);
+      let fd = new FormData();
+      fd.append('Headshot', val.file);
+      fd.append('author_id', window.localStorage.getItem('SID'))
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+      }
+      that.$axios.post('/scholar/author/headshot',fd,config).then((res) => {
+        console.log(res);
+        // this.userinfo.photo= res.data.data.head_shot;
+              this.$message({
+                type: "success",
+                message: res.data.msg,
+                customClass:'messageIndex'
+              });
+              // that.updateAvator();
+            console.log("avatar!");
+          })
+          .catch((err) => {
+            this.$message.error("上传失败ww");
+            console.log(err);
+          });
+    },
+    handleAvatarSuccess(res, file) {
+      let self = this;
+      self.$forceUpdate();
+      location.upload();
+
+      this.userinfo.photo = URL.createObjectURL(file.raw);
+      console.log("res", res);
+    },
+
+    //大图预览
+    handlePictureCardPreview(file) {
+      console.log("preview");
+      console.log(file.url);
+      this.userinfo.photo = file == null ? this.userinfo.photo : file.url;
+      this.dialogVisible = true;
+    },
+
+    beforeAvatarUpload(file) {
+      // console.log('file',file);
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG 格式!");
+      }
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      this.upload(file);
+      return isJPG && isLt2M;
+    },
   }
 }
 </script>

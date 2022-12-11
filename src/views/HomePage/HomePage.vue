@@ -107,12 +107,12 @@
           </div>
 
           <div class="itemlist">
-            <PaperItem :title="this.tuijianlist[0].work.title" :author="this.tuijianlist[0].work.authorships[0].author.display_name" :jigou="this.tuijianlist[0].work.host_venue.display_name" :time="this.tuijianlist[0].work.publication_date" :abstract="this.tuijianlist[0].work.abstract" :type="this.tuijianlist[0].work.type"></PaperItem>
-            <PaperItem :title="this.tuijianlist[1].work.title" :author="this.tuijianlist[1].work.authorships[0].author.display_name" :jigou="this.tuijianlist[1].work.host_venue.display_name" :time="this.tuijianlist[1].work.publication_date" :abstract="this.tuijianlist[1].work.abstract" :type="this.tuijianlist[1].work.type"></PaperItem>
-            <PaperItem :title="this.tuijianlist[2].work.title" :author="this.tuijianlist[2].work.authorships[0].author.display_name" :jigou="this.tuijianlist[2].work.host_venue.display_name" :time="this.tuijianlist[2].work.publication_date" :abstract="this.tuijianlist[2].work.abstract" :type="this.tuijianlist[2].work.type"></PaperItem>
-            <PaperItem :title="this.tuijianlist[3].work.title" :author="this.tuijianlist[3].work.authorships[0].author.display_name" :jigou="this.tuijianlist[3].work.host_venue.display_name" :time="this.tuijianlist[3].work.publication_date" :abstract="this.tuijianlist[3].work.abstract" :type="this.tuijianlist[3].work.type"></PaperItem>
-            <PaperItem :title="this.tuijianlist[4].work.title" :author="this.tuijianlist[4].work.authorships[0].author.display_name" :jigou="this.tuijianlist[4].work.host_venue.display_name" :time="this.tuijianlist[4].work.publication_date" :abstract="this.tuijianlist[4].work.abstract" :type="this.tuijianlist[4].work.type"></PaperItem>
-            <PaperItem :title="this.tuijianlist[5].work.title" :author="this.tuijianlist[5].work.authorships[0].author.display_name" :jigou="this.tuijianlist[5].work.host_venue.display_name" :time="this.tuijianlist[5].work.publication_date" :abstract="this.tuijianlist[5].work.abstract" :type="this.tuijianlist[5].work.type"></PaperItem>
+            <PaperItem @click.native="jpaper1(0)" :title="this.tuijianlist[0].work.title" :author="this.tuijianlist[0].work.authorships[0].author.display_name" :jigou="this.tuijianlist[0].work.host_venue.display_name" :time="this.tuijianlist[0].work.publication_date" :abstract="this.tuijianlist[0].work.abstract" :type="this.tuijianlist[0].work.type" :key1="this.tuijianlist[0].work.concepts[0].display_name"  :key2="this.tuijianlist[0].work.concepts[1].display_name" :key3="this.tuijianlist[0].work.concepts[2].display_name" :num="this.tuijianlist[0].work.cited_by_count"></PaperItem>
+            <PaperItem @click.native="jpaper1(1)" :title="this.tuijianlist[1].work.title" :author="this.tuijianlist[1].work.authorships[0].author.display_name" :jigou="this.tuijianlist[1].work.host_venue.display_name" :time="this.tuijianlist[1].work.publication_date" :abstract="this.tuijianlist[1].work.abstract" :type="this.tuijianlist[1].work.type" :key1="this.tuijianlist[1].work.concepts[0].display_name"  :key2="this.tuijianlist[1].work.concepts[1].display_name" :key3="this.tuijianlist[1].work.concepts[2].display_name" :num="this.tuijianlist[1].work.cited_by_count"></PaperItem>
+            <PaperItem @click.native="jpaper1(2)" :title="this.tuijianlist[2].work.title" :author="this.tuijianlist[2].work.authorships[0].author.display_name" :jigou="this.tuijianlist[2].work.host_venue.display_name" :time="this.tuijianlist[2].work.publication_date" :abstract="this.tuijianlist[2].work.abstract" :type="this.tuijianlist[2].work.type" :key1="this.tuijianlist[2].work.concepts[0].display_name"  :key2="this.tuijianlist[2].work.concepts[1].display_name" :key3="this.tuijianlist[2].work.concepts[2].display_name" :num="this.tuijianlist[2].work.cited_by_count"></PaperItem>
+            <PaperItem @click.native="jpaper1(3)" :title="this.tuijianlist[3].work.title" :author="this.tuijianlist[3].work.authorships[0].author.display_name" :jigou="this.tuijianlist[3].work.host_venue.display_name" :time="this.tuijianlist[3].work.publication_date" :abstract="this.tuijianlist[3].work.abstract" :type="this.tuijianlist[3].work.type" :key1="this.tuijianlist[3].work.concepts[0].display_name"  :key2="this.tuijianlist[3].work.concepts[1].display_name" :key3="this.tuijianlist[3].work.concepts[2].display_name" :num="this.tuijianlist[3].work.cited_by_count"></PaperItem>
+            <PaperItem @click.native="jpaper1(4)" :title="this.tuijianlist[4].work.title" :author="this.tuijianlist[4].work.authorships[0].author.display_name" :jigou="this.tuijianlist[4].work.host_venue.display_name" :time="this.tuijianlist[4].work.publication_date" :abstract="this.tuijianlist[4].work.abstract" :type="this.tuijianlist[4].work.type" :key1="this.tuijianlist[4].work.concepts[0].display_name"  :key2="this.tuijianlist[4].work.concepts[1].display_name" :key3="this.tuijianlist[4].work.concepts[2].display_name" :num="this.tuijianlist[4].work.cited_by_count"></PaperItem>
+            <PaperItem @click.native="jpaper1(5)" :title="this.tuijianlist[5].work.title" :author="this.tuijianlist[5].work.authorships[0].author.display_name" :jigou="this.tuijianlist[5].work.host_venue.display_name" :time="this.tuijianlist[5].work.publication_date" :abstract="this.tuijianlist[5].work.abstract" :type="this.tuijianlist[5].work.type" :key1="this.tuijianlist[5].work.concepts[0].display_name"  :key2="this.tuijianlist[5].work.concepts[1].display_name" :key3="this.tuijianlist[5].work.concepts[2].display_name" :num="this.tuijianlist[5].work.cited_by_count"></PaperItem>
           </div>
 
           <!--<div class="pages">
@@ -255,10 +255,10 @@ export default {
               console.log(this.tuijianlist);
               for(var i=0;i<this.tuijianlist.length;i++){
                 console.log(this.tuijianlist[i].work.title.length);
-                if(this.tuijianlist[i].work.title.length>65){//处理一下过长的题目
+                if(this.tuijianlist[i].work.title.length>55){//处理一下过长的题目
                   //console.log(this.items[i].zhaiyao);
                   console.log("过长")
-                  this.tuijianlist[i].work.title = this.tuijianlist[i].work.title.substring(0,65)+"...";
+                  this.tuijianlist[i].work.title = this.tuijianlist[i].work.title.substring(0,55)+"...";
                 }
                 if(this.tuijianlist[i].work.abstract.length>230){
                   this.tuijianlist[i].work.abstract = this.tuijianlist[i].work.abstract.substring(0,230)+"...";
@@ -268,7 +268,12 @@ export default {
                   this.tuijianlist[i].work.abstract = "This paper has no abstract."
                 }
                 if(this.tuijianlist[i].work.authorships.length===0){
-                  this.tuijianlist[i].work.authorships[0].author.display_name = "unknown";
+                  var tmp1 = {};
+                  var tmp2 ={};
+                  tmp2.display_name = "unknown";
+                  tmp1.author = tmp2;
+                  this.tuijianlist[i].work.authorships.push(tmp1);
+                  //this.tuijianlist[i].work.authorships[0].author.display_name = "unknown";
                 }
                 console.log(this.tuijianlist[i].work.type)
                 if(this.tuijianlist[i].work.type===null){
@@ -276,6 +281,41 @@ export default {
                 }
                 if(this.tuijianlist[i].work.host_venue.display_name===null){
                   this.tuijianlist[i].work.host_venue.display_name = "unknown";
+                }
+                if(this.tuijianlist[i].work.concepts.length<3){
+                  console.log("发现问题")
+                  if(this.tuijianlist[i].work.concepts.length===0){
+                    var tmp = {};
+                    tmp.display_name = "Science";
+                    this.tuijianlist[i].work.concepts.push(tmp);
+                    tmp.display_name = "Hot";
+                    this.tuijianlist[i].work.concepts.push(tmp);
+                    tmp.display_name = "Recommended"
+                    this.tuijianlist[i].work.concepts.push(tmp);
+                    //this.tuijianlist[i].work.concepts[0].display_name = "Science";
+                    //this.tuijianlist[i].work.concepts[1].display_name = "Hot";
+                    //this.tuijianlist[i].work.concepts[2].display_name = "Recommended";
+                  }
+                  else if(this.tuijianlist[i].work.concepts.length===1){
+                    var tmp = {};
+                    tmp.display_name = "Science";
+                    this.tuijianlist[i].work.concepts.push(tmp);
+                    tmp.display_name = "Hot";
+                    this.tuijianlist[i].work.concepts.push(tmp);
+                    //this.tuijianlist[i].work.concepts[1].display_name = "Science";
+                    //this.tuijianlist[i].work.concepts[2].display_name = "Hot";
+                  }
+                  else if(this.tuijianlist[i].work.concepts.length===2){
+                    var tmp = {};
+                    tmp.display_name = "Science";
+                    this.tuijianlist[i].work.concepts.push(tmp);
+                    //this.tuijianlist[i].work.concepts[2].display_name = "Science";
+                  }
+                }
+                for(var t=0;t<3;t++){
+                  if(this.tuijianlist[i].work.concepts[t].display_name.length>20){
+                    this.tuijianlist[i].work.concepts[t].display_name = "Science";
+                  }
                 }
               }
           }
@@ -332,10 +372,15 @@ export default {
       console.log("现在输入框内为" + value);
     },
     jpaper(index) {
+
       console.log("paper_id",this.hot_list[index].work_id )
       window.localStorage.setItem('WID',this.hot_list[index].work_id);
       window.open('/paper_details');
-
+    },
+    jpaper1(index){
+      console.log("paper_id",this.tuijianlist[index].work.id)
+      window.localStorage.setItem('WID',this.tuijianlist[index].work.id);
+      window.open('/paper_details');
     },
     jadvance(){
       window.open('/advancedSearch');

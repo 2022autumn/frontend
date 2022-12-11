@@ -28,30 +28,30 @@
     <div class="item-content">
       {{ this.abstract }}
     </div>
-    <!--<div style="width: 100%">
+    <div style="width: 100%">
       <el-row>
-        <el-col :span="3">
-          <div class="item-keyword">标签/关键词</div>
+        <el-col :span="5">
+          <div class="item-keyword">{{this.key1}}</div>
         </el-col>
-        <el-col :span="3">
-          <div class="item-keyword">标签/关键词</div>
+        <el-col :span="5">
+          <div class="item-keyword">{{this.key2}}</div>
         </el-col>
-        <el-col :span="3">
-          <div class="item-keyword">标签/关键词</div>
+        <el-col :span="5">
+          <div class="item-keyword">{{this.key3}}</div>
         </el-col>
-        <el-col :span="9"><div class="item-placeholder">a</div></el-col>
-        <el-col :span="3">
+        <!--<el-col :span="9"><div class="item-placeholder">a</div></el-col>-->
+        <el-col :span="6">
           <div class="item-site" style="margin-top: 17px">
             <img
               src="../HomePage_svg/site.svg"
               style="vertical-align: top"
             />
             <span style="vertical-align: text-bottom; padding-left: 7px"
-              >引用次数</span
+              >引用次数:{{this.num}}</span
             >
           </div>
         </el-col>
-        <el-col :span="3">
+        <!--<el-col :span="3">
           <div class="item-site" style="margin-top: 13px">
             <img
               src="../HomePage_svg/star.svg"
@@ -61,15 +61,15 @@
               >收藏次数</span
             >
           </div>
-        </el-col>
+        </el-col>-->
       </el-row>
-    </div>-->
+    </div>
   </div>
 </template>
 <script>
 export default {
   name: "paperItem",
-  props: ["title", "author", "jigou", "time", "abstract", "type"],
+  props: ["title", "author", "jigou", "time", "abstract", "type","key1","key2","key3","num"],
   data() {
     return {};
   },
@@ -140,7 +140,8 @@ export default {
 }
 .item-keyword {
   margin: 10px;
-  width: 93px;
+  /*width: 93px;*/
+  width: auto;
   height: 30px;
 
   background: rgba(99, 162, 247, 0.1);
