@@ -617,7 +617,7 @@ export default {
 
 <style >
 .container-box {
-  background-image: url(../../public/advanced_img/Frame 1.svg);
+  background-image: url("../../public/advanced_img/Frame 1.svg");
   background-size: 100%;
   position: relative;
   height: 100vh;
