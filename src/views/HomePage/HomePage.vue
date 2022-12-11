@@ -180,8 +180,12 @@
             <div class="hot-titile2">热门排行</div>
             <div class="hot-item-set" v-for="(item, index) in hot_list" :key="index">
               <div class="hot-item">
-                <span v-if="index!=9" class="hot-number">{{ "0"+(index+1) }} </span>
-                <span v-else class="hot-number">{{ (index+1) }} </span>
+                <!-- <span v-if="index!=9" class="hot-number">{{ "0"+(index+1) }} </span> -->
+                <span v-if="index===0" class="hot-number" style="color: #FA1616">01</span>
+                <span v-if="index===1" class="hot-number" style="color: #FD9B40">02</span>
+                <span v-if="index===2" class="hot-number" style="color: #F6DA95">03</span>
+                <span v-if="index>2 && index!=9" class="hot-number">{{ "0"+(index+1) }}</span>
+                <span v-if="index===9" class="hot-number"> {{ (index+1) }} </span>
                 <span class="hot-content" @click="jpaper(index)"> {{ item.work_title }}.</span>
               </div>
             </div>
@@ -461,6 +465,7 @@ export default {
   min-height: 80px;
   padding-bottom: 10px;
   padding-left: 10px;
+  padding-right: 10px;
 
   background:#FFFFFF;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -490,12 +495,13 @@ export default {
   text-align: left;
 }
 .hot-number{
-  padding-left: 20px;
+  padding-left: 10px;
   font-weight: 800;
   font-size: 18px;
   line-height: 180%;
   text-align: center;
-  color: rgba(238, 80, 18, 0.67);
+  /* color: rgba(238, 80, 18, 0.67); */
+  color: rgba(86, 72, 72, 0.67);
 }
 .hot-content{
   padding: 10px,10px;
