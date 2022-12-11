@@ -11,12 +11,12 @@
 
           <div style="margin-top: 6vh; margin-bottom: 5vh;display: inline-block">
             <div style="text-align: center">
-              <el-input class="home-search" placeholder="请输入检索内容" v-model="input1" @keyup.enter.native="j_search_outcome" @input="change">
+              <el-autocomplete :trigger-on-focus="false" :fetch-suggestions="querySearch" @select="handleSelect" class="home-search" placeholder="请输入检索内容" v-model="input1" @keyup.enter.native="j_search_outcome" @input="inputchange">
                 <!--<template slot="prepend" style="cursor: pointer">
                   <span @click="jadvance" style="width:inherit">高级检索</span>
                 </template>-->
                  <i slot="suffix" class="el-input__icon el-icon-search" @click="j_search_outcome" ></i>
-              </el-input>
+              </el-autocomplete>
             </div>
           </div>
 
@@ -53,10 +53,10 @@
           </div>
 
           <div class="icon-text">
-            <div style="position: absolute;left: 7vw; white-space:nowrap">50k+学者</div>
-            <div style="position: absolute;left: 20vw; white-space:nowrap">100k+论文</div>
-            <div style="position: absolute;left: 33vw; white-space:nowrap">10k+期刊</div>
-            <div style="position: absolute;left: 46vw; white-space:nowrap">1k+组织</div>
+            <div style="position: absolute;left: 4vw; white-space:nowrap">216,389,416学者</div>
+            <div style="position: absolute;left: 17vw; white-space:nowrap">170,358,065论文</div>
+            <div style="position: absolute;left: 31vw; white-space:nowrap">226,726期刊</div>
+            <div style="position: absolute;left: 44vw; white-space:nowrap">108,618组织</div>
           </div>
         </el-col>
 
@@ -96,8 +96,7 @@
                     style="
                       vertical-align: middle;
                       margin-left: -10%;
-                      margin-top: 5px;
-                    "
+                      margin-top: 5px;"
                   />
                   <span style="vertical-align: top">
                     订阅主题词，相关内容主页推荐~</span
@@ -108,12 +107,15 @@
           </div>
 
           <div class="itemlist">
-            <PaperItem></PaperItem>
-            <PaperItem></PaperItem>
-            <PaperItem></PaperItem>
+            <PaperItem @click.native="jpaper1(0)" :title="this.tuijianlist[0].work.title" :author="this.tuijianlist[0].work.authorships[0].author.display_name" :jigou="this.tuijianlist[0].work.host_venue.display_name" :time="this.tuijianlist[0].work.publication_date" :abstract="this.tuijianlist[0].work.abstract" :type="this.tuijianlist[0].work.type" :key1="this.tuijianlist[0].work.concepts[0].display_name"  :key2="this.tuijianlist[0].work.concepts[1].display_name" :key3="this.tuijianlist[0].work.concepts[2].display_name" :num="this.tuijianlist[0].work.cited_by_count"></PaperItem>
+            <PaperItem @click.native="jpaper1(1)" :title="this.tuijianlist[1].work.title" :author="this.tuijianlist[1].work.authorships[0].author.display_name" :jigou="this.tuijianlist[1].work.host_venue.display_name" :time="this.tuijianlist[1].work.publication_date" :abstract="this.tuijianlist[1].work.abstract" :type="this.tuijianlist[1].work.type" :key1="this.tuijianlist[1].work.concepts[0].display_name"  :key2="this.tuijianlist[1].work.concepts[1].display_name" :key3="this.tuijianlist[1].work.concepts[2].display_name" :num="this.tuijianlist[1].work.cited_by_count"></PaperItem>
+            <PaperItem @click.native="jpaper1(2)" :title="this.tuijianlist[2].work.title" :author="this.tuijianlist[2].work.authorships[0].author.display_name" :jigou="this.tuijianlist[2].work.host_venue.display_name" :time="this.tuijianlist[2].work.publication_date" :abstract="this.tuijianlist[2].work.abstract" :type="this.tuijianlist[2].work.type" :key1="this.tuijianlist[2].work.concepts[0].display_name"  :key2="this.tuijianlist[2].work.concepts[1].display_name" :key3="this.tuijianlist[2].work.concepts[2].display_name" :num="this.tuijianlist[2].work.cited_by_count"></PaperItem>
+            <PaperItem @click.native="jpaper1(3)" :title="this.tuijianlist[3].work.title" :author="this.tuijianlist[3].work.authorships[0].author.display_name" :jigou="this.tuijianlist[3].work.host_venue.display_name" :time="this.tuijianlist[3].work.publication_date" :abstract="this.tuijianlist[3].work.abstract" :type="this.tuijianlist[3].work.type" :key1="this.tuijianlist[3].work.concepts[0].display_name"  :key2="this.tuijianlist[3].work.concepts[1].display_name" :key3="this.tuijianlist[3].work.concepts[2].display_name" :num="this.tuijianlist[3].work.cited_by_count"></PaperItem>
+            <PaperItem @click.native="jpaper1(4)" :title="this.tuijianlist[4].work.title" :author="this.tuijianlist[4].work.authorships[0].author.display_name" :jigou="this.tuijianlist[4].work.host_venue.display_name" :time="this.tuijianlist[4].work.publication_date" :abstract="this.tuijianlist[4].work.abstract" :type="this.tuijianlist[4].work.type" :key1="this.tuijianlist[4].work.concepts[0].display_name"  :key2="this.tuijianlist[4].work.concepts[1].display_name" :key3="this.tuijianlist[4].work.concepts[2].display_name" :num="this.tuijianlist[4].work.cited_by_count"></PaperItem>
+            <PaperItem @click.native="jpaper1(5)" :title="this.tuijianlist[5].work.title" :author="this.tuijianlist[5].work.authorships[0].author.display_name" :jigou="this.tuijianlist[5].work.host_venue.display_name" :time="this.tuijianlist[5].work.publication_date" :abstract="this.tuijianlist[5].work.abstract" :type="this.tuijianlist[5].work.type" :key1="this.tuijianlist[5].work.concepts[0].display_name"  :key2="this.tuijianlist[5].work.concepts[1].display_name" :key3="this.tuijianlist[5].work.concepts[2].display_name" :num="this.tuijianlist[5].work.cited_by_count"></PaperItem>
           </div>
 
-          <div class="pages">
+          <!--<div class="pages">
             <el-pagination
                 layout="prev, pager, next"
                 :total=this.total_page
@@ -121,7 +123,7 @@
                 background="white"
               >
             </el-pagination>
-          </div>
+          </div>-->
         </el-col>
 
         <!-- 右侧导航栏 -->
@@ -162,13 +164,15 @@
               src="../../HomePage_svg/right-icon3.svg"
               style="vertical-align: middle;"
             />
-            <span style="vertical-align: super"> 期刊频道 </span>
+            <span style="vertical-align: super"> 高级检索 </span>
           </div>
 
           <!-- 导航栏滚动框 -->
           <el-carousel height="25vh" interval="2000" style="margin-top: 5vh">
             <el-carousel-item v-for="item in 4" :key="item">
-              <h3 class="slides">{{ item }}</h3>
+              <h3 class="slides"><img preview-disabled style="width:23vw;"
+                        src="../../../public/advanced_img/Frame 8.svg"
+                    /></h3>
             </el-carousel-item>
           </el-carousel>
 
@@ -178,8 +182,12 @@
             <div class="hot-titile2">热门排行</div>
             <div class="hot-item-set" v-for="(item, index) in hot_list" :key="index">
               <div class="hot-item">
-                <span v-if="index!=9" class="hot-number" style="color: #FA1616">{{ "0"+(index+1) }} </span>
-                <span v-else class="hot-number" style="color: #FA1616">{{ (index+1) }} </span>
+                <!-- <span v-if="index!=9" class="hot-number">{{ "0"+(index+1) }} </span> -->
+                <span v-if="index===0" class="hot-number" style="color: #FA1616">01</span>
+                <span v-if="index===1" class="hot-number" style="color: #FD9B40">02</span>
+                <span v-if="index===2" class="hot-number" style="color: #F6DA95">03</span>
+                <span v-if="index>2 && index!=9" class="hot-number">{{ "0"+(index+1) }}</span>
+                <span v-if="index===9" class="hot-number"> {{ (index+1) }} </span>
                 <span class="hot-content" @click="jpaper(index)"> {{ item.work_title }}.</span>
               </div>
             </div>
@@ -197,11 +205,23 @@ export default {
   components: {Topbar1, PaperItem},
   data(){
     return{
+      restaurants: [
+        {
+          "value":"java"
+        }
+      ],
       input1:"",
       num_exact_page:8,
       total: 1000,//返回的检索结果的总量
       total_page:0,
       hot_list:[],
+      oldtime:'',
+      titles:[
+          "c",
+          "c",
+          "c","c","c","c"
+      ],
+      tuijianlist:[],
     }
   },
   mounted() {
@@ -217,17 +237,150 @@ export default {
           this.hot_list = response.data.data;
         }
     )
+    this.gettuijian();
   },
   methods:{
-
+    gettuijian(){
+      this.$axios({//注意是this.$axios
+        method: 'get',
+        url: '/scholar/roll',
+        params: {//post请求这里是data
+           userid:8
+        }
+      }).then(
+          response => {
+              console.log("推荐论文为");
+              console.log(response.data.data);
+              this.tuijianlist = response.data.data;
+              console.log(this.tuijianlist);
+              for(var i=0;i<this.tuijianlist.length;i++){
+                console.log(this.tuijianlist[i].work.title.length);
+                if(this.tuijianlist[i].work.title.length>55){//处理一下过长的题目
+                  //console.log(this.items[i].zhaiyao);
+                  console.log("过长")
+                  this.tuijianlist[i].work.title = this.tuijianlist[i].work.title.substring(0,55)+"...";
+                }
+                if(this.tuijianlist[i].work.abstract.length>230){
+                  this.tuijianlist[i].work.abstract = this.tuijianlist[i].work.abstract.substring(0,230)+"...";
+                }
+                console.log(this.tuijianlist[i].work.abstract)
+                if(this.tuijianlist[i].work.abstract===""){
+                  this.tuijianlist[i].work.abstract = "This paper has no abstract."
+                }
+                if(this.tuijianlist[i].work.authorships.length===0){
+                  var tmp1 = {};
+                  var tmp2 ={};
+                  tmp2.display_name = "unknown";
+                  tmp1.author = tmp2;
+                  this.tuijianlist[i].work.authorships.push(tmp1);
+                  //this.tuijianlist[i].work.authorships[0].author.display_name = "unknown";
+                }
+                console.log(this.tuijianlist[i].work.type)
+                if(this.tuijianlist[i].work.type===null){
+                  this.tuijianlist[i].work.type = "unknown";
+                }
+                if(this.tuijianlist[i].work.host_venue.display_name===null){
+                  this.tuijianlist[i].work.host_venue.display_name = "unknown";
+                }
+                if(this.tuijianlist[i].work.concepts.length<3){
+                  console.log("发现问题")
+                  if(this.tuijianlist[i].work.concepts.length===0){
+                    var tmp = {};
+                    tmp.display_name = "Science";
+                    this.tuijianlist[i].work.concepts.push(tmp);
+                    tmp.display_name = "Hot";
+                    this.tuijianlist[i].work.concepts.push(tmp);
+                    tmp.display_name = "Recommended"
+                    this.tuijianlist[i].work.concepts.push(tmp);
+                    //this.tuijianlist[i].work.concepts[0].display_name = "Science";
+                    //this.tuijianlist[i].work.concepts[1].display_name = "Hot";
+                    //this.tuijianlist[i].work.concepts[2].display_name = "Recommended";
+                  }
+                  else if(this.tuijianlist[i].work.concepts.length===1){
+                    var tmp = {};
+                    tmp.display_name = "Science";
+                    this.tuijianlist[i].work.concepts.push(tmp);
+                    tmp.display_name = "Hot";
+                    this.tuijianlist[i].work.concepts.push(tmp);
+                    //this.tuijianlist[i].work.concepts[1].display_name = "Science";
+                    //this.tuijianlist[i].work.concepts[2].display_name = "Hot";
+                  }
+                  else if(this.tuijianlist[i].work.concepts.length===2){
+                    var tmp = {};
+                    tmp.display_name = "Science";
+                    this.tuijianlist[i].work.concepts.push(tmp);
+                    //this.tuijianlist[i].work.concepts[2].display_name = "Science";
+                  }
+                }
+                for(var t=0;t<3;t++){
+                  if(this.tuijianlist[i].work.concepts[t].display_name.length>20){
+                    this.tuijianlist[i].work.concepts[t].display_name = "Science";
+                  }
+                }
+              }
+          }
+      )
+    },
+    inputchange(value){//搜索的内容改变
+      console.log(value);
+      console.log(this.oldtime);
+      var newtime = new Date();
+      console.log(newtime-this.oldtime);
+      if(newtime-this.oldtime>=1000) {
+        this.$axios({//注意是this.$axios
+          method: 'post',
+          url: '/es/prefix',
+          data: {//post请求这里是data
+            Field: "title",
+            Prefix: value
+          }
+        }).then(
+            response => {
+              console.log("查询成功")
+              console.log(response.data.res);
+              this.restaurants.length = 0;
+              for (var i = 0; i < response.data.res.length; i++) {
+                var tmp = {};
+                tmp.value = response.data.res[i];
+                this.restaurants.push(tmp);
+              }
+            }
+        )
+        this.oldtime = new Date();
+      }
+    },
+    querySearch(queryString, cb) {
+      var restaurants = this.restaurants;
+      //var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
+      // 调用 callback 返回建议列表的数据
+      cb(restaurants);
+    },
+    createFilter(queryString) {
+      return (restaurant) => {
+        return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
+    },
+    loadAll() {
+      return [
+        { "value": "三全鲜食（北新泾店）"},
+      ];
+    },
+    handleSelect(item) {
+      console.log(item);
+    },
     change(value) {
       console.log("现在输入框内为" + value);
     },
     jpaper(index) {
+
       console.log("paper_id",this.hot_list[index].work_id )
       window.localStorage.setItem('WID',this.hot_list[index].work_id);
       window.open('/paper_details');
-
+    },
+    jpaper1(index){
+      console.log("paper_id",this.tuijianlist[index].work.id)
+      window.localStorage.setItem('WID',this.tuijianlist[index].work.id);
+      window.open('/paper_details');
     },
     jadvance(){
       window.open('/advancedSearch');
@@ -243,6 +396,10 @@ export default {
     }
   },
   created() {
+    //this.gettuijian();
+    console.log("titles为")
+    console.log(this.titles);
+    this.oldtime = new Date();
     if(this.total%4===0){
       this.total_page = this.total/8*10;
     }
@@ -414,6 +571,7 @@ export default {
   min-height: 80px;
   padding-bottom: 10px;
   padding-left: 10px;
+  padding-right: 10px;
 
   background:#FFFFFF;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -443,20 +601,23 @@ export default {
   text-align: left;
 }
 .hot-number{
-  font-weight: 400;
+  padding-left: 10px;
+  font-weight: 800;
   font-size: 18px;
   line-height: 180%;
   text-align: center;
+  /* color: rgba(238, 80, 18, 0.67); */
   color: rgba(86, 72, 72, 0.67);
 }
 .hot-content{
+  padding: 10px,10px;
   cursor: pointer;
-  font-weight: 400;
+  font-weight: 700;
   font-size: 16px;
   line-height: 123%;
   text-align: center;
   /*color: #000000;*/
-  color: #778192;
+  color: #5c5e5f;
 }
 .hot-content:hover {
   /*text-decoration: underline;*/

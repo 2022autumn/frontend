@@ -44,14 +44,14 @@ export default {
 .v1 {
   float: left;
   margin-top: 0px;
-  margin-left: 120px;
+  margin-left: 40px;
   height: 400px;
   width: 170px;
 }
 .v2 {
   float: left;
   position: relative;
-  margin-left: 100px;
+  margin-left: 180px;
   height: 400px;
   width: 279px;
 }

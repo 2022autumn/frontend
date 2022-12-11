@@ -56,18 +56,19 @@
               status-icon
               :rules="rules"
               ref="ruleForm"
-              label-width="100px"
+              label-width="70px"
               class="text"
               style="margin: 5vh auto"
             >
               <el-form-item label="用户名" prop="name" class="sitem">
-                <el-input v-model.number="ruleForm.name"></el-input>
+                <el-input v-model.number="ruleForm.name" :validate-event="false"></el-input>
               </el-form-item>
               <el-form-item label="密码" prop="pwd" class="sitem">
                 <el-input
                   type="password"
                   v-model="ruleForm.pwd"
                   autocomplete="off"
+                  :validate-event="false"
                 ></el-input>
               </el-form-item>
               <el-form-item label="确认密码" prop="checkPwd" class="sitem">
@@ -75,6 +76,7 @@
                   type="password"
                   v-model="ruleForm.checkPwd"
                   autocomplete="off"
+                  :validate-event="false"
                 ></el-input>
               </el-form-item>
 
@@ -128,6 +130,8 @@ export default {
     var validatePwd = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
+      } else if (value.length < 6) {
+        callback(new Error("设置密码需不少于6位"));
       } else {
         if (this.ruleForm.checkPwd !== "") {
           this.$refs.ruleForm.validateField("validateCheckPwd");
@@ -158,9 +162,9 @@ export default {
         checkPwd: "",
       },
       rules: {
-        pwd: [{ validator: validatePwd, trigger: "blur" }],
-        checkPwd: [{ validator: validateCheckPwd, trigger: "blur" }],
-        name: [{ validator: checkName, trigger: "blur" }],
+        pwd: [{ validator: validatePwd}],//, trigger: "blur" 
+        checkPwd: [{ validator: validateCheckPwd}],
+        name: [{ validator: checkName}],
       },
     };
   },
@@ -180,9 +184,9 @@ export default {
               username: this.ruleForm.name,
             },
           }).then((response) => {
-            alert("into response");
-            console.log(this.ruleForm.name);
-            console.log(this.ruleForm.pwd);
+            // alert("into response");
+            // console.log(this.ruleForm.name);
+            // console.log(this.ruleForm.pwd);
             console.log("response", response);
             console.log(response.data);
 
@@ -192,14 +196,15 @@ export default {
                 type: "success",
               });
               this.signup_visible = false;
-            } else if (response.data.status===400) {
+            } else if (response.data.status === 400) {
               this.$message({
-                message: "用户名已存在",
+                message:  response.data.msg,//"用户名已存在",
                 type: "error",
               });
+              // this.ruleForm.name = "";
             } else {
               this.$message({
-                message: "注册失败",
+                message: response.data.msg,//"注册失败",
                 type: "error",
               });
             }

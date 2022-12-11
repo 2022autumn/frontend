@@ -25,7 +25,7 @@
               <b>&nbsp;主要作者</b>
             </div>
             <el-checkbox-group v-model="checklist_author" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.authors"  :label=item.key style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item.key}}</b></el-checkbox>
+              <el-checkbox v-for="item in this.authors"  :label=item.key style="display: block;word-wrap: break-word;overflow: hidden;left: 0.5vw;"><b>{{item.key}}</b></el-checkbox>
             </el-checkbox-group>
             <el-divider></el-divider>
             </div>
@@ -35,7 +35,7 @@
               <b>&nbsp;主要组织</b>
             </div>
             <el-checkbox-group v-model="checklist_institutions" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.institutions"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
+              <el-checkbox v-for="item in this.institutions"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;left: 0.5vw;"><b>{{item}}</b></el-checkbox>
             </el-checkbox-group>
             <el-divider></el-divider>
             </div>
@@ -45,7 +45,7 @@
               <b>&nbsp;发表年份</b>
             </div>
             <el-checkbox-group v-model="checklist_publish_years" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.publish_years"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
+              <el-checkbox v-for="item in this.publish_years"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;left: 0.5vw;"><b>{{item}}</b></el-checkbox>
             </el-checkbox-group>
             <el-divider></el-divider>
             </div>
@@ -55,7 +55,7 @@
               <b>&nbsp;出版单位</b>
             </div>
             <el-checkbox-group v-model="checklist_publishers" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.publishers"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
+              <el-checkbox v-for="item in this.publishers"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;left: 0.5vw;"><b>{{item}}</b></el-checkbox>
             </el-checkbox-group>
             <el-divider></el-divider>
             </div>
@@ -65,7 +65,7 @@
               <b>&nbsp;论文类型</b>
             </div>
             <el-checkbox-group v-model="checklist_types" :max="1" @change="choose_change">
-              <el-checkbox v-for="item in this.types"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;"><b>{{item}}</b></el-checkbox>
+              <el-checkbox v-for="item in this.types"  :label=item style="display: block;word-wrap: break-word;overflow: hidden;left: 0.5vw;"><b>{{item}}</b></el-checkbox>
             </el-checkbox-group>
             <el-divider></el-divider>
             </div>
@@ -75,8 +75,8 @@
               <b>&nbsp;刊物名称</b>
             </div>
             <el-checkbox-group v-model="checklist_venues" :max="1" @change="choose_change" >
-              <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all;display:block;word-wrap: break-word;" >
-                <b style="width: 22vw;word-break: break-all;display:block;word-wrap: break-word;">
+              <el-checkbox v-for="item in this.venues"  :label=item style="width: 22vw;word-break: break-all;display:block;word-wrap: break-word;overflow: hidden;left: 0.5vw;" >
+                <b>
                   {{item}}
                 </b>
               </el-checkbox>
@@ -117,12 +117,12 @@
 
             </div>
           <div v-for="item in items" v-if="item.id!==''" style="width: 50vw;height:240px; " @click="jdetail(item.id)">
-            <el-card  class="outcome-card" style="width:55vw;height:228px; " shadow="hover">
-              <el-tag style="display: inline-block">{{item.type}}</el-tag>
+            <el-card  class="outcome-card" style="width:60vw;height:228px; " shadow="hover">
+              <el-tag class="item-type" style="display: inline-block;vertical-align: middle;">{{item.type}}</el-tag>
               <div style="display: inline-block;font-size: large;">
                 &nbsp;
                 <b>
-                {{item.title}}
+                  <div style="display: inline-block;" v-html="item.title"></div>
                 </b>
               </div>
               <div>
@@ -140,7 +140,8 @@
                 </div>
               </div>
               <div style="font-size: small;color: grey">
-                {{item.zhaiyao}}
+                <!--{{item.zhaiyao}}-->
+                <div style="display: inline-block;" v-html="item.zhaiyao"></div>
               </div>
               <div style="margin-top: 2vh;display: inline-block">
                 <div v-for="tags in item.tags" v-if="tags!==''" style="display: inline-block">
@@ -156,10 +157,10 @@
                 {{item.numyin}}次被引
                 </div>
               </div>
-              <!--<div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
+              <div style="display: inline-block;color: rgba(96, 96, 96, 0.69); ">
                 <div style="display: inline-block;"><img src="../img/shoucang.svg" style="width: 2vw;height: 2vh"></div>
                 <div style="display: inline-block">{{item.numstore}}次收藏</div>
-              </div>-->
+              </div>
             </el-card>
           </div>
           <el-row style="margin:auto; top:2vh">
@@ -398,16 +399,45 @@
         true_total_page:0,
         sort:0,
         asc:true,
-        ifjiazai:0,
       }
     },
     methods:{
+      RegandRep(src, dst,pre,post) {
+        // 对传入的字符串src进行不区分大小写的正则匹配,匹配dst，indexs中存匹配的所有位置
+        // 例如：reg("abcabc", "bc") 返回1和4
+        var reg = new RegExp(dst, "i");
+        var indexs = [];
+        var index = 0;
+        while (index < src.length) {
+          var match = reg.exec(src.slice(index));
+          if (match) {
+            indexs.push(index + match.index);
+            index += match.index + 1;
+          } else {
+            break;
+          }
+        }
+        if (indexs.length === 0) {
+          return -1;
+        }
+        // 对匹配的位置进行处理，将匹配的位置前后插入字符串a和b
+        var result = "";
+        var last = 0;
+        for (var i = 0; i < indexs.length; i++) {
+          var len = dst.length
+          var inner = src.slice(indexs[i], indexs[i] + len)
+          result += src.slice(last, indexs[i]) + pre + inner + post;
+          last = indexs[i] + dst.length;
+        }
+        result += src.slice(last);
+        return result;
+      },
       dosort(value){
         console.log("选择条件为: "+value);
         if(value===1){
           this.sort=1;
           this.asc = false;
-          //this.openFullScreen2();
+          //Screen2();
         }
         else if(value===2){
           this.sort=1;
@@ -443,13 +473,9 @@
           spinner: 'el-icon-loading',
           background: 'rgba(0, 0, 0, 0.7)'
         });
-        loading.close();
-        if(this.ifjiazai===1){
+        setTimeout(() => {
           loading.close();
-        }
-        //setTimeout(() => {
-         // loading.close();
-        //}, 1100);
+        }, 1100);
       },
       jdetail(id){
         console.log("文章id为:");
@@ -557,6 +583,8 @@
           var cond = JSON.parse(sessionStorage.getItem('Cond'));
           var searchname1 = sessionStorage.getItem('search_name1');
           var page = JSON.parse(sessionStorage.getItem('now_page'));
+          var pre = "<span style='color: red;'>";
+          var post = "</span>"
           console.log(this.conds);
           this.$axios({//注意是this.$axios
             method:'post',
@@ -634,10 +662,6 @@
                     this.venues.length=0;
                     for (var i = 0; i < venues_len && i < 5; i++) {
                       this.venues[i] = response.data.res.Aggs.venues [i].key;
-                      if(this.venues[i].length>28){//处理一下过长的摘要
-                        //console.log(this.items[i].zhaiyao);
-                        this.venues[i] = this.venues[i].substring(0,28)+"...";
-                      }
                     }
                   }
                 }
@@ -664,21 +688,36 @@
                   //console.log(response.data.res.Works);
                   this.items[i].id = response.data.res.Works[i].id;
                   this.items[i].zhaiyao = response.data.res.Works[i].abstract;
-                  if(this.items[i].zhaiyao.length>330){//处理一下过长的摘要
+                  if(this.items[i].zhaiyao.length>400){//处理一下过长的摘要
                     //console.log(this.items[i].zhaiyao);
-                    this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0,330)+"...";
+                    this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0,400)+"...";
+                  }
+                  var oldzhaiyao = "";
+                  oldzhaiyao = this.items[i].zhaiyao;
+                  if(this.items[i].zhaiyao!=="") {
+                    this.items[i].zhaiyao = this.RegandRep(this.items[i].zhaiyao, searchname1, pre, post);
+                    if (this.items[i].zhaiyao === -1) {
+                      this.items[i].zhaiyao = oldzhaiyao;
+                    }
                   }
                   this.items[i].title = response.data.res.Works[i].title;
-                  if(this.items[i].title.length>50){//处理一下过长的摘要
+                  if(this.items[i].title.length>70){//处理一下过长的题目
                     //console.log(this.items[i].zhaiyao);
-                    this.items[i].title = this.items[i].title.substring(0,50)+"...";
+                    console.log("过长")
+                    this.items[i].title = this.items[i].title.substring(0,70)+"...";
+                  }
+                  var oldtittle = "";
+                  oldtittle = this.items[i].title;
+                  this.items[i].title = this.RegandRep(this.items[i].title,searchname1,pre,post);
+                  if(this.items[i].title===-1){
+                    this.items[i].title = oldtittle;
                   }
                   //console.log(this.items[i].id);
                   if(response.data.res.Works[i].authorships.length!==0) {
                     this.items[i].author = response.data.res.Works[i].authorships[0].author.display_name;
                     var t = response.data.res.Works[i].authorships.length;
-                    if(t>5){
-                      t=5;
+                    if(t>4){
+                      t=4;
                     }
                     for(var j=0;j<t;j++){
                       this.items[i].authors[j] = response.data.res.Works[i].authorships[j].author.display_name;
@@ -705,8 +744,8 @@
                   }
                   this.items[i].numyin = response.data.res.Works[i].cited_by_count;
                   //this.items[i].numstore = Math.ceil(Math.random()*100);
+                  loading.close();
                 }
-                loading.close();
               }
           )
           window.scrollTo(0,0);//返回顶部
@@ -715,7 +754,7 @@
     created() {
       this.conds = JSON.parse(sessionStorage.getItem('Cond'));
       this.now_page = JSON.parse(sessionStorage.getItem('now_page'));
-
+      //this.openFullScreen2();
       this.search();
       /*if(this.total%4===0){
         this.total_page = this.total/8*10;
@@ -763,5 +802,19 @@
     box-shadow: 3px 3px 3px 3px rgba(107, 106, 106, 0.25);
     border-radius: 7px;
   }
+  .item-type {
+  margin: auto;
+  padding:0.5vw,0.2vh;
+  background: #217bf4;
+  box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
+  border-radius: 9px;
 
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 4vh;
+  text-align: center;
+  letter-spacing: 0.01em;
+
+  color: #ffffff;
+}
   </style>
