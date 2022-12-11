@@ -12,7 +12,7 @@
       个人简介
       <i
           :class="{'el-icon-edit': !edit, 'el-icon-check': edit}"
-          @click="edit = !edit"
+          @click="this.editInfo"
       ></i>
     </div>
     <div class="border">
@@ -72,6 +72,24 @@ export default {
         }
     )
 
+  },
+  methods: {
+    editInfo() {
+      this.edit = !this.edit;
+      let that = this;
+      that.$axios({
+        method:'get',
+        url:'/es/get',
+        params:{
+          id: "this.id"
+          // id: "A4221478216"
+        }
+      }).then(
+          response=> {
+
+          }
+      )
+    }
   }
 }
 </script>
