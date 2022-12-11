@@ -96,8 +96,7 @@
                     style="
                       vertical-align: middle;
                       margin-left: -10%;
-                      margin-top: 5px;
-                    "
+                      margin-top: 5px;"
                   />
                   <span style="vertical-align: top">
                     订阅主题词，相关内容主页推荐~</span
