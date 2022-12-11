@@ -100,6 +100,7 @@ export default {
 
   font-weight: 700;
   font-size: 16px;
+  line-height: 2vh;
   letter-spacing: 0.01em;
   color: #ffffff;
 }

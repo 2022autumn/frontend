@@ -184,9 +184,9 @@ export default {
               username: this.ruleForm.name,
             },
           }).then((response) => {
-            alert("into response");
-            console.log(this.ruleForm.name);
-            console.log(this.ruleForm.pwd);
+            // alert("into response");
+            // console.log(this.ruleForm.name);
+            // console.log(this.ruleForm.pwd);
             console.log("response", response);
             console.log(response.data);
 
@@ -196,14 +196,15 @@ export default {
                 type: "success",
               });
               this.signup_visible = false;
-            } else if (response.data.status===400) {
+            } else if (response.data.status === 400) {
               this.$message({
-                message: "用户名已存在",
+                message:  response.data.msg,//"用户名已存在",
                 type: "error",
               });
+              // this.ruleForm.name = "";
             } else {
               this.$message({
-                message: "注册失败",
+                message: response.data.msg,//"注册失败",
                 type: "error",
               });
             }

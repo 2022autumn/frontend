@@ -473,6 +473,7 @@ export default {
       newpass: "",
       test: "Electronic Attendance Recorder and Confirmation System Using Facial Identification Modules in Python",
     
+      application:[],
     };
   },
   methods: {
@@ -588,12 +589,13 @@ export default {
       }).then((response) => {
         console.log("得到管理员页面列表");
         console.log(response.data);
+        this.application = response.data;
       });
     },
   },
   created() {
     this.get_data();
-    // this.get_application();
+    this.get_application();
   },
 };
 </script>
