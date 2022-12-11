@@ -3,19 +3,19 @@
         <div class="hot-list" style="margin-top: 13vh">
           <div>&nbsp;</div>
           <div>
-            <FilterBar ref="bar1"  :iftop="1" :logic="this.params0.logic" :field="this.params0.field" :content="this.params0.content"/>
+            <FilterBar ref="bar1"  :iftop="1" :logic="this.params0.logic" :field="this.params0.field" :content="this.params0.content" :tiaojian="this.tioajian[0]"/>
           </div>
           <div>
-            <FilterBar ref="bar2" :logic="this.params1.logic" :field="this.params1.field" :content="this.params1.content"/>
+            <FilterBar ref="bar2" :logic="this.params1.logic" :field="this.params1.field" :content="this.params1.content" :tiaojian="this.tioajian[1]"/>
           </div>
           <div>
-            <FilterBar ref="bar3" :logic="this.params2.logic" :field="this.params2.field" :content="this.params2.content"/>
+            <FilterBar ref="bar3" :logic="this.params2.logic" :field="this.params2.field" :content="this.params2.content" :tiaojian="this.tioajian[2]"/>
           </div>
           <div>
-            <FilterBar ref="bar4" :logic="this.params3.logic" :field="this.params3.field" :content="this.params3.content"/>
+            <FilterBar ref="bar4" :logic="this.params3.logic" :field="this.params3.field" :content="this.params3.content" :tiaojian="this.tioajian[3]"/>
           </div>
           <div>
-            <FilterBar ref="bar5" :logic="this.params4.logic" :field="this.params4.field" :content="this.params4.content"/>
+            <FilterBar ref="bar5" :logic="this.params4.logic" :field="this.params4.field" :content="this.params4.content" :tiaojian="this.tioajian[4]"/>
           </div>
           <!--<div class="box-word" style="margin-top: 4%;margin-left: 6%;">
             设定时间范围
@@ -91,6 +91,20 @@
           </div>
           <div>&nbsp;</div>
           <div>&nbsp;</div>-->
+          <div style="margin-left: 15%;margin-top: 2%;">
+            <div style="display: inline-block;font-size:15px;">
+              <b>&nbsp;&nbsp&nbsp时间范围(请输入年份)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
+            </div>
+            <div style="width: 8vw;display: inline-block">
+              <el-input v-model="start" placeholder="" size="mini"></el-input>
+            </div>
+            <div style="display: inline-block;font-size:15px;">
+              <b>&nbsp;&nbsp;~&nbsp;&nbsp;</b>
+            </div>
+            <div style="width: 8vw;display: inline-block">
+              <el-input v-model="end" placeholder="" size="mini"></el-input>
+            </div>
+          </div>
           <div style="height: 2vh"></div>
           <div>
             <el-button  style="display:block;margin:0 auto" class="search-button" @click="search">搜索</el-button>
@@ -108,6 +122,8 @@ export default {
   components: {Topbar2, Topbar1,FilterBar},
   data() {
     return {
+      start:sessionStorage.getItem('start'),
+      end:sessionStorage.getItem('end'),
       options: [{
         value: '选项1',
         label: '作者'
@@ -136,6 +152,7 @@ export default {
       params2:{},
       params3:{},
       params4:{},
+      tioajian:[],
     };
   },
   methods: {
@@ -185,6 +202,7 @@ export default {
   mounted() {
   },
   created() {
+    this.tioajian = JSON.parse(sessionStorage.getItem('tiaojian'));
     var query = JSON.parse(sessionStorage.getItem('query'));
     this.params0 = query[0];
     this.params1 = query[1];

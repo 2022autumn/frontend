@@ -33,7 +33,7 @@
 
             </div>
           </el-col>
-            <el-col :span="13">
+            <el-col :span="10">
                 <div style="margin-top: 5px; ">
                     <el-input v-model="input" placeholder="请输入该条目查询内容"></el-input>
                 </div>
@@ -43,9 +43,9 @@
                     in
                 </div>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="4">
                 <div style="margin-top: 5px; margin-left: 10%">
-                    <el-select v-model="value" placeholder="请选择搜索条目" >
+                    <el-select v-model="value" placeholder="搜索条目" >
                         <el-option
                         v-for="item in options"
                         :key="item.value"
@@ -55,6 +55,18 @@
                     </el-select>
                 </div>
             </el-col>
+          <el-col :span="4">
+            <div style="margin-top: 5px; margin-left: 10%">
+              <el-select v-model="value2" placeholder="查找方式" >
+                <el-option
+                    v-for="item in options2"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                </el-option>
+              </el-select>
+            </div>
+          </el-col>
             <!--<el-col :span="1">
                 <i class="el-icon-delete" style="margin-top: 70%;margin-left: 70%;color:darkgray" ></i>
             </el-col>-->
@@ -66,7 +78,7 @@
 <script>
 export default {
   name: "filterBar",
-  props:['logic','field','content','iftop'],
+  props:['logic','field','content','iftop','tiaojian'],
 data() {
   return {
         input:"",
@@ -106,8 +118,19 @@ data() {
             label: 'NOT'
           },
         ],
+        options2:[
+          {
+            value:'1',
+            label:'模糊'
+          },
+          {
+            value:'2',
+            label:'精确'
+          },
+        ],
         value: '',
         value1:'',
+    value2:'',
     };
   },
   methods: {
@@ -121,6 +144,7 @@ data() {
      this.value1 = this.logic;
      this.value = this.field;
      this.input = this.content;
+     this.value2 = this.tiaojian;
   }
 }
 </script>

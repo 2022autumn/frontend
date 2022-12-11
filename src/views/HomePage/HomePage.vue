@@ -288,7 +288,7 @@ export default {
         method: 'get',
         url: '/scholar/roll',
         params: {//post请求这里是data
-           userid:8
+          concept_id:'C73878792'
         }
       }).then(
           response => {
