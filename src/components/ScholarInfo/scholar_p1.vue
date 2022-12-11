@@ -80,11 +80,11 @@ export default {
       method:'post',
       url:'/social/follow/list',
       data:{//get请求这里是params
-        user_id: 8
+        user_id:parseInt(window.localStorage.getItem('uid'))
         // user_id:window.localStorage.getItem('SID')
       },
       headers: {
-        'token': 8
+        'token': parseInt(window.localStorage.getItem('uid'))
       },
     }).then(
         response =>{
@@ -146,10 +146,10 @@ export default {
           // author_id: "A4221478216",
           author_id: window.localStorage.getItem('SID'),
           // user_id:window.localStorage.getItem('WID')
-          user_id: 8
+          user_id:  parseInt(window.localStorage.getItem('uid')),
         },
         headers: {
-          'token': 8
+          'token': parseInt(window.localStorage.getItem('uid')),
         },
       }).then(
           response =>{
