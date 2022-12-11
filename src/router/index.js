@@ -112,9 +112,9 @@ const routes = [
     component:() => import('../views/PersonalCenter')
   },
   {
-    path:'/collect',
-    name:'collect',
-    component:() => import('../components/xyj/collect')
+    path:'/collectDetail',
+    name:'collectDetail',
+    component:() => import('../components/xyj/collectDetail')
   },
   {
     path:'/reference',

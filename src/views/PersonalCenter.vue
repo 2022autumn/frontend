@@ -319,6 +319,17 @@
                   <!--<el-form-item label="确认新密码：">
                                         <el-input style="width: 100%"></el-input>
                                     </el-form-item>-->
+                                </el-form>
+                            </div>
+                        </div>
+                        <div style="text-align: center;margin-top: 6vh">
+                            <el-button class="btn" size="medium " @click="resetpass">确定</el-button>
+                        </div>
+                    </div>
+                </div>
+                <div v-show="activeIndex == 3" class="center2">
+                  <collect></collect>
+                    <!---div style="display:flex;align-items:center;justify-content:space-between">
                 </el-form>
               </div>
             </div>
@@ -712,6 +723,54 @@ export default {
   border-radius: 20px;
 }
 .center1 {
+    .circular{
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border: 1px solid #aaaaaa;
+        border-radius: 50%;
+        margin-right: 10px;
+        position: relative;
+    }
+    .circular::after{
+        content: '';
+        height: 20px;
+        width: 2px;
+        background:#130CB7;
+        position: absolute;
+        bottom: -24px;
+        left: 12px;
+    }
+    .circular.last::after{
+        display: none;
+    }
+    .center{
+        position: absolute;
+        left: 27vw;
+        top: 2vh;
+        width: 55vw;
+        padding: 30px;
+        margin-top: 80px;
+        height: 83vh;
+        background-color: #ffffff;
+        overflow: auto;
+        box-shadow: 6px 6px 6px 6px rgba(122, 122, 122, 0.25);
+        border-radius: 20px;
+    }
+  .center2{
+       position: absolute;
+       left: 27vw;
+       top: 2vh;
+       width: 55vw;
+       padding: 30px;
+       margin-top: 80px;
+       height: 83vh;
+       background-color: #ffffff;
+       box-shadow: 6px 6px 6px 6px rgba(122, 122, 122, 0.25);
+       border-radius: 20px;
+     }
+    }
+.center1{
   left: 20px;
 }
 .info-title {
