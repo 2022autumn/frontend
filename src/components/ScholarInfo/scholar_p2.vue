@@ -84,7 +84,7 @@ export default {
         that.$axios({
           method:'post',
           url:'/scholar/author/intro',
-          params:{
+          data:{
             author_id: window.localStorage.getItem('SID'),
             intro: this.scholar.intro,
           }
@@ -97,7 +97,10 @@ export default {
                 customClass:'messageIndex'
               })
             }
-        )
+        ).catch((err) => {
+          this.$message.error("学者尚未被认领");
+          console.log(err);
+        });
       }
       this.edit = !this.edit;
     }
