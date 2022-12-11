@@ -11,7 +11,7 @@
         :http-request="submitAvatarHttp"
         accept=".jpg"
     >
-      <el-button class="upload_btn" size="small">点击上传照片</el-button>
+      <el-button class="upload_btn" size="small" v-if="this.userinfo.verified">点击上传照片</el-button>
     </el-upload>
 <!--    <span class="scholar_name">-->
 <!--        {{scholarInfo.display_name}}-->
