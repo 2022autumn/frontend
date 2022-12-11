@@ -110,15 +110,15 @@
 <!--              <el-dropdown-item>螺蛳粉</el-dropdown-item>-->
 <!--            </el-dropdown-menu>-->
 <!--          </el-dropdown>-->
-          <el-dropdown>
-            <span class="rank-comments">
-              排序条件<i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>发布时间</el-dropdown-item>
-              <el-dropdown-item>发布用户</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+<!--          <el-dropdown>-->
+<!--&lt;!&ndash;            <span class="rank-comments">&ndash;&gt;-->
+<!--&lt;!&ndash;              排序条件<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;            </span>&ndash;&gt;-->
+<!--            <el-dropdown-menu slot="dropdown">-->
+<!--              <el-dropdown-item>发布时间</el-dropdown-item>-->
+<!--              <el-dropdown-item>发布用户</el-dropdown-item>-->
+<!--            </el-dropdown-menu>-->
+<!--          </el-dropdown>-->
         </div>
         <div class="commends" v-if="comment_num === 0" >
           <div class="cards">
@@ -263,7 +263,7 @@ export default {
           // paper_id: "W2914747780",
           paper_id:window.localStorage.getItem('WID'),
           //user_id: window.localStorage.getItem('SID'),
-          user_id: 8
+          user_id: parseInt(window.localStorage.getItem('uid')),
         }
       }).then(
           response =>{
@@ -280,7 +280,7 @@ export default {
         data: {//get请求这里是params
           content: this.myComment,
           // paper_id: "W2914747780",
-          user_id: 8,
+          user_id: parseInt(window.localStorage.getItem('uid')),
           paper_id: window.localStorage.getItem('WID'),
           //user_id: window.localStorage.getItem('SID'),
         }
