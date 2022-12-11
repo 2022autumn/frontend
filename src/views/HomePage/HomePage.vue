@@ -274,6 +274,9 @@ export default {
                 if(this.tuijianlist[i].work.type===null){
                   this.tuijianlist[i].work.type = "unknown";
                 }
+                if(this.tuijianlist[i].work.host_venue.display_name===null){
+                  this.tuijianlist[i].work.host_venue.display_name = "unknown";
+                }
               }
           }
       )
