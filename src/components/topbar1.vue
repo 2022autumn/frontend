@@ -38,7 +38,7 @@ export default {
   },
   methods:{
     jcenter(){
-      if(this.iflogin===0){
+      if(this.iflogin!==1){
         this.$message.warning("请先登录")
       }
       else {
@@ -71,6 +71,7 @@ export default {
             console.log("得到个人信息")
             console.log(response.data);
             this.photourl = response.data.data.head_shot
+            this.photourl = 'https://ishare.horik.cn/api/media/headshot/'+this.photourl;
           }
       )
     },

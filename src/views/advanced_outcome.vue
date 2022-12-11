@@ -592,7 +592,11 @@ export default {
       console.log(page);
       var query = JSON.parse(sessionStorage.getItem('query'));
       var searchname1 = query[0].content;
+      var searchname2 = query[1].content;
+      var searchname3 = query[2].content;
       var pre = "<span style='color: red;'>";
+      var pre1 = "<span style='color: blue;'>"
+      var pre2 = "<span style='color: green;'>"
       var post = "</span>"
       console.log("query is");
       console.log(query);
@@ -717,6 +721,24 @@ export default {
                   this.items[i].zhaiyao = oldzhaiyao;
                 }
               }
+              if(searchname2!==undefined) {
+                oldzhaiyao = this.items[i].zhaiyao;
+                if (this.items[i].zhaiyao !== "") {
+                  this.items[i].zhaiyao = this.RegandRep(this.items[i].zhaiyao, searchname2, pre1, post);
+                  if (this.items[i].zhaiyao === -1) {
+                    this.items[i].zhaiyao = oldzhaiyao;
+                  }
+                }
+              }
+              if(searchname3!==undefined) {
+                oldzhaiyao = this.items[i].zhaiyao;
+                if (this.items[i].zhaiyao !== "") {
+                  this.items[i].zhaiyao = this.RegandRep(this.items[i].zhaiyao, searchname3, pre2, post);
+                  if (this.items[i].zhaiyao === -1) {
+                    this.items[i].zhaiyao = oldzhaiyao;
+                  }
+                }
+              }
               this.items[i].title = response.data.res.Works[i].title;
               if(this.items[i].title.length>50){//处理一下过长的题目
                 //console.log(this.items[i].zhaiyao);
@@ -728,6 +750,21 @@ export default {
               if(this.items[i].title===-1){
                 this.items[i].title = oldtittle;
               }
+              if(searchname2!==undefined) {
+                oldtittle = this.items[i].title;
+                this.items[i].title = this.RegandRep(this.items[i].title, searchname2, pre1, post);
+                if (this.items[i].title === -1) {
+                  this.items[i].title = oldtittle;
+                }
+              }
+              if(searchname3!==undefined) {
+                oldtittle = this.items[i].title;
+                this.items[i].title = this.RegandRep(this.items[i].title, searchname3, pre2, post);
+                if (this.items[i].title === -1) {
+                  this.items[i].title = oldtittle;
+                }
+              }
+              console.log("title is :"+this.items[i].title);
               //console.log(this.items[i].id);
               if(response.data.res.Works[i].authorships.length!==0) {
                 this.items[i].author = response.data.res.Works[i].authorships[0].author.display_name;

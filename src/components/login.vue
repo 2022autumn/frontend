@@ -52,18 +52,19 @@
             status-icon
             :rules="rules"
             ref="ruleForm"
-            label-width="100px"
+            label-width="70px"
             class="text"
             style="margin: 5vh auto"
           >
             <el-form-item label="用户名" prop="name" class="litem">
-              <el-input v-model.number="ruleForm.name"></el-input>
+              <el-input v-model.number="ruleForm.name" :validate-event="false"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="pwd" class="litem">
               <el-input
                 type="password"
                 v-model="ruleForm.pwd"
                 autocomplete="off"
+                :validate-event="false"
               ></el-input>
             </el-form-item>
 
@@ -136,8 +137,8 @@ export default {
         pwd: "",
       },
       rules: {
-        name: [{ validator: checkName, trigger: "blur" }],
-        pwd: [{ validator: validatePwd, trigger: "blur" }],
+        name: [{ validator: checkName }],//, trigger: "blur"
+        pwd: [{ validator: validatePwd }],
       },
     };
   },
@@ -178,7 +179,8 @@ export default {
                 message: "用户名不存在",
                 type: "error",
               });
-
+              this.ruleForm.name = "";
+              this.ruleForm.pwd = "";
             } else if (response.data.status===401) {
               this.$message({
                 message: "密码错误",

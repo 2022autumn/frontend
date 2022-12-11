@@ -39,31 +39,38 @@ export default {
       input3:"",
       photourl:'',
       userid:window.localStorage.getItem('uid'),
-      iflogin:JSON.parse(window.localStorage.getItem('iflogin'))
+      iflogin:JSON.parse(window.localStorage.getItem('iflogin')),
+      oldtime:'',
     }
   },
   methods:{
     inputchange(value){//搜索的内容改变
       console.log(value);
-      this.$axios({//注意是this.$axios
-        method:'post',
-        url:'/es/prefix',
-        data:{//post请求这里是data
-          Field:"title",
-          Prefix:value
-        }
-      }).then(
-          response =>{
+      console.log(this.oldtime);
+      var newtime = new Date();
+      console.log(newtime-this.oldtime);
+      if(newtime-this.oldtime>=1000) {
+        this.$axios({//注意是this.$axios
+          method: 'post',
+          url: '/es/prefix',
+          data: {//post请求这里是data
+            Field: "title",
+            Prefix: value
+          }
+        }).then(
+            response => {
               console.log("查询成功")
               console.log(response.data.res);
-              this.restaurants.length=0;
-              for(var i=0;i<response.data.res.length;i++){
+              this.restaurants.length = 0;
+              for (var i = 0; i < response.data.res.length; i++) {
                 var tmp = {};
                 tmp.value = response.data.res[i];
                 this.restaurants.push(tmp);
               }
-          }
-      )
+            }
+        )
+        this.oldtime = new Date();
+      }
     },
     jcenter(){
       this.$router.push('/personal_center');
@@ -107,6 +114,7 @@ export default {
             console.log("得到个人信息")
             console.log(response.data);
             this.photourl = response.data.data.head_shot
+            this.photourl = 'https://ishare.horik.cn/api/media/headshot/'+this.photourl;
           }
       )
     },
@@ -132,6 +140,7 @@ export default {
   },
   created(){
     //this.restaurants = this.loadAll();
+    this.oldtime = new Date();
     this.get_data();
     if(sessionStorage.getItem('search_name1')===null){
       this.input3 = '';

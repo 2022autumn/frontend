@@ -32,17 +32,19 @@
             width: 25vw;
             height: 583px;
             display: inline-block;
-            vertical-align: top;
-          "
+            vertical-align: top;"
         >
           <div style="float: right" @click="close">
             <img src="../HomePage_svg/close.svg" />
           </div>
-          <div class="inst-background">
+          <div class="inst-background" style="float: top">
             <!-- <div class="inst-title">学者门户认领</div> -->
-            <img style="margin-top: -8%; margin-left:-1%" src="../assets/admin/scholarSite.svg"/>
+            <img
+              style="margin-top: -10vh"
+              src="../assets/admin/scholarSite.svg"
+            />
 
-            <div class="inst-text">机构名称</div>
+            <!-- <div class="inst-text">机构名称</div>
             <el-input
               class="input"
               v-model="institution"
@@ -60,9 +62,65 @@
               class="input"
               v-model="field"
               placeholder="添加标签"
-            ></el-input>
+            ></el-input> -->
 
-            <div class="button">提交申请</div>
+            <el-form
+              :model="ruleForm"
+              status-icon
+              :rules="rules"
+              ref="ruleForm"
+              label-width="70px"
+              class="text"
+              style="margin: 3vh auto"
+            >
+              <el-form-item label="真实姓名" prop="name" class="sitem">
+                <el-input
+                  v-model.number="ruleForm.name"
+                  :validate-event="false"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="工作单位" prop="institution" class="sitem">
+                <el-input
+                  v-model.number="ruleForm.institution"
+                  :validate-event="false"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="工作邮箱" prop="email" class="sitem">
+                <el-input
+                  v-model.number="ruleForm.email"
+                  :validate-event="false"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="验证码" prop="pwd" class="sitem">
+                <el-input
+                  type="password"
+                  v-model="ruleForm.pwd"
+                  autocomplete="off"
+                  :validate-event="false"
+                  style="display: inline-block; width: 50%"
+                ></el-input>
+                <el-button style="display: inline-block" @click="sendCode">获取验证码</el-button>
+              </el-form-item>
+              <el-form-item label="其他内容" prop="others" class="sitem">
+                <el-input
+                  type="textarea"
+                  v-model="ruleForm.others"
+                  autocomplete="off"
+                  :validate-event="false"
+                ></el-input>
+              </el-form-item>
+
+              <!-- <el-form-item>
+                <el-button type="primary" @click="submitForm('ruleForm')"
+                  >提交</el-button
+                >
+                <el-button @click="resetForm('ruleForm')">重置</el-button>
+              </el-form-item> -->
+            </el-form>
+
+            <el-button class="button" @click="submitApply('ruleForm')"
+              >提交申请</el-button
+            >
           </div>
         </div>
       </div>
@@ -73,20 +131,128 @@
 <script>
 export default {
   data() {
+    var checkName = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("真实姓名不能为空"));
+      } else {
+        callback();
+      }
+    };
+    var checkInst = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("工作单位不能为空"));
+      } else {
+        callback();
+      }
+    };
+    var checkEmail = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("工作邮箱不能为空"));
+      } else {
+        callback();
+      }
+    };
+    var validatePwd = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("验证码不能为空"));
+      } else {
+        callback();
+      }
+    };
+
     return {
-      institution: "",
-      email: "",
+      user_id: 0,
+      author_id: "",
       dialogVisible: true,
+
+      ruleForm: {
+        name: "",
+        institution: "",
+        email:"",
+        pwd: "",
+        others: "",
+      },
+      rules: {
+        pwd: [{ validator: validatePwd }],//, trigger: "blur"
+        name: [{ validator: checkName }],
+        institution: [{ validator: checkInst }],
+        email: [{ validator: checkEmail }],
+      },
     };
   },
   setup() {},
   methods: {
+    submitApply(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          // alert("submit signup request correct");
+          this.$axios({
+            //注意是this.$axios
+            method: "post",
+            url: "/register",
+            data: {
+              //post请求这里是data
+              author_id: "0",
+              author_name: this.ruleForm.name,
+              content: this.ruleForm.others,
+              email: this.ruleForm.email,
+              institution: this.ruleForm.institution,
+              user_id: this.user_id,
+              verify_code:this.ruleForm.pwd,
+            },
+          }).then((response) => {
+            console.log("response", response);
+            console.log(response.data);
+
+            if (response.data.status === 200) {
+              this.$message({
+                message: response.data.msg,
+                type: "success",
+              });
+              this.signup_visible = false;
+            }
+            // } else if (response.data.status===400) {
+            //   this.$message({
+            //     message: response.data.msg,
+            //     type: "error",
+            //   });
+            // } else if (response.data.status===401) {
+            //   this.$message({
+            //     message: response.data.msg,
+            //     type: "error",
+            //   });
+            // } else if (response.data.status===402) {
+            //   this.$message({
+            //     message: response.data.msg,
+            //     type: "error",
+            //   });
+            // } else if (response.data.status===403) {
+            //   this.$message({
+            //     message: response.data.msg,
+            //     type: "error",
+            //   });
+            else {
+              this.$message({
+                message: response.data.msg,
+                type: "error",
+              });
+            }
+          });
+        } else {
+          console.log("submit signup request error");
+          return false;
+        }
+      });
+    },
+
     init() {
-      console.log("打开注册组件");
+      console.log("打开门户申请组件");
       this.dialogVisible = true;
+      this.user_id = window.localStorage.getItem("uid");
+      // alert("user_id is " + this.user_id);
     },
     close() {
-      console.log("关闭注册组件");
+      console.log("关闭门户申请组件");
       this.dialogVisible = false;
     },
   }
@@ -103,8 +269,8 @@ export default {
 
 .inst-background {
   margin: auto;
-  padding: 15% 0;
-  width: 70%;
+  padding: 10% 0;
+  width: 80%;
   height: 583px;
   vertical-align: middle;
   /* height: 70%; */
