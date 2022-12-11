@@ -117,7 +117,7 @@
 
             </div>
           <div v-for="item in items" v-if="item.id!==''" style="width: 50vw;height:240px; " @click="jdetail(item.id)">
-            <el-card  class="outcome-card" style="width:55vw;height:228px; " shadow="hover">
+            <el-card  class="outcome-card" style="width:60vw;height:228px; " shadow="hover">
               <el-tag class="item-type" style="display: inline-block;vertical-align: middle;">{{item.type}}</el-tag>
               <div style="display: inline-block;font-size: large;">
                 &nbsp;
@@ -688,9 +688,9 @@
                   //console.log(response.data.res.Works);
                   this.items[i].id = response.data.res.Works[i].id;
                   this.items[i].zhaiyao = response.data.res.Works[i].abstract;
-                  if(this.items[i].zhaiyao.length>330){//处理一下过长的摘要
+                  if(this.items[i].zhaiyao.length>400){//处理一下过长的摘要
                     //console.log(this.items[i].zhaiyao);
-                    this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0,330)+"...";
+                    this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0,400)+"...";
                   }
                   var oldzhaiyao = "";
                   oldzhaiyao = this.items[i].zhaiyao;
@@ -716,8 +716,8 @@
                   if(response.data.res.Works[i].authorships.length!==0) {
                     this.items[i].author = response.data.res.Works[i].authorships[0].author.display_name;
                     var t = response.data.res.Works[i].authorships.length;
-                    if(t>5){
-                      t=5;
+                    if(t>4){
+                      t=4;
                     }
                     for(var j=0;j<t;j++){
                       this.items[i].authors[j] = response.data.res.Works[i].authorships[j].author.display_name;
