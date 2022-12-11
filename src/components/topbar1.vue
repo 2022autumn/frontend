@@ -38,7 +38,7 @@ export default {
   },
   methods:{
     jcenter(){
-      if(this.iflogin===0){
+      if(this.iflogin!==1){
         this.$message.warning("请先登录")
       }
       else {
