@@ -130,7 +130,7 @@
         <div class="commends" v-infinite-scroll="load">
           <div class="cards" v-for="(item,index) in command" :key="index">
             <div class="user-info">
-              <el-avatar class="commenter-avator" :src="item.headshot">
+              <el-avatar class="commenter-avator" :src=strcatHeadshot(item)>
               </el-avatar>
               <div class="left-info">
                 <span class="commenter-id">
@@ -237,6 +237,10 @@ export default {
     Related
   },
   methods: {
+    strcatHeadshot(item) {
+      console.log("headshot","https://ishare.horik.cn/api/media/headshot/"+item.headshot)
+      return "https://ishare.horik.cn/api/media/headshot/"+item.headshot;
+    },
     jscholar(index){
       // window.localStorage.setItem('SID',this.author_id);
       console.log(this.paper.authors[index].author.id)
