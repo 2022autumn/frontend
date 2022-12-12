@@ -196,15 +196,20 @@ export default {
                 type: "success",
               });
               this.signup_visible = false;
-            } else if (response.data.status === 400) {
+            }
+          }).catch((error) => {
+            console.log("error", error)
+            console.log("error", error.response.status)
+            
+            if (error.response.status === 400) {
               this.$message({
-                message:  response.data.msg,//"用户名已存在",
+                message: error.response.data.msg,//"用户名已存在",
                 type: "error",
               });
               // this.ruleForm.name = "";
             } else {
               this.$message({
-                message: response.data.msg,//"注册失败",
+                message: error.response.data.msg,//"注册失败",
                 type: "error",
               });
             }

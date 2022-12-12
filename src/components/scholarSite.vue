@@ -6,7 +6,6 @@
       :showClose="false"
       width="46.5vw"
       height="583px"
-      :before-close="handleClose"
     >
       <div style="background: #fffdfd; border-radius: 12px">
         <div
@@ -44,10 +43,7 @@
           </div>
           <div class="inst-background" style="float: top">
             <!-- <div class="inst-title">学者门户认领</div> -->
-            <img
-              style="margin-top: -10vh"
-              src="../assets/admin/title.png"
-            />
+            <img style="margin-top: -10vh" src="../assets/admin/title.png" />
 
             <!-- <div class="inst-text">机构名称</div>
             <el-input
@@ -97,8 +93,8 @@
                 ></el-input>
               </el-form-item>
               <el-form-item label="验证码" prop="pwd" class="sitem">
+                <!-- type="password" -->
                 <el-input
-                  type="password"
                   v-model="ruleForm.pwd"
                   autocomplete="off"
                   :validate-event="false"
@@ -218,53 +214,45 @@ export default {
             url: "/application/create",
             data: {
               //post请求这里是data
-              author_id: this.author_id,
-              author_name: this.ruleForm.name,
-              content: this.ruleForm.others,
-              email: this.ruleForm.email,
-              institution: this.ruleForm.institution,
+              author_id: this.author_id.toString(),
+              author_name: this.ruleForm.name.toString(),
+              content: this.ruleForm.others.toString(),
+              email: this.ruleForm.email.toString(),
+              institution: this.ruleForm.institution.toString(),
               user_id: this.user_id,
-              verify_code: this.ruleForm.pwd,
+              verify_code: this.ruleForm.pwd.toString(),
             },
-          }).then((response) => {
-            console.log("response", response);
-            console.log(response.data);
+          })
+            .then((response) => {
+              console.log("response", response);
+              console.log(response.data);
 
-            if (response.data.status === 200) {
-              this.$message({
-                message: response.data.msg,
-                type: "success",
-              });
-              this.dialogVisible = false;
-              this.$parent.isClaim = true;
-            }
-            // } else if (response.data.status===400) {
-            //   this.$message({
-            //     message: response.data.msg,
-            //     type: "error",
-            //   });
-            // } else if (response.data.status===401) {
-            //   this.$message({
-            //     message: response.data.msg,
-            //     type: "error",
-            //   });
-            // } else if (response.data.status===402) {
-            //   this.$message({
-            //     message: response.data.msg,
-            //     type: "error",
-            //   });
-            // } else if (response.data.status===403) {
-            //   this.$message({
-            //     message: response.data.msg,
-            //     type: "error",
-            //   });
-            else {
-              this.$message({
-                message: response.data.msg,
-                type: "error",
-              });
-            }
-          });
+              if (response.data.status === 200) {
+                this.$message({
+                  message: response.data.msg,
+                  type: "success",
+                });
+                this.dialogVisible = false;
+                // this.$parent.isClaim = true;
+                this.$emit("doClaim", this.isClaim);
+                // console.log("在申请门户页面isClaim "+ this.$parent.isClaim);
+              } else {
+                this.$message({
+                  message: response.data.msg,
+                  type: "error",
+                });
+              }
+            })
+            .catch((error) => {
+              console.log("error", error);
+              console.log("error", error.response.status);
+              if (error.response.status !== 200) {
+                this.$message({
+                  message: error.response.data.msg,
+                  type: "error",
+                });
+              }
+            });
         } else {
           console.log("submit signup request error");
           return false;
@@ -285,20 +273,55 @@ export default {
       this.dialogVisible = false;
     },
 
-    sendEmail() {
-      const TIME_COUNT = 60; //  更改倒计时时间
-      if (!this.timer) {
-        this.sendTime = TIME_COUNT;
-        this.showTime = false;
-        this.timer = setInterval(() => {
-          if (this.sendTime > 0 && this.sendTime <= TIME_COUNT) {
-            this.sendTime--;
-          } else {
-            this.showTime = true;
-            clearInterval(this.timer); // 清除定时器
-            this.timer = null;
-          }
-        }, 1000);
+    sendEmail(email) {
+      if (email === "") {
+        this.$message.error("请填写邮箱");
+      } 
+      else {
+        this.$axios({
+          //注意是this.$axios
+          method: "post",
+          url: "/application/code",
+          data: {
+            //post请求这里是data
+            email: email,
+            user_id: this.user_id,
+          },
+        }).then((response) => {
+            console.log("response", response);
+            console.log(response.data);
+            // console.log(response.data.status);
+
+            if (response.data.status === 200) {
+              this.$message({
+                message: response.data.msg,
+                type: "success",
+              });
+            }
+          }).catch((error) => {
+            console.log("error", error);
+            console.log("error", error.response.status);
+            if (error.response.status !== 200) {
+              this.$message({
+                message: error.response.data.msg,//"注册失败",
+                type: "error",
+              });
+            }
+          });
+        const TIME_COUNT = 60; //  更改倒计时时间
+        if (!this.timer) {
+          this.sendTime = TIME_COUNT;
+          this.showTime = false;
+          this.timer = setInterval(() => {
+            if (this.sendTime > 0 && this.sendTime <= TIME_COUNT) {
+              this.sendTime--;
+            } else {
+              this.showTime = true;
+              clearInterval(this.timer); // 清除定时器
+              this.timer = null;
+            }
+          }, 1000);
+        }
       }
     },
   },
