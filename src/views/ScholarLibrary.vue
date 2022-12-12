@@ -2,8 +2,10 @@
   <div>
   <Topbar1 style="z-index: 100000"></Topbar1>
   <div class="main_body">
-    <div class="search_part" style="width: 100%;padding-top: 8vh">
-      <img src="../assets/ScholarLibrary/background.png"
+    <img src="../assets/ScholarLibrary/background-full1.png"
+         style="margin-left: 0vw;width: 100%;z-index:100;position:absolute;" v-if="!ifSearch">
+    <div class="search_part" style="width: 100%;">
+      <img src="../assets/ScholarLibrary/background1.png"
            style="margin-left: 0vw;width: 100%;z-index:0;position:relative">
       <div class="search_title">
         <div class="text_sample1">这里集结了&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位学者</div>
@@ -17,7 +19,7 @@
         </div>
       </div>
     </div>
-    <div class="result_title">
+    <div class="result_title" v-if="ifSearch">
       <div class="title_line"></div>
       <div class="text_sample3">搜索结果</div>
       <div class="title_line"></div>
@@ -43,7 +45,7 @@
           </div>
       </div>
       </div>
-      <div class="change_page" style="width: 100%;text-align: center;margin-bottom: 5vh">
+      <div class="change_page" style="width: 100%;text-align: center;margin-bottom: 5vh" v-if="ifSearch">
       <el-pagination class="pages"
           layout="prev, pager, next"
           :total=this.total_page
@@ -66,58 +68,17 @@ export default {
   components: {Topbar1},
   data(){
     return{
+      ifSearch:false,
       search_word:"",
       total_page:6,
       now_page:1,
-      items:[
-        {
-          s_id:"1",
-          display_name:"Dimitra Psychogiou",
-          last_known_institution:"IRELAND",
-          s_worknum:"29",
-          s_citenum:"231"
-        },
-        {
-          s_id:"2",
-          display_name:"Kazuya Takeda",
-          last_known_institution:"JAPAN",
-          s_worknum:"292",
-          s_citenum:"2231"
-        },
-        {
-          s_id:"3",
-          display_name:"Sambit Bakshi",
-          last_known_institution:"INDIA",
-          s_worknum:"92",
-          s_citenum:"2131"
-        },
-        {
-          s_id:"1",
-          display_name:"Dimitra Psychogiou",
-          last_known_institution:"IRELAND",
-          s_worknum:"29",
-          s_citenum:"231"
-        },
-        {
-          s_id:"1",
-          display_name:"Dimitra Psychogiou",
-          last_known_institution:"IRELAND",
-          s_worknum:"29",
-          s_citenum:"231"
-        },
-        {
-          s_id:"1",
-          display_name:"Dimitra Psychogiou",
-          last_known_institution:"IRELAND",
-          s_worknum:"29",
-          s_citenum:"231"
-        },
-      ]
+      items:[]
     }
   },
   methods:{
     search(){
       console.log(this.search_word);
+      this.ifSearch=true;
       this.$axios({
         method:'get',
         url:'/es/search/author',
@@ -129,6 +90,7 @@ export default {
       }).then(
           response =>{
             this.items=response.data.res.Works;
+            console.log(this.items);
             for(var i=0;i<6;i++){
               if(this.items.at(i).last_known_institution===null){
                 this.items.at(i).last_known_institution="No Institution"
