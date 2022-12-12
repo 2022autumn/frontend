@@ -45,17 +45,29 @@
                     </div>
                     <div style="margin-left: 15%;margin-top: 2%;">
 
-                        <div style="display: inline-block;font-size:15px;">
-                            <b>&nbsp;&nbsp&nbsp时间范围(请输入年份)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
+                        <!--<div style="display: inline-block;font-size:15px;">
+                            <b>&nbsp;&nbsp&nbsp时间范围(请输入年-月-日)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
+                        </div>-->
+                        <div style="display: inline-block;margin-left: 3vw">
+                          <el-date-picker
+                              v-model="start"
+                              type="date"
+                              placeholder="选择日期"
+                              size="small"
+                              value-format='yyyy-MM-dd'
+                              >
+                          </el-date-picker>
                         </div>
-                        <div style="width: 8vw;display: inline-block">
-                            <el-input v-model="start" placeholder="" size="mini"></el-input>
-                        </div>
-                        <div style="display: inline-block;font-size:15px;">
-                            <b>&nbsp;&nbsp;~&nbsp;&nbsp;</b>
-                        </div>
-                        <div style="width: 8vw;display: inline-block">
-                            <el-input v-model="end" placeholder="" size="mini"></el-input>
+                        <div style="display: inline-block;font-size: 25px;margin-left: 3vw">~</div>
+                        <div style="display: inline-block;margin-left: 3vw">
+                          <el-date-picker
+                              v-model="end"
+                              type="date"
+                              placeholder="选择日期"
+                              size="small"
+                              value-format='yyyy-MM-dd'
+                          >
+                          </el-date-picker>
                         </div>
                     </div>
                     <div>
@@ -73,7 +85,6 @@
               </div>
             </el-col>
         </el-row>
-
     </div>
 </template>
 
@@ -155,12 +166,22 @@ export default {
       case5.field = this.$refs.bar5.value;
       case5.content = this.$refs.bar5.input;
       case5.logic = this.$refs.bar5.value1;
+      var case6 = {};
+      console.log(this.start)
+      console.log(this.end)
       this.query.length=0;
       this.query.push(case1);
       this.query.push(case2);
       this.query.push(case3);
       this.query.push(case4);
       this.query.push(case5);
+      if(this.start!==''&&this.end!==''){
+        case6.field = "publication_date";
+        case6.begin = this.start;
+        case6.end = this.end;
+        case6.logic = "and";
+        this.query.push(case6);
+      }
       console.log(this.query);
       sessionStorage.setItem('query',JSON.stringify(this.query));
       this.$router.push('/advanced_outcome');
