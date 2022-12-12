@@ -6,8 +6,8 @@
       <div class="main">
         <div class="paper-header">
           <div class="title">
-            <span class="title-txt">
-              {{ this.paper.paperTitle }}
+            <span class="title-txt" v-html="paper.paperTitle">
+<!--              {{ this.paper.paperTitle }}-->
               <div class="paper-type">{{ this.paper.type }}</div>
             </span>
           </div>
@@ -65,14 +65,14 @@
             </el-button>
 
             <!--被收藏的次数-->
-            <div class="like2" @click="onCollect" style="cursor:pointer;">
+            <div class="like2" @click="addTagdialog = true" style="cursor:pointer;">
               {{ this.isCollectionTxt }}
             </div>
             <!--是否被收藏的样式-->
             <div class="like1" v-model="key" style="cursor:pointer;">
               <span class="iconfont">
-                  <i v-if="!isCollection" class="el-icon-star-off" :key="0" @click="addTagdialog = true"></i>
-                  <i v-else class="el-icon-star-on" :key="1" @click="removeCollection"></i>
+                  <i v-if="myTagCnt === 0" class="el-icon-star-off" :key="0" @click="addTagdialog = true"></i>
+                  <i v-else class="el-icon-star-on" :key="1" @click="addTagdialog = true"></i>
               </span>
             </div>
           </div>
@@ -206,19 +206,25 @@
 <!--            </el-submenu>-->
 <!--          </el-scrollbar>-->
 <!--          </el-menu>-->
-        <el-select value="" v-model="selectedTag">
-          <el-option
-              v-for="item in tags"
-              :key="item.tag_id"
-              :label="item.tag_name"
-              :value="item.tag_id"
-              @click="this.selectedTag = item.tag_id">
-          </el-option>
-        </el-select>
+        <div class="box-set" v-infinite-scroll="load">
+          <div class="keyword-box" v-for="(item,index) in tags" :key="index">
+            <div class="keyword"  @click="addTagToFile(item)">{{item.tag_name}}</div>
+<!--            <div class="keyword1"  v-if="item.islike===true" @click="concern(item)">{{item.display_name}}</div>-->
+<!--            <div class="keyword"  v-else @click="concern(item)">{{item.display_name}}</div>-->
+          </div>
+        </div>
+<!--        <el-select value="" v-model="selectedTag">-->
+<!--          <el-option-->
+<!--              v-for="item in tags"-->
+<!--              :key="item.tag_id"-->
+<!--              :label="item.tag_name"-->
+<!--              :value="item.tag_id"-->
+<!--              @click="this.selectedTag = item.tag_id">-->
+<!--          </el-option>-->
+<!--        </el-select>-->
       </span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="addTagdialog = false">取 消</el-button>
-        <el-button type="primary" @click="addTagToFile" class="el-buttons">确 定</el-button>
+      <span slot="footer" class="dialog-footer" style="padding-left: 80%;">
+        <el-button type="primary" @click="addTagdialog = false" class="el-buttons">确 定</el-button>
       </span>
     </div>
     </el-dialog>
@@ -240,6 +246,7 @@ export default {
     return {
       tags: [],
       myTag: "",
+      myTagCnt: "",
       addTagdialog: false,//添加到我的收藏 控制dialog
       selectedTag: "",
       paper: {
@@ -309,25 +316,40 @@ export default {
         this.addTagdialog = true;
       }
     },
-    addTagToFile() {
+    getTagList() {
+      this.$axios({//注意是this.$axios
+        method:'post',
+        url:'/social/tag/taglist',
+        data: {//get请求这里是params
+          user_id: parseInt(window.localStorage.getItem('uid')),
+        },
+      }).then(
+          response =>{
+            console.log("tags", response.data);
+            this.tags = response.data.data;
+            this.myTagCnt = this.tags.length;
+          }
+      )
+    },
+    addTagToFile(item) {
       let that = this;
       that.$axios({//注意是this.$axios
         method:'post',
         url:'/social/tag/collectPaper',
         data:{//get请求这里是params
           paper_id:window.localStorage.getItem('WID'),
-          tag_id: this.selectedTag,
+          tag_id: item.tag_id,
           user_id: parseInt(window.localStorage.getItem('uid')),
         }
       }).then(res => {
         this.isCollection = true;
+        this.myTagCnt++;
         this.updateTxt();
         this.$message({
           type: "success",
           message: res.data.msg,
           customClass:'messageIndex'
         });
-        this.addTagdialog = false;
       }).catch(err => {
         console.log(err);
         this.$message({
@@ -336,18 +358,18 @@ export default {
         });
       });
     },
-    removeCollection() {
+    removeCollection(item) {
       let that = this;
       that.$axios({//注意是this.$axios
         method:'post',
         url:'/social/tag/cancelCollectPaper',
         data:{//get请求这里是params
           paper_id:window.localStorage.getItem('WID'),
-          tag_id: this.myTag,
+          tag_id: item.tag_id,
           user_id: parseInt(window.localStorage.getItem('uid')),
         }
       }).then(res => {
-        this.isCollection = false;
+        this.myTagCnt--;
         this.updateTxt();
         this.$message({
           type: "success",
@@ -443,7 +465,7 @@ export default {
       )
     },
     updateTxt() {
-      if(this.isCollection === true) {
+      if(this.myTagCnt > 0) {
         this.isCollectionTxt = "已收藏";
       } else {
         this.isCollectionTxt = "收藏"
@@ -488,30 +510,6 @@ export default {
         })
       }
     },
-    getTagList() {
-      this.$axios({//注意是this.$axios
-        method:'post',
-        url:'/social/tag/taglist',
-        data: {//get请求这里是params
-          user_id: parseInt(window.localStorage.getItem('uid')),
-        },
-      }).then(
-          response =>{
-            console.log("tags", response.data);
-            this.tags = response.data.data;
-
-            var wid = window.localStorage.getItem('WID');
-            for(var i = 0; i < this.tags; i++) {
-              if(wid === this.tags[i].tag_id) {
-                this.myTag = this.tags[i].tag_id;
-                this.isCollection = true;
-                this.updateTxt();
-                break;
-              }
-            }
-          }
-      )
-    }
   },
   // 挂载时获取
   mounted() {
@@ -1253,6 +1251,58 @@ export default {
   font-style: normal;
   font-weight: 600;
   font-size: 30px;
+}
+.box-set{
+  display: flex;
+  position: relative;
+  width: 100%;
+  flex-wrap: wrap;
+  //padding-left:10px ;
+  overflow-y:scroll;
+  overflow-x: hidden;
+  max-height: 265px;
+  padding-bottom: 50px;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+::-webkit-scrollbar {
+
+  width: 7px;
+  height: 18px;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb {
+  width: 7px;
+  height: 20px;
+  background-color: #E8E8E8;
+  border-radius: 8px;
+}
+.keyword-box{
+  display: flex;
+  padding-top: 12px;
+  padding-left: 20px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+.keyword{
+  display: flex;
+  left: 15px;
+  padding-top: 6px;
+  padding-bottom: 4px;
+  padding-left: 15px;
+  padding-right: 18px;
+  background: #F5F8FC;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 26px;
+  align-items: center;
+  justify-content: center;
+  /* identical to box height, or 144% */
+  letter-spacing: 0.04em;
+  color: #858FA0;
+  cursor:pointer;
 }
 </style>
 <style>
