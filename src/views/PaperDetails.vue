@@ -370,8 +370,8 @@ export default {
       method: 'get',
       url: '/es/get',
       params: {//get请求这里是params
-        //id: window.localStorage.getItem('WID')
-        id: "W2914747780"
+        id: window.localStorage.getItem('WID')
+        //id: "W2914747780"
       }
     }).then(
         response => {
