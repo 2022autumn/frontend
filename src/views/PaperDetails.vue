@@ -41,10 +41,12 @@
             <div class="info2 divide">
               |
             </div>
-            <div class="info2 cite">
+            <div class="info2 cite" >
               被引次数：{{ this.paper.cited_counts }}
             </div>
+            <div class="citethis">生成引用</div>
           </div>
+
           <div style="clear: both"></div>
           <div class="buttons">
             <!--            <el-button class="original" icon="el-icon-my-origin">-->
@@ -222,6 +224,20 @@
       </span>
     </div>
     </el-dialog>
+    <el-dialog
+        title="生成引用格式"
+        :visible.sync="createCite"
+        width="30%"
+    >
+      <div>
+        <div class="copyText">
+
+        </div>
+        <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="addTagToFile" class="el-buttons">复制</el-button>
+      </span>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -241,6 +257,7 @@ export default {
       tags: [],
       myTag: "",
       addTagdialog: false,//添加到我的收藏 控制dialog
+      createCite: false,
       selectedTag: "",
       paper: {
         paperTitle: "",
@@ -1297,5 +1314,20 @@ export default {
 }
 .el-menu-vertical-demo .el-submenu__icon-arrow {
   display: none !important;
+}
+.citethis{
+  float: left;
+  border: 2px solid #217BF4;
+  border-radius: 4px;
+  color:#217BF4 ;
+  width: 70px;
+  text-align: center;
+  height: 32px;
+  line-height: 28px;
+  font-weight: 600;
+  font-family: Inter;
+  margin-top: 2px;
+  font-size: 14px;
+  cursor: pointer;
 }
 </style>
