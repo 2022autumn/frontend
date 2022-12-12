@@ -38,12 +38,12 @@
             vertical-align: top;
           "
         >
-          <div style="float: right" @click="close">
-            <img src="../HomePage_svg/close.svg" />
+          <div class="close" style="float: right; margin: 0 1vh; cursor: pointer" @click="close">
+            <i class="el-icon-circle-close"></i>
           </div>
           <div class="inst-background" style="float: top">
             <!-- <div class="inst-title">学者门户认领</div> -->
-            <img style="margin-top: -10vh" src="../assets/admin/title.png" />
+            <img src="../assets/admin/title.png" />
 
             <!-- <div class="inst-text">机构名称</div>
             <el-input
@@ -335,10 +335,16 @@ export default {
 .site /deep/ .el-dialog__body {
   padding: 0;
 }
-
+.close{
+  font-size:48px;
+  color:#217BF4;
+}
+.close:hover{
+  color:rgb(0, 11, 165);
+}
 .inst-background {
-  margin: auto;
-  padding: 10% 0;
+  margin:auto;
+  padding: 15% 0;
   width: 80%;
   height: 583px;
   vertical-align: middle;

@@ -5,7 +5,6 @@
       :visible.sync="login_visible"
       :showClose="false"
       :append-to-body="true"
-
       width="53.5vw"
       height="583px"
     >
@@ -27,8 +26,15 @@
           vertical-align: top;
         "
       >
-        <div style="float: right" @click="close">
+        <!-- <div style="float: right" @click="close">
           <img src="../HomePage_svg/close.svg" />
+        </div> -->
+        <div
+          class="close"
+          style="float: right; margin: 0 1vh; cursor: pointer"
+          @click="close"
+        >
+          <i class="el-icon-circle-close"></i>
         </div>
         <div class="background">
           <div class="title1">登录</div>
@@ -57,7 +63,10 @@
             style="margin: 5vh auto"
           >
             <el-form-item label="用户名" prop="name" class="litem">
-              <el-input v-model.number="ruleForm.name" :validate-event="false"></el-input>
+              <el-input
+                v-model.number="ruleForm.name"
+                :validate-event="false"
+              ></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="pwd" class="litem">
               <el-input
@@ -137,7 +146,7 @@ export default {
         pwd: "",
       },
       rules: {
-        name: [{ validator: checkName }],//, trigger: "blur"
+        name: [{ validator: checkName }], //, trigger: "blur"
         pwd: [{ validator: validatePwd }],
       },
     };
@@ -158,44 +167,46 @@ export default {
               password: this.ruleForm.pwd,
               username: this.ruleForm.name,
             },
-          }).then((response) => {
-            console.log("response", response);
-            console.log(response.data);
-            // console.log(response.data.status);
+          })
+            .then((response) => {
+              console.log("response", response);
+              console.log(response.data);
+              // console.log(response.data.status);
 
-            if (response.data.status===200) {
-              this.$message({
-                message: "登录成功",
-                type: "success",
-              });
-              var storage = window.localStorage;
-              storage.setItem("uid",response.data.ID);
-              storage.setItem("token",response.data.token);
-              storage.setItem("iflogin",JSON.stringify(1));
-              // console.log(response.data.ID);
-              this.login_visible = false;
-              window.location.reload();
-            }
-          }).catch((error) => {
-            console.log("error", error)
-            console.log("error", error.response.status)
-            if (error.response.status===400) {
-              this.$message({
-                message: "用户名不存在",
-                type: "error",
-              });
-              this.ruleForm.name = "";
-              this.ruleForm.pwd = "";
-            } else if (error.response.status===401) {
-              this.$message({
-                message: "密码错误",
-                type: "error",
-              });
-            } else {
-              this.$message.error("登录出错");
-              alert("登录时出错");
-            }
-          });
+              if (response.data.status === 200) {
+                this.$message({
+                  message: "登录成功",
+                  type: "success",
+                });
+                var storage = window.localStorage;
+                storage.setItem("uid", response.data.ID);
+                storage.setItem("token", response.data.token);
+                storage.setItem("iflogin", JSON.stringify(1));
+                // console.log(response.data.ID);
+                this.login_visible = false;
+                window.location.reload();
+              }
+            })
+            .catch((error) => {
+              console.log("error", error);
+              console.log("error", error.response.status);
+              if (error.response.status === 400) {
+                this.$message({
+                  message: "用户名不存在",
+                  type: "error",
+                });
+                this.ruleForm.name = "";
+                this.ruleForm.pwd = "";
+              } else if (error.response.status === 401) {
+                this.$message({
+                  message: "密码错误",
+                  type: "error",
+                });
+              } else {
+                this.$message.error("登录出错");
+                alert("登录时出错");
+              }
+            });
         } else {
           console.log("submit login request error");
           return false;
@@ -230,7 +241,7 @@ export default {
   display: flex;
 }
 .background {
-  margin: 16% auto;
+  margin: 18% auto;
   /* margin: 15% 13%; */
   padding: 4vh;
   width: 70%;
@@ -239,6 +250,14 @@ export default {
   background: #ffffff;
   box-shadow: 0px 2px 18px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
+}
+
+.close{
+  font-size:48px;
+  color:#217BF4;
+}
+.close:hover{
+  color:rgb(0, 11, 165);
 }
 .title1 {
   margin: 1vh;
@@ -304,5 +323,4 @@ export default {
   );
   border-radius: 10px;
 }
-
 </style>
