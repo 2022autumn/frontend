@@ -93,7 +93,7 @@
           <div class="reference">
             <el-row>
               <el-col :span="6">
-                <div class="button" style="cursor: pointer">主题词</div>
+                <div class="button" >{{this.keyname}}</div>
               </el-col>
               <el-col :span="18">
                 <div class="ref-tag">
@@ -104,9 +104,18 @@
                       margin-left: -10%;
                       margin-top: 5px;"
                   />
-                  <span style="vertical-align: top">
-                    选择主题词，相关内容主页推荐~</span
-                  >
+                  <el-popover
+                      placement="right"
+                      width="500"
+                      height="500"
+                      trigger="hover"
+                     >
+                    <div style="margin-left: 10px"><b>我订阅的主题词</b></div>
+                  <div v-for="item in this.keys" style="display: inline-block;margin-left: 10px;margin-top: 8px">
+                    <el-button style="width: auto;" @click="choosekey(item)">{{item.concept_name}}</el-button>
+                  </div>
+                  <span style="vertical-align: top;cursor: pointer" slot="reference">
+                    选择主题词，相关内容主页推荐~</span></el-popover>
                 </div>
               </el-col>
             </el-row>
@@ -217,6 +226,7 @@ export default {
           "value":"java"
         }
       ],
+      userid:window.localStorage.getItem('uid'),
       input1:"",
       num_exact_page:8,
       total: 1000,//返回的检索结果的总量
@@ -229,9 +239,38 @@ export default {
           "c","c","c","c"
       ],
       tuijianlist:[],
+      testkey:[{
+        name:"java",
+        id:1,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,}],
+      keys:[],
+      keyname:'',
+      keyid:0,
+      cid:'C73878792',
     }
   },
   mounted() {
+    this.userid = window.localStorage.getItem('uid');
+    if(this.userid===null||this.userid===undefined||this.userid===0||this.userid===""){
+      this.userid = 1;
+    }
     let that = this;
     that.$axios({//注意是this.$axios
       method:'get',
@@ -244,15 +283,40 @@ export default {
           this.hot_list = response.data.data;
         }
     )
+    this.getkey();
     this.gettuijian();
   },
   methods:{
+    choosekey(item){
+      console.log(item.concept_id);
+      console.log(item.concept_name);
+      this.cid = item.concept_id;
+      this.keyname = item.concept_name;
+      this.gettuijian();
+    },
+    getkey(){
+      this.$axios({//注意是this.$axios
+        method:'get',
+        url:'/scholar/concept',
+        headers:{
+          //token:3,
+          token: this.userid,
+        },
+      }).then(
+          response =>{
+            console.log("关键词列表为");
+            //console.log(response.data.data);
+            this.keys = response.data.data;
+            console.log(this.keys);
+          }
+      )
+    },
     gettuijian(){
       this.$axios({//注意是this.$axios
         method: 'get',
         url: '/scholar/roll',
         params: {//post请求这里是data
-           userid:8
+          concept_id:this.cid
         }
       }).then(
           response => {

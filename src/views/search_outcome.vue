@@ -398,7 +398,7 @@
         },],
         true_total_page:0,
         sort:0,
-        asc:true,
+        asc:false,
       }
     },
     methods:{

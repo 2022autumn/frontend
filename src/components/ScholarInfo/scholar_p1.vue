@@ -147,11 +147,11 @@ export default {
     },
     loadClaim() {
       if(this.isClaim === true) {
-        this.claimContent = "已认证";
+        this.claimContent = "已认领";
         this.bg_color2 = "#0352FF"
         this.ft_color2="#E6EEFF";
       } else {
-        this.claimContent = "+ 认证";
+        this.claimContent = "+ 认领";
         this.bg_color2 = "#E6EEFF"
         this.ft_color2="#0352FF";
       }
@@ -204,7 +204,7 @@ export default {
       }
 
       else{
-        this.claimContent="+认领"
+        this.claimContent="+ 认领"
         this.bg_color2="#E6EEFF";
         this.ft_color2="#0352FF";
 

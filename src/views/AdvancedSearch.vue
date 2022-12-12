@@ -24,7 +24,9 @@
                             搜索内容
                     </div>
                     <div>
+                      <div>
                         <FilterBar ref="bar1" :iftop="1"/>
+                      </div>
                     </div>
                     <div>
                         <FilterBar ref="bar2"/>
@@ -38,80 +40,36 @@
                   <div>
                     <FilterBar ref="bar5"/>
                   </div>
-                   <!--<div class="box-word" style="margin-top: 4%;margin-left: 6%;">
+                   <div class="box-word" style="margin-top: 4%;margin-left: 6%;">
                             设定时间范围
-                    </div>-->
-                    <!--<div style="margin-left: 15%;margin-top: 3%;">
-                        <el-checkbox v-model="checked4">
-                            <div style="display: inline-block;font-size:15px;">
-                                <b>&nbsp;&nbsp&nbsp最早发表时间&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
-                            </div>
-                            <div style="width: 7vw;display: inline-block">
-                                <el-input v-model="input1" placeholder="" size="mini" ></el-input>
-                            </div>
-                            <div style="display: inline-block;font-size:15px;">
-                                <b>&nbsp;&nbsp年&nbsp&nbsp&nbsp</b>
-                            </div>
-                            <div style="width: 7vw;display: inline-block">
-                                <el-input v-model="input1" placeholder="" size="mini" ></el-input>
-                            </div>
-                            <div style="display: inline-block;font-size:15px;">
-                                <b>&nbsp;&nbsp月&nbsp</b>
-                            </div>
-                        </el-checkbox>
                     </div>
                     <div style="margin-left: 15%;margin-top: 2%;">
-                        <el-checkbox v-model="checked5">
-                        <div style="display: inline-block;font-size:15px;">
-                            <b>&nbsp;&nbsp&nbsp发表时间范围&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
+
+                        <!--<div style="display: inline-block;font-size:15px;">
+                            <b>&nbsp;&nbsp&nbsp时间范围(请输入年-月-日)&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
+                        </div>-->
+                        <div style="display: inline-block;margin-left: 3vw">
+                          <el-date-picker
+                              v-model="start"
+                              type="date"
+                              placeholder="选择日期"
+                              size="small"
+                              value-format='yyyy-MM-dd'
+                              >
+                          </el-date-picker>
                         </div>
-                        <div style="width: 5vw;display: inline-block">
-                            <el-input v-model="input2" placeholder="" size="mini"></el-input>
+                        <div style="display: inline-block;font-size: 25px;margin-left: 3vw">~</div>
+                        <div style="display: inline-block;margin-left: 3vw">
+                          <el-date-picker
+                              v-model="end"
+                              type="date"
+                              placeholder="选择日期"
+                              size="small"
+                              value-format='yyyy-MM-dd'
+                          >
+                          </el-date-picker>
                         </div>
-                        <div style="display: inline-block;font-size:15px;">
-                            <b>&nbsp;&nbsp;年&nbsp;&nbsp;&nbsp;&nbsp;</b>
-                        </div>
-                        <div style="width: 5vw;display: inline-block">
-                            <el-input v-model="input3" placeholder="" size="mini"></el-input>
-                        </div>
-                        <div style="display: inline-block;font-size:15px;">
-                            <b>&nbsp;月&nbsp;&nbsp;~&nbsp;&nbsp;</b>
-                        </div>
-                        <div style="width: 5vw;display: inline-block">
-                            <el-input v-model="input3" placeholder="" size="mini"></el-input>
-                        </div>
-                        <div style="display: inline-block;font-size:15px;">
-                            <b>&nbsp;&nbsp;年&nbsp;&nbsp;</b>
-                        </div>
-                        <div style="width: 5vw;display: inline-block">
-                            <el-input v-model="input3" placeholder="" size="mini"></el-input>
-                        </div>
-                        <div style="display: inline-block;font-size:15px;">
-                            <b>&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;</b>
-                        </div>
-                        </el-checkbox>
                     </div>
-                    <div style="margin-left: 15%;margin-top: 2%;">
-                        <el-checkbox v-model="checked6">
-                        <div style="display: inline-block;font-size:15px;">
-                            <b>&nbsp;&nbsp&nbsp最晚发表时间&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
-                        </div>
-                        <div style="width: 5vw;display: inline-block">
-                            <el-input v-model="input4" placeholder="" size="mini"></el-input>
-                        </div>
-                        <div style="display: inline-block;font-size:15px;">
-                            <b>&nbsp;&nbsp;年&nbsp;&nbsp;</b>
-                        </div>
-                        <div style="width: 5vw;display: inline-block">
-                            <el-input v-model="input3" placeholder="" size="mini"></el-input>
-                        </div>
-                        <div style="display: inline-block;font-size:15px;">
-                            <b>&nbsp;&nbsp;月&nbsp;&nbsp;&nbsp;&nbsp;</b>
-                        </div>
-                        </el-checkbox>
-                    </div>
-                    <div>&nbsp;</div>
-                    <div>&nbsp;</div>-->
                     <div>
                       &nbsp
                     </div>
@@ -127,7 +85,6 @@
               </div>
             </el-col>
         </el-row>
-
     </div>
 </template>
 
@@ -140,6 +97,8 @@ export default {
   components: {Topbar2, Topbar1,FilterBar},
   data() {
     return {
+        start:'',
+        end:'',
         options: [{
           value: '选项1',
           label: '作者'
@@ -161,6 +120,7 @@ export default {
         }],
         value: '',
         query:[],
+        tiaojian:[],
     };
   },
   methods: {
@@ -171,13 +131,22 @@ export default {
       var cond = {};
       sessionStorage.setItem('Cond',JSON.stringify(cond));
       sessionStorage.setItem('now_page',JSON.stringify(1));
+      sessionStorage.setItem('start', this.start);
+      sessionStorage.setItem('end', this.end);
       //console.log(this.$refs.bar1.value1);
       //console.log(this.$refs.bar1.input);
       //console.log(this.$refs.bar1.value);
+      this.tiaojian.push(this.$refs.bar1.value2);
+      this.tiaojian.push(this.$refs.bar2.value2);
+      this.tiaojian.push(this.$refs.bar3.value2);
+      this.tiaojian.push(this.$refs.bar4.value2);
+      this.tiaojian.push(this.$refs.bar5.value2);
+      sessionStorage.setItem('tiaojian',JSON.stringify(this.tiaojian))
       var case1 = {};
       case1.field = this.$refs.bar1.value;
       case1.content = this.$refs.bar1.input;
       case1.logic = "and";
+      //tiaojian.push(this.$refs.bar1.value2);
       //console.log(case1);
       var case2 = {};
       case2.field = this.$refs.bar2.value;
@@ -197,12 +166,22 @@ export default {
       case5.field = this.$refs.bar5.value;
       case5.content = this.$refs.bar5.input;
       case5.logic = this.$refs.bar5.value1;
+      var case6 = {};
+      console.log(this.start)
+      console.log(this.end)
       this.query.length=0;
       this.query.push(case1);
       this.query.push(case2);
       this.query.push(case3);
       this.query.push(case4);
       this.query.push(case5);
+      if(this.start!==''&&this.end!==''){
+        case6.field = "publication_date";
+        case6.begin = this.start;
+        case6.end = this.end;
+        case6.logic = "and";
+        this.query.push(case6);
+      }
       console.log(this.query);
       sessionStorage.setItem('query',JSON.stringify(this.query));
       this.$router.push('/advanced_outcome');
@@ -296,7 +275,7 @@ export default {
     font-weight: 600;
     font-size: 14px;
     text-align: center;
-    
+
     justify-content: center;
     align-items: center;
   }
