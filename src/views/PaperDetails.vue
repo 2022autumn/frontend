@@ -65,26 +65,20 @@
             </el-button>
 
             <!--被收藏的次数-->
-            <div class="like2" v-if="isCollection">
-              <span class="iconfont">&#xe663;</span>
+            <div class="like2" v-if="isCollection" style="cursor:pointer;">
+              <span class="iconfont"></span>
               {{ this.isCollectionTxt }}
             </div>
-            <div class="like2" v-else>
+            <div class="like2" v-else @click="addTagdialog = true" style="cursor:pointer;">
               {{ this.notCollectionTxt }}
             </div>
             <!--是否被收藏的样式-->
-            <div class="like1" v-model="key">
+            <div class="like1" v-model="key" style="cursor:pointer;">
               <span class="iconfont">
-                  <i v-if="!isCollection" class="el-icon-star-off" :key="0" @click="onCollection"></i>
+                  <i v-if="!isCollection" class="el-icon-star-off" :key="0" @click="addTagdialog = true"></i>
                   <i v-else class="el-icon-star-on" :key="1" @click="onCollection"></i>
               </span>
             </div>
-            <!--            <div class="right-buttons">-->
-            <!--              <el-button class="right-button1"></el-button>-->
-            <!--              <el-button class="right-button2"></el-button>-->
-            <!--              <el-button class="right-button3"></el-button>-->
-            <!--              <el-button class="right-button4"></el-button>-->
-            <!--            </div>-->
           </div>
         </div>
         <div class="content">
@@ -108,25 +102,6 @@
           <div class="commend-title">评论区 Comments</div>
           <div class="comment-tools">
             <div class="total-comments">共 {{ this.comment_num }} 条评论</div>
-            <!--          <el-dropdown>-->
-            <!--            <span class="filter-comments">-->
-            <!--              筛选条件<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
-            <!--            </span>-->
-            <!--            <el-dropdown-menu slot="dropdown">-->
-            <!--              <el-dropdown-item>黄金糕</el-dropdown-item>-->
-            <!--              <el-dropdown-item>狮子头</el-dropdown-item>-->
-            <!--              <el-dropdown-item>螺蛳粉</el-dropdown-item>-->
-            <!--            </el-dropdown-menu>-->
-            <!--          </el-dropdown>-->
-            <!--          <el-dropdown>-->
-            <!--&lt;!&ndash;            <span class="rank-comments">&ndash;&gt;-->
-            <!--&lt;!&ndash;              排序条件<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>&ndash;&gt;-->
-            <!--&lt;!&ndash;            </span>&ndash;&gt;-->
-            <!--            <el-dropdown-menu slot="dropdown">-->
-            <!--              <el-dropdown-item>发布时间</el-dropdown-item>-->
-            <!--              <el-dropdown-item>发布用户</el-dropdown-item>-->
-            <!--            </el-dropdown-menu>-->
-            <!--          </el-dropdown>-->
           </div>
           <div class="commends" v-if="comment_num === 0">
             <div class="cards">
@@ -204,15 +179,16 @@
         <el-select value="" v-model="selectedTag">
           <el-option
               v-for="item in tags"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              :key="item.tag_id"
+              :label="item.tag_name"
+              :value="item.tag_id"
+              @click="this.selectedTag = item.tag_id">
           </el-option>
         </el-select>
       </span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="addTagdialog = false">取 消</el-button>
-        <el-button type="primary" @click="addTagToFile">确 定</el-button>
+        <el-button type="primary" @click="addTagToFile" class="el-buttons">确 定</el-button>
       </span>
     </div>
     </el-dialog>
@@ -277,7 +253,7 @@ export default {
   },
 
   methods: {
-    addTagToFile(){
+    addTagToFile() {
       let that = this;
       that.$axios({//注意是this.$axios
         method:'post',
@@ -288,18 +264,13 @@ export default {
           user_id: parseInt(window.localStorage.getItem('uid')),
         }
       }).then(res => {
-        if(res.data.errno !== 0){
-          this.$message.error(res.data.msg);
-        }
-        console.log("[debug] 打印后端返回的添加文件的标签信息");
-        console.log(res.data);
-        if (res.data.errno === 0) {
-          this.$message({
-            message: '添加成功',
-            type: 'success'
-          });
-          this.addTagdialog = false;
-        }
+        this.isCollection = true;
+        this.$message({
+          type: "success",
+          message: res.data.msg,
+          customClass:'messageIndex'
+        });
+        this.addTagdialog = false;
       }).catch(err => {
         console.log(err);
         this.$message({
@@ -370,9 +341,6 @@ export default {
       }
     },
 
-    onCollection() {
-
-    },
     getCommentList() {
       this.$axios({//注意是this.$axios
         method: 'post',
@@ -429,20 +397,28 @@ export default {
       this.$axios({//注意是this.$axios
         method:'post',
         url:'/social/tag/taglist',
-        params: {//get请求这里是params
-          content: this.myComment,
+        data: {//get请求这里是params
           user_id: parseInt(window.localStorage.getItem('uid')),
         },
       }).then(
           response =>{
-            console.log(response.data);
+            console.log("tags", response.data);
             this.tags = response.data.data;
+
+            var wid = window.localStorage.getItem('WID');
+            for(var i = 0; i < this.tags; i++) {
+              if(wid === this.tags[i].tag_id) {
+                this.isCollection = true;
+                break;
+              }
+            }
           }
       )
     }
   },
   // 挂载时获取
   mounted() {
+    this.getTagList();
     let height = this.$refs.ref.offsetHeight;  //100
     this.$axios({//注意是this.$axios
       method: 'get',
@@ -511,7 +487,6 @@ export default {
         }
     )
     this.getCommentList();
-    this.getTagList();
   },
 };
 </script>

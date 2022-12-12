@@ -324,7 +324,7 @@ export default {
   },
   data(){
     return{
-      uid:14,
+      uid:parseInt(window.localStorage.getItem('uid')),
       name:["收藏夹1","收藏夹2","收藏夹3","收藏夹4","收藏夹5","收藏夹6","收藏夹6"],
       newcollect:false,
       delcollect:false,
