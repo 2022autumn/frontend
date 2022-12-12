@@ -257,7 +257,7 @@ export default {
       tags: [],
       myTag: "",
       addTagdialog: false,//添加到我的收藏 控制dialog
-      createCite: true,
+      createCite: false,
       selectedTag: "",
       paper: {
         paperTitle: "",
