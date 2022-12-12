@@ -1,36 +1,36 @@
-<template >
+<template>
   <div>
-  <Topbar1 ref="topbar"></Topbar1>
-  <div class="paper-detail">
+    <Topbar1 ref="topbar"></Topbar1>
+    <div class="paper-detail">
 
-    <div class="main">
-      <div class="paper-header">
+      <div class="main">
+        <div class="paper-header">
           <div class="title">
             <span class="title-txt">
               {{ this.paper.paperTitle }}
               <div class="paper-type">{{ this.paper.type }}</div>
             </span>
           </div>
-        <div class=" info1 authors"
-             v-for="(item,index) in this.paper.authors"
-             :key="index"
-             style="cursor: pointer;display: inline-block; position: relative;"
-        >
-          <div class="names" @click="jscholar(index)">
-            {{item.author.display_name}};
+          <div class=" info1 authors"
+               v-for="(item,index) in this.paper.authors"
+               :key="index"
+               style="cursor: pointer;display: inline-block; position: relative;"
+          >
+            <div class="names" @click="jscholar(index)">
+              {{ item.author.display_name }};
+            </div>
+            {{ "\xa0\xa0" }}
+            <!--<span>作者名字1； 作者名字2； 作者名字3；</span>-->
+            <!--<span>{{this.paper.authors[0].author.display_name}}</span>-->
           </div>
-          {{"\xa0\xa0"}}
-          <!--<span>作者名字1； 作者名字2； 作者名字3；</span>-->
-          <!--<span>{{this.paper.authors[0].author.display_name}}</span>-->
-        </div>
           <div class=" info1 location">
             <!--<span>北京航空航天大学xx实验室</span>-->
-            {{this.paper.institution}}
+            {{ this.paper.institution }}
           </div>
           <div class="info1">
             <div class="info2 time">
               <!--发表时间：2022年01月06日-->
-              {{this.paper.date}}
+              {{ this.paper.date }}
             </div>
             <div class="info2 divide">
               |
@@ -45,9 +45,9 @@
               被引次数：{{ this.paper.cited_counts }}
             </div>
           </div>
-        <div style="clear: both"></div>
+          <div style="clear: both"></div>
           <div class="buttons">
-<!--            <el-button class="original" icon="el-icon-my-origin">-->
+            <!--            <el-button class="original" icon="el-icon-my-origin">-->
             <el-button class="original" v-if="this.paper.hasIds" @click="jumpPaper">
               <img src="../assets/paperDetailsImg/original.png"
                    style="margin-left: 0vw">
@@ -57,6 +57,11 @@
               <img src="../assets/paperDetailsImg/original.png"
                    style="margin-left: 0vw">
               暂无原文地址
+            </el-button>
+            <el-button class="original3" v-if="this.paper.haspdf" @click="downloadPDF">
+              <img src="../assets/paperDetailsImg/pdf.png"
+                   style="margin-left: 0vw">
+              下载pdf
             </el-button>
 
             <!--被收藏的次数-->
@@ -70,92 +75,92 @@
             <!--是否被收藏的样式-->
             <div class="like1" v-model="key">
               <span class="iconfont">
-                  <i v-if = "!isCollection" class="el-icon-star-off" :key="0" @click="onCollection"></i>
+                  <i v-if="!isCollection" class="el-icon-star-off" :key="0" @click="onCollection"></i>
                   <i v-else class="el-icon-star-on" :key="1" @click="onCollection"></i>
               </span>
             </div>
             <!--            <div class="right-buttons">-->
-<!--              <el-button class="right-button1"></el-button>-->
-<!--              <el-button class="right-button2"></el-button>-->
-<!--              <el-button class="right-button3"></el-button>-->
-<!--              <el-button class="right-button4"></el-button>-->
-<!--            </div>-->
+            <!--              <el-button class="right-button1"></el-button>-->
+            <!--              <el-button class="right-button2"></el-button>-->
+            <!--              <el-button class="right-button3"></el-button>-->
+            <!--              <el-button class="right-button4"></el-button>-->
+            <!--            </div>-->
           </div>
         </div>
-      <div class="content">
-        <div class="abstract">
-          <div class="abstract-sider"></div>
-          <div class="abstract-title">
-            摘要Abstract
-          </div>
-          <div class="abstract-body">
-            {{this.paper.abstract}}
-          </div>
-        </div>
-      </div>
-      <div class="ref">
-        <reference ref="ref"/>
-      </div>
-<!--      <div class="relate">-->
-<!--        <related />-->
-<!--      </div>-->
-      <div class="review">
-        <div class="commend-title">评论区  Comments</div>
-        <div class="comment-tools">
-          <div class="total-comments">共 {{ this.comment_num }} 条评论</div>
-<!--          <el-dropdown>-->
-<!--            <span class="filter-comments">-->
-<!--              筛选条件<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
-<!--            </span>-->
-<!--            <el-dropdown-menu slot="dropdown">-->
-<!--              <el-dropdown-item>黄金糕</el-dropdown-item>-->
-<!--              <el-dropdown-item>狮子头</el-dropdown-item>-->
-<!--              <el-dropdown-item>螺蛳粉</el-dropdown-item>-->
-<!--            </el-dropdown-menu>-->
-<!--          </el-dropdown>-->
-<!--          <el-dropdown>-->
-<!--&lt;!&ndash;            <span class="rank-comments">&ndash;&gt;-->
-<!--&lt;!&ndash;              排序条件<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>&ndash;&gt;-->
-<!--&lt;!&ndash;            </span>&ndash;&gt;-->
-<!--            <el-dropdown-menu slot="dropdown">-->
-<!--              <el-dropdown-item>发布时间</el-dropdown-item>-->
-<!--              <el-dropdown-item>发布用户</el-dropdown-item>-->
-<!--            </el-dropdown-menu>-->
-<!--          </el-dropdown>-->
-        </div>
-        <div class="commends" v-if="comment_num === 0" >
-          <div class="cards">
-            <div class="empty">
-              快来发表评论吧~
+        <div class="content">
+          <div class="abstract">
+            <div class="abstract-sider"></div>
+            <div class="abstract-title">
+              摘要Abstract
+            </div>
+            <div class="abstract-body">
+              {{ this.paper.abstract }}
             </div>
           </div>
         </div>
-        <div class="commends" v-infinite-scroll="load">
-          <div class="cards" v-for="(item,index) in command" :key="index">
-            <div class="user-info">
-              <el-avatar class="commenter-avator" :src=strcatHeadshot(item)>
-              </el-avatar>
-              <div class="left-info">
+        <div class="ref">
+          <reference ref="ref"/>
+        </div>
+        <!--      <div class="relate">-->
+        <!--        <related />-->
+        <!--      </div>-->
+        <div class="review">
+          <div class="commend-title">评论区 Comments</div>
+          <div class="comment-tools">
+            <div class="total-comments">共 {{ this.comment_num }} 条评论</div>
+            <!--          <el-dropdown>-->
+            <!--            <span class="filter-comments">-->
+            <!--              筛选条件<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
+            <!--            </span>-->
+            <!--            <el-dropdown-menu slot="dropdown">-->
+            <!--              <el-dropdown-item>黄金糕</el-dropdown-item>-->
+            <!--              <el-dropdown-item>狮子头</el-dropdown-item>-->
+            <!--              <el-dropdown-item>螺蛳粉</el-dropdown-item>-->
+            <!--            </el-dropdown-menu>-->
+            <!--          </el-dropdown>-->
+            <!--          <el-dropdown>-->
+            <!--&lt;!&ndash;            <span class="rank-comments">&ndash;&gt;-->
+            <!--&lt;!&ndash;              排序条件<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>&ndash;&gt;-->
+            <!--&lt;!&ndash;            </span>&ndash;&gt;-->
+            <!--            <el-dropdown-menu slot="dropdown">-->
+            <!--              <el-dropdown-item>发布时间</el-dropdown-item>-->
+            <!--              <el-dropdown-item>发布用户</el-dropdown-item>-->
+            <!--            </el-dropdown-menu>-->
+            <!--          </el-dropdown>-->
+          </div>
+          <div class="commends" v-if="comment_num === 0">
+            <div class="cards">
+              <div class="empty">
+                快来发表评论吧~
+              </div>
+            </div>
+          </div>
+          <div class="commends" v-infinite-scroll="load">
+            <div class="cards" v-for="(item,index) in command" :key="index">
+              <div class="user-info">
+                <el-avatar class="commenter-avator" :src=strcatHeadshot(item)>
+                </el-avatar>
+                <div class="left-info">
                 <span class="commenter-id">
-                  {{item.username}}
-<!--                  一个不重要的用户id-->
+                  {{ item.username }}
+                  <!--                  一个不重要的用户id-->
                 </span>
-                <span class="comment-time">{{ dateTime(item.time) }}</span>
+                  <span class="comment-time">{{ dateTime(item.time) }}</span>
                   <span class="commenter-info">
                   {{ item.userinfo }}
                 </span>
-              </div>
+                </div>
 
+              </div>
+              <div class="comment-content">
+                {{ item.content }}
+                <!--              <div class="comment-divider"></div>-->
+              </div>
+              <div style="clear: both;"></div>
             </div>
-            <div class="comment-content">
-              {{item.content}}
-<!--              <div class="comment-divider"></div>-->
-            </div>
-            <div style="clear: both;"> </div>
           </div>
-        </div>
-        <span class="commending-title">发表评论</span>
-        <div class="conmmending">
+          <span class="commending-title">发表评论</span>
+          <div class="conmmending">
           <span style="width: 100%">
             <div class="avators">
             <el-avatar></el-avatar>
@@ -170,25 +175,25 @@
 
           </div>
           </span>
-          <span class="btn">
+            <span class="btn">
             <el-button class="submit-btn" @click="pushCommand">发表</el-button>
           </span>
+          </div>
+        </div>
+      </div>
+      <div class="right-sider">
+        <div class="recent">
+
+        </div>
+        <div class="key">
+          <keyword/>
+        </div>
+
+        <div class="relate">
+          <related/>
         </div>
       </div>
     </div>
-    <div class="right-sider">
-      <div class="recent">
-
-      </div>
-      <div class="key">
-        <keyword />
-      </div>
-
-      <div class="relate">
-        <related />
-      </div>
-    </div>
-  </div>
   </div>
 </template>
 <script>
@@ -199,6 +204,8 @@ import Reference from "@/components/xyj/reference";
 import Related from "@/components/xyj/related";
 import dateTime from "@/composables/calculationTime";
 import Topbar1 from "@/components/topbar1.vue";
+
+
 export default {
   name: "paperDetails",
   data() {
@@ -208,26 +215,27 @@ export default {
         paperFrom: "",
         paperUnit: "",
         height: "",
-        authors:[],
-        abstract:"",
-        cited_counts:0,
-        host_venue:"",
-        institution:"",
+        authors: [],
+        abstract: "",
+        cited_counts: 0,
+        host_venue: "",
+        institution: "",
         cited_by_count: "",
         ids: {},
         hasIds: false,
         url: "",
         doi: "",
         type: "unknown",
+        pdf_ids: {},
+        haspdf: false,
+        pdf_url: "",
       },
-      author_name:'',
-      author_id:0,
+      author_name: '',
+      author_id: 0,
       isCollection: false,
       isCollectionTxt: "已收藏",
       notCollectionTxt: "收藏",
-      command: {
-
-      },
+      command: {},
       space: ";",
       comment_num: 0,
       myComment: "",
@@ -242,38 +250,86 @@ export default {
     Related,
     Topbar1
   },
+
   methods: {
     strcatHeadshot(item) {
-      console.log("headshot","https://ishare.horik.cn/api/media/headshot/"+item.headshot)
-      return "https://ishare.horik.cn/api/media/headshot/"+item.headshot;
+      console.log("headshot", "https://ishare.horik.cn/api/media/headshot/" + item.headshot)
+      return "https://ishare.horik.cn/api/media/headshot/" + item.headshot;
     },
-    jscholar(index){
+    jscholar(index) {
       // window.localStorage.setItem('SID',this.author_id);
       console.log(this.paper.authors[index].author.id)
-      window.localStorage.setItem('SID',this.paper.authors[index].author.id);
+      window.localStorage.setItem('SID', this.paper.authors[index].author.id);
       window.open('/scholar_page');
     },
 
     jumpPaper() {
-      window.open(this.paper.url,'_blank');
+      window.open(this.paper.url, '_blank');
       // this.$router.push(this.paper.url);
     },
+    downloadPDF() {
+      window.open(this.paper.pdf_url, '_blank');
+      /*
+      let url = this.paper.pdf_url;
+      let fileName = "hello";
+      let reg = /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\/])+$/
+      if (!reg.test(url)) {
+        throw new Error('传入参数不合法,不是标准的文件链接')
+      } else {
+        let xhr = new XMLHttpRequest()
+        xhr.open('get', url, true)
+        xhr.setRequestHeader('Content-Type', `application/pdf`)
+        console.log("ds")
+        xhr.responseType = 'blob'
+        let that = this
+        xhr.onload = function () {
+          if (this.status == 200) {
+            //接受二进制文件流
+            var blob = this.response
+            that.downloadExportFile(blob, fileName)
+          }
+        }
+        xhr.send()
+      }
+
+       */
+    },
+    downloadExportFile(blob, tagFileName) {
+      let downloadElement = document.createElement('a')
+      let href = blob
+      if (typeof blob == 'string') {
+        downloadElement.target = '_blank'
+      } else {
+        href = window.URL.createObjectURL(blob) //创建下载的链接
+      }
+      downloadElement.href = href
+      downloadElement.download =
+          tagFileName +
+          //下载后文件名
+          document.body.appendChild(downloadElement)
+      downloadElement.click() //点击下载
+      document.body.removeChild(downloadElement) //下载完成移除元素
+      if (typeof blob != 'string') {
+        window.URL.revokeObjectURL(href) //释放掉blob对象
+      }
+    },
+
     onCollection() {
 
     },
     getCommentList() {
       this.$axios({//注意是this.$axios
-        method:'post',
-        url:'/social/comment/list',
-        data:{//get请求这里是params
+        method: 'post',
+        url: '/social/comment/list',
+        data: {//get请求这里是params
           // paper_id: "W2914747780",
-          paper_id:window.localStorage.getItem('WID'),
+          paper_id: window.localStorage.getItem('WID'),
           //user_id: window.localStorage.getItem('SID'),
           user_id: parseInt(window.localStorage.getItem('uid')),
         }
       }).then(
-          response =>{
-            console.log("get comment",response.data)
+          response => {
+            console.log("get comment", response.data)
             this.command = response.data.data.comments;
             this.comment_num = this.command.length;
           }
@@ -281,8 +337,8 @@ export default {
     },
     pushCommand() {
       this.$axios({//注意是this.$axios
-        method:'post',
-        url:'/social/comment/create',
+        method: 'post',
+        url: '/social/comment/create',
         data: {//get请求这里是params
           content: this.myComment,
           // paper_id: "W2914747780",
@@ -294,13 +350,13 @@ export default {
           'token': parseInt(window.localStorage.getItem('uid'))
         },
       }).then(
-          response =>{
+          response => {
             console.log(response.data);
-            this.myComment="";
+            this.myComment = "";
             this.$message({
-              type:"success",
+              type: "success",
               message: response.data.msg,
-              customClass:'messageIndex'
+              customClass: 'messageIndex'
             })
             this.getCommentList();
           }
@@ -309,20 +365,20 @@ export default {
   },
   // 挂载时获取
   mounted() {
-    let height= this.$refs.ref.offsetHeight;  //100
+    let height = this.$refs.ref.offsetHeight;  //100
     this.$axios({//注意是this.$axios
-      method:'get',
-      url:'/es/get',
-      params:{//get请求这里是params
-        id: window.localStorage.getItem('WID')
-        // id: "W2914747780"
+      method: 'get',
+      url: '/es/get',
+      params: {//get请求这里是params
+        //id: window.localStorage.getItem('WID')
+        id: "W2914747780"
       }
     }).then(
-        response =>{
-          console.log(response.data);
-          this.paper.paperTitle=response.data.data.title
-          this.paper.type=response.data.data.type
-          this.paper.authors=response.data.data.authorships
+        response => {
+          console.log("test " + response.data.data.open_access.oa_url);
+          this.paper.paperTitle = response.data.data.title
+          this.paper.type = response.data.data.type
+          this.paper.authors = response.data.data.authorships
           // var len = Math.min(3, this.paper.authors.length)
           // for(var i = 0; i < len; i++) {
           //   this.author_name += this.paper.authors[i].author.display_name
@@ -334,37 +390,44 @@ export default {
           // }
           // this.author_name= this.paper.authors[0].author.display_name//存储作者名称
           // this.author_id = this.paper.authors[0].author.id//存储作者id
-          this.paper.date=response.data.data.publication_date
-          this.paper.abstract=response.data.data.abstract
-          this.paper.cited_counts=response.data.data.cited_by_count
-          if(response.data.data.host_venue.display_name != null) {
-            this.paper.host_venue=response.data.data.host_venue
-          }else {
+          this.paper.date = response.data.data.publication_date
+          this.paper.abstract = response.data.data.abstract
+          this.paper.cited_counts = response.data.data.cited_by_count
+          if (response.data.data.host_venue.display_name != null) {
+            this.paper.host_venue = response.data.data.host_venue
+          } else {
             this.paper.host_venue = new Object();
             this.paper.host_venue.display_name = "Unknown";
           }
-          if(response.data.data.type != null) {
+          if (response.data.data.type != null) {
             this.paper.type = response.data.data.type
-          } else{
+          } else {
             this.paper.type = "unknown";
           }
           this.paper.ids = response.data.data.ids
           this.paper.doi = response.data.data.doi
-          if(this.paper.doi != null) {
+          if (this.paper.doi != null) {
             this.paper.hasIds = true;
             this.paper.url = this.paper.doi;
-          } else if('pmid' in this.paper.ids) {
+          } else if ('pmid' in this.paper.ids) {
             this.paper.hasIds = true;
             this.paper.url = this.paper.ids.pmid;
-          } else  {
+          } else {
             this.paper.hasIds = false;
           }
+          this.paper.pdf_ids = response.data.data.open_access;
+          if ('oa_url' in this.paper.pdf_ids) {
+            this.paper.haspdf = response.data.data.open_access.is_oa;
+            if (this.paper.haspdf) {
+              this.paper.pdf_url = response.data.data.open_access.oa_url;
+            }
+          }
+          console.log("this.paper.pdf_ids "+this.paper.pdf_ids.oa_url);
           console.log("author institution is:")
           console.log(this.paper.authors[0].institutions)
-          if(this.paper.authors[0].institutions.length===0){
+          if (this.paper.authors[0].institutions.length === 0) {
             this.paper.institution = "No belonged institution";
-          }
-          else{
+          } else {
             this.paper.institution = this.paper.authors[0].institutions[0].display_name;
           }
         }
@@ -383,6 +446,7 @@ export default {
   background: linear-gradient(311.76deg, #D4E7FE, #FFFFFF);
   /*padding-bottom: 87px;*/
 }
+
 .main {
   paddong-top: 9vw;
   //padding-left: 44px; //44px
@@ -390,6 +454,7 @@ export default {
   //display: flex;
   width: 61vw;
 }
+
 .paper-header {
   width: 100%;
   //padding-top: 61px;
@@ -399,9 +464,11 @@ export default {
   height: auto;
   border-bottom: 0.5px solid rgba(171, 169, 169, 0.51);
 }
+
 .title {
 
 }
+
 .title-txt {
   display: inline-block;
   margin-top: 0;
@@ -449,15 +516,18 @@ export default {
   background: transparent !important;
   background-color: transparent !important;
 }
+
 .names {
   display: inline;
   float: left;
   color: #778192;
 }
+
 .names:hover {
   text-decoration: underline;
   color: #53a2e3;
 }
+
 .info2 {
   float: left;
   margin-top: 1.04vh;
@@ -472,13 +542,15 @@ export default {
   margin-right: 1.81vw;
   padding: 0 0 0 0;
 }
-.info2 #outer:after{
-content:".";
-height:0;
-visibility:hidden;
-display:block;
-clear:both;
+
+.info2 #outer:after {
+  content: ".";
+  height: 0;
+  visibility: hidden;
+  display: block;
+  clear: both;
 }
+
 .buttons {
   width: 100%;
   margin-top: 0vh;
@@ -488,11 +560,13 @@ clear:both;
   justify-content: center;
   line-height: 5.19vh;
 }
+
 .like1 {
   float: right;
   margin-left: 2vw;
   color: #FD9B40;
 }
+
 .like2 {
   float: right;
   margin-left: 0.5vw;
@@ -502,9 +576,11 @@ clear:both;
   font-size: 14px;
   //color: #FD9B40;
 }
-.el-icon-my-origin{
+
+.el-icon-my-origin {
   background: url('~@/assets/paperDetailsImg/Vector.png') center no-repeat;
 }
+
 .original {
   float: left;
   align-items: center;
@@ -523,6 +599,7 @@ clear:both;
   line-height: 4.93vh;
   color: #FFFFFF;
 }
+
 .original2 {
   background-color: #C8C9CC;
   color: #FFFFFF;
@@ -541,23 +618,53 @@ clear:both;
   font-size: 16px;
   line-height: 4.93vh;
 }
+
+.original3 {
+  float: left;
+  align-items: center;
+  vertical-align: center;
+  justify-content: center;
+  display: inline-block;
+  width: 8.03vw;
+  height: 4.93vh;
+  background: #D2585F;
+  box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
+  border-radius: 14px;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 4.93vh;
+  color: #FFFFFF;
+}
+
 .original img {
   float: left;
   padding-left: 10px;
   margin-top: 6px;
-}.original2 img {
+}
+
+.original2 img {
   float: left;
   padding-left: 10px;
   margin-top: 6px;
 }
+
+.original3 img {
+  float: left;
+  padding-left: 10px;
+  margin-top: 6px;
+}
+
 .right-buttons {
   float: right;
-  height:6.75vh;
+  height: 6.75vh;
   width: 12.91vw;
   margin-right: 1.29vw;
   display: flex;
   justify-content: flex-end;
 }
+
 .right-button1 {
   border: none;
   height: 6.25vh;
@@ -569,6 +676,7 @@ clear:both;
   background: url('~@/assets/paperDetailsImg/image0.png');
   background-size: 100% 100%;
 }
+
 .right-button2 {
   border: none;
   height: 6.25vh;
@@ -576,6 +684,7 @@ clear:both;
   background: url('~@/assets/paperDetailsImg/image0 (1).png');
   background-size: 100% 100%;
 }
+
 .right-button3 {
   border: none;
   height: 6.15vh;
@@ -583,6 +692,7 @@ clear:both;
   background: url('~@/assets/paperDetailsImg/image0 (2).png');
   background-size: 100% 100%;
 }
+
 .right-button4 {
   border: none;
   height: 6.15vh;
@@ -590,6 +700,7 @@ clear:both;
   background: url('~@/assets/paperDetailsImg/image0 (3).png');
   background-size: 100% 100%;
 }
+
 .content {
   width: 100%;
   margin-top: 5.19vh;
@@ -597,11 +708,12 @@ clear:both;
   position: relative;
   clear: both;
 }
+
 .abstract {
   text-align: left;
   margin-top: 4.15vh;
   width: 56.86vw;
-  overflow:hidden;
+  overflow: hidden;
   filter: drop-shadow(0px 3px 4px rgba(0, 0, 0, 0.25));
   box-shadow: 0px 3px 0px rgba(0, 0, 0, 0.25);
 }
@@ -635,18 +747,21 @@ clear:both;
   line-height: 3.38vh;
   letter-spacing: 0.02em;
 }
+
 .abstract-body {
   text-align: left;
   width: 54.02vw;
   padding-bottom: 3.77vh;
   padding-left: 4.45vw;
 }
+
 .row {
   background: url("~@/assets/paperDetailsImg/Vector (1).png");
   background-size: 100% 100%;
   left: 2.29%;
   right: 96.79%;
 }
+
 .review {
   float: left;
   display: block;
@@ -662,6 +777,7 @@ clear:both;
   box-shadow: 0px 0px 8px #C1C9F0;
   border-radius: 12px;
 }
+
 .commend-title {
   text-align: left;
   height: 3.38vh;
@@ -671,6 +787,7 @@ clear:both;
   font-size: 26px;
   line-height: 3.38vh;
 }
+
 .comment-tools {
   margin-left: 0;
   margin-right: 0;
@@ -688,22 +805,26 @@ clear:both;
 
   color: #818181;
 }
+
 .total-comments {
   float: left;
 }
+
 .filter-comments {
   display: inline-block;
   margin-left: 24.53vw;
   margin-right: 2.78vw;
 }
+
 .rank-comments {
   display: inline-block;
   margin-left: 39.53vw;
   margin-right: 0.97vw;
 }
+
 .commends {
   position: relative;
-  overflow-y:scroll;
+  overflow-y: scroll;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
@@ -713,17 +834,20 @@ clear:both;
   max-height: 350px;
   width: 51.83vw;
 }
+
 ::-webkit-scrollbar {
   width: 7px;
   height: 18px;
   border-radius: 8px;
 }
+
 ::-webkit-scrollbar-thumb {
   width: 7px;
   height: 20px;
   background-color: #E8E8E8;
   border-radius: 8px;
 }
+
 .cards {
   position: relative;
   margin-top: 10px;
@@ -740,18 +864,21 @@ clear:both;
   box-shadow: 0px 2px 4px rgba(180, 180, 180, 0.25);
   border-radius: 8px;
 }
+
 .user-info {
   float: left;
   position: absolute;;
   height: 7.79vh;
   width: 47.31vw;
 }
+
 .commenter-avator {
   float: left;
   display: inline-block;
   height: 5.32vh;
   width: 2.65vw;
 }
+
 .left-info {
   height: 7.79vh;
   //width: 28vw;
@@ -761,6 +888,7 @@ clear:both;
   display: inline;
   margin-left: 0.9vw;
 }
+
 .commenter-id {
   position: relative;
   display: inline-block;
@@ -773,6 +901,7 @@ clear:both;
   font-size: 16px;
   line-height: 3.38vh;
 }
+
 .commenter-info {
   float: left;
   position: relative;
@@ -791,6 +920,7 @@ clear:both;
 
   color: #7D7D7D;
 }
+
 .comment-time {
   position: relative;
   width: auto;
@@ -809,6 +939,7 @@ clear:both;
 
   color: #8A8A8A;
 }
+
 .comment-content {
   display: flex;
   position: absolute;
@@ -830,6 +961,7 @@ clear:both;
   font-size: 17px;
   line-height: 26px;
 }
+
 .comment-divider {
   position: relative;
   width: 100%;
@@ -838,12 +970,13 @@ clear:both;
   //top: 5px;
   border-bottom: 1.4px solid rgba(217, 215, 215, 0.58);
 }
+
 .commending-title {
   display: flex;
   text-align: left;
   width: 5.49vw;
   height: 3.38vh;
-  margin-top: 4.67vh;//4.67vh
+  margin-top: 4.67vh; //4.67vh
   margin-bottom: 1.95vh;
 
   font-family: 'Poppins';
@@ -852,6 +985,7 @@ clear:both;
   font-size: 2.6vh;
   line-height: 3.38vh;
 }
+
 .conmmending {
   position: relative;
   margin-top: 1.95vh;
@@ -863,6 +997,7 @@ clear:both;
   //min-height: 19.35vh;
   min-height: 22vh;
 }
+
 .avators {
   display: inline-block;
   float: left;
@@ -871,21 +1006,25 @@ clear:both;
   margin-top: 2.08vh;
   margin-left: 1.48vw;
 }
+
 .right-comment {
   display: inline-block;
   float: left;
   margin-left: 0.32vw;
 }
+
 .input_command {
   width: 42.05vw;
   height: 11.35vh;
   border: 1.4px solid rgba(198, 198, 198, 0.6);
   border-radius: 8px;
 }
+
 .btn {
   height: 3.64vh;
   width: 100%;
 }
+
 .submit-btn {
   float: right;
   margin-right: 2.90vw;
@@ -902,6 +1041,7 @@ clear:both;
   font-weight: 600;
   font-size: 16px;
 }
+
 .right-sider {
   display: flex;
   float: right;
@@ -912,13 +1052,15 @@ clear:both;
   width: 100%;
   display: table-cell;
   vertical-align: middle;
-  flex-direction:column;
+  flex-direction: column;
 }
+
 .key {
   width: 100%;
   height: 100%;
   height: auto;
 }
+
 .ref {
   display: block;
   float: left;
@@ -927,6 +1069,7 @@ clear:both;
   height: 383px;
   margin-right: 0vw;
 }
+
 .relate {
   display: block;
   float: left;
@@ -936,6 +1079,7 @@ clear:both;
   //height: 383px;
   margin-right: 0vw;
 }
+
 .notes {
   width: 100%;
   height: auto;
@@ -943,6 +1087,7 @@ clear:both;
   //margin-bottom: 10vh;
   clear: both;
 }
+
 .empty {
   height: 150px;
   line-height: 120px;
@@ -960,20 +1105,29 @@ clear:both;
 .el-input__inner {
   border: none !important;
 }
+
 .original {
   padding: 0 2px 2px 0 !important;
 }
+
 .original2 {
   padding: 0 2px 2px 0 !important;
   border: none;
 }
+
 .original2 .el-button.is-disabled, .el-button.is-disabled:focus, .el-button.is-disabled:hover {
   background-color: #C8C9CC !important;
   color: #FFFFFF !important;
 }
+
+.original3 {
+  padding: 0 2px 2px 0 !important;
+}
+
 .submit-btn {
   padding: 0 2px 2px 0 !important;
 }
+
 .el-textarea__inner {
   border: none;
   height: 10.35vh;
