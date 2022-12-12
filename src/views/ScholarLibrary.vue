@@ -10,8 +10,8 @@
         <div class="text_sample2">1000+</div>
       </div>
       <div class="search_box" >
-        <input class="search_input" placeholder="输入学者名称进行搜索..."></input>
-        <div class="search_button">
+        <input class="search_input"  @keyup.enter="search" placeholder="输入学者名称进行搜索..." v-model="search_word"></input>
+        <div class="search_button" v-on:click="search">
           <img src="../assets/ScholarLibrary/search.png"
                style="margin-left: 0vw;margin-top:10px;height: 30px">
         </div>
@@ -27,21 +27,31 @@
         <div class="scholar_avatar">
           <img src="../assets/ScholarLibrary/temp_avar.png" alt="">
         </div>
-        <div class="scholar_name">Dimitra Psychogiou</div>
-        <div class="institution_name">Institution Name</div>
+        <div class="scholar_name">{{item.display_name}}</div>
+        <div class="institution_name">{{ item.last_known_institution }}</div>
         <div class="otherInformation">
         <div class="scholar_work">
           <img src="../assets/ScholarLibrary/work.png" style="float: left">
           <div class="text_sample4">作品数</div>
-          <div class="text_sample5">28</div>
+          <div class="text_sample5">{{ item.works_count }}</div>
         </div>
           <div class="vertical_line" style="float:left;margin-left: 2vh"></div>
           <div class="scholar_cite " style="float:left;margin-left: 5vh">
             <img src="../assets/ScholarLibrary/quota.png" style="float: left;margin-top: -2px">
             <div class="text_sample4">被引用数</div>
-            <div class="text_sample5">1228</div>
+            <div class="text_sample5">{{ item.cited_by_count }}</div>
           </div>
       </div>
+      </div>
+      <div class="change_page" style="width: 100%;text-align: center;margin-bottom: 5vh">
+      <el-pagination class="pages"
+          layout="prev, pager, next"
+          :total=this.total_page
+          @current-change="handlechange"
+          :current-page= this.now_page
+          background
+      >
+      </el-pagination>
       </div>
     </div>
   </div>
@@ -56,50 +66,78 @@ export default {
   components: {Topbar1},
   data(){
     return{
+      search_word:"",
+      total_page:6,
+      now_page:1,
       items:[
         {
           s_id:"1",
-          s_name:"Dimitra Psychogiou",
-          s_insititution:"IRELAND",
+          display_name:"Dimitra Psychogiou",
+          last_known_institution:"IRELAND",
           s_worknum:"29",
           s_citenum:"231"
         },
         {
           s_id:"2",
-          s_name:"Kazuya Takeda",
-          s_insititution:"JAPAN",
+          display_name:"Kazuya Takeda",
+          last_known_institution:"JAPAN",
           s_worknum:"292",
           s_citenum:"2231"
         },
         {
           s_id:"3",
-          s_name:"Sambit Bakshi",
-          s_insititution:"INDIA",
+          display_name:"Sambit Bakshi",
+          last_known_institution:"INDIA",
           s_worknum:"92",
           s_citenum:"2131"
         },
         {
           s_id:"1",
-          s_name:"Dimitra Psychogiou",
-          s_insititution:"IRELAND",
+          display_name:"Dimitra Psychogiou",
+          last_known_institution:"IRELAND",
           s_worknum:"29",
           s_citenum:"231"
         },
         {
           s_id:"1",
-          s_name:"Dimitra Psychogiou",
-          s_insititution:"IRELAND",
+          display_name:"Dimitra Psychogiou",
+          last_known_institution:"IRELAND",
           s_worknum:"29",
           s_citenum:"231"
         },
         {
           s_id:"1",
-          s_name:"Dimitra Psychogiou",
-          s_insititution:"IRELAND",
+          display_name:"Dimitra Psychogiou",
+          last_known_institution:"IRELAND",
           s_worknum:"29",
           s_citenum:"231"
         },
       ]
+    }
+  },
+  methods:{
+    search(){
+      console.log(this.search_word);
+      this.$axios({
+        method:'get',
+        url:'/es/search/author',
+        params: {
+          query_word:this.search_word,
+          page:this.now_page,
+          size:6
+        }
+      }).then(
+          response =>{
+            this.items=response.data.res.Works;
+            for(var i=0;i<6;i++){
+              if(this.items.at(i).last_known_institution===null){
+                this.items.at(i).last_known_institution="No Institution"
+              }else{
+                this.items.at(i).last_known_institution=this.items.at(i).last_known_institution.display_name;
+              }
+            }
+          }
+      )
     }
   }
 }
@@ -186,7 +224,7 @@ export default {
   width: 200px;
 }
 .result_area{
-  margin-top: 120px;
+  margin-top: 100px;
 }
 .scholar_card{
   width: 150vh;
@@ -228,6 +266,7 @@ export default {
 }
 .institution_name{
   width: 90vh;
+  height: 5vh;
   float: left;
   margin-left: 6vh;
   font-family: 'Inter';
@@ -277,5 +316,8 @@ export default {
   background-color: rgba(109, 109, 109, 0.55);
   float: left;
   margin-top: -3px;
+}
+.pages{
+  margin-top: 3vh;
 }
 </style>
