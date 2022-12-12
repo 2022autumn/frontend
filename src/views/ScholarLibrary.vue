@@ -25,7 +25,7 @@
       <div class="title_line"></div>
     </div>
     <div class="result_area">
-      <div class="scholar_card" v-for="item in items">
+      <div class="scholar_card" v-for="item in items" v-on:click="jumpToScholar(item.id)">
         <div class="scholar_avatar">
           <img src="../assets/ScholarLibrary/temp_avar.png" alt="">
         </div>
@@ -100,6 +100,10 @@ export default {
             }
           }
       )
+    },
+    jumpToScholar(id){
+      window.localStorage.setItem('SID', id);
+      window.open('/scholar_page');
     }
   }
 }
@@ -197,6 +201,7 @@ export default {
   box-shadow: 0px 1px 22px rgba(167, 167, 167, 0.25);
   border-radius: 6px;
   overflow: hidden;
+  cursor: pointer;
 }
 .scholar_avatar{
   width: 17vh;
