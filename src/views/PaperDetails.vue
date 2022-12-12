@@ -628,7 +628,7 @@ export default {
   width: 8.03vw;
   height: 4.93vh;
   background: #D2585F;
-  box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
+  box-shadow: 0px 7px 22px -6px rgba(118, 62, 65, 0.34);
   border-radius: 14px;
   font-family: 'Poppins';
   font-style: normal;
