@@ -403,7 +403,7 @@ export default {
       if_venues:0,
       query:[],
       sort:0,
-      asc:true,
+      asc:false,
     }
   },
   methods:{

@@ -343,6 +343,7 @@
         <div v-show="activeIndex == 3" class="center">
           <collect-detail></collect-detail>
           <！---div style="display:flex;align-items:center;justify-content:space-between">
+          -div style="display:flex;align-items:center;justify-content:space-between">
                         <div style="display:flex;align-items:center">
                             <img src="../assets/Star.png" alt="">
                             <span class="info-title">收藏夹</span>
@@ -617,7 +618,7 @@ export default {
 
 <style >
 .container-box {
-  background-image: url(../../public/advanced_img/Frame 1.svg);
+  background-image: url("../../public/advanced_img/Frame 1.svg");
   background-size: 100%;
   position: relative;
   height: 100vh;
@@ -722,6 +723,7 @@ export default {
   box-shadow: 6px 6px 6px 6px rgba(122, 122, 122, 0.25);
   border-radius: 20px;
 }
+
     .circular{
         display: inline-block;
         width: 30px;
@@ -768,6 +770,7 @@ export default {
        box-shadow: 6px 6px 6px 6px rgba(122, 122, 122, 0.25);
        border-radius: 20px;
      }
+
 .center1{
   left: 20px;
 }

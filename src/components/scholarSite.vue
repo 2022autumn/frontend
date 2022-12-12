@@ -32,7 +32,8 @@
             width: 25vw;
             height: 583px;
             display: inline-block;
-            vertical-align: top;"
+            vertical-align: top;
+          "
         >
           <div style="float: right" @click="close">
             <img src="../HomePage_svg/close.svg" />
@@ -97,9 +98,25 @@
                   v-model="ruleForm.pwd"
                   autocomplete="off"
                   :validate-event="false"
-                  style="display: inline-block; width: 50%"
+                  style="display: inline-block; width: 70%"
                 ></el-input>
-                <el-button style="display: inline-block" @click="sendCode">获取验证码</el-button>
+                <!-- <el-button style="" @click="sendCode">获取验证码</el-button> -->
+                <el-button
+                  v-show="showTime"
+                  @click="sendEmail(ruleForm.email)"
+                  style="
+                    display: inline-block;
+                    width: 30%;
+                    padding: 12px 0;
+                    font-size: 13px;
+                  "
+                  >获取验证码</el-button
+                >
+                <el-button
+                  style="width: 30%; padding: 12px 0; font-size: 13px"
+                  disabled
+                  v-show="!showTime" >{{sendTime}} s</el-button
+                >
               </el-form-item>
               <el-form-item label="其他内容" prop="others" class="sitem">
                 <el-input
@@ -163,21 +180,25 @@ export default {
     return {
       user_id: 0,
       author_id: "",
-      dialogVisible: true,
+      dialogVisible: false,
 
       ruleForm: {
         name: "",
         institution: "",
-        email:"",
+        email: "",
         pwd: "",
         others: "",
       },
       rules: {
-        pwd: [{ validator: validatePwd }],//, trigger: "blur"
+        pwd: [{ validator: validatePwd }], //, trigger: "blur"
         name: [{ validator: checkName }],
         institution: [{ validator: checkInst }],
         email: [{ validator: checkEmail }],
       },
+
+      showTime: true /* 布尔值，通过v-show控制显示‘获取按钮’还是‘倒计时’ */,
+      sendTime: "" /* 倒计时 计数器 */,
+      timer: null,
     };
   },
   setup() {},
@@ -189,7 +210,7 @@ export default {
           this.$axios({
             //注意是this.$axios
             method: "post",
-            url: "/register",
+            url: "/application/create",
             data: {
               //post请求这里是data
               author_id: this.author_id,
@@ -198,7 +219,7 @@ export default {
               email: this.ruleForm.email,
               institution: this.ruleForm.institution,
               user_id: this.user_id,
-              verify_code:this.ruleForm.pwd,
+              verify_code: this.ruleForm.pwd,
             },
           }).then((response) => {
             console.log("response", response);
@@ -209,7 +230,7 @@ export default {
                 message: response.data.msg,
                 type: "success",
               });
-              this.signup_visible = false;
+              this.dialogVisible = false;
               this.$parent.isClaim = true;
             }
             // } else if (response.data.status===400) {
@@ -258,7 +279,24 @@ export default {
       console.log("关闭门户申请组件");
       this.dialogVisible = false;
     },
-  }
+
+    sendEmail() {
+      const TIME_COUNT = 60; //  更改倒计时时间
+      if (!this.timer) {
+        this.sendTime = TIME_COUNT;
+        this.showTime = false;
+        this.timer = setInterval(() => {
+          if (this.sendTime > 0 && this.sendTime <= TIME_COUNT) {
+            this.sendTime--;
+          } else {
+            this.showTime = true;
+            clearInterval(this.timer); // 清除定时器
+            this.timer = null;
+          }
+        }, 1000);
+      }
+    },
+  },
 };
 </script>
 

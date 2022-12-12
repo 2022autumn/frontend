@@ -11,7 +11,7 @@
         :http-request="submitAvatarHttp"
         accept=".jpg"
     >
-      <el-button class="upload_btn" size="small">点击上传照片</el-button>
+      <el-button class="upload_btn" size="small" v-if="this.userinfo.verified">点击上传照片</el-button>
     </el-upload>
 <!--    <span class="scholar_name">-->
 <!--        {{scholarInfo.display_name}}-->
@@ -80,17 +80,17 @@ export default {
       method:'post',
       url:'/social/follow/list',
       data:{//get请求这里是params
-        user_id: 8
+        user_id:parseInt(window.localStorage.getItem('uid'))
         // user_id:window.localStorage.getItem('SID')
       },
       headers: {
-        'token': 8
+        'token': parseInt(window.localStorage.getItem('uid'))
       },
     }).then(
         response =>{
           console.log(response.data);
-          this.followList = response.data.data;
-          console.log("followList", this.followList);
+          // this.followList = response.data.data;
+          // console.log("followList", this.followList);
           for(var i = 0; i < this.followList.length; i++) {
             if(this.followList[i].author_id == this.scholarInfo.id) {
               console.log("followed")
@@ -117,22 +117,41 @@ export default {
           response=> {
             this.userinfo = response.data.info;
             this.avator_url = "https://ishare.horik.cn/api/media/headshot/"+this.userinfo.headshot
+
             if(this.userinfo.verified === true) {
               this.isClaim = true;
               this.loadClaim()
             } else {
               this.loadClaim()
             }
+
+            if(this.userinfo.isFollow === true) {
+              this.isFollow = true;
+              this.loadFollow()
+            } else {
+              this.loadFollow()
+            }
           }
       )
     } ,
+    loadFollow() {
+      if(this.isFollow === true) {
+        this.followContent = "已认证";
+        this.bg_color = "#0352FF"
+        this.ft_color="#E6EEFF";
+      } else {
+        this.followContent = "+ 认证";
+        this.bg_color = "#E6EEFF"
+        this.ft_color="#0352FF";
+      }
+    },
     loadClaim() {
       if(this.isClaim === true) {
-        this.claimContent = "已认证";
+        this.claimContent = "已认领";
         this.bg_color2 = "#0352FF"
         this.ft_color2="#E6EEFF";
       } else {
-        this.claimContent = "+ 认证";
+        this.claimContent = "+ 认领";
         this.bg_color2 = "#E6EEFF"
         this.ft_color2="#0352FF";
       }
@@ -146,10 +165,10 @@ export default {
           // author_id: "A4221478216",
           author_id: window.localStorage.getItem('SID'),
           // user_id:window.localStorage.getItem('WID')
-          user_id: 8
+          user_id:  parseInt(window.localStorage.getItem('uid')),
         },
         headers: {
-          'token': 8
+          'token': parseInt(window.localStorage.getItem('uid')),
         },
       }).then(
           response =>{
@@ -185,7 +204,7 @@ export default {
       }
 
       else{
-        this.claimContent="+认领"
+        this.claimContent="+ 认领"
         this.bg_color2="#E6EEFF";
         this.ft_color2="#0352FF";
 

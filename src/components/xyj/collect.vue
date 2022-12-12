@@ -132,10 +132,10 @@ export default {
         url:'/social/tag/create',
         headers:{
           //token:3,
-          //token: this.uid,
+          token: this.uid,
         },
         data:{//get请求这里是params
-          user_id: parseInt (this.uid),
+          user_id: this.uid,
           tag_name:this.nameInput
           //user_id: window.localStorage.getItem('SID'),
         }
@@ -151,7 +151,7 @@ export default {
                 token: this.uid,
               },
               data:{//get请求这里是params
-                user_id: parseInt (this.uid),
+                user_id: this.uid,
                 //user_id: window.localStorage.getItem('SID'),
               }
             }).then(
@@ -175,7 +175,7 @@ export default {
             token: this.uid,
           },
           data:{//get请求这里是params
-            user_id: parseInt (this.uid),
+            user_id: this.uid,
             tag_id:item.tag_id
             //user_id: 3,
             //tag_id:10
@@ -236,10 +236,10 @@ export default {
         url:'/social/tag/delete',
         headers:{
           //token:3,
-          //token: this.uid,
+          token: this.uid,
         },
         data:{//get请求这里是params
-          user_id: parseInt (this.uid),
+          user_id: this.uid,
           tag_id:item.tag_id
           //user_id: window.localStorage.getItem('SID'),
         }
@@ -253,10 +253,10 @@ export default {
               url:'/social/tag/taglist',
               headers:{
                 //token:3,
-                //token: this.uid,
+                token: this.uid,
               },
               data:{//get请求这里是params
-                user_id: parseInt (this.uid),
+                user_id: this.uid,
                 //user_id: window.localStorage.getItem('SID'),
               }
             }).then(
@@ -275,10 +275,10 @@ export default {
         url:'/social/tag/rename',
         headers:{
           //token:3,
-          //token: this.uid,
+          token: this.uid,
         },
         data:{//get请求这里是params
-          user_id: parseInt (this.uid),
+          user_id: this.uid,
           new_tag_name:this.nameInput,
           tag_id:item.tag_id
           //user_id: window.localStorage.getItem('SID'),
@@ -295,7 +295,7 @@ export default {
                 token: this.uid,
               },
               data:{//get请求这里是params
-                user_id: parseInt (this.uid),
+                user_id: this.uid,
                 //user_id: window.localStorage.getItem('SID'),
               }
             }).then(
@@ -316,10 +316,10 @@ export default {
       url:'/social/tag/taglist',
       headers:{
         //token:3,
-        //token: this.uid,
+        token: this.uid,
       },
       data:{//get请求这里是params
-        user_id: parseInt (this.uid),
+        user_id: this.uid,
         //user_id: window.localStorage.getItem('SID'),
       }
     }).then(
@@ -331,7 +331,7 @@ export default {
   },
   data(){
     return{
-      uid:window.localStorage.getItem('uid'),
+      uid:parseInt(window.localStorage.getItem('uid')),
       name:["收藏夹1","收藏夹2","收藏夹3","收藏夹4","收藏夹5","收藏夹6","收藏夹6"],
       newcollect:false,
       delcollect:false,

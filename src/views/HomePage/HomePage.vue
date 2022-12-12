@@ -11,10 +11,16 @@
 
           <div style="margin-top: 6vh; margin-bottom: 5vh;display: inline-block">
             <div style="text-align: center">
-              <el-autocomplete :trigger-on-focus="false" :fetch-suggestions="querySearch" @select="handleSelect" class="home-search" placeholder="请输入检索内容" v-model="input1" @keyup.enter.native="j_search_outcome" @input="inputchange">
+              <el-autocomplete :trigger-on-focus="false" :fetch-suggestions="querySearch" @select="handleSelect" class="home-search" placeholder="请输入检索内容" v-model="input1" @keyup.enter.native="j_search_outcome" @input="inputchange" style="width: 40vw">
                 <!--<template slot="prepend" style="cursor: pointer">
                   <span @click="jadvance" style="width:inherit">高级检索</span>
                 </template>-->
+                <el-select v-model="select" slot="prepend" placeholder="请选择字段" style="width: 10vw">
+                  <el-option label="标题" value="1"></el-option>
+                  <el-option label="摘要" value="2"></el-option>
+                  <el-option label="刊物" value="3"></el-option>
+                  <el-option label="机构" value="4"></el-option>
+                </el-select>
                  <i slot="suffix" class="el-input__icon el-icon-search" @click="j_search_outcome" ></i>
               </el-autocomplete>
             </div>
@@ -87,7 +93,7 @@
           <div class="reference">
             <el-row>
               <el-col :span="6">
-                <div class="button">推荐</div>
+                <div class="button" >{{this.keyname}}</div>
               </el-col>
               <el-col :span="18">
                 <div class="ref-tag">
@@ -98,9 +104,18 @@
                       margin-left: -10%;
                       margin-top: 5px;"
                   />
-                  <span style="vertical-align: top">
-                    订阅主题词，相关内容主页推荐~</span
-                  >
+                  <el-popover
+                      placement="right"
+                      width="500"
+                      height="500"
+                      trigger="hover"
+                     >
+                    <div style="margin-left: 10px"><b>我订阅的主题词</b></div>
+                  <div v-for="item in this.keys" style="display: inline-block;margin-left: 10px;margin-top: 8px">
+                    <el-button style="width: auto;" @click="choosekey(item)">{{item.concept_name}}</el-button>
+                  </div>
+                  <span style="vertical-align: top;cursor: pointer" slot="reference">
+                    选择主题词，相关内容主页推荐~</span></el-popover>
                 </div>
               </el-col>
             </el-row>
@@ -205,11 +220,13 @@ export default {
   components: {Topbar1, PaperItem},
   data(){
     return{
+      select:'',
       restaurants: [
         {
           "value":"java"
         }
       ],
+      userid:window.localStorage.getItem('uid'),
       input1:"",
       num_exact_page:8,
       total: 1000,//返回的检索结果的总量
@@ -222,9 +239,38 @@ export default {
           "c","c","c","c"
       ],
       tuijianlist:[],
+      testkey:[{
+        name:"java",
+        id:1,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,},{
+        name:"python",
+        id:2,}],
+      keys:[],
+      keyname:'',
+      keyid:0,
+      cid:'C73878792',
     }
   },
   mounted() {
+    this.userid = window.localStorage.getItem('uid');
+    if(this.userid===null||this.userid===undefined||this.userid===0||this.userid===""){
+      this.userid = 1;
+    }
     let that = this;
     that.$axios({//注意是this.$axios
       method:'get',
@@ -237,15 +283,40 @@ export default {
           this.hot_list = response.data.data;
         }
     )
+    this.getkey();
     this.gettuijian();
   },
   methods:{
+    choosekey(item){
+      console.log(item.concept_id);
+      console.log(item.concept_name);
+      this.cid = item.concept_id;
+      this.keyname = item.concept_name;
+      this.gettuijian();
+    },
+    getkey(){
+      this.$axios({//注意是this.$axios
+        method:'get',
+        url:'/scholar/concept',
+        headers:{
+          //token:3,
+          token: this.userid,
+        },
+      }).then(
+          response =>{
+            console.log("关键词列表为");
+            //console.log(response.data.data);
+            this.keys = response.data.data;
+            console.log(this.keys);
+          }
+      )
+    },
     gettuijian(){
       this.$axios({//注意是this.$axios
         method: 'get',
         url: '/scholar/roll',
         params: {//post请求这里是data
-           userid:8
+          concept_id:this.cid
         }
       }).then(
           response => {
@@ -469,7 +540,7 @@ export default {
 .home-search /deep/ .el-input__inner {
   background: rgba(117, 167, 235, 0.52);
   height: 45px; /*调整inner的高度*/
-  width: 500px;
+  /*width: 500px;*/
 }
 .home-search /deep/ .el-input__inner::placeholder {
   font-weight: 300;

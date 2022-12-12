@@ -312,7 +312,7 @@ export default {
 
 }
 .scholar_buttons {
-  margin-top: 48px;
+  margin-top: 25px;
 }
 .buttons {
   border: none;
