@@ -450,38 +450,43 @@ export default {
       }
     },
     pushCommand() {
-      this.$axios({//注意是this.$axios
-        method: 'post',
-        url: '/social/comment/create',
-        data: {//get请求这里是params
-          content: this.myComment,
-          // paper_id: "W2914747780",
-          user_id: parseInt(window.localStorage.getItem('uid')),
-          paper_id: window.localStorage.getItem('WID'),
-          //user_id: window.localStorage.getItem('SID'),
-        },
-        headers: {
-          'token': parseInt(window.localStorage.getItem('uid'))
-        },
-      }).then(
-          response => {
-            console.log(response.data);
-            this.myComment = "";
-            this.$message({
-              type: "success",
-              message: response.data.msg,
-              customClass: 'messageIndex'
-            })
-            this.getCommentList();
+      if(window.localStorage.getItem('iflogin') === "0") {
+        this.$refs.topbar.open_login();
+        this.$message.error("尚未登陆");
+      } else {
+        this.$axios({//注意是this.$axios
+          method: 'post',
+          url: '/social/comment/create',
+          data: {//get请求这里是params
+            content: this.myComment,
+            // paper_id: "W2914747780",
+            user_id: parseInt(window.localStorage.getItem('uid')),
+            paper_id: window.localStorage.getItem('WID'),
+            //user_id: window.localStorage.getItem('SID'),
+          },
+          headers: {
+            'token': parseInt(window.localStorage.getItem('uid'))
+          },
+        }).then(
+            response => {
+              console.log(response.data);
+              this.myComment = "";
+              this.$message({
+                type: "success",
+                message: response.data.msg,
+                customClass: 'messageIndex'
+              })
+              this.getCommentList();
+            }
+        ).catch(error=> {
+          console.log("error", error)
+          console.log("error", error.response.status)
+          if(error.response.status === 502) {
+            this.$refs.topbar.open_login();
+            this.$message.error(error.msg);
           }
-      ).catch(error=> {
-        console.log("error", error)
-        console.log("error", error.response.status)
-        if(error.response.status === 502) {
-          this.$refs.topbar.open_login();
-          this.$message.error(error.msg);
-        }
-      })
+        })
+      }
     },
     getTagList() {
       this.$axios({//注意是this.$axios
