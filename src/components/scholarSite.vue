@@ -19,12 +19,16 @@
         >
           <img
             style="height: 100%; position: absolute; top: 0; left: 0"
+            src="../assets/admin/left-scholar.png"
+          />
+          <!-- <img
+            style="height: 100%; position: absolute; top: 0; left: 0"
             src="../assets/admin/BG.svg"
           />
           <img
             style="height: 93%; position: absolute; bottom: 0; left: 0"
             src="../assets/admin/peopleLeft.svg"
-          />
+          /> -->
         </div>
 
         <div
@@ -42,7 +46,7 @@
             <!-- <div class="inst-title">学者门户认领</div> -->
             <img
               style="margin-top: -10vh"
-              src="../assets/admin/scholarSite.svg"
+              src="../assets/admin/title.png"
             />
 
             <!-- <div class="inst-text">机构名称</div>
@@ -115,7 +119,8 @@
                 <el-button
                   style="width: 30%; padding: 12px 0; font-size: 13px"
                   disabled
-                  v-show="!showTime" >{{sendTime}} s</el-button
+                  v-show="!showTime"
+                  >{{ sendTime }} s</el-button
                 >
               </el-form-item>
               <el-form-item label="其他内容" prop="others" class="sitem">

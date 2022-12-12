@@ -41,10 +41,12 @@
             <div class="info2 divide">
               |
             </div>
-            <div class="info2 cite">
+            <div class="info2 cite" >
               被引次数：{{ this.paper.cited_counts }}
             </div>
+            <div class="citethis" v-on:click="createCitation">生成引用</div>
           </div>
+
           <div style="clear: both"></div>
           <div class="buttons">
             <!--            <el-button class="original" icon="el-icon-my-origin">-->
@@ -228,6 +230,18 @@
       </span>
     </div>
     </el-dialog>
+    <el-dialog
+        title="生成引用格式"
+        :visible.sync="createCite"
+        width="30%"
+    >
+      <div>
+        <div class="copyText">
+          <div style="display: inline-block; position: relative;text-align: left">{{this.citation}}</div>
+        </div>
+        <el-button type="primary"  class="el-buttons" style="color: #FFFFFF;margin-top: 30px;margin-left: 280px;"  @click="clickCopy()">复制到剪切板</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -248,6 +262,7 @@ export default {
       myTag: "",
       myTagCnt: "",
       addTagdialog: false,//添加到我的收藏 控制dialog
+      createCite: false,
       selectedTag: "",
       paper: {
         paperTitle: "",
@@ -268,6 +283,7 @@ export default {
         pdf_ids: {},
         haspdf: false,
         pdf_url: "",
+
       },
       author_name: '',
       author_id: 0,
@@ -280,6 +296,7 @@ export default {
       myComment: "",
       dateTime,
       author_len: 0,
+      citation:"",
     };
   },
   components: {
@@ -510,6 +527,28 @@ export default {
         })
       }
     },
+    createCitation(){
+      this.createCite=true;
+      console.log("authors "+this.paper.authors);
+      for(var i=0;i<this.paper.authors.length;i++){
+        this.citation=this.citation+this.paper.authors.at(i).author.display_name+", ";
+      }
+      console.log("first "+this.citation);
+      this.citation=this.citation+"\""+this.paper.paperTitle+"\" in "+this.paper.host_venue.display_name+", "+this.paper.date;
+      console.log("second "+this.citation);
+    },
+    clickCopy() {
+      let msg;
+      msg=this.citation;
+      const save = function(e) {
+        e.clipboardData.setData('text/plain', msg)
+        e.preventDefault() // 阻止默认行为
+      }
+      document.addEventListener('copy', save) // 添加一个copy事件
+      document.execCommand('copy') // 执行copy方法
+      this.$message({ message: '复制成功', type: 'success' })
+    }
+
   },
   // 挂载时获取
   mounted() {
