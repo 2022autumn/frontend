@@ -175,21 +175,25 @@ export default {
               // console.log(response.data.ID);
               this.login_visible = false;
               window.location.reload();
-            } else if (response.data.status===400) {
+            }
+          }).catch((error) => {
+            console.log("error", error)
+            console.log("error", error.response.status)
+            if (error.response.status===400) {
               this.$message({
                 message: "用户名不存在",
                 type: "error",
               });
               this.ruleForm.name = "";
               this.ruleForm.pwd = "";
-            } else if (response.data.status===401) {
+            } else if (error.response.status===401) {
               this.$message({
                 message: "密码错误",
                 type: "error",
               });
             } else {
               this.$message.error("登录出错");
-              alert("用户登录出错");
+              alert("登录时出错");
             }
           });
         } else {
