@@ -6,6 +6,8 @@
     <router-link to="/"><div v-if="this.whichpage===1" style="position: absolute;width: 29px;height:14px;left:25vw;top:3.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: #2B2B39;cursor: pointer" @click="which_page(1)">首页</div></router-link>
     <router-link to="/"><div v-if="this.whichpage!==1" style="position: absolute;width: 29px;height:14px;left:25vw;top:3.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="which_page(1)">首页</div></router-link>
     <router-link to="/advancedSearch"><div style="position: absolute;width: 57px;height:14px;left:32vw;top:3.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="which_page(2)">高级检索</div></router-link>
+    <router-link to="/ScholarLibrary"><div v-if="this.whichpage!==5" style="position: absolute;width: 57px;height:14px;left:50vw;top:3.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="which_page(5)">学者库</div></router-link>
+    <router-link to="/ScholarLibrary"><div v-if="this.whichpage===5" style="position: absolute;width: 57px;height:14px;left:50vw;top:3.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color:  #2B2B39;cursor: pointer" @click="which_page(5)">学者库</div></router-link>
     <!--<div style="position: absolute;width: 57px;height:14px;left:39vw;top:2.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="which_page(3)">机构馆</div>-->
     <div style="position: absolute;width: 100px;height:14px;left:40vw;top:3.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="jcenter">我的 I SHARE</div>
     <div v-if="this.iflogin!==1" style="position: absolute; left:75vw;top:1.3vh;box-shadow: 0 7px 22px -6px rgba(33, 123, 244, 0.34);color: white"><v-btn style="background-color: #217BF4;" class="white--text" @click="open_login()">登 录</v-btn></div>
@@ -57,6 +59,9 @@ export default {
       }
       else if(ident===4){
         this.whichpage=4;
+      }
+      else if(ident===5){
+        this.whichpage=5;
       }
     },
     get_data(){
