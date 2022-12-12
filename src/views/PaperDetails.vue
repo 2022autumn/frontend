@@ -65,18 +65,14 @@
             </el-button>
 
             <!--被收藏的次数-->
-            <div class="like2" v-if="isCollection" style="cursor:pointer;">
-              <span class="iconfont"></span>
+            <div class="like2" @click="onCollect" style="cursor:pointer;">
               {{ this.isCollectionTxt }}
-            </div>
-            <div class="like2" v-else @click="addTagdialog = true" style="cursor:pointer;">
-              {{ this.notCollectionTxt }}
             </div>
             <!--是否被收藏的样式-->
             <div class="like1" v-model="key" style="cursor:pointer;">
               <span class="iconfont">
                   <i v-if="!isCollection" class="el-icon-star-off" :key="0" @click="addTagdialog = true"></i>
-                  <i v-else class="el-icon-star-on" :key="1" @click="onCollection"></i>
+                  <i v-else class="el-icon-star-on" :key="1" @click="removeCollection"></i>
               </span>
             </div>
           </div>
@@ -176,6 +172,40 @@
     >
     <div>
       <span>
+<!--        <el-menu-->
+<!--            mode="vertical"-->
+<!--            class="el-menu-vertical-demo"-->
+<!--            @open="handleOpen"-->
+<!--            @close="handleClose"-->
+<!--            @select="handleSelect"-->
+<!--            :collapse=false-->
+
+<!--        >-->
+<!--&lt;!&ndash;          <el-submenu @click="joinVisible = true" index="create_team">&ndash;&gt;-->
+<!--&lt;!&ndash;            <template slot="title">&ndash;&gt;-->
+<!--&lt;!&ndash;              <i class="el-icon-plus icons"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span slot="title" class="text">新建收藏夹</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </template>&ndash;&gt;-->
+<!--&lt;!&ndash;          </el-submenu>&ndash;&gt;-->
+<!--          <el-scrollbar>-->
+<!--            <el-submenu-->
+<!--                v-for="(item, i) in tags"-->
+<!--                :key="i"-->
+<!--                :index="item.tag_id"-->
+<!--                @click="addTagToFile(item)"-->
+<!--            >-->
+<!--              <span slot="title" class="text">{{ item.tag_name }}-->
+<!--              <el-button-->
+<!--                  @click="onCollect(item)"-->
+<!--                  class="collect_btn"-->
+<!--                  :style="{backgroundColor:bg_color, color: ft_color,}"-->
+<!--              >-->
+<!--                {{collectContent}}-->
+<!--              </el-button>-->
+<!--              </span>-->
+<!--            </el-submenu>-->
+<!--          </el-scrollbar>-->
+<!--          </el-menu>-->
         <el-select value="" v-model="selectedTag">
           <el-option
               v-for="item in tags"
@@ -209,6 +239,7 @@ export default {
   data() {
     return {
       tags: [],
+      myTag: "",
       addTagdialog: false,//添加到我的收藏 控制dialog
       selectedTag: "",
       paper: {
@@ -251,8 +282,33 @@ export default {
     Related,
     Topbar1
   },
-
+  watch:{
+    'isCollection': {
+      handler (newData,oldData) {
+        console.log("newdata2",newData)
+        this.isCollection = newData;
+      },
+      deep: true,
+      immediate: true,
+    }
+  },
   methods: {
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    onCollect(item) {
+      if(this.isCollection === true) {
+        this.removeCollection(item);
+      } else {
+        this.addTagdialog = true;
+      }
+    },
     addTagToFile() {
       let that = this;
       that.$axios({//注意是this.$axios
@@ -265,12 +321,39 @@ export default {
         }
       }).then(res => {
         this.isCollection = true;
+        this.updateTxt();
         this.$message({
           type: "success",
           message: res.data.msg,
           customClass:'messageIndex'
         });
         this.addTagdialog = false;
+      }).catch(err => {
+        console.log(err);
+        this.$message({
+          message: '好像出了点问题诶',
+          type: 'error'
+        });
+      });
+    },
+    removeCollection() {
+      let that = this;
+      that.$axios({//注意是this.$axios
+        method:'post',
+        url:'/social/tag/cancelCollectPaper',
+        data:{//get请求这里是params
+          paper_id:window.localStorage.getItem('WID'),
+          tag_id: this.myTag,
+          user_id: parseInt(window.localStorage.getItem('uid')),
+        }
+      }).then(res => {
+        this.isCollection = false;
+        this.updateTxt();
+        this.$message({
+          type: "success",
+          message: res.data.msg,
+          customClass:'messageIndex'
+        });
       }).catch(err => {
         console.log(err);
         this.$message({
@@ -359,6 +442,13 @@ export default {
           }
       )
     },
+    updateTxt() {
+      if(this.isCollection === true) {
+        this.isCollectionTxt = "已收藏";
+      } else {
+        this.isCollectionTxt = "收藏"
+      }
+    },
     pushCommand() {
       this.$axios({//注意是this.$axios
         method: 'post',
@@ -408,7 +498,9 @@ export default {
             var wid = window.localStorage.getItem('WID');
             for(var i = 0; i < this.tags; i++) {
               if(wid === this.tags[i].tag_id) {
+                this.myTag = this.tags[i].tag_id;
                 this.isCollection = true;
+                this.updateTxt();
                 break;
               }
             }
@@ -1188,5 +1280,17 @@ export default {
 .el-textarea__inner {
   border: none;
   height: 10.35vh;
+}
+.el-scrollbar .el-scrollbar__wrap {
+  max-height: 400px;
+  /*height: 400px;*/
+}
+.el-menu-vertical-demo .el-submenu__icon-arrow el-icon-arrow-down{
+  display: none !important;
+  content: "" !important;
+  width: 0px;
+}
+.el-menu-vertical-demo .el-submenu__icon-arrow {
+  display: none !important;
 }
 </style>
