@@ -304,12 +304,13 @@ export default {
     }
   },
   mounted() {
+    console.log("uid"+this.uid)
     this.$axios({//注意是this.$axios
       method:'post',
       url:'/social/tag/taglist',
       headers:{
         //token:3,
-        token: this.uid,
+        //token: this.uid,
       },
       data:{//get请求这里是params
         user_id: this.uid,
@@ -324,7 +325,7 @@ export default {
   },
   data(){
     return{
-      uid:14,
+      uid:window.localStorage.getItem('uid'),
       name:["收藏夹1","收藏夹2","收藏夹3","收藏夹4","收藏夹5","收藏夹6","收藏夹6"],
       newcollect:false,
       delcollect:false,

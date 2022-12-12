@@ -55,7 +55,7 @@ export default {
   },
   methods:{
     concern(item){
-      console.log(item.islike+this.uid)
+      console.log("cancel"+item.display_name)
       if(this.uid!=null){
         if(item.islike===false){
           item.islike=true
@@ -72,7 +72,6 @@ export default {
           },
           data:{//get请求这里是params
             concept_id: item.id,
-            user_id: this.uid,
             //user_id: window.localStorage.getItem('SID'),
           }
         }).then(
@@ -190,6 +189,7 @@ export default {
   letter-spacing: 0.04em;
   color: #858FA0;
   cursor:pointer;
+  z-index: 99;
 }
 .keyword1{
   display: flex;
@@ -198,7 +198,7 @@ export default {
   padding-bottom: 4px;
   padding-left: 15px;
   padding-right: 18px;
-  background: #858FA0;
+  background: #217BF4;
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
@@ -211,6 +211,7 @@ export default {
   color: #F5F8FC;
   cursor:pointer;
 }
+
 .line{
   position: relative;
   width: 340px;

@@ -342,7 +342,7 @@
         </div>
         <div v-show="activeIndex == 3" class="center">
           <collect-detail></collect-detail>
-          <!---div style="display:flex;align-items:center;justify-content:space-between">
+          <！---div style="display:flex;align-items:center;justify-content:space-between">
                         <div style="display:flex;align-items:center">
                             <img src="../assets/Star.png" alt="">
                             <span class="info-title">收藏夹</span>
@@ -722,7 +722,6 @@ export default {
   box-shadow: 6px 6px 6px 6px rgba(122, 122, 122, 0.25);
   border-radius: 20px;
 }
-.center1 {
     .circular{
         display: inline-block;
         width: 30px;
