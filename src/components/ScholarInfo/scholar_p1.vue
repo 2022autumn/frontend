@@ -31,6 +31,7 @@
     <span class="claim">
       <el-button
           @click="claim"
+          disabled="judgeClaim()"
           class="claim_btn"
           :style="{backgroundColor:bg_color2, color: ft_color2,}"
           @mouseenter="change2" @mouseleave="goback2">
@@ -105,6 +106,13 @@ export default {
     )
   },
   methods: {
+    judgeClaim() {
+      if(this.isClaim === true) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     getScholarInfo() {
       let that = this;
       that.$axios({
