@@ -121,7 +121,7 @@
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
               <div v-if="this.ifedit === 0">
-                <div class="info-text"><span>用户名:</span>张博皓</div>
+                <div class="info-text"><span>用户名:</span>{{this.username}}</div>
                 <div class="info-text">
                   <span>个性签名:</span>{{ this.gexingqianming }}
                 </div>
@@ -151,7 +151,7 @@
                     <el-input
                       type="text"
                       placeholder="请输入用户名"
-                      v-model="name"
+                      v-model="username"
                       maxlength="15"
                       show-word-limit
                       style="width: 15vw"
@@ -299,7 +299,7 @@
                 <div class="change-password">修改密码</div>
                 <el-form size="small" label-position="left" label-width="120px">
                   <el-form-item label="用户名：">
-                    <span class="admin">张博皓</span>
+                    <span class="admin">{{this.username}}</span>
                   </el-form-item>
                   <el-form-item label="原密码：">
                     <el-input
@@ -512,6 +512,7 @@ export default {
       test: "Electronic Attendance Recorder and Confirmation System Using Facial Identification Modules in Python",
       application:[],
       authors:[],
+      username:"",
     };
   },
   methods: {
@@ -619,6 +620,7 @@ export default {
         this.phone = response.data.data.phone;
         this.gexingqianming = response.data.data.user_info;
         this.photourl = response.data.data.head_shot;
+        this.username = response.data.data.username;
         console.log("头像为")
         console.log(this.photourl)
         this.photourl = 'https://ishare.horik.cn/api/media/headshot/'+this.photourl;

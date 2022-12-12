@@ -75,8 +75,9 @@ export default {
           response =>{
             console.log("得到个人信息")
             console.log(response.data);
-            this.photourl = response.data.data.head_shot
+            this.photourl = response.data.data.head_shot;
             this.photourl = 'https://ishare.horik.cn/api/media/headshot/'+this.photourl;
+            this.username = response.data.data.username;
           }
       )
     },
@@ -91,6 +92,7 @@ export default {
     logout(){
       this.iflogin=0;
       window.localStorage.setItem('iflogin',JSON.stringify(0));
+      window.localStorage.setItem("uid","1");
       this.$router.push('/');
     }
   },
