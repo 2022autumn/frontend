@@ -68,7 +68,7 @@
               :class="{ actived: activeIndex == 4 }"
               class="circular"
             ></span>
-            <div class="text1">个性化设置</div>
+            <div class="text1">关注列表</div>
           </div>
           <div
             @click="activeIndex = 5"
@@ -402,8 +402,11 @@
           >
             <div style="display: flex; align-items: center">
               <img src="../assets/Star.png" alt="" />
-              <span class="info-title">个性化设置</span>
+              <span class="info-title">关注列表</span>
             </div>
+          </div>
+          <div>
+            
           </div>
         </div>
         <div v-show="activeIndex == 5" class="center">
