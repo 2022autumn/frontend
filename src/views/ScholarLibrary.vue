@@ -81,7 +81,7 @@ export default {
       this.ifSearch=true;
       this.$axios({
         method:'get',
-        url:'/es/search/author',
+        url:'/es/search/author2',
         params: {
           query_word:this.search_word,
           page:this.now_page,
@@ -89,7 +89,8 @@ export default {
         }
       }).then(
           response =>{
-            this.items=response.data.res.Works;
+            console.log(response.data);
+            this.items=response.data.res.works;
             console.log(this.items);
             for(var i=0;i<6;i++){
               if(this.items.at(i).last_known_institution===null){
@@ -247,7 +248,7 @@ export default {
   width: 65vh;
   float: left;
   margin-left: 60vh;
-  margin-top: 1vh;
+  margin-top: 2.5vh;
   overflow: hidden;
 }
 .text_sample4{
