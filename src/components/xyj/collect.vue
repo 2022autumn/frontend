@@ -20,7 +20,7 @@
       <div class="line1" v-infinite-scroll="load">
         <div class="single-line" v-for="(item,index) in name" :key="index" >
           <div class="left1">
-            <img src="../../assets/image1.png" class="simple-img">
+            <img src="../../assets/image1.png" class="simple-img" @click="change(item)">
           </div>
           <div class="right1">
             <div class="content1" @click="change(item)">{{ item.tag_name }}</div>
@@ -66,10 +66,11 @@
                   <div v-if="item.authorships[0]" class="author-first">
                     <div v-if="item.authorships[0].author.display_name">
                       <div v-if="item.authorships.length>1">
-                        <span @click="jscholar(item.authorships[0].author.id)">
-                           作者:{{item.authorships[0].author.display_name}};
+                        <span>作者:</span>
+                        <span @click="jscholar(item.authorships[0].author.id)" class="author1">
+                           {{item.authorships[0].author.display_name}};
                         </span>
-                        <span @click="jscholar(item.authorships[1].author.id)">
+                        <span @click="jscholar(item.authorships[1].author.id)" class="author1">
                           {{item.authorships[1].author.display_name}}
                         </span>
                       </div>
@@ -131,10 +132,10 @@ export default {
         url:'/social/tag/create',
         headers:{
           //token:3,
-          token: this.uid,
+          //token: this.uid,
         },
         data:{//get请求这里是params
-          user_id: this.uid,
+          user_id: parseInt (this.uid),
           tag_name:this.nameInput
           //user_id: window.localStorage.getItem('SID'),
         }
@@ -150,7 +151,7 @@ export default {
                 token: this.uid,
               },
               data:{//get请求这里是params
-                user_id: this.uid,
+                user_id: parseInt (this.uid),
                 //user_id: window.localStorage.getItem('SID'),
               }
             }).then(
@@ -174,7 +175,7 @@ export default {
             token: this.uid,
           },
           data:{//get请求这里是params
-            user_id: this.uid,
+            user_id: parseInt (this.uid),
             tag_id:item.tag_id
             //user_id: 3,
             //tag_id:10
@@ -199,6 +200,11 @@ export default {
                   for(var j=0;j<this.detail[i].concepts.length;j++){
                     if(this.detail[i].concepts[j].display_name.length>28){
                       this.detail[i].concepts[j].display_name= this.detail[i].concepts[j].display_name.substring(0,28)+"...";
+                    }
+                  }
+                  for(var j=0;j<2;j++){
+                    if(this.detail[i].authorships[j].author.display_name.length>20){
+                      this.detail[i].authorships[j].author.display_name= this.detail[i].authorships[j].author.display_name.substring(0,20)+"...";
                     }
                   }
                   console.log(this.detail[i].concepts)
@@ -230,10 +236,10 @@ export default {
         url:'/social/tag/delete',
         headers:{
           //token:3,
-          token: this.uid,
+          //token: this.uid,
         },
         data:{//get请求这里是params
-          user_id: this.uid,
+          user_id: parseInt (this.uid),
           tag_id:item.tag_id
           //user_id: window.localStorage.getItem('SID'),
         }
@@ -247,10 +253,10 @@ export default {
               url:'/social/tag/taglist',
               headers:{
                 //token:3,
-                token: this.uid,
+                //token: this.uid,
               },
               data:{//get请求这里是params
-                user_id: this.uid,
+                user_id: parseInt (this.uid),
                 //user_id: window.localStorage.getItem('SID'),
               }
             }).then(
@@ -269,10 +275,10 @@ export default {
         url:'/social/tag/rename',
         headers:{
           //token:3,
-          token: this.uid,
+          //token: this.uid,
         },
         data:{//get请求这里是params
-          user_id: this.uid,
+          user_id: parseInt (this.uid),
           new_tag_name:this.nameInput,
           tag_id:item.tag_id
           //user_id: window.localStorage.getItem('SID'),
@@ -289,7 +295,7 @@ export default {
                 token: this.uid,
               },
               data:{//get请求这里是params
-                user_id: this.uid,
+                user_id: parseInt (this.uid),
                 //user_id: window.localStorage.getItem('SID'),
               }
             }).then(
@@ -313,7 +319,7 @@ export default {
         //token: this.uid,
       },
       data:{//get请求这里是params
-        user_id: this.uid,
+        user_id: parseInt (this.uid),
         //user_id: window.localStorage.getItem('SID'),
       }
     }).then(
@@ -495,6 +501,7 @@ export default {
    height: 92px;
    filter: drop-shadow(0px 5px 20px rgba(75, 148, 248, 0.25));
    top:21px;
+   cursor: pointer;
  }
  .left1{
 
@@ -740,7 +747,7 @@ export default {
     width: auto;
     padding-right:5px ;
     height: 5vh;
-    left: -1vw;
+    left: 1vw;
     top:-25px;
     font-family: 'Inter';
     font-style: normal;
@@ -760,7 +767,7 @@ export default {
     width:auto;
     top:-67px;
     height: 5vh;
-    left: 12vw;
+    left: 13vw;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
@@ -905,5 +912,12 @@ export default {
     font-size: 40px;
     top:180px;
     left: 338px;
+  }
+  .author1{
+
+  }
+  .author1:hover{
+    text-decoration: underline;
+    color: #53a2e3;
   }
 </style>
