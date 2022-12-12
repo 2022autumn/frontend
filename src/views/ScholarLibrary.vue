@@ -9,7 +9,7 @@
              style="margin-left: 0vw;width: 100%;z-index:0;position:relative">
         <div class="search_title">
           <div class="text_sample1">这里集结了&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位学者</div>
-          <div class="text_sample2">1000+</div>
+          <div class="text_sample2">200000000+</div>
         </div>
         <div class="search_box">
           <input class="search_input" @keyup.enter="search" placeholder="输入学者名称进行搜索..." v-model="search_word"></input>
