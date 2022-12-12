@@ -170,6 +170,7 @@ export default {
               });
               var storage = window.localStorage;
               storage.setItem("uid",response.data.ID);
+              storage.setItem("token",response.data.token);
               storage.setItem("iflogin",JSON.stringify(1));
               // console.log(response.data.ID);
               this.login_visible = false;

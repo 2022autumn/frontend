@@ -128,8 +128,13 @@ const routes = [
   },
  {
    path:'/ScholarLibrary',
-       name:'ScholarLibrary',
-     component:() => import('../views/ScholarLibrary')
+   name:'ScholarLibrary',
+   component:() => import('../views/ScholarLibrary')
+ },
+ {
+   path:'/admin',
+   name:'admin',
+   component:() => import('../views/administrator')
  }
 ]
 
