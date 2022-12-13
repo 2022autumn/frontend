@@ -35,7 +35,7 @@
                   <div style="display: inline-block;" v-html="item.title"  @click="jdetail(item.id)"></div>
                 </b>
               </div>
-              
+
               <div style="display: inline-block;margin-right:2vh;float: right;" @click="paperDown(item.id)">
                 <el-tooltip content="下移文章" placement="top" effect="light">
                   <img src="../../assets/Vector (2).svg"/>
@@ -43,7 +43,7 @@
               </div>
               <div style="display: inline-block;margin-right:2vh;float: right;" @click="paperUp(item.id)">
                 <el-tooltip content="上移文章" placement="top" effect="light">
-                  <img src="../../assets/Vector (1).svg"/> 
+                  <img src="../../assets/Vector (1).svg"/>
                 </el-tooltip>
               </div>
               <div style="display: inline-block;margin-right:2vh;float: right;" >
@@ -140,7 +140,7 @@
         </el-col>
       </el-row>
 
-     
+
     </div>
 
     </div>
@@ -320,6 +320,11 @@ export default {
                 })
           });
     },
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 15b9a2208d4f2d9067ed6481279b61842b5bd0d9
     handlechange(page){//处理跳转，page为当前选中的页面
           this.now_page = page;
           sessionStorage.setItem('now_page',JSON.stringify(page));
@@ -446,16 +451,28 @@ export default {
                 //console.log("iiiii", i);
                 this.items[i].id = response.data.data[i].id;
                 this.items[i].zhaiyao = response.data.data[i].abstract;
+<<<<<<< HEAD
+                console.log("zhaiyao", this.items[i].zhaiyao);
+                if(this.items[i].zhaiyao === undefined){
+                  this.items[i].zhaiyao = "No abstract"
+=======
                 //console.log("zhaiyao", this.items[i].zhaiyao);
                 if(this.items[i].zhaiyao.length>400){//处理一下过长的摘要
                   //console.log(this.items[i].zhaiyao);
                   this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0,400)+"...";
+>>>>>>> 15b9a2208d4f2d9067ed6481279b61842b5bd0d9
                 }
-                var oldzhaiyao = "";
-                oldzhaiyao = this.items[i].zhaiyao;
-                if(this.items[i].zhaiyao!=="") {
-                  if (this.items[i].zhaiyao === -1) {
-                    this.items[i].zhaiyao = oldzhaiyao;
+                if(this.items[i].zhaiyao !== undefined) {
+                  if (this.items[i].zhaiyao.length > 400) {//处理一下过长的摘要
+                    //console.log(this.items[i].zhaiyao);
+                    this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0, 400) + "...";
+                  }
+                  var oldzhaiyao = "";
+                  oldzhaiyao = this.items[i].zhaiyao;
+                  if (this.items[i].zhaiyao !== "") {
+                    if (this.items[i].zhaiyao === -1) {
+                      this.items[i].zhaiyao = oldzhaiyao;
+                    }
                   }
                 }
                 this.items[i].title = response.data.data[i].title;
@@ -491,8 +508,13 @@ export default {
                   this.items[i].numyin = response.data.data[i].cited_by_count;
                   //console.log("response.data.data[i].Top",response.data.data[i].Top);
                   this.items[i].isTop=response.data.data[i].Top;
+<<<<<<< HEAD
+                  console.log("1111 this.item[i].isTop",this.items[i].isTop);
+
+=======
                   //console.log("1111 this.item[i].isTop",this.items[i].isTop);
                   
+>>>>>>> 15b9a2208d4f2d9067ed6481279b61842b5bd0d9
                   if(response.data.data[i].authorships.length!==0) {
                     this.items[i].author = response.data.data[i].authorships[0].author.display_name;
                     var t = response.data.data[i].authorships.length;
@@ -504,8 +526,12 @@ export default {
                       this.items[i].authors[j] = response.data.data[i].authorships[j].author.display_name;
                     }
                   }
+<<<<<<< HEAD
+
+=======
                   
                   
+>>>>>>> 15b9a2208d4f2d9067ed6481279b61842b5bd0d9
                   //this.items[i].numstore = Math.ceil(Math.random()*100);
               }
             }
@@ -582,6 +608,10 @@ export default {
         response=> {
             // console.log("userinfo",response.data);
             this.scholarInfo = response.data.data;
+<<<<<<< HEAD
+
+=======
+>>>>>>> 15b9a2208d4f2d9067ed6481279b61842b5bd0d9
             if(this.scholarInfo.last_known_institution===null){
               this.scholarInfo.last_known_institution ="No belonged institution";
             }
@@ -640,8 +670,13 @@ export default {
               console.log("response.data.data.pages",response.data.pages);
               console.log("response.data.data.pages",this.total_page);
               for(var i=0;i<len;i++){
+<<<<<<< HEAD
+                console.log("iiiii", i);
+
+=======
                 //console.log("iiiii", i);
                 
+>>>>>>> 15b9a2208d4f2d9067ed6481279b61842b5bd0d9
                 this.items[i].id = response.data.data[i].id;
                 this.items[i].zhaiyao = response.data.data[i].abstract;
                 //console.log("zhaiyao", this.items[i].zhaiyao);
@@ -703,12 +738,12 @@ export default {
                       this.items[i].authors[j] = response.data.data[i].authorships[j].author.display_name;
                     }
                   }
-                  
+
                   //this.items[i].numstore = Math.ceil(Math.random()*100);
               }
             }
         )
-    
+
   },
 }
 </script>
@@ -811,7 +846,7 @@ export default {
 }
 .outcome-card {
     margin-top: 10px;
-   
+
     width: 90%;
     height: 550px;
 
@@ -836,7 +871,7 @@ export default {
 }
 .item-type2 {
   margin: auto;
-  
+
   background: #217bf4;
   box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
   border-radius: 9px;
@@ -851,7 +886,7 @@ export default {
 }
 .item-type3 {
   margin: auto;
-  
+
   background: #15BA84;
   box-shadow: 0px 7px 22px -6px rgba(3, 85, 54, 0.34);
   border-radius: 9px;
