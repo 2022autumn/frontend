@@ -1,41 +1,48 @@
 <template>
   <div class="scholar_p1">
-    <img class="scholar_img" :src="avator_url">
+    <img class="scholar_img" :src="avator_url" />
     <el-upload
-        ref="upload"
-        class="upload-demo"
-        action="123"
-        :show-file-list="false"
-        :on-change="handlePictureCardPreview"
-        :on-success="handleAvatarSuccess"
-        :http-request="submitAvatarHttp"
-        accept=".jpg"
+      ref="upload"
+      class="upload-demo"
+      action="123"
+      :show-file-list="false"
+      :on-change="handlePictureCardPreview"
+      :on-success="handleAvatarSuccess"
+      :http-request="submitAvatarHttp"
+      accept=".jpg"
     >
-      <el-button class="upload_btn" size="small" v-if="this.userinfo.verified">点击上传照片</el-button>
+      <el-button class="upload_btn" size="small" v-if="this.userinfo.verified"
+        >点击上传照片</el-button
+      >
     </el-upload>
-<!--    <span class="scholar_name">-->
-<!--        {{scholarInfo.display_name}}-->
-<!--    </span>-->
-<!--    <span class="scholar_institution">-->
-<!--        {{scholarInfo.last_known_institution}}-->
-<!--    </span>-->
+    <!--    <span class="scholar_name">-->
+    <!--        {{scholarInfo.display_name}}-->
+    <!--    </span>-->
+    <!--    <span class="scholar_institution">-->
+    <!--        {{scholarInfo.last_known_institution}}-->
+    <!--    </span>-->
     <span class="follow">
       <el-button
-          @click="follow"
-          class="follow_btn"
-          :style="{backgroundColor:bg_color, color: ft_color,}"
-          @mouseenter="change" @mouseleave="goback">
-        {{followContent}}
+        @click="follow"
+        class="follow_btn"
+        :style="{ backgroundColor: bg_color, color: ft_color }"
+        @mouseenter="change"
+        @mouseleave="goback"
+      >
+        {{ followContent }}
       </el-button>
     </span>
+    
     <span class="claim">
       <el-button
-          @click="claim"
-          disabled="judgeClaim"
-          class="claim_btn"
-          :style="{backgroundColor:bg_color2, color: ft_color2,}"
-          @mouseenter="change2" @mouseleave="goback2">
-        {{claimContent}}
+        @click="claim"
+        disabled="judgeClaim()"
+        class="claim_btn"
+        :style="{ backgroundColor: bg_color2, color: ft_color2 }"
+        @mouseenter="change2"
+        @mouseleave="goback2"
+      >
+        {{ claimContent }}
       </el-button>
     </span>
     <Site ref="site" :claim="isClaim" @doClaim="doClaim"></Site>
@@ -46,18 +53,24 @@ import Site from "@/components/scholarSite.vue";
 export default {
   name: "scholar_p1",
   components: {
-      //挂载组件
-      Site,//自定义的标签
+    //挂载组件
+    Site, //自定义的标签
   },
   props: {
     scholarInfo: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   data() {
+    // var judgeClaim = () => {
+    //   if (this.isClaim === true) {
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // };
     return {
-      userinfo: {
-      },
+      userinfo: {},
       avator_url: "",
       followList: [],
       isFollow: false,
@@ -72,43 +85,44 @@ export default {
       ft_color: "#0352FF",
       bg_color2: "#E6EEFF",
       ft_color2: "#0352FF",
-    }
+    };
   },
   mounted() {
     this.getScholarInfo();
-    let that = this;
-    that.$axios({//注意是this.$axios
-      method:'post',
-      url:'/social/follow/list',
-      data:{//get请求这里是params
-        user_id:parseInt(window.localStorage.getItem('uid'))
-        // user_id:window.localStorage.getItem('SID')
-      },
-      headers: {
-        'token': parseInt(window.localStorage.getItem('uid'))
-      },
-    }).then(
-        response =>{
-          //console.log(response.data);
-          // this.followList = response.data.data;
-          // console.log("followList", this.followList);
-          for(var i = 0; i < this.followList.length; i++) {
-            if(this.followList[i].author_id == this.scholarInfo.id) {
-              //console.log("followed")
-              this.isFollow = true;
-              this.followContent="已关注";
-              this.bg_color="#0352FF";
-              this.ft_color="#E6EEFF";
-              break;
-            }
+
+    that
+      .$axios({
+        //注意是this.$axios
+        method: "post",
+        url: "/social/follow/list",
+        data: {
+          //get请求这里是params
+          user_id: parseInt(window.localStorage.getItem("uid")),
+          // user_id:window.localStorage.getItem('SID')
+        },
+        headers: {
+          token: parseInt(window.localStorage.getItem("uid")),
+        },
+      })
+      .then((response) => {
+        //console.log(response.data);
+        // this.followList = response.data.data;
+        // console.log("followList", this.followList);
+        for (var i = 0; i < this.followList.length; i++) {
+          if (this.followList[i].author_id == this.scholarInfo.id) {
+            //console.log("followed")
+            this.isFollow = true;
+            this.followContent = "已关注";
+            this.bg_color = "#0352FF";
+            this.ft_color = "#E6EEFF";
+            break;
           }
         }
-    )
+      });
   },
   methods: {
-    judgeClaim() {
-      console.log("judge", this.isClaim)
-      if(this.isClaim === true) {
+    judgeClaim () {
+      if (this.isClaim === true) {
         return true;
       } else {
         return false;
@@ -134,74 +148,72 @@ export default {
               this.loadClaim()
             }
 
-            if(this.userinfo.isFollow === true) {
-              this.isFollow = true;
-              this.loadFollow()
-            } else {
-              this.loadFollow()
-            }
+          if (this.userinfo.isFollow === true) {
+            this.isFollow = true;
+            this.loadFollow();
+          } else {
+            this.loadFollow();
           }
-      )
-    } ,
+        });
+    },
     loadFollow() {
-      if(this.isFollow === true) {
+      if (this.isFollow === true) {
         this.followContent = "已认证";
-        this.bg_color = "#0352FF"
-        this.ft_color="#E6EEFF";
+        this.bg_color = "#0352FF";
+        this.ft_color = "#E6EEFF";
       } else {
         this.followContent = "+ 认证";
-        this.bg_color = "#E6EEFF"
-        this.ft_color="#0352FF";
+        this.bg_color = "#E6EEFF";
+        this.ft_color = "#0352FF";
       }
     },
     loadClaim() {
-      console.log("claim", this.isClaim)
-      if(this.isClaim === true) {
+      if (this.isClaim === true) {
         this.claimContent = "已认领";
-        this.bg_color2 = "#0352FF"
-        this.ft_color2="#E6EEFF";
+        this.bg_color2 = "#0352FF";
+        this.ft_color2 = "#E6EEFF";
       } else {
         this.claimContent = "+ 认领";
-        this.bg_color2 = "#E6EEFF"
-        this.ft_color2="#0352FF";
+        this.bg_color2 = "#E6EEFF";
+        this.ft_color2 = "#0352FF";
       }
     },
     follow() {
       let that = this;
-      that.$axios({//注意是this.$axios
-        method:'post',
-        url:'/social/follow',
-        data:{//get请求这里是params
-          // author_id: "A4221478216",
-          author_id: window.localStorage.getItem('SID'),
-          // user_id:window.localStorage.getItem('WID')
-          user_id:  parseInt(window.localStorage.getItem('uid')),
-        },
-        headers: {
-          'token': parseInt(window.localStorage.getItem('uid')),
-        },
-      }).then(
-          response =>{
-            //console.log(response.data);
-            this.$message({
-              type:"success",
-              message: response.data.msg,
-              customClass:'messageIndex'
-            })
-            this.isFollow=!this.isFollow;
-            if(this.isFollow){
-              this.followContent="已关注";
-              this.bg_color="#0352FF";
-              this.ft_color="#E6EEFF";
-            }
-
-            else{
-              this.followContent="+关注"
-              this.bg_color="#E6EEFF";
-              this.ft_color="#0352FF";
-            }
+      that
+        .$axios({
+          //注意是this.$axios
+          method: "post",
+          url: "/social/follow",
+          data: {
+            //get请求这里是params
+            // author_id: "A4221478216",
+            author_id: window.localStorage.getItem("SID"),
+            // user_id:window.localStorage.getItem('WID')
+            user_id: parseInt(window.localStorage.getItem("uid")),
+          },
+          headers: {
+            token: parseInt(window.localStorage.getItem("uid")),
+          },
+        })
+        .then((response) => {
+          //console.log(response.data);
+          this.$message({
+            type: "success",
+            message: response.data.msg,
+            customClass: "messageIndex",
+          });
+          this.isFollow = !this.isFollow;
+          if (this.isFollow) {
+            this.followContent = "已关注";
+            this.bg_color = "#0352FF";
+            this.ft_color = "#E6EEFF";
+          } else {
+            this.followContent = "+关注";
+            this.bg_color = "#E6EEFF";
+            this.ft_color = "#0352FF";
           }
-      )
+        });
     },
     claim() {
       //console.log("去申请门户");
@@ -221,78 +233,80 @@ export default {
       //   this.ft_color2="#0352FF";
       // }
     },
-    doClaim(status){
-      console.log("into do Claim func")
+    doClaim(status) {
+      console.log("into do Claim func");
       this.isClaim = true;
-      if(this.isClaim){
-        this.claimContent="申请中";
-        this.bg_color2="#0352FF";
-        this.ft_color2="#E6EEFF";
+      if (this.isClaim) {
+        this.claimContent = "申请中";
+        this.bg_color2 = "#0352FF";
+        this.ft_color2 = "#E6EEFF";
       }
     },
     change() {
-      this.bg_color="#0352FF";
-      this.ft_color="#E6EEFF";
+      this.bg_color = "#0352FF";
+      this.ft_color = "#E6EEFF";
     },
     change2() {
-      this.bg_color2="#0352FF";
-      this.ft_color2="#E6EEFF";
+      this.bg_color2 = "#0352FF";
+      this.ft_color2 = "#E6EEFF";
     },
-    goback(){
-      if(this.isFollow){
-        this.bg_color="#0352FF";
-        this.ft_color="#E6EEFF";
-      }
-      else{
-        this.bg_color="#E6EEFF";
-        this.ft_color="#0352FF";
+    goback() {
+      if (this.isFollow) {
+        this.bg_color = "#0352FF";
+        this.ft_color = "#E6EEFF";
+      } else {
+        this.bg_color = "#E6EEFF";
+        this.ft_color = "#0352FF";
       }
     },
-    goback2(){
-      if(this.isClaim){
-        this.bg_color2="#0352FF";
-        this.ft_color2="#E6EEFF";
-      }
-      else{
-        this.bg_color2="#E6EEFF";
-        this.ft_color2="#0352FF";
+    goback2() {
+      if (this.isClaim) {
+        this.bg_color2 = "#0352FF";
+        this.ft_color2 = "#E6EEFF";
+      } else {
+        this.bg_color2 = "#E6EEFF";
+        this.ft_color2 = "#0352FF";
       }
     },
     submitAvatarHttp(val) {
-      let that=this;
+      let that = this;
       // console.log("in!");
       // console.log(val.file);
       let fd = new FormData();
-      fd.append('Headshot', val.file);
-      fd.append('author_id', window.localStorage.getItem('SID'))
+      fd.append("Headshot", val.file);
+      fd.append("author_id", window.localStorage.getItem("SID"));
       const config = {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          "Content-Type": "multipart/form-data",
         },
-      }
-      that.$axios.post('/scholar/author/headshot',fd,config).then((res) => {
-        // console.log(res);
-        // this.userinfo.photo= res.data.data.head_shot;
-              this.$message({
-                type: "success",
-                message: res.data.msg,
-                customClass:'messageIndex'
-              });
-              // that.updateAvator();
-        that.getScholarInfo()
-            // console.log("avatar!");
-          })
-          .catch((err) => {
-            this.$message.error("上传失败ww");
-            // console.log(err);
+      };
+      that.$axios
+        .post("/scholar/author/headshot", fd, config)
+        .then((res) => {
+          // console.log(res);
+          // this.userinfo.photo= res.data.data.head_shot;
+          this.$message({
+            type: "success",
+            message: res.data.msg,
+            customClass: "messageIndex",
           });
+          // that.updateAvator();
+          that.getScholarInfo();
+          // console.log("avatar!");
+        })
+        .catch((err) => {
+          this.$message.error("上传失败ww");
+          // console.log(err);
+        });
     },
     handleAvatarSuccess(res, file) {
       let self = this;
       self.$forceUpdate();
       location.upload();
       this.userinfo.headshot = URL.createObjectURL(file.raw);
-      this.avator_url = "https://ishare.horik.cn/api/media/headshot/"+URL.createObjectURL(file.raw);
+      this.avator_url =
+        "https://ishare.horik.cn/api/media/headshot/" +
+        URL.createObjectURL(file.raw);
       // console.log("res", res);
     },
 
@@ -318,8 +332,8 @@ export default {
       this.upload(file);
       return isJPG && isLt2M;
     },
-  }
-}
+  },
+};
 </script>
 <style scoped>
 .scholar_p1 {
@@ -341,7 +355,7 @@ export default {
   float: left;
   position: relative;
   width: 100%;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
   font-size: 36px;
@@ -351,7 +365,7 @@ export default {
   float: left;
   position: relative;
   width: 100%;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
@@ -364,7 +378,7 @@ export default {
   text-decoration: underline;
 }
 .upload_btn:hover {
-  color: #0E84F4;
+  color: #0e84f4;
   background-color: transparent;
 }
 .follow {
@@ -380,7 +394,7 @@ export default {
   margin-top: 18px;
   /*padding-left: 10px;*/
   border-radius: 4px;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
@@ -398,7 +412,7 @@ export default {
   margin-top: 18px;
   /*padding-left: 10px;*/
   border-radius: 4px;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
   font-size: 14px;

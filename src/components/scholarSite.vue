@@ -38,12 +38,16 @@
             vertical-align: top;
           "
         >
-          <div class="close" style="float: right; margin: 0 1vh; cursor: pointer" @click="close">
+          <div
+            class="close"
+            style="float: right; margin: 0 1vh; cursor: pointer"
+            @click="close"
+          >
             <i class="el-icon-circle-close"></i>
           </div>
           <div class="inst-background" style="float: top">
-            <!-- <div class="inst-title">学者门户认领</div> -->
-            <img src="../assets/admin/title.png" />
+            <div class="inst-title">学者门户认领</div>
+            <!-- <img src="../assets/admin/title.png" /> -->
 
             <!-- <div class="inst-text">机构名称</div>
             <el-input
@@ -276,8 +280,7 @@ export default {
     sendEmail(email) {
       if (email === "") {
         this.$message.error("请填写邮箱");
-      } 
-      else {
+      } else {
         this.$axios({
           //注意是this.$axios
           method: "post",
@@ -287,7 +290,8 @@ export default {
             email: email,
             user_id: this.user_id,
           },
-        }).then((response) => {
+        })
+          .then((response) => {
             console.log("response", response);
             console.log(response.data);
             // console.log(response.data.status);
@@ -298,12 +302,13 @@ export default {
                 type: "success",
               });
             }
-          }).catch((error) => {
+          })
+          .catch((error) => {
             console.log("error", error);
             console.log("error", error.response.status);
             if (error.response.status !== 200) {
               this.$message({
-                message: error.response.data.msg,//"注册失败",
+                message: error.response.data.msg, //"注册失败",
                 type: "error",
               });
             }
@@ -335,15 +340,15 @@ export default {
 .site /deep/ .el-dialog__body {
   padding: 0;
 }
-.close{
-  font-size:48px;
-  color:#217BF4;
+.close {
+  font-size: 48px;
+  color: #217bf4;
 }
-.close:hover{
-  color:rgb(0, 11, 165);
+.close:hover {
+  color: rgb(0, 11, 165);
 }
 .inst-background {
-  margin:auto;
+  margin: auto;
   padding: 15% 0;
   width: 80%;
   height: 583px;
@@ -358,7 +363,16 @@ export default {
   font-weight: 500;
   font-size: 34px;
   line-height: 60px;
-  color: #2e70ff;
+  /* color: #2e70ff; */
+  background-image: linear-gradient(
+    88.02deg,
+    #130cb7 22.13%,
+    rgba(56, 85, 222, 0.930753) 43.18%,
+    rgba(46, 106, 204, 0.869375) 61.83%,
+    rgba(47, 191, 194, 0.7) 79.36%
+  );
+  -webkit-background-clip: text;
+  color: transparent;
   /* identical to box height */
   letter-spacing: 0.02em;
 }
