@@ -53,7 +53,7 @@ export default {
     let that = this;
     that.$axios({
       method: 'get',
-      url: '/es/get',
+      url: '/es/get2',
       params: {
         id: window.localStorage.getItem('SID'),
         // id: this.id
