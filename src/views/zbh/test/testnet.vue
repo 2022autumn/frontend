@@ -2,13 +2,6 @@
   <div>
     <!--width,height 画布的宽度，高度。 可以是百分比或像素，一般在dom元素上设置 -->
     <div id="network_id" class="network" style="position: absolute;top:140vh;width: 100vw;height: 70vh"></div>
-    <!--<el-dialog title="测试框" :visible.sync="dialogVisible" width="width">
-      <div>xxxxxx</div>
-      <div slot="footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-      </div>
-    </el-dialog>-->
   </div>
 </template>
 
@@ -18,67 +11,251 @@ export default {
   name: "testnet",
   data() {
     return {
+      author_id: "",
       dialogVisible: false,
       nodes: [],
       edges: [],
       // network:null,
       container: null,
-      //   节点数组
       nodesArray: [
         {
-          id: 0,
-          label: "黄瑞",
-          //background: url('~@/assets/paperDetailsImg/image0 (2).png'),
-          //color: { background: "yellow" }
-          image:'http://nj.benqmedicalcenter.com/uploadfile/image/20201214/20201214162432_54714.jpg',
-          shape: 'circularImage'
+          "full": "Nicholas Cameron",
+          "id": "A2114233763",
+          "label": "Ni"
         },
         {
-          id: 1,
-          label: "唐熙程",
-          color: { background: "pink" }
+          "full": "Sophia Drossopoulou",
+          "id": "A152419205",
+          "label": "So"
         },
         {
-          id: 2,
-          label: "张博皓",
-          color: { background: "pink" }
+          "full": "James Noble",
+          "id": "A2103426042",
+          "label": "Ja"
         },
         {
-          id: 3,
-          label: "刘俞笑眉",
-          color: { background: "pink" }
+          "full": "Paley Li",
+          "id": "A2159570553",
+          "label": "Pa"
         },
         {
-          id: 4,
-          label: "徐亦佳",
-          color: { background: "pink" }
+          "full": "Alexander J. Summers",
+          "id": "A2122918521",
+          "label": "Al"
         },
         {
-          id: 5,
-          label: "吕新月",
-          color: { background: "pink" }
+          "full": "Tobias Wrigstad",
+          "id": "A2792100077",
+          "label": "To"
         },
         {
-          id: 6,
-          label: "刘汉尧",
-          color: { background: "pink" }
+          "full": "Frank Schmager",
+          "id": "A1981913168",
+          "label": "Fr"
         },
         {
-          id: 7,
-          label: "疯了",
-          color: { background: "pink" }
+          "full": "Erik Ernst",
+          "id": "A2108976767",
+          "label": "E"
+        },
+        {
+          "full": "Mariangiola Dezani-Ciancaglini",
+          "id": "A194585239",
+          "label": "Ma"
+        },
+        {
+          "full": "Matthew J. Smith",
+          "id": "A2489948046",
+          "label": "Ma"
+        },
+        {
+          "full": "Ferruccio Damiani",
+          "id": "A2113991381",
+          "label": "Fe"
         }
       ],
       //   关系线数组
       edgesArray: [
-        { from: 0, to: 1, label: "ddd" },
-        { from: 1, to: 0, label: "aaa" },
-        { from: 0, to: 2, label: "step1" },
-        { from: 0, to: 3, label: "step1" },
-        { from: 0, to: 4, label: "step1" },
-        { from: 4, to: 5, label: "step2" },
-        { from: 4, to: 6, label: "step2" },
-        { from: 4, to: 7, label: "step2" }
+        {
+          "from": "A2114233763",
+          "to": "A152419205",
+          "weight": 8,
+          "width": 8,
+          "works": [
+            {
+              "id": "W2295118110",
+              "title": "Multiple ownership"
+            },
+            {
+              "id": "W1558128491",
+              "title": "A Model for Java with Wildcards"
+            },
+            {
+              "id": "W1489834477",
+              "title": "Existential Quantification for Variant Ownership"
+            },
+            {
+              "id": "W2157627245",
+              "title": "On subtyping, wildcards, and existential types"
+            },
+            {
+              "id": "W1972792083",
+              "title": "Towards a semantic model for Java wildcards"
+            },
+            {
+              "id": "W1561839097",
+              "title": "A State Abstraction for Coordination in Java-like Languages"
+            },
+            {
+              "id": "W92503261",
+              "title": "Understanding Ownership Types with Dependent Types"
+            },
+            {
+              "id": "W6177290",
+              "title": "Variant Ownership with Existential Types"
+            }
+          ]
+        },
+        {
+          "from": "A2114233763",
+          "to": "A2103426042",
+          "weight": 8,
+          "width": 8,
+          "works": [
+            {
+              "id": "W2295118110",
+              "title": "Multiple ownership"
+            },
+            {
+              "id": "W2296246574",
+              "title": "Tribal ownership"
+            },
+            {
+              "id": "W2050346936",
+              "title": "GoHotDraw"
+            },
+            {
+              "id": "W2156373721",
+              "title": "Cloning in ownership"
+            },
+            {
+              "id": "W1851276171",
+              "title": "Encoding Ownership Types in Java"
+            },
+            {
+              "id": "W1975789449",
+              "title": "OGJ gone wild"
+            },
+            {
+              "id": "W92503261",
+              "title": "Understanding Ownership Types with Dependent Types"
+            },
+            {
+              "id": "W2317483806",
+              "title": "Mojojojo — More Ownership for Multiple Owners"
+            }
+          ]
+        },
+        {
+          "from": "A2114233763",
+          "to": "A2159570553",
+          "weight": 2,
+          "width": 2,
+          "works": [
+            {
+              "id": "W2156373721",
+              "title": "Cloning in ownership"
+            },
+            {
+              "id": "W2317483806",
+              "title": "Mojojojo — More Ownership for Multiple Owners"
+            }
+          ]
+        },
+        {
+          "from": "A2114233763",
+          "to": "A2122918521",
+          "weight": 1,
+          "width": 1,
+          "works": [
+            {
+              "id": "W1972792083",
+              "title": "Towards a semantic model for Java wildcards"
+            }
+          ]
+        },
+        {
+          "from": "A2114233763",
+          "to": "A2792100077",
+          "weight": 1,
+          "width": 1,
+          "works": [
+            {
+              "id": "W2296246574",
+              "title": "Tribal ownership"
+            }
+          ]
+        },
+        {
+          "from": "A2114233763",
+          "to": "A1981913168",
+          "weight": 1,
+          "width": 1,
+          "works": [
+            {
+              "id": "W2050346936",
+              "title": "GoHotDraw"
+            }
+          ]
+        },
+        {
+          "from": "A2114233763",
+          "to": "A2108976767",
+          "weight": 1,
+          "width": 1,
+          "works": [
+            {
+              "id": "W1558128491",
+              "title": "A Model for Java with Wildcards"
+            }
+          ]
+        },
+        {
+          "from": "A2114233763",
+          "to": "A194585239",
+          "weight": 1,
+          "width": 1,
+          "works": [
+            {
+              "id": "W1972792083",
+              "title": "Towards a semantic model for Java wildcards"
+            }
+          ]
+        },
+        {
+          "from": "A2114233763",
+          "to": "A2489948046",
+          "weight": 1,
+          "width": 1,
+          "works": [
+            {
+              "id": "W2295118110",
+              "title": "Multiple ownership"
+            }
+          ]
+        },
+        {
+          "from": "A2114233763",
+          "to": "A2113991381",
+          "weight": 1,
+          "width": 1,
+          "works": [
+            {
+              "id": "W1561839097",
+              "title": "A State Abstraction for Coordination in Java-like Languages"
+            }
+          ]
+        }
       ],
       options: {},
       data: {}
@@ -88,9 +265,9 @@ export default {
     init() {
       let _this = this;
       //1.创建一个nodes数组
-      _this.nodes = new Vis.DataSet(_this.nodesArray);
+      _this.nodes = new Vis.DataSet();
       //2.创建一个edges数组
-      _this.edges = new Vis.DataSet(_this.edgesArray);
+      _this.edges = new Vis.DataSet();
       _this.container = document.getElementById("network_id");
       _this.data = {
         nodes: _this.nodes,
@@ -147,6 +324,11 @@ export default {
         // 边线配置
         edges: {
           width: 1,
+          // 设置label的字体大小
+          font: {
+            size: 35
+          },
+          labelHighlightBold: true,
           length: 260,
           color: {
             color: "#848484",
@@ -196,14 +378,62 @@ export default {
           deleteEdge: true
         }
       };
-
-      _this.network = new Vis.Network(
-          _this.container,
-          _this.data,
-          _this.options
-      );
+      // _this.network = new Vis.Network(
+      //   _this.container,
+      //   _this.data,
+      //   _this.options
+      // );
     },
-
+    // 同步函数
+    async getAuthorRelationNet() {
+      console.log("getAuthorRelationNet");
+      this.$axios({
+        method: 'get',
+        url: '/es/getAuthorRelationNet',
+        params: {
+          author_id: this.author_id
+        }
+      }).then(res => {
+        console.log("getAuthorRelationNet res", res);
+        this.nodesArray = res.data.res.Vertex_set;
+        // 为nodesArray中的每个节点添加label属性
+        this.nodesArray.forEach(item => {
+          item.color = {
+            border: "#2B7CE9",
+            background: "#D2E5FF"
+          };
+          item.title = item.full
+        });
+        this.edgesArray = res.data.res.Edge_set;
+        this.edgesArray.forEach(item => {
+          item.id = item.from + "-" + item.to;
+          item.label = item.weight.toString();
+        })
+        console.log("this.nodesArray", this.nodesArray);
+        console.log("this.edgesArray", this.edgesArray);
+        this.resetAllNodesStabilize();
+        // 点击事件
+        this.network.on("click", params => {
+          console.log("点击", params.edges[0]);
+          this.dialogVisible = true;
+          // 遍历edgesArray
+          this.edgesArray.forEach(item => {
+            if (item.id === params.edges[0]) {
+              console.log("点击的边", item);
+            }
+          });
+          this.nodesArray.forEach(item => {
+            if (item.id === params.nodes[0]) {
+              console.log("点击的点", item);
+            }
+          });
+        });
+        // this.resetAllNodesStabilize();
+      }).catch(err => {
+        console.log("getAuthorRelationNet error");
+        console.log(err);
+      })
+    },
     resetAllNodes() {
       let _this = this;
       _this.nodes.clear();
@@ -216,9 +446,9 @@ export default {
       };
       //   network是一种用于将包含点和线的网络和网络之间的可视化展示
       _this.network = new Vis.Network(
-          _this.container,
-          _this.data,
-          _this.options
+        _this.container,
+        _this.data,
+        _this.options
       );
     },
     resetAllNodesStabilize() {
@@ -228,17 +458,9 @@ export default {
     }
   },
   mounted() {
+    this.author_id = window.localStorage.getItem('SID');
     this.init();
-    // 点击事件
-    this.network.on("click", params => {
-      console.log("点击", params);
-      // this.network.addEdgeMode();
-    });
-    // 点击鼠标右键事件
-    this.network.on("oncontext", params => {
-      console.log("右击", params);
-      this.dialogVisible = true;
-    });
+    this.getAuthorRelationNet();
   }
 }
 </script>

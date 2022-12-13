@@ -576,12 +576,12 @@
           this.search();
         },
         search(){
-          const loading = this.$loading({
-            lock: true,
-            text: 'Loading',
-            spinner: 'el-icon-loading',
-            background: 'rgba(0, 0, 0, 0.7)'
-          });
+          // const loading = this.$loading({
+          //   lock: true,
+          //   text: 'Loading',
+          //   spinner: 'el-icon-loading',
+          //   background: 'rgba(0, 0, 0, 0.7)'
+          // });
           var cond = JSON.parse(sessionStorage.getItem('Cond'));
           var searchname1 = sessionStorage.getItem('search_name1');
           var page = JSON.parse(sessionStorage.getItem('now_page'));

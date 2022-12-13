@@ -102,8 +102,8 @@ export default {
     }
     else{
       console.log("已登录")
+      this.get_data();
     }
-    this.get_data();
   }
 }
 </script>
