@@ -10,6 +10,7 @@
               width="280"
               height="500"
               trigger="hover"
+              open-delay="600"
           >
             <div style="height: 30px">
               <div style="margin-left: 10px;cursor: default;float: left"><b>关键词描述</b></div>
@@ -36,6 +37,8 @@
               width="280"
               height="500"
               trigger="hover"
+              open-delay="600"
+              close-delay="0"
           >
             <div style="height: 30px">
               <div style="margin-left: 10px;cursor: default;float: left"><b>关键词描述</b></div>
@@ -106,9 +109,8 @@ export default {
   },
   methods: {
     getDetail(id) {
-      this.detail = "";
-      this.image_thumbnail_url = "";
-      this.ifhasImage = false;
+      this.ifhasImage=false;
+      this.detail="";
       this.$axios({//注意是this.$axios
         method: 'get',
         url: '/es/get2',
@@ -118,10 +120,12 @@ export default {
       }).then(
           response => {
             this.detail = response.data.data.description;
-            console.log(response.data.data);
             if (response.data.data.image_thumbnail_url !== null) {
               this.ifhasImage=true
               this.image_thumbnail_url = response.data.data.image_thumbnail_url;
+            }else{
+              this.ifhasImage=false;
+              this.image_thumbnail_url ="";
             }
           }
       )

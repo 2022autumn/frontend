@@ -11,7 +11,15 @@
     <router-link to="/ScholarLibrary"><div v-if="this.whichpage===5" style="position: absolute;width: 57px;height:14px;left:48vw;top:3.1vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color:  grey;cursor: pointer" @click="which_page(5)">学者库</div></router-link>
     <!--<div style="position: absolute;width: 57px;height:14px;left:39vw;top:2.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="which_page(3)">机构馆</div>-->
     <div style="position: absolute;width: 100px;height:14px;left:38vw;top:3.1vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="jcenter">我的 I SHARE</div>
-    <img v-if="this.iflogin===1" :src="this.photourl" style="top: 1.5vh;width: 40px;height: 40px;border-radius: 50px;left: 90.5vw;position: absolute" alt="">
+    <el-popover
+        placement="top-start"
+        width="100"
+        trigger="hover"
+    >
+        <el-button @click="logout()" type="text">退出登录</el-button>
+        <el-button type="text">管理员</el-button>
+    <img slot="reference" v-if="this.iflogin===1" :src="this.photourl" style="top: 1.5vh;width: 40px;height: 40px;border-radius: 50px;left: 90.5vw;position: absolute" alt="">
+    </el-popover>
     <div v-if="this.iflogin===1"  style="position: absolute;width: 45px;height:14px;left:94vw;top:3.5vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: #2B2B39;">{{this.username}}</div>
     <!-- <div style="position: absolute;height: 5vh;width: 100vw;top:5vh"><el-divider></el-divider></div> -->
     <!--class="input-with-select"-->
@@ -52,6 +60,12 @@ export default {
     }
   },
   methods:{
+    logout(){
+      this.iflogin=0;
+      window.localStorage.setItem('iflogin',JSON.stringify(0));
+      window.localStorage.setItem("uid","1");
+      this.$router.push('/');
+    },
     inputchange(value){//搜索的内容改变
       console.log(value);
       console.log(this.oldtime);

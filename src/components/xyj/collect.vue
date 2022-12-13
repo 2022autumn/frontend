@@ -55,7 +55,7 @@
             <el-button icon="el-icon-d-arrow-left" class="new-button2" @click="change(0)">返回</el-button>
           </div>
         </div>
-        <div class="line2" v-infinite-scroll="load" v-if="have_collect===true">
+        <div class="line2" v-if="have_collect===true">
             <div class="single-line2" v-for="(item,index) in detail" :key="index">
               <div class="title-line2">
                 <div class="type2">{{ item.type }}</div>
@@ -73,18 +73,33 @@
                         <span @click="jscholar(item.authorships[1].author.id)" class="author1">
                           {{item.authorships[1].author.display_name}}
                         </span>
+                        <span class="company3" v-if="item.host_venue">
+                          机构:{{item.host_venue.display_name}}
+                        </span>
+                        <span class="time3">
+                          发表时间:{{ item.publication_date }}
+                        </span>
                       </div>
                       <div v-else @click="jscholar(item.authorships[0].author.id)">
-                        作者:{{item.authorships[0].author.display_name}}
+                        <span>
+                          作者:{{item.authorships[0].author.display_name}}
+                        </span>
+                        <span class="company3" v-if="item.host_venue">
+                          机构:{{item.host_venue.display_name}}
+                        </span>
+                        <span class="time3">
+                          发表时间:{{ item.publication_date }}
+                        </span>
                       </div>
                     </div>
                     <!---div class="vector2">|</div--->
                   </div>
 
                 </div>
-                <div class="company2" v-if="item.host_venue">机构:{{item.host_venue.display_name}}</div>
+
+                <!---div class="company2" v-if="item.host_venue">机构:{{item.host_venue.display_name}}</div--->
                 <!---div class="vector1">|</div--->
-                <div class="time2">发表时间:{{ item.publication_date }}</div>
+                <!---div class="time2">发表时间:{{ item.publication_date }}</div--->
               </div>
               <div class="bottom-line2">
                 <div class="key-box2">
@@ -776,6 +791,37 @@ export default {
     color: rgba(96, 96, 96, 0.69);
 
   }
+  .company3{
+    position: relative;
+    width: auto;
+    padding-left: 5px;
+    padding-right:6px ;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 14px;
+    white-space: nowrap;
+    /* or 108% */
+
+    text-align: center;
+
+    color: rgba(96, 96, 96, 0.69);
+  }
+  .time3{
+    position: relative;
+    width:auto;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 14px;
+    /* or 108% */
+
+    text-align: center;
+    white-space: nowrap;
+    color: rgba(96, 96, 96, 0.69);
+  }
   .time2{
     position: relative;
     width:auto;
@@ -859,7 +905,7 @@ export default {
     padding-top: 6px;
   }
   .quote2{
-      margin-left: 36px;
+      margin-left: 18px;
   }
   .quote-img{
     width: 23px;
@@ -875,7 +921,7 @@ export default {
     width: 8vw;
     height: 15vh;
     top:0.7vh;
-    left: 1.8vw;
+    left: 2.2vw;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 520;
