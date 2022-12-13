@@ -65,12 +65,12 @@
             "
           >
             <span
-              :class="{ actived: activeIndex == 4 }"
-              class="circular"
+              :class="{ actived: activeIndex === 4 }"
+              class="circular last"
             ></span>
             <div class="text1">关注列表</div>
           </div>
-          <div
+          <!--<div
             @click="activeIndex = 5"
             style="
               display: flex;
@@ -85,7 +85,7 @@
               class="circular last"
             ></span>
             <div class="text1">管理员界面</div>
-          </div>
+          </div>-->
         </div>
       </div>
       <div>
@@ -411,10 +411,10 @@
               <!--<div style="display: inline-block">
                 <img src="../assets/ScholarLibrary/temp_avar.png" alt="" style="width: 5vw;height: 10vh;margin: 0 auto">
               </div>-->
-                <div style="font-size: 30px">
+                <div style="font-size: 20px;display: inline-block">
                   <b>{{item.author_name}}</b>
                 </div>
-              <div style="font-size: 20px;color: #8c939d">
+              <div style="font-size: 20px;color: #8c939d;display: inline-block;margin-left: 5vw">
                 <b>关注时间:&nbsp;&nbsp;{{item.follow_time}}</b>
               </div>
               <!--<div style="font-size: 20px;color: #8c939d;display: inline-block">
@@ -433,7 +433,7 @@
             </el-card>
           </div>
         </div>
-        <div v-show="activeIndex == 5" class="center">
+        <!--<div v-show="activeIndex == 5" class="center">
           <div
             style="
               display: flex;
@@ -480,7 +480,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>-->
       </div>
       <div></div>
     </div>
