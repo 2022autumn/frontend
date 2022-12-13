@@ -22,6 +22,9 @@
                 style="margin-top: 10px;width: 90%;word-break: break-word;text-align: left;margin-left: 5%;cursor: default">
               {{ detail }}
             </div>
+            <div v-if="ifhasImage" style="width: 100%;text-align: center;margin-top: 10px">
+              <img :src="image_thumbnail_url" alt="">
+            </div>
             <div class="kk keyword1" @click="concern(item)" slot="reference" v-on:mouseover="getDetail(item.id)">
               {{ item.display_name }}
             </div>
@@ -44,6 +47,9 @@
             <div
                 style="margin-top: 10px;width: 90%;word-break: break-word;text-align: left;margin-left: 5%;cursor: default">
               {{ detail }}
+            </div>
+            <div v-if="ifhasImage" style="width: 100%;text-align: center;margin-top: 10px">
+              <img :src="image_thumbnail_url" alt="">
             </div>
             <div class="kk keyword" @click="concern(item)" slot="reference" v-on:mouseover="getDetail(item.id)">
               {{ item.display_name }}
@@ -101,6 +107,8 @@ export default {
   methods: {
     getDetail(id) {
       this.detail = "";
+      this.image_thumbnail_url = "";
+      this.ifhasImage = false;
       this.$axios({//注意是this.$axios
         method: 'get',
         url: '/es/get2',
@@ -110,7 +118,11 @@ export default {
       }).then(
           response => {
             this.detail = response.data.data.description;
-            console.log(this.detail);
+            console.log(response.data.data);
+            if (response.data.data.image_thumbnail_url !== null) {
+              this.ifhasImage=true
+              this.image_thumbnail_url = response.data.data.image_thumbnail_url;
+            }
           }
       )
     },
@@ -153,7 +165,9 @@ export default {
       uid: window.localStorage.getItem('uid'),
       keywords: ["核电厂", "电厂设备", "电气贯穿件(EPA)", "延寿", "再鉴定",],
       definekey: ["经济报告", "疫情相关", "能源经济", "换行测试"],
-      detail: "origin"
+      detail: "origin",
+      image_thumbnail_url: "",
+      ifhasImage: false,
     }
   }
 }
@@ -402,6 +416,7 @@ export default {
   box-shadow: 0px 2px 4px rgba(27, 83, 158, 0.25);
   background-color: #82B7FF;
 }
+
 .unfollow_keyword {
   background-color: #F5F8FC;
   width: 58px;
