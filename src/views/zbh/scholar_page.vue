@@ -398,9 +398,14 @@ export default {
             console.log("iiiii", i);
             this.items[i].id = response.data.data[i].id;
             this.items[i].zhaiyao = response.data.data[i].abstract;
-            console.log("zhaiyao", this.items[i].zhaiyao);
+            //console.log("zhaiyao", this.items[i].zhaiyao);
+            //console.log("zhaiyao1", this.items[i].zhaiyao);
+            if(this.items[i].zhaiyao === undefined){
+              this.items[i].zhaiyao = "No abstract";
+            }
+            console.log("zhaiyao1", this.items[i].zhaiyao);
             if (this.items[i].zhaiyao.length > 400) {//处理一下过长的摘要
-              //console.log(this.items[i].zhaiyao);
+              console.log(this.items[i].zhaiyao);
               this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0, 400) + "...";
             }
             var oldzhaiyao = "";
@@ -412,7 +417,9 @@ export default {
             }
             this.items[i].title = response.data.data[i].title;
             console.log("title", this.items[i].title)
-            console.log()
+            if(this.items[i].title === undefined){
+              this.items[i].title = "No title"
+            }
             if (this.items[i].title.length > 55) {//处理一下过长的题目
               //console.log(this.items[i].zhaiyao);
               console.log("过长")
@@ -595,6 +602,9 @@ export default {
           this.items[i].id = response.data.data[i].id;
           this.items[i].zhaiyao = response.data.data[i].abstract;
           console.log("zhaiyao", this.items[i].zhaiyao);
+          if(this.items[i].zhaiyao === undefined){
+            this.items[i].zhaiyao = "No abstract";
+          }
           if (this.items[i].zhaiyao.length > 400) {//处理一下过长的摘要
             //console.log(this.items[i].zhaiyao);
             this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0, 400) + "...";
@@ -608,7 +618,9 @@ export default {
           }
           this.items[i].title = response.data.data[i].title;
           console.log("title", this.items[i].title)
-          console.log()
+          if(this.items[i].title === undefined){
+            this.items[i].title = "No title"
+          }
           if (this.items[i].title.length > 55) {//处理一下过长的题目
             //console.log(this.items[i].zhaiyao);
             console.log("过长")
