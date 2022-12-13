@@ -121,14 +121,14 @@
       </div>
 
       <el-row style="margin:auto; top:2vh">
-        <el-col :span="5">
+        <el-col :span="3">
           <div>&nbsp</div>
         </el-col>
         <el-col :span="16">
             <div class="block">
               <el-pagination
                   layout="prev, pager, next"
-                  :total=this.total_page
+                  :page-count=this.total_page
                   @current-change="handlechange"
                   background
               >
@@ -288,7 +288,7 @@ export default {
           this.now_page = page;
           sessionStorage.setItem('now_page',JSON.stringify(page));
           //this.openFullScreen2();
-          this.paperGet(page);
+          this.paperGet();
         },
     jdetail(id){
         // console.log("文章id为:");
@@ -386,7 +386,8 @@ export default {
               })
         })
       },
-      paperGet(page){
+      paperGet(){
+        var page = JSON.parse(sessionStorage.getItem('now_page'));
         this.$axios({
             method:'post',
             url:'/scholar/works/get',
@@ -398,17 +399,18 @@ export default {
             }
           }).then(
             response=> {
-              console.log("1111111111")
-              //this.items =  response.data.data.docs;
-              console.log("response.data.data",this.items);
+              //console.log("response.data.data",this.items);
               var len = 0;
               len = response.data.data.length;
-              console.log("len",len);
+              //console.log("len",len);
+              console.log("response.data.data.pages",response.data.data.pages);
+              this.total_page = response.data.data.pages;
+              console.log("response.data.data.pages",this.total_page);
               for(var i=0;i<len;i++){
-                console.log("iiiii", i);
+                //console.log("iiiii", i);
                 this.items[i].id = response.data.data[i].id;
                 this.items[i].zhaiyao = response.data.data[i].abstract;
-                console.log("zhaiyao", this.items[i].zhaiyao);
+                //console.log("zhaiyao", this.items[i].zhaiyao);
                 if(this.items[i].zhaiyao.length>400){//处理一下过长的摘要
                   //console.log(this.items[i].zhaiyao);
                   this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0,400)+"...";
@@ -421,8 +423,7 @@ export default {
                   }
                 }
                 this.items[i].title = response.data.data[i].title;
-                console.log("title",this.items[i].title)
-                console.log()
+                //console.log("title",this.items[i].title)
                   if(this.items[i].title.length>55){//处理一下过长的题目
                     //console.log(this.items[i].zhaiyao);
                     console.log("过长")
@@ -443,8 +444,8 @@ export default {
                   }
                   this.items[i].time = response.data.data[i].publication_date;
                   for(var j=0;j<3&&j<response.data.data[i].concepts.length;j++){
-                    console.log("response.data.data.docs[i]._source.concepts[j].display_name",response.data.data[i].concepts[j].display_name)
-                    console.log("this.items[i].tags[j]",this.items[i]);
+                    //console.log("response.data.data.docs[i]._source.concepts[j].display_name",response.data.data[i].concepts[j].display_name)
+                    //console.log("this.items[i].tags[j]",this.items[i]);
                     this.items[i].tags[j] = response.data.data[i].concepts[j].display_name;
                   }
                   this.items[i].type =  response.data.data[i].type;
@@ -452,9 +453,9 @@ export default {
                     this.items[i].type = "unknown"
                   }
                   this.items[i].numyin = response.data.data[i].cited_by_count;
-                  console.log("response.data.data[i].Top",response.data.data[i].Top);
+                  //console.log("response.data.data[i].Top",response.data.data[i].Top);
                   this.items[i].isTop=response.data.data[i].Top;
-                  console.log("1111 this.item[i].isTop",this.items[i].isTop);
+                  //console.log("1111 this.item[i].isTop",this.items[i].isTop);
                   
                   if(response.data.data[i].authorships.length!==0) {
                     this.items[i].author = response.data.data[i].authorships[0].author.display_name;
@@ -462,7 +463,7 @@ export default {
                     if(t>4){
                       t=4;
                     }
-                    console.log("jjjjj",t);
+                    //console.log("jjjjj",t);
                     for(var j=0;j<t;j++){
                       this.items[i].authors[j] = response.data.data[i].authorships[j].author.display_name;
                     }
@@ -474,7 +475,6 @@ export default {
             }
         )
       },
-
 
       beforeStudtUpload (file, type) {//可以获取上传的大小和类型
       const fileSuffix = file.name.substring(file.name.lastIndexOf('.') + 1)
@@ -577,34 +577,37 @@ export default {
         this.empty = true;
       }
     })
-
+    sessionStorage.setItem('now_page',JSON.stringify(1));
+    this.now_page=1;
+    
     this.$axios({
             method:'post',
             url:'/scholar/works/get',
             data:{//post请求这里是data
               author_id: this.id,
               display:1,
-              page:1,
+              page:this.now_page,
               page_size:5,
             }
           }).then(
             response=> {
-              console.log("1111111111")
+              //console.log("1111111111")
               //this.items =  response.data.data.docs;
-              console.log("response.data.data",this.items);
+              //console.log("response.data.data",this.items);
               var len = 0;
               len = response.data.data.length;
               console.log("len",len);
               this.total_page=response.data.pages;
-              console.log("response.data.pages",response.data.pages);
-              console.log("response.data.pages",this.total_page);
-
+              //console.log("response.data.pages",response.data.pages);
+              //console.log("response.data.pages",this.total_page);
+              console.log("response.data.data.pages",response.data.pages);
+              console.log("response.data.data.pages",this.total_page);
               for(var i=0;i<len;i++){
-                console.log("iiiii", i);
+                //console.log("iiiii", i);
                 
                 this.items[i].id = response.data.data[i].id;
                 this.items[i].zhaiyao = response.data.data[i].abstract;
-                console.log("zhaiyao", this.items[i].zhaiyao);
+                //console.log("zhaiyao", this.items[i].zhaiyao);
                 if(this.items[i].zhaiyao.length>400){//处理一下过长的摘要
                   //console.log(this.items[i].zhaiyao);
                   this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0,400)+"...";
@@ -617,11 +620,11 @@ export default {
                   }
                 }
                 this.items[i].title = response.data.data[i].title;
-                console.log("title",this.items[i].title)
-                console.log()
+                //console.log("title",this.items[i].title)
+                //console.log()
                   if(this.items[i].title.length>55){//处理一下过长的题目
                     //console.log(this.items[i].zhaiyao);
-                    console.log("过长")
+                    //console.log("过长")
                     this.items[i].title = this.items[i].title.substring(0,55)+"...";
                   }
                   var oldtittle = "";
@@ -639,8 +642,8 @@ export default {
                   }
                   this.items[i].time = response.data.data[i].publication_date;
                   for(var j=0;j<3&&j<response.data.data[i].concepts.length;j++){
-                    console.log("response.data.data.docs[i]._source.concepts[j].display_name",response.data.data[i].concepts[j].display_name)
-                    console.log("this.items[i].tags[j]",this.items[i]);
+                    //console.log("response.data.data.docs[i]._source.concepts[j].display_name",response.data.data[i].concepts[j].display_name)
+                    //console.log("this.items[i].tags[j]",this.items[i]);
                     this.items[i].tags[j] = response.data.data[i].concepts[j].display_name;
                   }
                   this.items[i].type =  response.data.data[i].type;
@@ -648,9 +651,9 @@ export default {
                     this.items[i].type = "unknown"
                   }
                   this.items[i].numyin = response.data.data[i].cited_by_count;
-                  console.log("response.data.data[i].Top",response.data.data[i].Top);
+                  //console.log("response.data.data[i].Top",response.data.data[i].Top);
                   this.items[i].isTop=response.data.data[i].Top;
-                  console.log("1111 this.item[i].isTop",this.items[i].isTop);
+                  //console.log("1111 this.item[i].isTop",this.items[i].isTop);
 
                   if(response.data.data[i].authorships.length!==0) {
                     this.items[i].author = response.data.data[i].authorships[0].author.display_name;
@@ -658,7 +661,7 @@ export default {
                     if(t>4){
                       t=4;
                     }
-                    console.log("jjjjj",t);
+                    //console.log("jjjjj",t);
                     for(var j=0;j<t;j++){
                       this.items[i].authors[j] = response.data.data[i].authorships[j].author.display_name;
                     }
