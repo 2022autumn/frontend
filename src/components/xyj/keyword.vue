@@ -4,8 +4,33 @@
     <div class="title-en">Keywords</div>
     <div class="box-set" v-infinite-scroll="load">
       <div class="keyword-box" v-for="(item,index) in keywords" :key="index">
-        <div class="kk keyword1"  v-if="item.islike===true" @click="concern(item)">{{item.display_name}}</div>
-        <div class="kk keyword"  v-else @click="concern(item)">{{item.display_name}}</div>
+        <div v-if="item.islike===true" style="cursor: pointer">
+          <el-popover
+              placement="bottom"
+              width="280"
+              height="500"
+              trigger="hover"
+          >
+            <div style="margin-left: 10px;cursor: default"><b>关键词描述</b></div>
+            <div style="width: 90%;left:50%;position:absolute;margin-left:-45%;height: 1px;margin-top:10px;background-color:rgba(217, 215, 215, 0.58)"></div>
+            <div style="margin-top: 20px;width: 90%;word-break: break-word;text-align: left;margin-left: 5%;cursor: default">{{detail}}</div>
+             <div class="kk keyword1"   @click="concern(item)" slot="reference" v-on:mouseover="getDetail(item.id)">{{item.display_name}}</div>
+          </el-popover>
+        </div>
+        <div  v-else style="cursor: pointer">
+        <el-popover
+            placement="bottom"
+            width="280"
+            height="500"
+            trigger="hover"
+        >
+          <div style="margin-left: 10px;cursor: default"><b>关键词描述</b></div>
+          <div style="width: 90%;left:50%;position:absolute;margin-left:-45%;height: 1px;margin-top:10px;background-color:rgba(217, 215, 215, 0.58)"></div>
+          <div style="margin-top: 20px;width: 90%;word-break: break-word;text-align: left;margin-left: 5%;cursor: default">{{detail}}</div>
+        <div class="kk keyword"  @click="concern(item)" slot="reference" v-on:mouseover="getDetail(item.id)">{{item.display_name}}</div>
+        </el-popover>
+        </div>
+
       </div>
     </div>
     <!--div class="line"></div>
@@ -54,6 +79,21 @@ export default {
 
   },
   methods:{
+    getDetail(id){
+      this.detail="";
+      this.$axios({//注意是this.$axios
+        method:'get',
+        url:'/es/get2',
+        params: {
+          id:id,
+        }
+      }).then(
+          response =>{
+            this.detail=response.data.data.description;
+            console.log(this.detail);
+          }
+      )
+    },
     concern(item){
 
       console.log(item.islike+this.uid)
@@ -93,6 +133,7 @@ export default {
       uid:window.localStorage.getItem('uid'),
       keywords:["核电厂","电厂设备","电气贯穿件(EPA)","延寿","再鉴定",],
       definekey:["经济报告","疫情相关","能源经济","换行测试"],
+      detail:"origin"
     }
   }
 }
