@@ -31,7 +31,7 @@
     <span class="claim">
       <el-button
           @click="claim"
-          disabled="judgeClaim()"
+          disabled="judgeClaim"
           class="claim_btn"
           :style="{backgroundColor:bg_color2, color: ft_color2,}"
           @mouseenter="change2" @mouseleave="goback2">
@@ -76,7 +76,7 @@ export default {
   },
   mounted() {
     this.getScholarInfo();
-
+    let that = this;
     that.$axios({//注意是this.$axios
       method:'post',
       url:'/social/follow/list',
@@ -107,6 +107,7 @@ export default {
   },
   methods: {
     judgeClaim() {
+      console.log("judge", this.isClaim)
       if(this.isClaim === true) {
         return true;
       } else {
@@ -154,6 +155,7 @@ export default {
       }
     },
     loadClaim() {
+      console.log("claim", this.isClaim)
       if(this.isClaim === true) {
         this.claimContent = "已认领";
         this.bg_color2 = "#0352FF"
