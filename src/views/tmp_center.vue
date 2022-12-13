@@ -56,23 +56,23 @@
               </div>
               <!-- 上传照片给服务器，服务器的图片地址 上传前的判断 请求头Tonken 上传成功后的回调-->
               <!-- :action="$http.adornUrl(`/file/uploadFile`)"  -->
-              <div style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;">
+              <div style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;" >
                 <el-upload
                   accept=".pdf"
-                  action="123"
-                  :http-request="(res)=>paperUpLoad(item.id,res)"
-                  :file-list="fileArr"
-                  :before-upload="(res)=>beforeStudtUpload(res,1)"
                   :show-file-list="false"
+                  slot="append"
+                  ref="upload"
+                  name="file"
+                  :multiple="false"
+                  action="htttps://ishare.horik.cn/api/"
+                  :on-change="onChange"
+                  :auto-upload="false"
                 >
-                  <el-tag class="item-type3" style="display: inline-block;vertical-align: middle;">
+                  <el-tag class="item-type3" style="display: inline-block;vertical-align: middle;" @click="setpdfid(item.id)">
                     上传原文
                   </el-tag>
                 </el-upload>
               </div>
-              
-
-              
 
               <div>
                 <div style="display: inline-block;margin-top: 1vh;color: grey" v-for="(aus,index) in item.authors">
@@ -115,15 +115,29 @@
             </el-card>
 
       </div>
-      <div class="block">
-        <el-pagination
-            layout="prev, pager, next"
-            :total=this.total_page
-            @current-change="handlechange"
-            background
-        >
-        </el-pagination>
-      </div>
+
+      <el-row style="margin:auto; top:2vh">
+        <el-col :span="5">
+          <div>&nbsp</div>
+        </el-col>
+        <el-col :span="16">
+            <div class="block">
+              <el-pagination
+                    layout="prev, pager, next"
+                    :total=this.total_page
+                    @current-change="handlechange"
+                    :current-page= this.now_page
+                    background
+              >
+              </el-pagination>
+            </div>
+        </el-col>
+        <el-col :span="3">
+          <div>&nbsp</div>
+        </el-col>
+      </el-row>
+
+     
     </div>
 
     </div>
@@ -143,11 +157,14 @@ export default {
   components: {Testnet, Trycloud, Topbar1, testScolar,PaperManage},
   data(){
     return{
+      pdfUrl: "",
       num_exact_page:8,
       total: 1000,//返回的检索结果的总量
       total_page:0,
+      now_page:1,
       //id: "A4261893083",
       id: window.localStorage.getItem('SID'),
+      pdf_work_id:"",
       scholarInfo: {
         cited_by_count: 0,
         counts_by_year: [
@@ -223,60 +240,6 @@ export default {
           authors:[],
           isTop:-1,
         },
-        {
-          type:"期刊",
-          title:"疫情冲击下2020年中国新经济形势与政策",
-          author:"horik",
-          time:"2020/9/23",
-          institution:"北京航空航天大学",
-          zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
-          tags:[
-            "数学",
-            "物理",
-            "化学",
-          ],
-          numyin:0,
-          numstore:0,
-          id:"",
-          authors:[],
-          isTop:-1,
-        },
-        {
-          type:"期刊",
-          title:"疫情冲击下2020年中国新经济形势与政策",
-          author:"horik",
-          time:"2020/9/23",
-          institution:"北京航空航天大学",
-          zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
-          tags:[
-            "数学",
-            "物理",
-            "化学",
-          ],
-          numyin:0,
-          numstore:0,
-          id:"",
-          authors:[],
-          isTop:-1,
-        },
-        {
-          type:"期刊",
-          title:"疫情冲击下2020年中国新经济形势与政策",
-          author:"horik",
-          time:"2020/9/23",
-          institution:"北京航空航天大学",
-          zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
-          tags:[
-            "数学",
-            "物理",
-            "化学",
-          ],
-          numyin:0,
-          numstore:0,
-          id:"",
-          authors:[],
-          isTop:-1,
-        },
       ],
       empty: false,
       show: false,
@@ -286,9 +249,47 @@ export default {
     }
   },
   methods:{
-    handlechange(page){//处理跳转，page为当前选中的页面
-      //alert(page);
+    setpdfid(id){
+      console.log("setpdfid1",id);
+      this.pdf_work_id=id;
+      console.log("this.pdf_work_id",this.pdf_work_id);
     },
+    onChange(file) {
+        // 校验格式
+        console.log("OnChange");
+        if (['application/pdf'].indexOf(file.raw.type) == -1) {
+            this.$message.error('请上传正确的pdf格式');
+            return false;
+        }
+
+        const formData = new FormData();
+        formData.append('PDF',file.raw);//file.file
+        formData.append("work_id", this.pdf_work_id);
+        formData.append("author_id ", this.id);
+
+        const config = {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
+        this.$axios.post("/scholar/works/upload", formData, config)
+        .then(
+              response=> {
+                console.log(message);
+                this.$message({
+                  type:"success",
+                  message: "上传成功",
+                })
+          });
+    },
+    
+
+    handlechange(page){//处理跳转，page为当前选中的页面
+          this.now_page = page;
+          sessionStorage.setItem('now_page',JSON.stringify(page));
+          //this.openFullScreen2();
+          this.paperGet(page);
+        },
     jdetail(id){
         // console.log("文章id为:");
         // console.log(id);
@@ -385,17 +386,97 @@ export default {
               })
         })
       },
-      beforeStudtUpload (file, type) {//可以获取上传的大小和类型
-      const fileSuffix = file.name.substring(file.name.lastIndexOf('.') + 1)
-      const whiteList = ['pdf']
-       if (whiteList.indexOf(fileSuffix) === -1) {
-        this.$message({
-          message: '上传文件只能是 pdf',
-          type: 'warning'
-        })
-        return false
-       }
-    },
+      paperGet(page){
+        this.$axios({
+            method:'post',
+            url:'/scholar/works/get',
+            data:{//post请求这里是data
+              author_id: this.id,
+              display:1,
+              page:page,
+              page_size:5,
+            }
+          }).then(
+            response=> {
+              console.log("1111111111")
+              //this.items =  response.data.data.docs;
+              console.log("response.data.data",this.items);
+              var len = 0;
+              len = response.data.data.length;
+              console.log("len",len);
+              console.log("response.data.data.pages",response.data.data.pages);
+              this.total_page = response.data.data.pages;
+              console.log("response.data.data.pages",response.data.data.pages);
+              for(var i=0;i<len;i++){
+                console.log("iiiii", i);
+                this.items[i].id = response.data.data[i].id;
+                this.items[i].zhaiyao = response.data.data[i].abstract;
+                console.log("zhaiyao", this.items[i].zhaiyao);
+                if(this.items[i].zhaiyao.length>400){//处理一下过长的摘要
+                  //console.log(this.items[i].zhaiyao);
+                  this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0,400)+"...";
+                }
+                var oldzhaiyao = "";
+                oldzhaiyao = this.items[i].zhaiyao;
+                if(this.items[i].zhaiyao!=="") {
+                  if (this.items[i].zhaiyao === -1) {
+                    this.items[i].zhaiyao = oldzhaiyao;
+                  }
+                }
+                this.items[i].title = response.data.data[i].title;
+                console.log("title",this.items[i].title)
+                console.log()
+                  if(this.items[i].title.length>55){//处理一下过长的题目
+                    //console.log(this.items[i].zhaiyao);
+                    console.log("过长")
+                    this.items[i].title = this.items[i].title.substring(0,55)+"...";
+                  }
+                  var oldtittle = "";
+                  oldtittle = this.items[i].title;
+                  if(this.items[i].title===-1){
+                    this.items[i].title = oldtittle;
+                  }
+                  this.items[i].institution = response.data.data[i].host_venue.display_name;
+                  if(this.items[i].institution===null){
+                    this.items[i].institution = "无所属机构";
+                  }
+                  if(this.items[i].institution.length>50){
+                    //console.log(this.items[i].zhaiyao);
+                    this.items[i].institution = this.items[i].institution.substring(0,50)+"...";
+                  }
+                  this.items[i].time = response.data.data[i].publication_date;
+                  for(var j=0;j<3&&j<response.data.data[i].concepts.length;j++){
+                    console.log("response.data.data.docs[i]._source.concepts[j].display_name",response.data.data[i].concepts[j].display_name)
+                    console.log("this.items[i].tags[j]",this.items[i]);
+                    this.items[i].tags[j] = response.data.data[i].concepts[j].display_name;
+                  }
+                  this.items[i].type =  response.data.data[i].type;
+                  if(this.items[i].type === null){
+                    this.items[i].type = "unknown"
+                  }
+                  this.items[i].numyin = response.data.data[i].cited_by_count;
+                  console.log("response.data.data[i].Top",response.data.data[i].Top);
+                  this.items[i].isTop=response.data.data[i].Top;
+                  console.log("1111 this.item[i].isTop",this.items[i].isTop);
+                  
+                  if(response.data.data[i].authorships.length!==0) {
+                    this.items[i].author = response.data.data[i].authorships[0].author.display_name;
+                    var t = response.data.data[i].authorships.length;
+                    if(t>4){
+                      t=4;
+                    }
+                    console.log("jjjjj",t);
+                    for(var j=0;j<t;j++){
+                      this.items[i].authors[j] = response.data.data[i].authorships[j].author.display_name;
+                    }
+                  }
+                  
+                  //this.items[i].numstore = Math.ceil(Math.random()*100);
+              }
+            }
+        )
+      },
+
       paperUpLoad(id,res){
         this.$axios({
             method:'post',
@@ -454,6 +535,7 @@ export default {
         response=> {
             // console.log("userinfo",response.data);
             this.scholarInfo = response.data.data;
+            
             if(this.scholarInfo.last_known_institution===null){
               this.scholarInfo.last_known_institution ="No belonged institution";
             }
@@ -504,6 +586,9 @@ export default {
               var len = 0;
               len = response.data.data.length;
               console.log("len",len);
+              this.total_page=response.data.pages;
+              console.log("response.data.pages",response.data.pages);
+              console.log("response.data.pages",this.total_page);
               for(var i=0;i<len;i++){
                 console.log("iiiii", i);
                 
@@ -557,22 +642,23 @@ export default {
                   this.items[i].isTop=response.data.data[i].Top;
                   console.log("1111 this.item[i].isTop",this.items[i].isTop);
 
-                  // if(response.data.data.docs[i]._source.authorships.length!==0) {
-                  //   this.items[i].author = response.data.data.docs[i]._source.authorships[0].author.display_name;
-                  //   var t = response.data.data.docs[i]._source.authorships.length;
-                  //   if(t>4){
-                  //     t=4;
-                  //   }
-                  //   console.log("jjjjj",t);
-                  //   for(var j=0;j<t;j++){
-                  //     this.items[i].authors[j] = response.data.data.docs[i]._source.authorships[j].author.display_name;
-                  //   }
-                  // }
+                  if(response.data.data[i].authorships.length!==0) {
+                    this.items[i].author = response.data.data[i].authorships[0].author.display_name;
+                    var t = response.data.data[i].authorships.length;
+                    if(t>4){
+                      t=4;
+                    }
+                    console.log("jjjjj",t);
+                    for(var j=0;j<t;j++){
+                      this.items[i].authors[j] = response.data.data[i].authorships[j].author.display_name;
+                    }
+                  }
                   
                   //this.items[i].numstore = Math.ceil(Math.random()*100);
               }
-        }
-    )
+            }
+        )
+    
   },
 }
 </script>

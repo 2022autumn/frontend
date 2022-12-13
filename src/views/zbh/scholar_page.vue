@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <Topbar1></Topbar1>
@@ -56,16 +57,19 @@
               </div>
               <!-- 上传照片给服务器，服务器的图片地址 上传前的判断 请求头Tonken 上传成功后的回调-->
               <!-- :action="$http.adornUrl(`/file/uploadFile`)"  -->
-              <div style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;">
+              <div style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;" >
                 <el-upload
                   accept=".pdf"
-                  action="123"
-                  :http-request="(res)=>paperUpLoad(item.id,res)"
-                  :file-list="fileArr"
-                  :before-upload="(res)=>beforeStudtUpload(res,1)"
                   :show-file-list="false"
+                  slot="append"
+                  ref="upload"
+                  name="file"
+                  :multiple="false"
+                  action="htttps://ishare.horik.cn/api/"
+                  :on-change="onChange"
+                  :auto-upload="false"
                 >
-                  <el-tag class="item-type3" style="display: inline-block;vertical-align: middle;">
+                  <el-tag class="item-type3" style="display: inline-block;vertical-align: middle;" @click="setpdfid(item.id)">
                     上传原文
                   </el-tag>
                 </el-upload>
@@ -156,6 +160,7 @@ export default {
   components: {Testnet, Trycloud, Topbar1, testScolar,PaperManage},
   data(){
     return{
+      detail:"",
       num_exact_page:8,
       total: 1000,//返回的检索结果的总量
       total_page:0,
@@ -246,6 +251,39 @@ export default {
     }
   },
   methods:{
+    setpdfid(id){
+      console.log("setpdfid1",id);
+      this.pdf_work_id=id;
+      console.log("this.pdf_work_id",this.pdf_work_id);
+    },
+    onChange(file) {
+        // 校验格式
+        console.log("OnChange");
+        if (['application/pdf'].indexOf(file.raw.type) == -1) {
+            this.$message.error('请上传正确的pdf格式');
+            return false;
+        }
+
+        const formData = new FormData();
+        formData.append('PDF',file.raw);//file.file
+        formData.append("work_id", this.pdf_work_id);
+        formData.append("author_id ", this.id);
+
+        const config = {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
+        this.$axios.post("/scholar/works/upload", formData, config)
+        .then(
+              response=> {
+                console.log(message);
+                this.$message({
+                  type:"success",
+                  message: "上传成功",
+                })
+          });
+    },
     handlechange(page){//处理跳转，page为当前选中的页面
           this.now_page = page;
           sessionStorage.setItem('now_page',JSON.stringify(page));
@@ -418,17 +456,18 @@ export default {
                   this.items[i].isTop=response.data.data[i].Top;
                   console.log("1111 this.item[i].isTop",this.items[i].isTop);
                   
-                  // if(response.data.data.docs[i]._source.authorships.length!==0) {
-                  //   this.items[i].author = response.data.data.docs[i]._source.authorships[0].author.display_name;
-                  //   var t = response.data.data.docs[i]._source.authorships.length;
-                  //   if(t>4){
-                  //     t=4;
-                  //   }
-                  //   console.log("jjjjj",t);
-                  //   for(var j=0;j<t;j++){
-                  //     this.items[i].authors[j] = response.data.data.docs[i]._source.authorships[j].author.display_name;
-                  //   }
-                  // }
+                  if(response.data.data[i].authorships.length!==0) {
+                    this.items[i].author = response.data.data[i].authorships[0].author.display_name;
+                    var t = response.data.data[i].authorships.length;
+                    if(t>4){
+                      t=4;
+                    }
+                    console.log("jjjjj",t);
+                    for(var j=0;j<t;j++){
+                      this.items[i].authors[j] = response.data.data[i].authorships[j].author.display_name;
+                    }
+                  }
+                  
                   
                   //this.items[i].numstore = Math.ceil(Math.random()*100);
               }
@@ -497,7 +536,7 @@ export default {
     console.log("id is "+this.id);
     that.$axios({
       method:'get',
-      url:'/es/get',
+      url:'/es/get2',
       params:{
         id: this.id
         // id: "A4221478216"
@@ -613,17 +652,17 @@ export default {
                   this.items[i].isTop=response.data.data[i].Top;
                   console.log("1111 this.item[i].isTop",this.items[i].isTop);
 
-                  // if(response.data.data.docs[i]._source.authorships.length!==0) {
-                  //   this.items[i].author = response.data.data.docs[i]._source.authorships[0].author.display_name;
-                  //   var t = response.data.data.docs[i]._source.authorships.length;
-                  //   if(t>4){
-                  //     t=4;
-                  //   }
-                  //   console.log("jjjjj",t);
-                  //   for(var j=0;j<t;j++){
-                  //     this.items[i].authors[j] = response.data.data.docs[i]._source.authorships[j].author.display_name;
-                  //   }
-                  // }
+                  if(response.data.data[i].authorships.length!==0) {
+                    this.items[i].author = response.data.data[i].authorships[0].author.display_name;
+                    var t = response.data.data[i].authorships.length;
+                    if(t>4){
+                      t=4;
+                    }
+                    console.log("jjjjj",t);
+                    for(var j=0;j<t;j++){
+                      this.items[i].authors[j] = response.data.data[i].authorships[j].author.display_name;
+                    }
+                  }
                   
                   //this.items[i].numstore = Math.ceil(Math.random()*100);
               }
