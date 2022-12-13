@@ -56,7 +56,7 @@
                 </el-tooltip>
               </div>
               
-              <div style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;" >
+              <div v-if="item.pdf===0" style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;" >
                 <el-upload
                   accept=".pdf"
                   :show-file-list="false"
@@ -72,6 +72,12 @@
                     上传原文
                   </el-tag>
                 </el-upload>
+              </div>
+
+              <div v-if="item.pdf===1" style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;" >
+                <el-tag class="item-type4" style="display: inline-block;vertical-align: middle;" @click="delePdf(item.id)">
+                    删除原文
+                  </el-tag>
               </div>
 
               <div>
@@ -92,12 +98,13 @@
                 <!--{{item.zhaiyao}}-->
                 <div style="display: inline-block;" v-html="item.zhaiyao"  @click="jdetail(item.id)"></div>
               </div>
-              <div style="margin-top: 2vh;display: inline-block">
+              <div  style="margin-top: 2vh;display: inline-block">
                 <div v-for="tags in item.tags" v-if="tags!==''" style="display: inline-block">
                   <el-tag>{{tags}}</el-tag>
                   &nbsp;
                 </div>
               </div>
+              
               <div style="display: inline-block;color: rgba(96, 96, 96, 0.69);">
                 <div style="display: inline-block;top:3vh">
                 <img src="../../img/yinhao.svg" style="width: 2vw;height: 2vh">
@@ -321,7 +328,7 @@ export default {
         this.$axios.post("/scholar/works/upload", formData, config)
         .then(
               response=> {
-                console.log(message);
+                window.location.reload();
                 this.$message({
                   type:"success",
                   message: "上传成功",
@@ -432,6 +439,26 @@ export default {
                 message: "取消置顶成功",
               })
         })
+      },
+      delePdf(id){
+        const formData = new FormData();
+        formData.append('author_id',this.id);//file.file
+        formData.append("work_id", id);
+
+        const config = {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
+        this.$axios.post("/scholar/works/unupload", formData, config)
+        .then(
+              response=> {
+                window.location.reload();
+                this.$message({
+                  type:"success",
+                  message: "删除原文成功",
+                })
+          });
       },
       paperGet(){
         //var page = JSON.parse(sessionStorage.getItem('now_page'));
@@ -857,6 +884,22 @@ export default {
   margin: auto;
 
   background: #15BA84;
+  box-shadow: 0px 7px 22px -6px rgba(3, 85, 54, 0.34);
+  border-radius: 9px;
+  vertical-align:middle;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 4vh;
+  text-align: center;
+  letter-spacing: 0.01em;
+
+  color: #ffffff;
+}
+
+.item-type4 {
+  margin: auto;
+
+  background: #e66a5a;
   box-shadow: 0px 7px 22px -6px rgba(3, 85, 54, 0.34);
   border-radius: 9px;
   vertical-align:middle;
