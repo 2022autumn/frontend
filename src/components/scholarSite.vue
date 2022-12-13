@@ -361,21 +361,23 @@ export default {
   font-style: normal;
 }
 .inst-title {
-  font-weight: 500;
+  font-weight: 700;
   font-size: 34px;
   line-height: 60px;
   /* color: #2e70ff; */
-  background-image: linear-gradient(
-    88.02deg,
-    #130cb7 22.13%,
-    rgba(56, 85, 222, 0.930753) 43.18%,
-    rgba(46, 106, 204, 0.869375) 61.83%,
-    rgba(47, 191, 194, 0.7) 79.36%
+  letter-spacing: 0.2em;
+
+  background: linear-gradient(
+    90.48deg,
+    #130cb7 -8.56%,
+    rgba(56, 85, 222, 0.930753) 33.43%,
+    rgba(46, 106, 204, 0.869375) 70.65%,
+    rgba(82, 229, 231, 0.7) 105.64%
   );
   -webkit-background-clip: text;
-  color: transparent;
-  /* identical to box height */
-  letter-spacing: 0.02em;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }
 .inst-text {
   margin: 2vh 0;

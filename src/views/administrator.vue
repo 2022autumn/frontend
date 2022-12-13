@@ -20,7 +20,7 @@
               class="circular"
               :class="{ actived: activeIndex == 1 }"
             ></span>
-            <div class="text1">网站信息</div>
+            <div class="text1">数据信息</div>
           </div>
           <div
             @click="activeIndex = 2"
@@ -48,11 +48,39 @@
         <div v-show="activeIndex == 1" class="center">
           <div style="display: flex; align-items: center">
             <img src="../assets/Vector.png" alt="" />
-            <span class="info-title">网站信息</span>
+            <span class="info-title">数据信息</span>
           </div>
           <div>
             <!-- 放置内容 -->
-            <div class="content grid1"></div>
+            <div class="data-title" >注册信息</div>
+            <div style="margin: 1vh auto">
+              <div class="data-tag">注册用户数量</div>
+              <div class="data-content">{{ this.registerNum }}</div>
+            </div>
+            <div style="margin: 1vh auto">
+              <div class="data-tag">认证学者数量</div>
+              <div class="data-content">{{ this.verifiedNum }}</div>
+            </div>
+
+            <div class="line"></div>
+
+            <div class="data-title">公开数据</div>
+            <div style="margin: 1vh auto">
+              <div class="data-tag">学者数量</div>
+              <div class="data-content">{{ this.authorNum }}</div>
+            </div>
+            <div style="margin: 1vh auto">
+              <div class="data-tag">论文数量</div>
+              <div class="data-content">{{ this.workNum }}</div>
+            </div>
+            <div style="margin: 1vh auto">
+              <div class="data-tag">期刊数量</div>
+              <div class="data-content">{{ this.venueNum }}</div>
+            </div>
+            <div style="margin: 1vh auto">
+              <div class="data-tag">组织数量</div>
+              <div class="data-content">{{ this.institutionNum }}</div>
+            </div>
           </div>
         </div>
 
@@ -78,7 +106,8 @@
                 <div style="flex: 1; display: flex; align-items: center">
                   <img src="../assets/Avatar (1).png" alt="" />
                   <span class="app-text"
-                    >用户 {{ item.user_id }} 申请门户： {{ item.real_name }}</span
+                    >用户 {{ item.user_id }} 申请门户：
+                    {{ item.real_name }}</span
                   >
                 </div>
                 <div
@@ -171,6 +200,7 @@ export default {
     return {
       activeIndex: 1,
       show1: true,
+
       application: [],
       uid: 0,
       total: 0,
@@ -179,6 +209,13 @@ export default {
       institution: "",
       email: "",
       other: "",
+
+      registerNum:0,
+      verifiedNum: 0,
+      authorNum: 0,
+      institutionNum:0,
+      venueNum: 0,
+      workNum: 0,
     };
   },
   methods: {
@@ -197,6 +234,51 @@ export default {
         console.log("application" + this.application);
         this.total = this.application.length;
         console.log("获取到申请列表长度为" + this.total);
+      });
+    },
+    getRegister() {
+      this.$axios({
+        //注意是this.$axios
+        method: "get",
+        url: "/info/register_num",
+        params: {
+          //get请求这里是params
+        },
+      }).then((response) => {
+        console.log("成功获得注册用户数量");
+        console.log(response.data);
+        this.registerNum = response.data.register_num;
+      });
+    },
+    getVerified() {
+      this.$axios({
+        //注意是this.$axios
+        method: "get",
+        url: "/info/verified_num",
+        params: {
+          //get请求这里是params
+        },
+      }).then((response) => {
+        console.log("成功获得认证学者数量");
+        console.log(response.data);
+        this.verifiedNum = response.data.verified_num;
+      });
+    },
+    getStatistic() {
+      this.$axios({
+        //注意是this.$axios
+        method: "get",
+        url: "/es/statistic",
+        params: {
+          //get请求这里是params
+        },
+      }).then((response) => {
+        console.log("成功统计数据");
+        console.log(response.data);
+        this.authorNum = response.data.res.authors;
+        this.institutionNum = response.data.res.institutions;
+        this.venueNum = response.data.res.venues;
+        this.workNum = response.data.res.works;
       });
     },
     accept(id) {
@@ -294,6 +376,9 @@ export default {
     this.uid = parseInt(tmpID);
     console.log("uid is" + this.uid);
     this.get_application();
+    this.getRegister();
+    this.getVerified();
+    this.getStatistic();
   },
 };
 </script>
@@ -379,7 +464,7 @@ export default {
   font-family: "Nunito Sans";
   font-style: normal;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 28px;
 }
 
 .app-none {
@@ -390,15 +475,6 @@ export default {
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
-}
-.content {
-  width: 50%;
-  margin: 20px 40% 0 20%;
-}
-.grid1 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-content: center;
 }
 
 .actived {
@@ -447,7 +523,7 @@ export default {
   color: #2f2c4a;
 }
 /deep/ .el-dialog {
-    --el-bg-color: linear-gradient(
+  --el-bg-color: linear-gradient(
     90.39deg,
     #246ef3 -28.26%,
     #3bbde7 100.2%,
@@ -485,5 +561,38 @@ export default {
 
   text-align: left;
   color: #000000;
+}
+
+.data-title {
+  margin-top: 3vh;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+
+  color: #246ef3;
+}
+.data-tag{
+  display: inline-block;
+  width: 30%;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  color: #000000;
+}
+.data-content{
+  display: inline-block;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  color:#246ef3;
+}
+.line{
+  margin-top: 3vh;
+  width: 100%;
+  height: 1px;
+  background-color: rgba(96, 96, 96, 0.69);
 }
 </style>
