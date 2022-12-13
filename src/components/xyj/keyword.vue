@@ -103,7 +103,7 @@ export default {
   position: absolute;
   width: 392px;
   height: 350px;
-  top: 95px;
+  top: 378px;
   background: #FFFFFF;
   box-shadow: -2px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
@@ -111,7 +111,7 @@ export default {
 .title{
   position: absolute;
   height: 26px;
-  width: 80px;
+  width: 90px;
   top:27px;
   left: 24px;
   font-family:Poppins;
