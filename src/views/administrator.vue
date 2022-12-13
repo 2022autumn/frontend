@@ -5,7 +5,7 @@
     <div class="grid">
       <div></div>
       <div style="text-align: center">
-        <div class="title-personal">管理员界面</div>
+        <div class="title-personal">管理中心</div>
         <div class="left">
           <div
             @click="activeIndex = 1"
@@ -20,7 +20,7 @@
               class="circular"
               :class="{ actived: activeIndex == 1 }"
             ></span>
-            <div class="text1">网站信息</div>
+            <div class="text1">数据信息</div>
           </div>
           <div
             @click="activeIndex = 2"
@@ -36,7 +36,10 @@
               :class="{ actived: activeIndex == 2 }"
               class="circular last"
             ></span>
-            <div class="text1">申请处理</div>
+            <div class="text1">
+              申请处理
+              <el-badge :value="total" v-show="total"></el-badge>
+            </div>
           </div>
         </div>
       </div>
@@ -45,11 +48,39 @@
         <div v-show="activeIndex == 1" class="center">
           <div style="display: flex; align-items: center">
             <img src="../assets/Vector.png" alt="" />
-            <span class="info-title">网站信息</span>
+            <span class="info-title">数据信息</span>
           </div>
           <div>
             <!-- 放置内容 -->
-            <div class="content grid1"></div>
+            <div class="data-title" >注册信息</div>
+            <div style="margin: 1vh auto">
+              <div class="data-tag">注册用户数量</div>
+              <div class="data-content">{{ this.registerNum }}</div>
+            </div>
+            <div style="margin: 1vh auto">
+              <div class="data-tag">认证学者数量</div>
+              <div class="data-content">{{ this.verifiedNum }}</div>
+            </div>
+
+            <div class="line"></div>
+
+            <div class="data-title">公开数据</div>
+            <div style="margin: 1vh auto">
+              <div class="data-tag">学者数量</div>
+              <div class="data-content">{{ this.authorNum }}</div>
+            </div>
+            <div style="margin: 1vh auto">
+              <div class="data-tag">论文数量</div>
+              <div class="data-content">{{ this.workNum }}</div>
+            </div>
+            <div style="margin: 1vh auto">
+              <div class="data-tag">期刊数量</div>
+              <div class="data-content">{{ this.venueNum }}</div>
+            </div>
+            <div style="margin: 1vh auto">
+              <div class="data-tag">组织数量</div>
+              <div class="data-content">{{ this.institutionNum }}</div>
+            </div>
           </div>
         </div>
 
@@ -65,6 +96,7 @@
             <div style="display: flex; align-items: center">
               <img src="../assets/Rectangle 2619.png" alt="" />
               <span class="info-title">申请处理</span>
+              <el-badge :value="total" v-show="total"></el-badge>
             </div>
           </div>
           <div class="app-none" v-show="!total">没有待处理的门户申请~</div>
@@ -74,7 +106,8 @@
                 <div style="flex: 1; display: flex; align-items: center">
                   <img src="../assets/Avatar (1).png" alt="" />
                   <span class="app-text"
-                    >用户{{ item.user_id }}申请门户：{{ item.real_name }}</span
+                    >用户 {{ item.user_id }} 申请门户：
+                    {{ item.real_name }}</span
                   >
                 </div>
                 <div
@@ -85,8 +118,13 @@
                     justify-content: flex-end;
                   "
                 >
-                  <el-button size="mini" icon="el-icon-menu" class="btn2"
-                    >详情</el-button
+                  <el-button
+                    size="mini"
+                    icon="el-icon-menu"
+                    class="btn2"
+                    @click="openDetail(item)"
+                  >
+                    详情</el-button
                   >
                   <el-button
                     size="mini"
@@ -110,6 +148,47 @@
       </div>
       <div></div>
     </div>
+
+    <el-dialog
+      custom-class="detail"
+      class="info-title"
+      title="学者门户申请详情"
+      :visible.sync="dialogVisible"
+      width="40%"
+    >
+      <el-row style="width: 80%; margin: auto">
+        <el-col :span="8">
+          <div class="dia-head">真实姓名：</div>
+        </el-col>
+        <el-col :span="16">
+          <div class="dia-content">{{ this.realname }}</div>
+        </el-col>
+      </el-row>
+      <el-row style="width: 80%; margin: auto">
+        <el-col :span="8">
+          <div class="dia-head">工作单位：</div>
+        </el-col>
+        <el-col :span="16">
+          <div class="dia-content">{{ this.institution }}</div>
+        </el-col>
+      </el-row>
+      <el-row style="width: 80%; margin: auto">
+        <el-col :span="8">
+          <div class="dia-head">工作邮箱：</div>
+        </el-col>
+        <el-col :span="16">
+          <div class="dia-content">{{ this.email }}</div>
+        </el-col>
+      </el-row>
+      <el-row style="width: 80%; margin: auto">
+        <el-col :span="8">
+          <div class="dia-head">备注信息：</div>
+        </el-col>
+        <el-col :span="16">
+          <div class="dia-content">{{ this.other }}</div>
+        </el-col>
+      </el-row>
+    </el-dialog>
   </div>
 </template>
 
@@ -121,9 +200,22 @@ export default {
     return {
       activeIndex: 1,
       show1: true,
+
       application: [],
       uid: 0,
       total: 0,
+      dialogVisible: false,
+      realname: "",
+      institution: "",
+      email: "",
+      other: "",
+
+      registerNum:0,
+      verifiedNum: 0,
+      authorNum: 0,
+      institutionNum:0,
+      venueNum: 0,
+      workNum: 0,
     };
   },
   methods: {
@@ -142,6 +234,51 @@ export default {
         console.log("application" + this.application);
         this.total = this.application.length;
         console.log("获取到申请列表长度为" + this.total);
+      });
+    },
+    getRegister() {
+      this.$axios({
+        //注意是this.$axios
+        method: "get",
+        url: "/info/register_num",
+        params: {
+          //get请求这里是params
+        },
+      }).then((response) => {
+        console.log("成功获得注册用户数量");
+        console.log(response.data);
+        this.registerNum = response.data.register_num;
+      });
+    },
+    getVerified() {
+      this.$axios({
+        //注意是this.$axios
+        method: "get",
+        url: "/info/verified_num",
+        params: {
+          //get请求这里是params
+        },
+      }).then((response) => {
+        console.log("成功获得认证学者数量");
+        console.log(response.data);
+        this.verifiedNum = response.data.verified_num;
+      });
+    },
+    getStatistic() {
+      this.$axios({
+        //注意是this.$axios
+        method: "get",
+        url: "/es/statistic",
+        params: {
+          //get请求这里是params
+        },
+      }).then((response) => {
+        console.log("成功统计数据");
+        console.log(response.data);
+        this.authorNum = response.data.res.authors;
+        this.institutionNum = response.data.res.institutions;
+        this.venueNum = response.data.res.venues;
+        this.workNum = response.data.res.works;
       });
     },
     accept(id) {
@@ -195,7 +332,7 @@ export default {
           application_id: id,
           content: "拒绝",
           status: 2,
-          user_id: this.uid
+          user_id: this.uid,
         },
       })
         .then((response) => {
@@ -226,13 +363,22 @@ export default {
           }
         });
     },
+    openDetail(item) {
+      this.dialogVisible = true;
+      this.realname = item.real_name;
+      this.institution = item.institution;
+      this.email = item.email;
+      this.other = item.content;
+    },
   },
   created() {
     var tmpID = window.localStorage.getItem("uid");
     this.uid = parseInt(tmpID);
     console.log("uid is" + this.uid);
     this.get_application();
-    
+    this.getRegister();
+    this.getVerified();
+    this.getStatistic();
   },
 };
 </script>
@@ -318,10 +464,10 @@ export default {
   font-family: "Nunito Sans";
   font-style: normal;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 28px;
 }
 
-.app-none{
+.app-none {
   width: 100%;
   margin: 2vh auto;
   text-align: center;
@@ -329,15 +475,6 @@ export default {
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
-}
-.content {
-  width: 50%;
-  margin: 20px 40% 0 20%;
-}
-.grid1 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-content: center;
 }
 
 .actived {
@@ -348,7 +485,6 @@ export default {
     #2eddf4 106.16%
   );
 }
-
 .btn2 {
   color: #ffffff;
   background: linear-gradient(
@@ -385,5 +521,78 @@ export default {
   /* or 162% */
 
   color: #2f2c4a;
+}
+/deep/ .el-dialog {
+  --el-bg-color: linear-gradient(
+    90.39deg,
+    #246ef3 -28.26%,
+    #3bbde7 100.2%,
+    #2eddf4 123.43%
+  ) !important;
+}
+
+.detail {
+  background: linear-gradient(
+    90.39deg,
+    #246ef3 -28.26%,
+    #3bbde7 100.2%,
+    #2eddf4 123.43%
+  );
+  border-radius: 6px;
+}
+.dia-head {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 40px;
+  /* or 154% */
+
+  text-align: left;
+  color: #000000;
+}
+.dia-content {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 40px;
+  /* or 154% */
+
+  text-align: left;
+  color: #000000;
+}
+
+.data-title {
+  margin-top: 3vh;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+
+  color: #246ef3;
+}
+.data-tag{
+  display: inline-block;
+  width: 30%;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  color: #000000;
+}
+.data-content{
+  display: inline-block;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  color:#246ef3;
+}
+.line{
+  margin-top: 3vh;
+  width: 100%;
+  height: 1px;
+  background-color: rgba(96, 96, 96, 0.69);
 }
 </style>

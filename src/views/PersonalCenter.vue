@@ -65,8 +65,8 @@
             "
           >
             <span
-              :class="{ actived: activeIndex == 4 }"
-              class="circular"
+              :class="{ actived: activeIndex === 4 }"
+              class="circular "
             ></span>
             <div class="text1">关注列表</div>
           </div>
@@ -84,7 +84,7 @@
               :class="{ actived: activeIndex == 5 }"
               class="circular last"
             ></span>
-            <div class="text1">管理员界面</div>
+            <div class="text1">历史记录</div>
           </div>
         </div>
       </div>
@@ -411,10 +411,10 @@
               <!--<div style="display: inline-block">
                 <img src="../assets/ScholarLibrary/temp_avar.png" alt="" style="width: 5vw;height: 10vh;margin: 0 auto">
               </div>-->
-                <div style="font-size: 30px">
+                <div style="font-size: 20px;display: inline-block">
                   <b>{{item.author_name}}</b>
                 </div>
-              <div style="font-size: 20px;color: #8c939d">
+              <div style="font-size: 20px;color: #8c939d;display: inline-block;margin-left: 5vw">
                 <b>关注时间:&nbsp;&nbsp;{{item.follow_time}}</b>
               </div>
               <!--<div style="font-size: 20px;color: #8c939d;display: inline-block">
@@ -433,7 +433,10 @@
             </el-card>
           </div>
         </div>
-        <div v-show="activeIndex == 5" class="center">
+        <div v-show="activeIndex == 5" class="center2">
+          <History></History>
+        </div>
+        <!---div v-show="activeIndex == 5" class="center">
           <div
             style="
               display: flex;
@@ -480,7 +483,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div--->
       </div>
       <div></div>
     </div>
@@ -491,8 +494,9 @@
 import topbar1 from "@/components/topbar1";
 import collect from "@/components/xyj/collect";
 import collectDetail from "@/components/xyj/collectDetail";
+import History from "@/components/xyj/history";
 export default {
-  components: { collect, topbar1, collectDetail },
+  components: {History, collect, topbar1, collectDetail },
   data() {
     return {
       activeIndex: 1,
@@ -597,10 +601,12 @@ export default {
           user_info: this.gexingqianming,
         },
       }).then((res) => {
+        console.log("修改成功!")
         console.log(res.data);
+        //window.location.reload();
       });
       this.ifedit = 0;
-      window.location.reload();
+      //window.location.reload();
       //this.get_data();
     },
     get_data() {

@@ -2,7 +2,7 @@
   <div class="re-total">
     <div class="title">相关文献</div>
     <div class="title-en">Related Literature</div>
-    <div class="ref-box-set" v-infinite-scroll="load" v-if="have_refer===true">
+    <div class="ref-box-set" v-if="have_refer===true">
       <div class="ref-box" v-for="(item,index) in refer" :key="index">
         <div class="ref" @click="jdetail(item.id)">
           <div class="content">{{ item.title }}</div>
