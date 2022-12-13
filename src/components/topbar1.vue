@@ -17,12 +17,9 @@
         width="100"
         trigger="hover"
         >
-      <div>
-        <el-button @click="logout()">退出登录</el-button>
-      </div>
-      <div style="margin-top: 2vh">
-        <el-button>管理员</el-button>
-      </div>
+        <el-button @click="logout()"  type="text">退出登录</el-button>
+        <el-button type="text" >管理员</el-button>
+
     <img slot="reference" v-if="this.iflogin===1" :src="this.photourl" style="top: 1.5vh;width: 40px;height: 40px;border-radius: 50px;left: 90vw;position: absolute" alt="">
     </el-popover>
     <div v-if="this.iflogin===1" style="position: absolute;width: 45px;height:14px;left:94vw;top:3.5vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: #2B2B39;">{{this.username}}</div>
