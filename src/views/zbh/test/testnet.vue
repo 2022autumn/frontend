@@ -402,6 +402,7 @@ export default {
             border: "#2B7CE9",
             background: "#D2E5FF"
           };
+          item.title = item.full
         });
         this.edgesArray = res.data.res.Edge_set;
         this.edgesArray.forEach(item => {
