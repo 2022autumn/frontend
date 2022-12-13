@@ -44,7 +44,10 @@
             <div class="info2 cite" >
               被引次数：{{ this.paper.cited_counts }}
             </div>
-            <div class="citethis" v-on:click="createCitation">生成引用</div>
+            <div class="citethis" v-on:click="createCitation">
+              <img src="../assets/paperDetailsImg/citation.png" style="margin-top: 5px;margin-left: 7px;float: left">
+              <div class="citeword">生成引用</div>
+            </div>
           </div>
 
           <div style="clear: both"></div>
@@ -529,6 +532,7 @@ export default {
     },
     createCitation(){
       this.createCite=true;
+      this.citation="";
       console.log("authors "+this.paper.authors);
       for(var i=0;i<this.paper.authors.length;i++){
         this.citation=this.citation+this.paper.authors.at(i).author.display_name+", ";
@@ -1386,5 +1390,39 @@ export default {
 }
 .el-menu-vertical-demo .el-submenu__icon-arrow {
   display: none !important;
+}
+.citethis{
+  background: #D5DFF2;
+  box-shadow: 0px 2px 22px rgba(144, 148, 177, 0.25);
+  border-radius: 6px;
+  width: 97px;
+  height: 28px;
+  margin-top: 4px;
+  margin-left: 5px;
+  float: left;
+  cursor: pointer;
+}
+.citethis:hover{
+  background: #D5DFF2;
+  box-shadow: 0px 2px 7px rgba(144, 148, 177, 0.25);
+  border-radius: 6px;
+  width: 97px;
+  height: 28px;
+  margin-top: 4px;
+  margin-left: 5px;
+  float: left;
+  cursor: pointer;
+}
+.citeword{
+  font-family: 'inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  float: left;
+  color: #7B7D8B;
+  letter-spacing: 1px;
+  margin-top: 6px;
+  margin-left: 4px;
 }
 </style>
