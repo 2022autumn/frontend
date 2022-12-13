@@ -53,7 +53,7 @@ export default {
     let that = this;
     that.$axios({
       method: 'get',
-      url: '/es/get',
+      url: '/es/get2',
       params: {
         id: window.localStorage.getItem('SID'),
         // id: this.id
@@ -65,7 +65,7 @@ export default {
           this.info = response.data.data;
           this.scholar = response.data.info;
           //console.log("get useInfo", this.info);
-          //console.log("get data", response.data);
+          //console.log("get data", response.data);info
           //console.log("get info", this.scholar);
           if(response.data.data.last_known_institution==null){
             let obj = new Object();
