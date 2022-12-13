@@ -75,7 +75,7 @@
                 <div style="flex: 1; display: flex; align-items: center">
                   <img src="../assets/Avatar (1).png" alt="" />
                   <span class="app-text"
-                    >用户{{ item.user_id }}申请门户：{{ item.real_name }}</span
+                    >用户 {{ item.user_id }} 申请门户： {{ item.real_name }} </span
                   >
                 </div>
                 <div

@@ -13,15 +13,15 @@
     <div v-if="this.iflogin!==1" style="position: absolute; left:75vw;top:1.3vh;box-shadow: 0 7px 22px -6px rgba(33, 123, 244, 0.34);color: white"><v-btn style="background-color: #217BF4;" class="white--text" @click="open_login()">登 录</v-btn></div>
     <!--<div v-if="this.iflogin===1" style="position: absolute; left:80vw;top:1.8vh;box-shadow: 0 7px 22px -6px rgba(33, 123, 244, 0.34);color: white"><v-btn style="background-color: #217BF4;" class="white--text" @click="logout()">退出登录</v-btn></div>-->
     <el-popover
-        placement="top-start"
+        placement="bottom"
         width="100"
         trigger="hover"
         >
-      <div>
-        <el-button @click="logout()">退出登录</el-button>
+      <div style="margin-bottom: 1vh;">
+        <el-button style="display:block;margin:0 auto" @click="logout()">退出登录</el-button>
       </div>
-      <div style="margin-top: 2vh">
-        <el-button>管理员</el-button>
+      <div v-show="isAdmin">
+        <el-button style="display:block;margin:0 auto" @click="gotoAdmin()">管理中心</el-button>
       </div>
     <img slot="reference" v-if="this.iflogin===1" :src="this.photourl" style="top: 1.5vh;width: 40px;height: 40px;border-radius: 50px;left: 90vw;position: absolute" alt="">
     </el-popover>
@@ -47,7 +47,8 @@ export default {
       whichpage:1,
       userid:window.localStorage.getItem('uid'),
       photourl:'',
-      iflogin:JSON.parse(window.localStorage.getItem('iflogin'))
+      iflogin:JSON.parse(window.localStorage.getItem('iflogin')),
+      isAdmin:false,
     }
   },
   methods:{
@@ -90,6 +91,9 @@ export default {
             this.photourl = response.data.data.head_shot;
             this.photourl = 'https://ishare.horik.cn/api/media/headshot/'+this.photourl;
             this.username = response.data.data.username;
+            if(response.data.data.user_type === 1){
+              this.isAdmin = true;
+            }
           }
       )
     },
@@ -106,6 +110,9 @@ export default {
       window.localStorage.setItem('iflogin',JSON.stringify(0));
       window.localStorage.setItem("uid","1");
       this.$router.push('/');
+    },
+    gotoAdmin(){
+      window.open('/admin');
     }
   },
   created() {
