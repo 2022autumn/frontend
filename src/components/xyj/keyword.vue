@@ -104,7 +104,7 @@ export default {
   position: absolute;
   width: 392px;
   height: 350px;
-  top: 65px;
+  top: 95px;
   background: #FFFFFF;
   box-shadow: -2px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;

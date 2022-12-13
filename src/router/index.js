@@ -125,7 +125,17 @@ const routes = [
     path:'/shenqing',
     name:'shenqing',
     component:() => import('../components/scholarSite')
-  }
+  },
+ {
+   path:'/ScholarLibrary',
+   name:'ScholarLibrary',
+   component:() => import('../views/ScholarLibrary')
+ },
+ {
+   path:'/admin',
+   name:'admin',
+   component:() => import('../views/administrator')
+ }
 ]
 
 const router = new VueRouter({

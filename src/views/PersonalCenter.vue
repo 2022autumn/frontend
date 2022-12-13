@@ -68,7 +68,7 @@
               :class="{ actived: activeIndex == 4 }"
               class="circular"
             ></span>
-            <div class="text1">个性化设置</div>
+            <div class="text1">关注列表</div>
           </div>
           <div
             @click="activeIndex = 5"
@@ -121,7 +121,7 @@
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
               <div v-if="this.ifedit === 0">
-                <div class="info-text"><span>用户名:</span>张博皓</div>
+                <div class="info-text"><span>用户名:</span>{{this.username}}</div>
                 <div class="info-text">
                   <span>个性签名:</span>{{ this.gexingqianming }}
                 </div>
@@ -151,7 +151,7 @@
                     <el-input
                       type="text"
                       placeholder="请输入用户名"
-                      v-model="name"
+                      v-model="username"
                       maxlength="15"
                       show-word-limit
                       style="width: 15vw"
@@ -299,7 +299,7 @@
                 <div class="change-password">修改密码</div>
                 <el-form size="small" label-position="left" label-width="120px">
                   <el-form-item label="用户名：">
-                    <span class="admin">张博皓</span>
+                    <span class="admin">{{this.username}}</span>
                   </el-form-item>
                   <el-form-item label="原密码：">
                     <el-input
@@ -392,7 +392,7 @@
                         </div>
                     </div--->
         </div>
-        <div v-show="activeIndex == 4" class="center">
+        <div v-show="activeIndex == 4" class="center"  >
           <div
             style="
               display: flex;
@@ -400,10 +400,36 @@
               justify-content: space-between;
             "
           >
-            <div style="display: flex; align-items: center">
+            <div style="display: flex; align-items: center;">
               <img src="../assets/Star.png" alt="" />
-              <span class="info-title">个性化设置</span>
+              <span class="info-title">关注列表</span>
             </div>
+          </div>
+          <div v-for="item in this.authors" style="overflow-y: scroll;margin-top: 2vh;cursor: pointer" @click="jscholar(item.author_id);">
+            <el-card shadow="hover">
+              <!--<div style="display: inline-block">
+                <img src="../assets/ScholarLibrary/temp_avar.png" alt="" style="width: 5vw;height: 10vh;margin: 0 auto">
+              </div>-->
+                <div style="font-size: 30px">
+                  <b>{{item.author_name}}</b>
+                </div>
+              <div style="font-size: 20px;color: #8c939d">
+                <b>关注时间:&nbsp;&nbsp;{{item.follow_time}}</b>
+              </div>
+              <!--<div style="font-size: 20px;color: #8c939d;display: inline-block">
+                <b>Stanford University</b>
+              </div>
+              <div style="display: inline-block;font-size: 20px;margin-left: 10vw">
+                <i class="el-icon-tickets" style="display: inline-block"></i>
+                <div style="display: inline-block;margin-left: 0.5vw ">
+                  发表文献:30&nbsp;&nbsp;&nbsp;&nbsp;<b style="color: #8c939d">|</b>
+                </div>
+                <i class="el-icon-share" style="display: inline-block;margin-left: 1vw"></i>
+                <div style="display: inline-block;margin-left: 0.5vw ">
+                  被引次数:30
+                </div>
+              </div>-->
+            </el-card>
           </div>
         </div>
         <div v-show="activeIndex == 5" class="center">
@@ -479,15 +505,21 @@ export default {
       email: "",
       field: "",
       userid: window.localStorage.getItem("uid"),
+      token:  window.localStorage.getItem("token"),
       photourl: "",
       oldpass: "",
       newpass: "",
       test: "Electronic Attendance Recorder and Confirmation System Using Facial Identification Modules in Python",
-
       application:[],
+      authors:[],
+      username:"",
     };
   },
   methods: {
+    jscholarpage(){
+      //this.$message.warning(this.userid);
+      //this.$message.warning(this.token);
+    },
     resetpass() {
       this.$axios({
         //注意是this.$axios
@@ -588,6 +620,7 @@ export default {
         this.phone = response.data.data.phone;
         this.gexingqianming = response.data.data.user_info;
         this.photourl = response.data.data.head_shot;
+        this.username = response.data.data.username;
         console.log("头像为")
         console.log(this.photourl)
         this.photourl = 'https://ishare.horik.cn/api/media/headshot/'+this.photourl;
@@ -607,10 +640,38 @@ export default {
         this.application = response.data;
       });
     },
+    get_guanzhu(){
+      this.$axios({//注意是this.$axios
+        method:'post',
+        url:'/social/follow/list',
+        headers:{
+          token:this.token,
+        },
+        data: {
+          user_id:parseInt(this.userid)
+        }
+      }).then(
+          response =>{
+            console.log("查询关注列表成功")
+            console.log(response.data.data)
+            this.authors = response.data.data;
+            for(var i=0;i<this.authors.length;i++){
+              this.authors[i].follow_time = this.authors[i].follow_time.substring(0,this.authors[i].follow_time.indexOf("T"));
+            }
+          }
+      )
+    },
+    jscholar(sid) {
+      // window.localStorage.setItem('SID',this.author_id);
+      console.log(sid)
+      window.localStorage.setItem('SID', sid);
+      window.open('/scholar_page');
+    },
   },
   created() {
     this.get_data();
     this.get_application();
+    this.get_guanzhu();
   },
 };
 </script>

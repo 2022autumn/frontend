@@ -6,8 +6,8 @@
       <div class="main">
         <div class="paper-header">
           <div class="title">
-            <span class="title-txt">
-              {{ this.paper.paperTitle }}
+            <span class="title-txt" v-html="paper.paperTitle">
+<!--              {{ this.paper.paperTitle }}-->
               <div class="paper-type">{{ this.paper.type }}</div>
             </span>
           </div>
@@ -41,10 +41,12 @@
             <div class="info2 divide">
               |
             </div>
-            <div class="info2 cite">
+            <div class="info2 cite" >
               被引次数：{{ this.paper.cited_counts }}
             </div>
+            <div class="citethis" v-on:click="createCitation">生成引用</div>
           </div>
+
           <div style="clear: both"></div>
           <div class="buttons">
             <!--            <el-button class="original" icon="el-icon-my-origin">-->
@@ -65,26 +67,16 @@
             </el-button>
 
             <!--被收藏的次数-->
-            <div class="like2" v-if="isCollection">
-              <span class="iconfont">&#xe663;</span>
+            <div class="like2" @click="addTagdialog = true" style="cursor:pointer;">
               {{ this.isCollectionTxt }}
             </div>
-            <div class="like2" v-else>
-              {{ this.notCollectionTxt }}
-            </div>
             <!--是否被收藏的样式-->
-            <div class="like1" v-model="key">
+            <div class="like1" v-model="key" style="cursor:pointer;">
               <span class="iconfont">
-                  <i v-if="!isCollection" class="el-icon-star-off" :key="0" @click="onCollection"></i>
-                  <i v-else class="el-icon-star-on" :key="1" @click="onCollection"></i>
+                  <i v-if="myTagCnt === 0" class="el-icon-star-off" :key="0" @click="addTagdialog = true"></i>
+                  <i v-else class="el-icon-star-on" :key="1" @click="addTagdialog = true"></i>
               </span>
             </div>
-            <!--            <div class="right-buttons">-->
-            <!--              <el-button class="right-button1"></el-button>-->
-            <!--              <el-button class="right-button2"></el-button>-->
-            <!--              <el-button class="right-button3"></el-button>-->
-            <!--              <el-button class="right-button4"></el-button>-->
-            <!--            </div>-->
           </div>
         </div>
         <div class="content">
@@ -108,25 +100,6 @@
           <div class="commend-title">评论区 Comments</div>
           <div class="comment-tools">
             <div class="total-comments">共 {{ this.comment_num }} 条评论</div>
-            <!--          <el-dropdown>-->
-            <!--            <span class="filter-comments">-->
-            <!--              筛选条件<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
-            <!--            </span>-->
-            <!--            <el-dropdown-menu slot="dropdown">-->
-            <!--              <el-dropdown-item>黄金糕</el-dropdown-item>-->
-            <!--              <el-dropdown-item>狮子头</el-dropdown-item>-->
-            <!--              <el-dropdown-item>螺蛳粉</el-dropdown-item>-->
-            <!--            </el-dropdown-menu>-->
-            <!--          </el-dropdown>-->
-            <!--          <el-dropdown>-->
-            <!--&lt;!&ndash;            <span class="rank-comments">&ndash;&gt;-->
-            <!--&lt;!&ndash;              排序条件<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>&ndash;&gt;-->
-            <!--&lt;!&ndash;            </span>&ndash;&gt;-->
-            <!--            <el-dropdown-menu slot="dropdown">-->
-            <!--              <el-dropdown-item>发布时间</el-dropdown-item>-->
-            <!--              <el-dropdown-item>发布用户</el-dropdown-item>-->
-            <!--            </el-dropdown-menu>-->
-            <!--          </el-dropdown>-->
           </div>
           <div class="commends" v-if="comment_num === 0">
             <div class="cards">
@@ -194,6 +167,81 @@
         </div>
       </div>
     </div>
+    <el-dialog
+        title="添加到我的收藏"
+       :visible.sync="addTagdialog"
+       width="30%"
+    >
+    <div>
+      <span>
+<!--        <el-menu-->
+<!--            mode="vertical"-->
+<!--            class="el-menu-vertical-demo"-->
+<!--            @open="handleOpen"-->
+<!--            @close="handleClose"-->
+<!--            @select="handleSelect"-->
+<!--            :collapse=false-->
+
+<!--        >-->
+<!--&lt;!&ndash;          <el-submenu @click="joinVisible = true" index="create_team">&ndash;&gt;-->
+<!--&lt;!&ndash;            <template slot="title">&ndash;&gt;-->
+<!--&lt;!&ndash;              <i class="el-icon-plus icons"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                <span slot="title" class="text">新建收藏夹</span>&ndash;&gt;-->
+<!--&lt;!&ndash;            </template>&ndash;&gt;-->
+<!--&lt;!&ndash;          </el-submenu>&ndash;&gt;-->
+<!--          <el-scrollbar>-->
+<!--            <el-submenu-->
+<!--                v-for="(item, i) in tags"-->
+<!--                :key="i"-->
+<!--                :index="item.tag_id"-->
+<!--                @click="addTagToFile(item)"-->
+<!--            >-->
+<!--              <span slot="title" class="text">{{ item.tag_name }}-->
+<!--              <el-button-->
+<!--                  @click="onCollect(item)"-->
+<!--                  class="collect_btn"-->
+<!--                  :style="{backgroundColor:bg_color, color: ft_color,}"-->
+<!--              >-->
+<!--                {{collectContent}}-->
+<!--              </el-button>-->
+<!--              </span>-->
+<!--            </el-submenu>-->
+<!--          </el-scrollbar>-->
+<!--          </el-menu>-->
+        <div class="box-set" v-infinite-scroll="load">
+          <div class="keyword-box" v-for="(item,index) in tags" :key="index">
+            <div class="keyword"  @click="addTagToFile(item)">{{item.tag_name}}</div>
+<!--            <div class="keyword1"  v-if="item.islike===true" @click="concern(item)">{{item.display_name}}</div>-->
+<!--            <div class="keyword"  v-else @click="concern(item)">{{item.display_name}}</div>-->
+          </div>
+        </div>
+<!--        <el-select value="" v-model="selectedTag">-->
+<!--          <el-option-->
+<!--              v-for="item in tags"-->
+<!--              :key="item.tag_id"-->
+<!--              :label="item.tag_name"-->
+<!--              :value="item.tag_id"-->
+<!--              @click="this.selectedTag = item.tag_id">-->
+<!--          </el-option>-->
+<!--        </el-select>-->
+      </span>
+      <span slot="footer" class="dialog-footer" style="padding-left: 80%;">
+        <el-button type="primary" @click="addTagdialog = false" class="el-buttons">确 定</el-button>
+      </span>
+    </div>
+    </el-dialog>
+    <el-dialog
+        title="生成引用格式"
+        :visible.sync="createCite"
+        width="30%"
+    >
+      <div>
+        <div class="copyText">
+          <div style="display: inline-block; position: relative;text-align: left">{{this.citation}}</div>
+        </div>
+        <el-button type="primary"  class="el-buttons" style="color: #FFFFFF;margin-top: 30px;margin-left: 280px;"  @click="clickCopy()">复制到剪切板</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -210,6 +258,12 @@ export default {
   name: "paperDetails",
   data() {
     return {
+      tags: [],
+      myTag: "",
+      myTagCnt: "",
+      addTagdialog: false,//添加到我的收藏 控制dialog
+      createCite: false,
+      selectedTag: "",
       paper: {
         paperTitle: "",
         paperFrom: "",
@@ -229,6 +283,7 @@ export default {
         pdf_ids: {},
         haspdf: false,
         pdf_url: "",
+
       },
       author_name: '',
       author_id: 0,
@@ -241,6 +296,7 @@ export default {
       myComment: "",
       dateTime,
       author_len: 0,
+      citation:"",
     };
   },
   components: {
@@ -250,8 +306,101 @@ export default {
     Related,
     Topbar1
   },
-
+  watch:{
+    'isCollection': {
+      handler (newData,oldData) {
+        console.log("newdata2",newData)
+        this.isCollection = newData;
+      },
+      deep: true,
+      immediate: true,
+    }
+  },
   methods: {
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    onCollect(item) {
+      if(this.isCollection === true) {
+        this.removeCollection(item);
+      } else {
+        this.addTagdialog = true;
+      }
+    },
+    getTagList() {
+      this.$axios({//注意是this.$axios
+        method:'post',
+        url:'/social/tag/taglist',
+        data: {//get请求这里是params
+          user_id: parseInt(window.localStorage.getItem('uid')),
+        },
+      }).then(
+          response =>{
+            console.log("tags", response.data);
+            this.tags = response.data.data;
+            this.myTagCnt = this.tags.length;
+          }
+      )
+    },
+    addTagToFile(item) {
+      let that = this;
+      that.$axios({//注意是this.$axios
+        method:'post',
+        url:'/social/tag/collectPaper',
+        data:{//get请求这里是params
+          paper_id:window.localStorage.getItem('WID'),
+          tag_id: item.tag_id,
+          user_id: parseInt(window.localStorage.getItem('uid')),
+        }
+      }).then(res => {
+        this.isCollection = true;
+        this.myTagCnt++;
+        this.updateTxt();
+        this.$message({
+          type: "success",
+          message: res.data.msg,
+          customClass:'messageIndex'
+        });
+      }).catch(err => {
+        console.log(err);
+        this.$message({
+          message: '好像出了点问题诶',
+          type: 'error'
+        });
+      });
+    },
+    removeCollection(item) {
+      let that = this;
+      that.$axios({//注意是this.$axios
+        method:'post',
+        url:'/social/tag/cancelCollectPaper',
+        data:{//get请求这里是params
+          paper_id:window.localStorage.getItem('WID'),
+          tag_id: item.tag_id,
+          user_id: parseInt(window.localStorage.getItem('uid')),
+        }
+      }).then(res => {
+        this.myTagCnt--;
+        this.updateTxt();
+        this.$message({
+          type: "success",
+          message: res.data.msg,
+          customClass:'messageIndex'
+        });
+      }).catch(err => {
+        console.log(err);
+        this.$message({
+          message: '好像出了点问题诶',
+          type: 'error'
+        });
+      });
+    },
     strcatHeadshot(item) {
       console.log("headshot", "https://ishare.horik.cn/api/media/headshot/" + item.headshot)
       return "https://ishare.horik.cn/api/media/headshot/" + item.headshot;
@@ -314,9 +463,6 @@ export default {
       }
     },
 
-    onCollection() {
-
-    },
     getCommentList() {
       this.$axios({//注意是this.$axios
         method: 'post',
@@ -335,36 +481,78 @@ export default {
           }
       )
     },
+    updateTxt() {
+      if(this.myTagCnt > 0) {
+        this.isCollectionTxt = "已收藏";
+      } else {
+        this.isCollectionTxt = "收藏"
+      }
+    },
     pushCommand() {
-      this.$axios({//注意是this.$axios
-        method: 'post',
-        url: '/social/comment/create',
-        data: {//get请求这里是params
-          content: this.myComment,
-          // paper_id: "W2914747780",
-          user_id: parseInt(window.localStorage.getItem('uid')),
-          paper_id: window.localStorage.getItem('WID'),
-          //user_id: window.localStorage.getItem('SID'),
-        },
-        headers: {
-          'token': parseInt(window.localStorage.getItem('uid'))
-        },
-      }).then(
-          response => {
-            console.log(response.data);
-            this.myComment = "";
-            this.$message({
-              type: "success",
-              message: response.data.msg,
-              customClass: 'messageIndex'
-            })
-            this.getCommentList();
+      if(window.localStorage.getItem('iflogin') === "0") {
+        this.$refs.topbar.open_login();
+        this.$message.error("尚未登陆");
+      } else {
+        this.$axios({//注意是this.$axios
+          method: 'post',
+          url: '/social/comment/create',
+          data: {//get请求这里是params
+            content: this.myComment,
+            // paper_id: "W2914747780",
+            user_id: parseInt(window.localStorage.getItem('uid')),
+            paper_id: window.localStorage.getItem('WID'),
+            //user_id: window.localStorage.getItem('SID'),
+          },
+          headers: {
+            'token': parseInt(window.localStorage.getItem('uid'))
+          },
+        }).then(
+            response => {
+              console.log(response.data);
+              this.myComment = "";
+              this.$message({
+                type: "success",
+                message: response.data.msg,
+                customClass: 'messageIndex'
+              })
+              this.getCommentList();
+            }
+        ).catch(error=> {
+          console.log("error", error)
+          console.log("error", error.response.status)
+          if(error.response.status === 502) {
+            this.$refs.topbar.open_login();
+            this.$message.error(error.msg);
           }
-      )
+        })
+      }
+    },
+    createCitation(){
+      this.createCite=true;
+      console.log("authors "+this.paper.authors);
+      for(var i=0;i<this.paper.authors.length;i++){
+        this.citation=this.citation+this.paper.authors.at(i).author.display_name+", ";
+      }
+      console.log("first "+this.citation);
+      this.citation=this.citation+"\""+this.paper.paperTitle+"\" in "+this.paper.host_venue.display_name+", "+this.paper.date;
+      console.log("second "+this.citation);
+    },
+    clickCopy() {
+      let msg;
+      msg=this.citation;
+      const save = function(e) {
+        e.clipboardData.setData('text/plain', msg)
+        e.preventDefault() // 阻止默认行为
+      }
+      document.addEventListener('copy', save) // 添加一个copy事件
+      document.execCommand('copy') // 执行copy方法
+      this.$message({ message: '复制成功', type: 'success' })
     }
+
   },
   // 挂载时获取
   mounted() {
+    this.getTagList();
     let height = this.$refs.ref.offsetHeight;  //100
     this.$axios({//注意是this.$axios
       method: 'get',
@@ -439,6 +627,8 @@ export default {
 <style lang="scss" scoped>
 
 .paper-detail {
+
+  //paddong-top: 11vh;
   display: flex;
   box-sizing: border-box;
   height: 100%;
@@ -448,7 +638,8 @@ export default {
 }
 
 .main {
-  paddong-top: 9vw;
+  margin-top: 4vh;
+  //margin-top: 10vh;
   //padding-left: 44px; //44px
   padding-left: 5.84vw;
   //display: flex;
@@ -628,7 +819,7 @@ export default {
   width: 8.03vw;
   height: 4.93vh;
   background: #D2585F;
-  box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
+  box-shadow: 0px 7px 22px -6px rgba(118, 62, 65, 0.34);
   border-radius: 14px;
   font-family: 'Poppins';
   font-style: normal;
@@ -1100,6 +1291,58 @@ export default {
   font-weight: 600;
   font-size: 30px;
 }
+.box-set{
+  display: flex;
+  position: relative;
+  width: 100%;
+  flex-wrap: wrap;
+  //padding-left:10px ;
+  overflow-y:scroll;
+  overflow-x: hidden;
+  max-height: 265px;
+  padding-bottom: 50px;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+::-webkit-scrollbar {
+
+  width: 7px;
+  height: 18px;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb {
+  width: 7px;
+  height: 20px;
+  background-color: #E8E8E8;
+  border-radius: 8px;
+}
+.keyword-box{
+  display: flex;
+  padding-top: 12px;
+  padding-left: 20px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+.keyword{
+  display: flex;
+  left: 15px;
+  padding-top: 6px;
+  padding-bottom: 4px;
+  padding-left: 15px;
+  padding-right: 18px;
+  background: #F5F8FC;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 26px;
+  align-items: center;
+  justify-content: center;
+  /* identical to box height, or 144% */
+  letter-spacing: 0.04em;
+  color: #858FA0;
+  cursor:pointer;
+}
 </style>
 <style>
 .el-input__inner {
@@ -1131,5 +1374,17 @@ export default {
 .el-textarea__inner {
   border: none;
   height: 10.35vh;
+}
+.el-scrollbar .el-scrollbar__wrap {
+  max-height: 400px;
+  /*height: 400px;*/
+}
+.el-menu-vertical-demo .el-submenu__icon-arrow el-icon-arrow-down{
+  display: none !important;
+  content: "" !important;
+  width: 0px;
+}
+.el-menu-vertical-demo .el-submenu__icon-arrow {
+  display: none !important;
 }
 </style>

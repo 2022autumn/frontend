@@ -31,13 +31,14 @@
     <span class="claim">
       <el-button
           @click="claim"
+          disabled="judgeClaim()"
           class="claim_btn"
           :style="{backgroundColor:bg_color2, color: ft_color2,}"
           @mouseenter="change2" @mouseleave="goback2">
         {{claimContent}}
       </el-button>
     </span>
-    <Site ref="site"></Site>
+    <Site ref="site" :claim="isClaim" @doClaim="doClaim"></Site>
   </div>
 </template>
 <script>
@@ -105,6 +106,13 @@ export default {
     )
   },
   methods: {
+    judgeClaim() {
+      if(this.isClaim === true) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     getScholarInfo() {
       let that = this;
       that.$axios({
@@ -196,18 +204,28 @@ export default {
     claim() {
       //console.log("去申请门户");
       this.$refs.site.init();
+      //这之后无法执行？原因未知
       // this.isClaim=!this.isClaim;
+      // console.log("在学者主页isClaim "+this.isClaim);
+      // if(this.isClaim){
+      //   this.claimContent="审核中";
+      //   this.bg_color2="#0352FF";
+      //   this.ft_color2="#E6EEFF";
+      // }
+
+      // else{
+      //   this.claimContent="+ 认领"
+      //   this.bg_color2="#E6EEFF";
+      //   this.ft_color2="#0352FF";
+      // }
+    },
+    doClaim(status){
+      console.log("into do Claim func")
+      this.isClaim = true;
       if(this.isClaim){
-        this.claimContent="已认领";
+        this.claimContent="申请中";
         this.bg_color2="#0352FF";
         this.ft_color2="#E6EEFF";
-      }
-
-      else{
-        this.claimContent="+ 认领"
-        this.bg_color2="#E6EEFF";
-        this.ft_color2="#0352FF";
-
       }
     },
     change() {

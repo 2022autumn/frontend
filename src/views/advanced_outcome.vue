@@ -102,8 +102,11 @@
         <div style="margin-bottom:10px">
           <el-row :gutter="20" style="margin:auto;">
             <el-col :span="6">
-              <b style="color:gray;font-size: small;">
+              <b style="color:gray;font-size: small;" v-if="this.true_total_page!==10000">
                 &ensp; 共找到{{this.true_total_page}}条结果
+              </b>
+              <b style="color:gray;font-size: small;" v-if="this.true_total_page===10000">
+                &ensp; 共找到{{this.true_total_page}}+条结果
               </b>
             </el-col>
             <el-col :span="8">
@@ -403,7 +406,7 @@ export default {
       if_venues:0,
       query:[],
       sort:0,
-      asc:true,
+      asc:false,
     }
   },
   methods:{
