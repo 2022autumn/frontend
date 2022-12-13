@@ -336,9 +336,10 @@ export default {
     getTagList() {
       this.$axios({//注意是this.$axios
         method:'post',
-        url:'/social/tag/taglist',
+        url:'/social/tag/paperTagList',
         data: {//get请求这里是params
           user_id: parseInt(window.localStorage.getItem('uid')),
+          paper_id: window.localStorage.getItem('WID')
         },
       }).then(
           response =>{
