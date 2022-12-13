@@ -547,7 +547,8 @@ export default {
       }
     }).then(
         response=> {
-            // console.log("userinfo",response.data);
+            console.log("is mine")
+            console.log("userinfo",response.data);
             this.scholarInfo = response.data.data;
             if(this.scholarInfo.last_known_institution===null){
               this.scholarInfo.last_known_institution ="No belonged institution";
@@ -598,12 +599,15 @@ export default {
             response=> {
               //console.log("1111111111")
               //this.items =  response.data.data.docs;
+              console.log("ttttttt")
+              console.log(response.data);
               //console.log("response.data.data",this.items);
               var len = 0;
               len = response.data.data.length;
               console.log("len",len);
               this.total_page=response.data.pages;
-              //console.log("response.data.pages",response.data.pages);
+
+              console.log("response.data.pages",response.data.pages);
               //console.log("response.data.pages",this.total_page);
               console.log("response.data.data.pages",response.data.pages);
               console.log("response.data.data.pages",this.total_page);
