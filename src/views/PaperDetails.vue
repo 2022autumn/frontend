@@ -1373,7 +1373,7 @@ export default {
   padding-bottom: 4px;
   padding-left: 15px;
   padding-right: 18px;
-  background: #accaf1;
+  background: rgba(67, 127, 236, 0.66);
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;

@@ -497,7 +497,7 @@ export default {
     console.log("id is "+this.id);
     that.$axios({
       method:'get',
-      url:'/es/get',
+      url:'/es/get2',
       params:{
         id: this.id
         // id: "A4221478216"

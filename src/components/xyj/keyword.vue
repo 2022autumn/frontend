@@ -1,6 +1,6 @@
 <template>
   <div class="key-total">
-    <div class="title">关键词</div>
+    <div class="title">相关领域</div>
     <div class="title-en">Keywords</div>
     <div class="box-set" v-infinite-scroll="load">
       <div class="keyword-box" v-for="(item,index) in keywords" :key="index">
@@ -37,7 +37,7 @@ export default {
     //console.log(wid)
     this.$axios({//注意是this.$axios
       method:'get',
-      url:'/es/get',
+      url:'/es/get2',
       headers:{
         token:this.uid,
       },
@@ -207,7 +207,7 @@ export default {
   padding-left: 15px;
   padding-right: 18px;
   /*background: #858FA0;*/
-  background: #accaf1;
+  background: rgba(67, 127, 236, 0.66);
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
