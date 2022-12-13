@@ -26,8 +26,8 @@
     <div class="wenxian_top">. 已发表文献 .</div>
 
     <div style="position:absolute;left:20vw;height: 75vh;top:275vh;width: 100vw;">
-      <div v-for="item in items" style="width: 50vw;height:240px;">
-        <el-card  class="outcome-card" style="width:60vw;height:228px; " shadow="hover">
+      <div v-for=" (item , index) in items" style="width: 50vw;height:240px;">
+        <el-card v-if="index < item.lenth" class="outcome-card" style="width:60vw;height:228px; " shadow="hover"  >
               <el-tag class="item-type2" style="display: inline-block;vertical-align: middle;">{{item.type}}</el-tag>
               <div style="display: inline-block;font-size: large;">
                 &nbsp;
@@ -36,7 +36,7 @@
                 </b>
               </div>
 
-              <div style="display: inline-block;margin-right:2vh;float: right;" @click="paperDown(item.id)">
+              <div style="display: inline-block;margin-right:2vh;float: right;" @click="paperDown(item.id)" >
                 <el-tooltip content="下移文章" placement="top" effect="light">
                   <img src="../../assets/Vector (2).svg"/>
                 </el-tooltip>
@@ -55,8 +55,7 @@
                   <img src="../../assets/Vector (3).svg" @click="paperTopCancel(item)"/>
                 </el-tooltip>
               </div>
-              <!-- 上传照片给服务器，服务器的图片地址 上传前的判断 请求头Tonken 上传成功后的回调-->
-              <!-- :action="$http.adornUrl(`/file/uploadFile`)"  -->
+              
               <div style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;" >
                 <el-upload
                   accept=".pdf"
@@ -74,9 +73,6 @@
                   </el-tag>
                 </el-upload>
               </div>
-
-
-
 
               <div>
                 <div style="display: inline-block;margin-top: 1vh;color: grey" v-for="(aus,index) in item.authors">
@@ -163,6 +159,7 @@ export default {
     return{
       detail:"",
       num_exact_page:8,
+      ture_len:5,
       total: 1000,//返回的检索结果的总量
       total_page:0,
       now_page:1,
@@ -207,6 +204,7 @@ export default {
             authors:[],
             isTop:-1,
             pdf:0,
+            lenth:5,
         },
         {
           type:"期刊",
@@ -226,6 +224,7 @@ export default {
           authors:[],
           isTop:-1,
           pdf:0,
+          lenth:5,
         },
         {
           type:"期刊",
@@ -245,6 +244,7 @@ export default {
           authors:[],
           isTop:-1,
           pdf:0,
+          lenth:5,
         },
         {
           type:"期刊",
@@ -264,6 +264,7 @@ export default {
           authors:[],
           isTop:-1,
           pdf:0,
+          lenth:5,
         },
         {
           type:"期刊",
@@ -283,6 +284,7 @@ export default {
           authors:[],
           isTop:-1,
           pdf:0,
+          lenth:5,
         },
       ],
       empty: false,
@@ -626,12 +628,17 @@ export default {
           }).then(
             response=> {
               //console.log("1111111111")
-              //this.items =  response.data.data.docs;
+              //this.items =  response.data;
               console.log("ttttttt")
               console.log(response.data);
               //console.log("response.data.data",this.items);
               var len = 0;
               len = response.data.data.length;
+              if(len<5){
+                for(var i=0;i<5;i++){
+                  this.items[i].lenth=len;
+                }
+              }
               console.log("len",len);
               this.total_page=response.data.total/5*10;
               console.log("response.data.pages",response.data.pages);
@@ -706,7 +713,6 @@ export default {
               }
             }
         )
-
   },
 }
 </script>
