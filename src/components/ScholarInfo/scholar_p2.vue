@@ -11,7 +11,7 @@
     <div class="info_title">
       个人简介
       <i id="editIcon"
-         v-if="this.info.verified"
+         v-if="this.scholar.verified"
           :class="{'el-icon-edit': !edit, 'el-icon-check': edit}"
           @click="this.editInfo"
       ></i>
