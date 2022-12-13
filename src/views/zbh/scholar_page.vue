@@ -277,7 +277,7 @@ export default {
     // });
     setTimeout(() => {
       this.show=true;
-      loading.close();
+      // loading.close();
     }, 300);
     let that = this;
     console.log("id is "+this.id);
