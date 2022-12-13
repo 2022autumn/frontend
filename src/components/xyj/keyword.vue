@@ -2,7 +2,7 @@
   <div class="key-total">
     <div class="title">相关领域</div>
     <div class="title-en">Keywords</div>
-    <div class="box-set" v-infinite-scroll="load">
+    <div class="box-set">
       <div class="keyword-box" v-for="(item,index) in keywords" :key="index">
         <div v-if="item.islike===true" style="cursor: pointer">
           <el-popover

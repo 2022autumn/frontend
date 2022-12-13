@@ -13,11 +13,11 @@
             <el-input v-model="nameInput" placeholder="请输入收藏夹名称" class="new-input"></el-input>
             <div slot="footer" class="new-footer">
               <el-button @click="newcollect = false">取 消</el-button>
-              <el-button @click="newcollect = false;addNew();update();" class="el-buttons">确 定</el-button>
+              <el-button @click="newcollect = false;addNew();" class="el-buttons">确 定</el-button>
             </div>
           </el-dialog>
         </div>
-      <div class="line1" v-infinite-scroll="load">
+      <div class="line1">
         <div class="single-line" v-for="(item,index) in name" :key="index" >
           <div class="left1">
             <img src="../../assets/image1.png" class="simple-img" @click="change(item)">
@@ -55,11 +55,11 @@
             <el-button icon="el-icon-d-arrow-left" class="new-button2" @click="change(0)">返回</el-button>
           </div>
         </div>
-        <div class="line2" v-if="have_collect===true">
+        <div class="line2" v-if="have_collect===2">
             <div class="single-line2" v-for="(item,index) in detail" :key="index">
               <div class="title-line2">
                 <div class="type2">{{ item.type }}</div>
-                <div class="content2" @click="jdetail(item.id)">{{ item.title }}</div>
+                <div class="content2" @click="jdetail(item.id)" v-html="item.title"></div>
               </div>
               <div class="middle-line2">
                 <div class="author2" v-if="item.authorships">
@@ -124,7 +124,7 @@
               </div>
             </div>
           </div>
-        <div class="no-collect" v-else>
+        <div class="no-collect" v-else-if="have_collect===1">
            暂无收藏文献
         </div>
       </div>
@@ -181,6 +181,12 @@ export default {
     },
     change(item){
       if(this.showDetail===false){
+        const loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0)'
+        });
         this.tname=item.tag_name
         this.$axios({//注意是this.$axios
           method:'post',
@@ -198,12 +204,13 @@ export default {
           }
         }).then(
             response =>{
+              console.log(response.data);
               if(response.data.num===0){
-                this.have_collect=false;
+                this.have_collect=1;
               }else{
-                this.have_collect=true;
+                this.have_collect=2;
                 this.detail=response.data.paper_list
-                console.log(response.data);
+                //console.log(response.data);
                 console.log(this.detail.length)
                 for(var i=0;i<this.detail.length;i++){
                   console.log(this.detail[i].host_venue)
@@ -239,11 +246,13 @@ export default {
                   console.log(this.detail[i].concepts);
                 }
               }
-              this.showDetail=true;
+              loading.close();
             }
         )
+        this.showDetail=true;
       }else{
         this.showDetail=false;
+        this.have_collect=0;
       }
 
     },
@@ -369,7 +378,7 @@ export default {
       tid:1,
       tname:'',
       rename:false,
-      have_collect:false,
+      have_collect:0,
       current:"",
       detail:[{
         type:"期刊",
@@ -417,6 +426,7 @@ export default {
         company:"作者所属机构",
         time:"发表时间",
       },],
+      loading:false,
     }
   },
 

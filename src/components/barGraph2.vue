@@ -13,9 +13,9 @@ export default  {
   data() {
     return {
       xData: [ '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'],
-      yData: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 10],
+      yData: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
       myChartStyle: { float: "left", width: "90%", height: "120px"}, //图表样式
-      newYData: []
+      newYData: [],
     }
   },
   watch:{
@@ -30,7 +30,7 @@ export default  {
         this.initEcharts()
       },
       deep: true,
-      immediate: true,
+      immediate: false,
     },
     'xcounts': {
       handler (newData,oldData) {
@@ -39,7 +39,7 @@ export default  {
         this.initEcharts();
       },
       deep: true,
-      immediate: true,
+      immediate: false,
     }
   },
   mounted() {

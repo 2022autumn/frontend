@@ -84,7 +84,7 @@
               :class="{ actived: activeIndex == 5 }"
               class="circular last"
             ></span>
-            <div class="text1">管理员界面</div>
+            <div class="text1">历史记录</div>
           </div>
         </div>
       </div>
@@ -433,7 +433,10 @@
             </el-card>
           </div>
         </div>
-        <div v-show="activeIndex == 5" class="center">
+        <div v-show="activeIndex == 5" class="center2">
+          <History></History>
+        </div>
+        <!---div v-show="activeIndex == 5" class="center">
           <div
             style="
               display: flex;
@@ -480,7 +483,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div--->
       </div>
       <div></div>
     </div>
@@ -491,8 +494,9 @@
 import topbar1 from "@/components/topbar1";
 import collect from "@/components/xyj/collect";
 import collectDetail from "@/components/xyj/collectDetail";
+import History from "@/components/xyj/history";
 export default {
-  components: { collect, topbar1, collectDetail },
+  components: {History, collect, topbar1, collectDetail },
   data() {
     return {
       activeIndex: 1,

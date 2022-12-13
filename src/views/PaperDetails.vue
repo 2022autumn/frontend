@@ -111,7 +111,7 @@
               </div>
             </div>
           </div>
-          <div class="commends" v-infinite-scroll="load">
+          <div class="commends">
             <div class="cards" v-for="(item,index) in command" :key="index">
               <div class="user-info">
                 <el-avatar class="commenter-avator" :src=strcatHeadshot(item)>
@@ -216,7 +216,7 @@
 <!--            </el-submenu>-->
 <!--          </el-scrollbar>-->
 <!--          </el-menu>-->
-        <div class="box-set" v-infinite-scroll="load">
+        <div class="box-set">
           <div class="keyword-box" v-for="(item,index) in tags" :key="index">
             <div class="kk keyword" v-if="item.isCollect === false"  @click="addTagToFile(item)">{{item.tag_name}}</div>
             <div class="kk keyword1" v-else  @click="removeCollection(item)">{{item.tag_name}}</div>
@@ -247,10 +247,9 @@
       <div>
         <div class="copyText">
           <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="Plain Text" name="first" style="display: inline-block; position: relative;text-align: left">{{this.citation}}</el-tab-pane>
+            <el-tab-pane label="Plain Text" name="first" style="display: inline-block; position: relative;text-align: left" v-html="this.citation"></el-tab-pane>
             <el-tab-pane label="MLA" name="second">
-              <span>
-                {{this.MLA}}
+              <span v-html="this.MLA">
               </span>
               <span style="font-style: italic">
                 {{this.MLAM}}
@@ -260,8 +259,7 @@
               </span>
             </el-tab-pane>
             <el-tab-pane label="APA" name="third">
-              <span>
-                {{this.apa}}
+              <span v-html="this.apa">
               </span>
               <span style="font-style: italic">
                 {{this.apam}}
@@ -346,6 +344,7 @@ export default {
       apae:"",
       activeName:"first",
       cited:"",
+      key:"",
     };
   },
   components: {
@@ -864,13 +863,14 @@ export default {
           }
           this.paper.counts_by_year=response.data.data.counts_by_year
           console.log("year"+this.paper.counts_by_year)
+          console.log(this.paper.counts_by_year)
           for(var i = 0; i < this.paper.counts_by_year.length; i++) {
             if(this.paper.counts_by_year[i].cited_by_count != 0) {
               this.counts[this.paper.counts_by_year[i].year-2013]=this.paper.counts_by_year[i].cited_by_count;
             }
           }
           this.initEcharts();
-          echarts.getInstanceByDom(this.$refs.graph1).resize()
+          //echarts.getInstanceByDom(this.$refs.graph1).resize()
         }
     )
     this.getCommentList();
