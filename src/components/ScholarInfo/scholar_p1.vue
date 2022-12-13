@@ -36,7 +36,7 @@
     <span class="claim">
       <el-button
         @click="claim"
-        disabled="judgeClaim()"
+        :disabled="judgeClaim"
         class="claim_btn"
         :style="{ backgroundColor: bg_color2, color: ft_color2 }"
         @mouseenter="change2"
@@ -89,7 +89,7 @@ export default {
   },
   mounted() {
     this.getScholarInfo();
-
+    let that = this;
     that
       .$axios({
         //注意是this.$axios
@@ -112,22 +112,25 @@ export default {
           if (this.followList[i].author_id == this.scholarInfo.id) {
             //console.log("followed")
             this.isFollow = true;
-            this.followContent = "已关注";
-            this.bg_color = "#0352FF";
-            this.ft_color = "#E6EEFF";
+            this.loadFollow();
+            // this.followContent = "已关注";
+            // this.bg_color = "#0352FF";
+            // this.ft_color = "#E6EEFF";
             break;
           }
         }
       });
   },
-  methods: {
-    judgeClaim () {
+  computed: {
+    judgeClaim() {
       if (this.isClaim === true) {
         return true;
       } else {
         return false;
       }
     },
+  },
+  methods: {
     getScholarInfo() {
       let that = this;
       that.$axios({
@@ -139,21 +142,21 @@ export default {
       }).then(
           response=> {
             this.userinfo = response.data.info;
+            console.log(this.userinfo)
             this.avator_url = "https://ishare.horik.cn/api/media/headshot/"+this.userinfo.headshot
-
-            if(this.userinfo.verified === 1) {
+            if(this.userinfo.verified === true) {
               this.isClaim = true;
               this.loadClaim()
             } else {
               this.loadClaim()
             }
-
-          if (this.userinfo.isFollow === true) {
-            this.isFollow = true;
-            this.loadFollow();
-          } else {
-            this.loadFollow();
-          }
+            console.log("get verify", this.isClaim)
+          // if (this.userinfo.isFollow === true) {
+          //   this.isFollow = true;
+          //   this.loadFollow();
+          // } else {
+          //   this.loadFollow();
+          // }
         });
     },
     loadFollow() {
