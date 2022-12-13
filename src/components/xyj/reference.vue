@@ -208,4 +208,8 @@ export default {
 .ref{
   cursor: pointer;
 }
+.content:hover {
+  text-decoration: underline;
+  color: #53a2e3;
+}
 </style>

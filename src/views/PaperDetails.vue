@@ -159,7 +159,12 @@
       </div>
       <div class="right-sider">
         <div class="recent">
-
+          <div class="title-cited">近年引用</div>
+          <div class="title-cited-en">Citation Time Distribution</div>
+          <barGraph2 class="graph" ref="graph1" :ycounts="counts" :xcounts="xData"/>
+          <div class="line"></div>
+          <div class="year-2013">{{ this.xData[0] }}</div>
+          <div class="year-2022">{{this.xData[9]}}</div>
         </div>
         <div class="key">
           <keyword/>
@@ -256,7 +261,8 @@ import Reference from "@/components/xyj/reference";
 import Related from "@/components/xyj/related";
 import dateTime from "@/composables/calculationTime";
 import Topbar1 from "@/components/topbar1.vue";
-
+import * as echarts from "echarts";
+import barGraph2 from "@/components/barGraph2";
 
 export default {
   name: "paperDetails",
@@ -287,7 +293,6 @@ export default {
         pdf_ids: {},
         haspdf: false,
         pdf_url: "",
-
       },
       author_name: '',
       author_id: 0,
@@ -301,6 +306,10 @@ export default {
       dateTime,
       author_len: 0,
       citation:"",
+      counts:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
+      xData: "",
+      yData: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
+      myChartStyle: { float: "left", width: "90%", height: "120px"}, //图表样式
     };
   },
   components: {
@@ -308,7 +317,8 @@ export default {
     Keyword,
     Note,
     Related,
-    Topbar1
+    Topbar1,
+    barGraph2,
   },
   watch:{
     'isCollection': {
@@ -563,13 +573,129 @@ export default {
       document.addEventListener('copy', save) // 添加一个copy事件
       document.execCommand('copy') // 执行copy方法
       this.$message({ message: '复制成功', type: 'success' })
-    }
+    },
+    initEcharts() {
+      // 基本柱状图
+      const option = {
+        grid: {
+          x: 0,
+          y: 17,
+          x2: 0,
+          y2: 0
+        },
+        tooltip : {
+          trigger: 'axis',
+          axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+          },
+          confine: true,  //解决浮窗被截断问题
+          formatter : function(params){
+            // console.log("params",params);//打印断点，会看到自己想要的后台数据
+            if(params[0].data < 1) {
+              var num = 0;
+            }
+            else {
+              var num = params[0].data;
+            }
+
+            let html=`<div style="height:auto;width: 50px;position:relative;z-index: 1000">
+                ${params
+                .map(
+                    (
+                        item
+                    ) => `<div style="font-size:14px;color:#808080;display:flex;align-items:center;line-height:2;">
+
+            ${item.axisValue}
+          </div>`
+                )
+                .join("")}
+                <div style="display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight: bold;color:#333;padding-top:4px;margin-bottom:7px;line-height:1;">
+            <span style="display:inline-block;margin-right:2px;border-radius:7px;width:7px;height:7px;background-color:#217BF4;"></span>
+            <span>${num}</span>
+          </div>
+            </div>`
+
+            return html;
+          }
+        },
+        xAxis: {
+          data: this.xData,
+          axisLabel:{ show: false },
+          axisTick: {		//x轴刻度线
+            show: false
+          },
+          splitLine:{
+            show: false
+          },
+          axisLine:{     //x轴坐标轴，false为隐藏，true为显示
+            "show":false
+          },
+        },
+        yAxis: {
+          splitLine:{
+            show: false
+          },
+          axisLabel:{
+            show: false
+          },
+          axisTick: {		//x轴刻度线
+            show: false
+          },
+        },
+        series: [
+          {
+            type: "bar", //形状为柱状图
+            data: this.counts,
+            barWidth: '80%',
+            itemStyle: {
+              //柱形图圆角，鼠标移上去效果，如果只是一个数字则说明四个参数全部设置为那么多
+              normal: {
+                //柱形图圆角，初始化效果
+                barBorderRadius:[2, 2, 2, 2],
+                color: function (params) {
+                  // console.log("parapms",params);
+                  if(params.data < 1) {
+                    return "#DFE7F6"
+                  } else {
+                    return "#217BF4"
+                  }
+                },
+              }
+            },
+            axisLine:{     //x轴坐标轴，false为隐藏，true为显示
+              "show":false
+            },
+          }
+        ],
+        // color: "#217BF4"
+      };
+      // const myChart = this.$echarts.init(this.$refs.ch);
+      // document.getElementById('mychart').removeAttribute('_echarts_instance_');
+      let myChart = echarts.init(document.getElementById("mychart"));
+      //为了好看放了一个加载
+      myChart.showLoading();
+      // 利用setTimeout延迟获取和赋值图表
+      setTimeout(()=>{
+        myChart.hideLoading();
+        myChart.setOption(option, true);
+      },2000)
+
+
+      // myChart.setOption(option, true);
+      //随着屏幕大小调节图表
+      window.addEventListener("resize", () => {
+        myChart.resize();
+      });
+    },
 
   },
   // 挂载时获取
   mounted() {
     this.getTagList();
     let height = this.$refs.ref.offsetHeight;  //100
+    if(this.xData === ""){
+      this.xData = [ '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'];
+    }
     this.$axios({//注意是this.$axios
       method: 'get',
       url: '/es/get2',
@@ -634,10 +760,20 @@ export default {
           } else {
             this.paper.institution = this.paper.authors[0].institutions[0].display_name;
           }
+          this.paper.counts_by_year=response.data.data.counts_by_year
+          console.log("year"+this.paper.counts_by_year)
+          for(var i = 0; i < this.paper.counts_by_year.length; i++) {
+            if(this.paper.counts_by_year[i].cited_by_count != 0) {
+              this.counts[this.paper.counts_by_year[i].year-2013]=this.paper.counts_by_year[i].cited_by_count;
+            }
+          }
+          this.initEcharts();
+          echarts.getInstanceByDom(this.$refs.graph1).resize()
         }
     )
     this.getCommentList();
   },
+
 };
 </script>
 <style lang="scss" scoped>
@@ -1280,9 +1416,8 @@ export default {
 .relate {
   display: block;
   float: left;
-  margin-top: 40px;
   width: 100%;
-  margin-top: 60vh;
+  margin-top: 95vh;
   //height: 383px;
   margin-right: 0vw;
 }
@@ -1352,7 +1487,7 @@ export default {
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
-  font-size: 10px;
+  font-size: 14px;
   line-height: 26px;
   align-items: center;
   justify-content: center;
@@ -1377,7 +1512,7 @@ export default {
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
-  font-size: 10px;
+  font-size: 14px;
   line-height: 26px;
   align-items: center;
   justify-content: center;
@@ -1466,5 +1601,97 @@ export default {
   letter-spacing: 1px;
   margin-top: 6px;
   margin-left: 4px;
+}
+.recent{
+  float:right;
+  margin-top:96px;
+  position: absolute;
+  width: 392px;
+  height: 230px;
+  background: #FFFFFF;
+  box-shadow: -2px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+}
+.title-cited{
+  position: relative;
+  width: 120px;
+  height: 26px;
+  left: 20px;
+  top: 20px;
+
+  font-family:Poppins;
+  font-style: normal;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 26px;
+  letter-spacing: 0.06em;
+}
+.title-cited-en{
+  position: relative;
+  width: 210px;
+  height: 52px;
+  left: 150px;
+  top: 0px;
+
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  /* or 162% */
+
+  letter-spacing: 0.02em;
+
+  color: #928E8E;
+
+}
+.graph{
+  left: 20px;
+  top:-17px;
+}
+.year-2013{
+  position: relative;
+  width: 30px;
+  height: 26px;
+  left: 23px;
+  top: -10px;
+
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 26px;
+  /* identical to box height, or 186% */
+
+
+  color: #928E8E;
+
+}
+.year-2022{
+  position: relative;
+  width: 30px;
+  height: 26px;
+  left: 339px;
+  top: -10px;
+
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 26px;
+  /* identical to box height, or 186% */
+
+
+  color: #928E8E;
+
+}
+.line{
+  position: relative;
+  width: 370px;
+  height: 0px;
+  left: 15px;
+  top:101px;
+  border-bottom: 3px solid rgba(217, 215, 215, 0.58);
+  transform: rotate(0.09deg);
 }
 </style>
