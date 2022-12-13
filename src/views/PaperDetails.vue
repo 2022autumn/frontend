@@ -242,13 +242,40 @@
     <el-dialog
         title="生成引用格式"
         :visible.sync="createCite"
-        width="30%"
+        width="35%"
     >
       <div>
         <div class="copyText">
-          <div style="display: inline-block; position: relative;text-align: left">{{this.citation}}</div>
+          <el-tabs v-model="activeName" @tab-click="handleClick">
+            <el-tab-pane label="Plain Text" name="first" style="display: inline-block; position: relative;text-align: left">{{this.citation}}</el-tab-pane>
+            <el-tab-pane label="MLA" name="second">
+              <span>
+                {{this.MLA}}
+              </span>
+              <span style="font-style: italic">
+                {{this.MLAM}}
+              </span>
+              <span>
+                {{this.MLAE}}
+              </span>
+            </el-tab-pane>
+            <el-tab-pane label="APA" name="third">
+              <span>
+                {{this.apa}}
+              </span>
+              <span style="font-style: italic">
+                {{this.apam}}
+              </span>
+              <span>
+                {{this.apae}}
+              </span>
+            </el-tab-pane>
+          </el-tabs>
         </div>
-        <el-button type="primary"  class="el-buttons" style="color: #FFFFFF;margin-top: 30px;margin-left: 280px;"  @click="clickCopy()">复制到剪切板</el-button>
+        <div class="copy-button">
+          <el-button type="primary" icon="el-icon-copy-document" class="el-buttons" style="color: #FFFFFF;margin-top: 30px;margin-left: 280px;"  @click="clickCopy()">复制</el-button>
+        </div>
+
       </div>
     </el-dialog>
   </div>
@@ -310,6 +337,15 @@ export default {
       xData: "",
       yData: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
       myChartStyle: { float: "left", width: "90%", height: "120px"}, //图表样式
+      BibTex:"",
+      MLA:"",
+      MLAM:"",
+      MLAE:"",
+      apa:"",
+      apam:"",
+      apae:"",
+      activeName:"first",
+      cited:"",
     };
   },
   components: {
@@ -555,17 +591,69 @@ export default {
     createCitation(){
       this.createCite=true;
       this.citation="";
+      this.BibTex="";
+      this.MLAM="";
+      this.MLAE="";
+      //this.BibTex=this.BibTex+"@"+this.paper.type+"{"+window.localStorage.getItem('WID')+","+"\n"+"author={";
+      this.MLA="";
+      this.apa="";
+      this.apae="";
+      this.apam="";
       console.log("authors "+this.paper.authors);
       for(var i=0;i<this.paper.authors.length;i++){
         this.citation=this.citation+this.paper.authors.at(i).author.display_name+", ";
+
       }
+      /*for(var i=0;i<this.paper.authors.length-1;i++){
+        this.BibTex=this.BibTex+this.paper.authors.at(i).author.display_name+" and"
+      }
+      if(this.paper.authors.length>=1){
+        this.BibTex=this.BibTex+this.paper.authors.at(this.paper.authors.length-1).author.display_name+"},\n";
+      }*/
+
+      if(this.paper.authors.length<=3){
+        for(var i=0;i<this.paper.authors.length-1;i++){
+          this.MLA=this.MLA+this.paper.authors.at(i).author.display_name+" and "
+        }
+        if(this.paper.authors.length>=1){
+          this.MLA=this.MLA+this.paper.authors.at(this.paper.authors.length-1).author.display_name+",";
+        }
+      }else{
+        this.MLA=this.MLA+this.paper.authors.at(0).author.display_name+",et al."
+      }
+      this.MLA=this.MLA+"\""+this.paper.paperTitle+".\""
+      this.MLAM=this.MLAM+this.paper.host_venue.display_name;
+      this.MLAE="("+this.paper.publication_year+")."
+
+      if(this.paper.authors.length>=4){
+        for(var i=0;i<this.paper.authors.length-2;i++){
+          this.apa=this.apa+this.paper.authors.at(i).author.display_name+","
+        }
+        this.apa=this.apa+this.paper.authors.at(this.paper.authors.length-2).author.display_name+"&";
+        this.apa=this.apa+this.paper.authors.at(this.paper.authors.length-1).author.display_name+".";
+      }else{
+        for(var i=0;i<this.paper.authors.length-1;i++){
+          this.apa=this.apa+this.paper.authors.at(i).author.display_name+","
+        }
+        this.apa=this.apa+this.paper.authors.at(this.paper.authors.length-1).author.display_name+".";
+      }
+      this.apa+="("+this.paper.publication_year+")."+this.paper.paperTitle+"."
+      this.apam+=this.paper.host_venue.display_name+".";
+      this.paper.doi=this.paper.doi.replace("https://doi.org/","");
+      if(this.paper.doi!=null){
+        this.apae="doi:"+this.paper.doi;
+        this.MLAE+="doi:"+this.paper.doi
+      }
+
+
       console.log("first "+this.citation);
       this.citation=this.citation+"\""+this.paper.paperTitle+"\" in "+this.paper.host_venue.display_name+", "+this.paper.date;
       console.log("second "+this.citation);
+      this.cited=this.citation;
     },
     clickCopy() {
       let msg;
-      msg=this.citation;
+      msg=this.cited;
       const save = function(e) {
         e.clipboardData.setData('text/plain', msg)
         e.preventDefault() // 阻止默认行为
@@ -687,6 +775,17 @@ export default {
         myChart.resize();
       });
     },
+    handleClick(tab, event) {
+      this.activeName=tab.name;
+      if(this.activeName==="first"){
+        this.cited=this.citation;
+      }else if(this.activeName==="second"){
+        this.cited=this.MLA+this.MLAM+this.MLAE;
+      }else{
+        this.cited=this.apa+this.apam+this.apae;
+      }
+      console.log(tab, event);
+    }
 
   },
   // 挂载时获取
@@ -720,9 +819,12 @@ export default {
           // }
           // this.author_name= this.paper.authors[0].author.display_name//存储作者名称
           // this.author_id = this.paper.authors[0].author.id//存储作者id
+          this.paper.cited_string=response.data.data.cited_string
+          this.paper.doi=response.data.data.doi
           this.paper.date = response.data.data.publication_date
           this.paper.abstract = response.data.data.abstract
           this.paper.cited_counts = response.data.data.cited_by_count
+          this.paper.publication_year=response.data.data.publication_year
           if (response.data.data.host_venue.display_name != null) {
             this.paper.host_venue = response.data.data.host_venue
           } else {
@@ -1417,7 +1519,7 @@ export default {
   display: block;
   float: left;
   width: 100%;
-  margin-top: 95vh;
+  margin-top: 800px;
   //height: 383px;
   margin-right: 0vw;
 }
@@ -1693,5 +1795,12 @@ export default {
   top:101px;
   border-bottom: 3px solid rgba(217, 215, 215, 0.58);
   transform: rotate(0.09deg);
+}
+.el-buttons{
+
+}
+.copy-button{
+  position: relative;
+  left: 150px;
 }
 </style>

@@ -183,31 +183,45 @@ export default {
           }
         }).then(
             response =>{
-              if(response.data.num==0){
+              if(response.data.num===0){
                 this.have_collect=false;
               }else{
                 this.have_collect=true;
                 this.detail=response.data.paper_list
                 console.log(response.data);
+                console.log(this.detail.length)
                 for(var i=0;i<this.detail.length;i++){
-                  if(this.detail[i].host_venue.display_name.length>30){
-                    this.detail[i].host_venue.display_name= this.detail[i].host_venue.display_name.substring(0,30)+"...";
+                  console.log(this.detail[i].host_venue)
+                  if(this.detail[i].host_venue.display_name!=null){
+                    if(this.detail[i].host_venue.display_name.length>30){
+                      this.detail[i].host_venue.display_name= this.detail[i].host_venue.display_name.substring(0,30)+"...";
+                    }
                   }
                   if(this.detail[i].title.length>70){
                     this.detail[i].title= this.detail[i].title.substring(0,70)+"...";
                   }
                   this.detail[i].concepts.splice(3);
                   for(var j=0;j<this.detail[i].concepts.length;j++){
-                    if(this.detail[i].concepts[j].display_name.length>28){
-                      this.detail[i].concepts[j].display_name= this.detail[i].concepts[j].display_name.substring(0,28)+"...";
+                    if(this.detail[i].concepts[j].display_name!=null){
+                      if(this.detail[i].concepts[j].display_name.length>25){
+                        this.detail[i].concepts[j].display_name= this.detail[i].concepts[j].display_name.substring(0,25)+"...";
+                      }
                     }
                   }
-                  for(var j=0;j<2;j++){
+                  var len=2;
+                  if(this.detail[i].authorships.length!=null){
+                      if(this.detail[i].authorships.length===1){
+                        len=1;
+                      }
+                  }else {
+                    len=-1;
+                  }
+                  for(var j=0;j<len;j++){
                     if(this.detail[i].authorships[j].author.display_name.length>20){
                       this.detail[i].authorships[j].author.display_name= this.detail[i].authorships[j].author.display_name.substring(0,20)+"...";
                     }
                   }
-                  console.log(this.detail[i].concepts)
+                  console.log(this.detail[i].concepts);
                 }
               }
               this.showDetail=true;
@@ -845,7 +859,7 @@ export default {
     padding-top: 6px;
   }
   .quote2{
-
+      margin-left: 36px;
   }
   .quote-img{
     width: 23px;
