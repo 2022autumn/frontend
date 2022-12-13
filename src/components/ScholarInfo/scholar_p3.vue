@@ -99,7 +99,7 @@ export default {
     // },
     'counts2': {
       handler (newData,oldData) {
-        console.log("newdata2",newData)
+        // console.log("newdata2",newData)
         this.newYData = newData;
       },
       deep: true,
@@ -116,7 +116,7 @@ export default {
   },
   methods: {
     handleClick(tab, event) {
-      console.log(tab, event);
+      // console.log(tab, event);
       this.activeName=tab.name;
       this.$nextTick(() => {
         if(this.activeName === 'second') {

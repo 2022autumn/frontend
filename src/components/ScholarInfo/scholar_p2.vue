@@ -64,16 +64,16 @@ export default {
           // console.log("userinfo",response.data);
           this.info = response.data.data;
           this.scholar = response.data.info;
-          console.log("get useInfo", this.info);
-          console.log("get data", response.data);
-          console.log("get info", this.scholar);
+          //console.log("get useInfo", this.info);
+          //console.log("get data", response.data);
+          //console.log("get info", this.scholar);
           if(response.data.data.last_known_institution==null){
             let obj = new Object();
             obj.display_name ="no institution";
             this.info.last_known_institution= obj;
           }
           this.description="I’m "+this.info.display_name + ", I'm interested in areas like "+this.areas+", I'm working for " + this.info.last_known_institution.display_name + ". I've post "+this.info.most_cited_work+", which is my most-cited work. I'm looking for highly motivate students."
-        console.log(this.description)
+        //(this.description)
         }
     )
 
@@ -91,7 +91,7 @@ export default {
           }
         }).then(
             response=> {
-              console.log(this.scholar.intro)
+              //(this.scholar.intro)
               this.$message({
                 type:"success",
                 message: response.data.msg,
@@ -100,7 +100,7 @@ export default {
             }
         ).catch((err) => {
           this.$message.error("学者尚未被认领");
-          console.log(err);
+          //console.log(err);
         });
       }
       this.edit = !this.edit;

@@ -148,7 +148,9 @@ export default {
       return this.loading || this.noMore;
     },
   },
-
+  mounted() {
+    this.get_application();
+  },
   methods: {
     load() {
       this.loading = true;
@@ -170,9 +172,6 @@ export default {
         console.log(response.data);
         this.application = response.data;
       });
-    },
-    created() {
-      this.get_application();
     },
   },
 };

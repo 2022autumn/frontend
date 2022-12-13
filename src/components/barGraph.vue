@@ -25,7 +25,7 @@ export default  {
     // },
     'ycounts': {
       handler (newData,oldData) {
-        console.log("newdata",newData)
+        // console.log("newdata",newData)
         this.yData = newData;
         this.initEcharts()
       },
@@ -34,7 +34,7 @@ export default  {
     },
     'xcounts': {
       handler (newData,oldData) {
-        console.log("newdata",newData)
+        // console.log("newdata",newData)
         this.xData = newData;
         this.initEcharts();
       },
