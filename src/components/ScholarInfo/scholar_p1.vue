@@ -284,7 +284,9 @@ export default {
         },
       };
       that.$axios
-        .post("/scholar/author/headshot", fd, config)
+        .post("/scholar/author/headshot", fd, config, {
+          'token': parseInt(window.localStorage.getItem('uid'))
+        })
         .then((res) => {
           // console.log(res);
           // this.userinfo.photo= res.data.data.head_shot;

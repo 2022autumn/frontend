@@ -26,8 +26,8 @@
     <div class="wenxian_top">. 已发表文献 .</div>
 
     <div style="position:absolute;left:20vw;height: 75vh;top:275vh;width: 100vw;">
-      <div v-for="item in items" style="width: 50vw;height:240px;">
-        <el-card  class="outcome-card" style="width:60vw;height:228px; " shadow="hover">
+      <div v-for=" (item , index) in items" style="width: 50vw;height:240px;">
+        <el-card v-if="index < item.lenth" class="outcome-card" style="width:60vw;height:228px; " shadow="hover"  >
               <el-tag class="item-type2" style="display: inline-block;vertical-align: middle;">{{item.type}}</el-tag>
               <div style="display: inline-block;font-size: large;">
                 &nbsp;
@@ -35,15 +35,15 @@
                   <div style="display: inline-block;" v-html="item.title"  @click="jdetail(item.id)"></div>
                 </b>
               </div>
-              
-              <div style="display: inline-block;margin-right:2vh;float: right;" @click="paperDown(item.id)">
+
+              <div style="display: inline-block;margin-right:2vh;float: right;" @click="paperDown(item.id)" >
                 <el-tooltip content="下移文章" placement="top" effect="light">
                   <img src="../../assets/Vector (2).svg"/>
                 </el-tooltip>
               </div>
               <div style="display: inline-block;margin-right:2vh;float: right;" @click="paperUp(item.id)">
                 <el-tooltip content="上移文章" placement="top" effect="light">
-                  <img src="../../assets/Vector (1).svg"/> 
+                  <img src="../../assets/Vector (1).svg"/>
                 </el-tooltip>
               </div>
               <div style="display: inline-block;margin-right:2vh;float: right;" >
@@ -55,9 +55,8 @@
                   <img src="../../assets/Vector (3).svg" @click="paperTopCancel(item)"/>
                 </el-tooltip>
               </div>
-              <!-- 上传照片给服务器，服务器的图片地址 上传前的判断 请求头Tonken 上传成功后的回调-->
-              <!-- :action="$http.adornUrl(`/file/uploadFile`)"  -->
-              <div style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;" >
+              
+              <div v-if="item.pdf===0" style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;" >
                 <el-upload
                   accept=".pdf"
                   :show-file-list="false"
@@ -74,9 +73,12 @@
                   </el-tag>
                 </el-upload>
               </div>
-              
 
-              
+              <div v-if="item.pdf===1" style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;" >
+                <el-tag class="item-type4" style="display: inline-block;vertical-align: middle;" @click="delePdf(item.id)">
+                    删除原文
+                  </el-tag>
+              </div>
 
               <div>
                 <div style="display: inline-block;margin-top: 1vh;color: grey" v-for="(aus,index) in item.authors">
@@ -96,12 +98,13 @@
                 <!--{{item.zhaiyao}}-->
                 <div style="display: inline-block;" v-html="item.zhaiyao"  @click="jdetail(item.id)"></div>
               </div>
-              <div style="margin-top: 2vh;display: inline-block">
+              <div  style="margin-top: 2vh;display: inline-block">
                 <div v-for="tags in item.tags" v-if="tags!==''" style="display: inline-block">
                   <el-tag>{{tags}}</el-tag>
                   &nbsp;
                 </div>
               </div>
+              
               <div style="display: inline-block;color: rgba(96, 96, 96, 0.69);">
                 <div style="display: inline-block;top:3vh">
                 <img src="../../img/yinhao.svg" style="width: 2vw;height: 2vh">
@@ -128,8 +131,9 @@
             <div class="block">
               <el-pagination
                   layout="prev, pager, next"
-                  :page-count=this.total_page
+                  :total=this.total_page
                   @current-change="handlechange"
+                  :current-page=this.now_page
                   background
               >
               </el-pagination>
@@ -140,7 +144,7 @@
         </el-col>
       </el-row>
 
-     
+
     </div>
 
     </div>
@@ -162,6 +166,7 @@ export default {
     return{
       detail:"",
       num_exact_page:8,
+      ture_len:5,
       total: 1000,//返回的检索结果的总量
       total_page:0,
       now_page:1,
@@ -205,6 +210,8 @@ export default {
             id:"",
             authors:[],
             isTop:-1,
+            pdf:0,
+            lenth:5,
         },
         {
           type:"期刊",
@@ -223,6 +230,8 @@ export default {
           id:"",
           authors:[],
           isTop:-1,
+          pdf:0,
+          lenth:5,
         },
         {
           type:"期刊",
@@ -241,6 +250,48 @@ export default {
           id:"",
           authors:[],
           isTop:-1,
+          pdf:0,
+          lenth:5,
+        },
+        {
+          type:"期刊",
+          title:"疫情冲击下2020年中国新经济形势与政策",
+          author:"horik",
+          time:"2020/9/23",
+          institution:"北京航空航天大学",
+          zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
+          tags:[
+            "数学",
+            "物理",
+            "化学",
+          ],
+          numyin:0,
+          numstore:0,
+          id:"",
+          authors:[],
+          isTop:-1,
+          pdf:0,
+          lenth:5,
+        },
+        {
+          type:"期刊",
+          title:"疫情冲击下2020年中国新经济形势与政策",
+          author:"horik",
+          time:"2020/9/23",
+          institution:"北京航空航天大学",
+          zhaiyao:"这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要这是一个摘要",
+          tags:[
+            "数学",
+            "物理",
+            "化学",
+          ],
+          numyin:0,
+          numstore:0,
+          id:"",
+          authors:[],
+          isTop:-1,
+          pdf:0,
+          lenth:5,
         },
       ],
       empty: false,
@@ -277,16 +328,18 @@ export default {
         this.$axios.post("/scholar/works/upload", formData, config)
         .then(
               response=> {
-                console.log(message);
+                window.location.reload();
                 this.$message({
                   type:"success",
                   message: "上传成功",
                 })
           });
     },
+
     handlechange(page){//处理跳转，page为当前选中的页面
           this.now_page = page;
-          sessionStorage.setItem('now_page',JSON.stringify(page));
+          console.log("this.now_page",page);
+          //sessionStorage.setItem('now_page',JSON.stringify(page));
           //this.openFullScreen2();
           this.paperGet();
         },
@@ -307,6 +360,7 @@ export default {
               author_id: this.id,
               work_id:id,
               direction:-1,
+
             }
         }).then(
             response=> {
@@ -386,28 +440,49 @@ export default {
               })
         })
       },
+      delePdf(id){
+        const formData = new FormData();
+        formData.append('author_id',this.id);//file.file
+        formData.append("work_id", id);
+
+        const config = {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
+        this.$axios.post("/scholar/works/unupload", formData, config)
+        .then(
+              response=> {
+                window.location.reload();
+                this.$message({
+                  type:"success",
+                  message: "删除原文成功",
+                })
+          });
+      },
       paperGet(){
-        var page = JSON.parse(sessionStorage.getItem('now_page'));
+        //var page = JSON.parse(sessionStorage.getItem('now_page'));
         this.$axios({
             method:'post',
             url:'/scholar/works/get',
             data:{//post请求这里是data
               author_id: this.id,
               display:1,
-              page:page,
+              page:this.now_page,
               page_size:5,
             }
           }).then(
             response=> {
-              //console.log("response.data.data",this.items);
+              console.log("response.data.data",response.data.data);
               var len = 0;
               len = response.data.data.length;
               //console.log("len",len);
-              console.log("response.data.data.pages",response.data.data.pages);
-              this.total_page = response.data.data.pages;
-              console.log("response.data.data.pages",this.total_page);
+              //console.log("response.data.data.pages",response.data.data.pages);
+              //this.total_page = response.data.data.pages;
+              //console.log("response.data.data.pages",this.total_page);
               for(var i=0;i<len;i++){
                 //console.log("iiiii", i);
+                this.items[i].pdf= response.data.data[i].isupdatepdf;
                 this.items[i].id = response.data.data[i].id;
                 this.items[i].zhaiyao = response.data.data[i].abstract;
                 //console.log("zhaiyao", this.items[i].zhaiyao);
@@ -456,7 +531,7 @@ export default {
                   //console.log("response.data.data[i].Top",response.data.data[i].Top);
                   this.items[i].isTop=response.data.data[i].Top;
                   //console.log("1111 this.item[i].isTop",this.items[i].isTop);
-                  
+
                   if(response.data.data[i].authorships.length!==0) {
                     this.items[i].author = response.data.data[i].authorships[0].author.display_name;
                     var t = response.data.data[i].authorships.length;
@@ -468,13 +543,15 @@ export default {
                       this.items[i].authors[j] = response.data.data[i].authorships[j].author.display_name;
                     }
                   }
-                  
-                  
+
+
                   //this.items[i].numstore = Math.ceil(Math.random()*100);
               }
             }
+
         )
       },
+
 
       beforeStudtUpload (file, type) {//可以获取上传的大小和类型
       const fileSuffix = file.name.substring(file.name.lastIndexOf('.') + 1)
@@ -505,22 +582,6 @@ export default {
         })
       }
   },
-  created() {
-    if(this.total%4===0){
-      this.total_page = this.total/8*10;
-    }
-    else{
-      this.total_page = (this.total/8+1)*10;
-    }
-
-    this.num_exact_page = this.items.length;
-    var i;
-    for(i=0;i<this.num_exact_page;i++){
-      if(this.items[i].zhaiyao.length>100){//处理一下过长的摘要
-        this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0,100)+"...";
-      }
-    }
-  },
   mounted() {
     // const loading = this.$loading({
     //   lock: true,
@@ -543,7 +604,8 @@ export default {
       }
     }).then(
         response=> {
-            // console.log("userinfo",response.data);
+            console.log("is mine")
+            console.log("userinfo",response.data);
             this.scholarInfo = response.data.data;
             if(this.scholarInfo.last_known_institution===null){
               this.scholarInfo.last_known_institution ="No belonged institution";
@@ -577,10 +639,11 @@ export default {
         this.empty = true;
       }
     })
-    sessionStorage.setItem('now_page',JSON.stringify(1));
-    this.now_page=1;
+    // sessionStorage.setItem('now_page',JSON.stringify(1));
+    // this.now_page=1;
     
     this.$axios({
+
             method:'post',
             url:'/scholar/works/get',
             data:{//post请求这里是data
@@ -592,19 +655,26 @@ export default {
           }).then(
             response=> {
               //console.log("1111111111")
-              //this.items =  response.data.data.docs;
+              //this.items =  response.data;
+              console.log("ttttttt")
+              console.log(response.data);
               //console.log("response.data.data",this.items);
               var len = 0;
               len = response.data.data.length;
+              if(len<5){
+                for(var i=0;i<5;i++){
+                  this.items[i].lenth=len;
+                }
+              }
               console.log("len",len);
-              this.total_page=response.data.pages;
-              //console.log("response.data.pages",response.data.pages);
+              this.total_page=response.data.total/5*10;
+              console.log("response.data.pages",response.data.pages);
               //console.log("response.data.pages",this.total_page);
               console.log("response.data.data.pages",response.data.pages);
               console.log("response.data.data.pages",this.total_page);
               for(var i=0;i<len;i++){
                 //console.log("iiiii", i);
-                
+                this.items[i].pdf= response.data.data[i].isupdatepdf;
                 this.items[i].id = response.data.data[i].id;
                 this.items[i].zhaiyao = response.data.data[i].abstract;
                 //console.log("zhaiyao", this.items[i].zhaiyao);
@@ -655,6 +725,7 @@ export default {
                   this.items[i].isTop=response.data.data[i].Top;
                   //console.log("1111 this.item[i].isTop",this.items[i].isTop);
 
+
                   if(response.data.data[i].authorships.length!==0) {
                     this.items[i].author = response.data.data[i].authorships[0].author.display_name;
                     var t = response.data.data[i].authorships.length;
@@ -666,12 +737,9 @@ export default {
                       this.items[i].authors[j] = response.data.data[i].authorships[j].author.display_name;
                     }
                   }
-                  
-                  //this.items[i].numstore = Math.ceil(Math.random()*100);
               }
             }
         )
-    
   },
 }
 </script>
@@ -774,7 +842,7 @@ export default {
 }
 .outcome-card {
     margin-top: 10px;
-   
+
     width: 90%;
     height: 550px;
 
@@ -799,7 +867,7 @@ export default {
 }
 .item-type2 {
   margin: auto;
-  
+
   background: #217bf4;
   box-shadow: 0px 7px 22px -6px rgba(0, 72, 168, 0.34);
   border-radius: 9px;
@@ -814,8 +882,24 @@ export default {
 }
 .item-type3 {
   margin: auto;
-  
+
   background: #15BA84;
+  box-shadow: 0px 7px 22px -6px rgba(3, 85, 54, 0.34);
+  border-radius: 9px;
+  vertical-align:middle;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 4vh;
+  text-align: center;
+  letter-spacing: 0.01em;
+
+  color: #ffffff;
+}
+
+.item-type4 {
+  margin: auto;
+
+  background: #e66a5a;
   box-shadow: 0px 7px 22px -6px rgba(3, 85, 54, 0.34);
   border-radius: 9px;
   vertical-align:middle;

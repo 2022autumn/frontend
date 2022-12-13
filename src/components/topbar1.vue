@@ -11,8 +11,22 @@
     <!--<div style="position: absolute;width: 57px;height:14px;left:39vw;top:2.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="which_page(3)">机构馆</div>-->
     <div style="position: absolute;width: 100px;height:14px;left:40vw;top:3.7vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: grey;cursor: pointer" @click="jcenter">我的 I SHARE</div>
     <div v-if="this.iflogin!==1" style="position: absolute; left:75vw;top:1.3vh;box-shadow: 0 7px 22px -6px rgba(33, 123, 244, 0.34);color: white"><v-btn style="background-color: #217BF4;" class="white--text" @click="open_login()">登 录</v-btn></div>
-    <div v-if="this.iflogin===1" style="position: absolute; left:80vw;top:1.8vh;box-shadow: 0 7px 22px -6px rgba(33, 123, 244, 0.34);color: white"><v-btn style="background-color: #217BF4;" class="white--text" @click="logout()">退出登录</v-btn></div>
-    <img v-if="this.iflogin===1" :src="this.photourl" style="top: 1.5vh;width: 40px;height: 40px;border-radius: 50px;left: 90vw;position: absolute" alt="">
+    <!--<div v-if="this.iflogin===1" style="position: absolute; left:80vw;top:1.8vh;box-shadow: 0 7px 22px -6px rgba(33, 123, 244, 0.34);color: white"><v-btn style="background-color: #217BF4;" class="white--text" @click="logout()">退出登录</v-btn></div>-->
+    <el-popover
+        placement="bottom"
+        width="100"
+        trigger="hover"
+        >
+
+      <div>
+        <el-button style="display:block;margin:0 auto" @click="logout()" type="text">退出登录</el-button>
+      </div>
+      <div  style="margin-top: 1vh;" v-show="isAdmin">
+
+        <el-button style="display:block;margin:0 auto" @click="gotoAdmin()" type="text">管理中心</el-button>
+      </div>
+    <img slot="reference" v-if="this.iflogin===1" :src="this.photourl" style="top: 1.5vh;width: 40px;height: 40px;border-radius: 50px;left: 90vw;position: absolute" alt="">
+    </el-popover>
     <div v-if="this.iflogin===1" style="position: absolute;width: 45px;height:14px;left:94vw;top:3.5vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: #2B2B39;">{{this.username}}</div>
     <!-- <div style="position: absolute;height: 5vh;width: 100vw;top:5vh"><el-divider></el-divider></div> -->
     <LoginWindow ref="login"></LoginWindow>
@@ -35,7 +49,8 @@ export default {
       whichpage:1,
       userid:window.localStorage.getItem('uid'),
       photourl:'',
-      iflogin:JSON.parse(window.localStorage.getItem('iflogin'))
+      iflogin:JSON.parse(window.localStorage.getItem('iflogin')),
+      isAdmin:false,
     }
   },
   methods:{
@@ -78,6 +93,9 @@ export default {
             this.photourl = response.data.data.head_shot;
             this.photourl = 'https://ishare.horik.cn/api/media/headshot/'+this.photourl;
             this.username = response.data.data.username;
+            if(response.data.data.user_type === 1){
+              this.isAdmin = true;
+            }
           }
       )
     },
@@ -94,6 +112,9 @@ export default {
       window.localStorage.setItem('iflogin',JSON.stringify(0));
       window.localStorage.setItem("uid","1");
       this.$router.push('/');
+    },
+    gotoAdmin(){
+      window.open('/admin');
     }
   },
   created() {

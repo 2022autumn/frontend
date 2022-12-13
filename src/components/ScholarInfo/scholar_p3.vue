@@ -32,10 +32,25 @@
       <div>相关领域</div>
       <div class="domain_set">
         <div class="domain_boxs" v-for="(item,index) in domainList" :key="index">
-          <div class="domain-box">
+          <el-popover
+              placement="bottom"
+              width="280"
+              height="500"
+              trigger="hover"
+              open-delay="900"
+              close-delay="0"
+          >
+            <div style="margin-left: 10px;cursor: default"><b>关键词描述</b></div>
+            <div style="width: 90%;left:50%;position:absolute;margin-left:-45%;height: 1px;margin-top:10px;background-color:rgba(217, 215, 215, 0.58)"></div>
+            <div style="margin-top: 20px;width: 90%;word-break: break-word;text-align: left;margin-left: 5%;cursor: default">{{detail}}</div>
+            <div v-if="ifhasImage" style="width: 100%;text-align: center;margin-top: 10px">
+              <img :src="image_thumbnail_url" alt="">
+            </div>
+          <div class="domain-box" slot="reference" @mouseenter="getDetail(item.id)">
 <!--            <img src="../../assets/label.png" class="label">-->
             <div class="domain">{{ item.display_name }}</div>
           </div>
+          </el-popover>
         </div>
       </div>
     </div>
@@ -81,7 +96,10 @@ export default {
       yData: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 10],
       myChartStyle: { float: "left", width: "100%", height: "120px"}, //图表样式
       newYData: [],
-      activeName: 'first'
+      activeName: 'first',
+      detail: "origin",
+      image_thumbnail_url: "",
+      ifhasImage: false,
     }
   },
   watch:{
@@ -113,8 +131,39 @@ export default {
     this.initEcharts();
   },
   created() {
+    console.log("oops")
+    console.log(this.domainList)
   },
   methods: {
+    test(item){
+      console.log("waht")
+      console.log(item)
+    },
+    getDetail(id) {
+      this.$axios({//注意是this.$axios
+        method: 'get',
+        url: '/es/get2',
+        params: {
+          id: id,
+        }
+      }).then(
+          response => {
+            this.ifhasImage=false;
+            this.detail="";
+            setTimeout(() =>{
+              console.log(response.data.data)
+              this.detail = response.data.data.description;
+              if (response.data.data.image_thumbnail_url !== null) {
+                this.ifhasImage=true
+                this.image_thumbnail_url = response.data.data.image_thumbnail_url;
+              }else{
+                this.ifhasImage=false;
+                this.image_thumbnail_url ="";
+              }
+            },200)
+          }
+      )
+    },
     handleClick(tab, event) {
       // console.log(tab, event);
       this.activeName=tab.name;
@@ -336,6 +385,7 @@ export default {
   padding-top: 10px;
   padding-right: 12px;
   flex-wrap: wrap;
+  cursor: default;
 }
 .domain-box {
   display: flex;
