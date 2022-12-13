@@ -267,7 +267,7 @@ export default {
         const formData = new FormData();
         formData.append('PDF',file.raw);//file.file
         formData.append("work_id", this.pdf_work_id);
-        formData.append("author_id ", this.id);
+        formData.append("author_id", this.id);
 
         const config = {
           headers: {
