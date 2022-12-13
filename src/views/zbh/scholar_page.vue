@@ -35,51 +35,54 @@
                   <div style="display: inline-block;" v-html="item.title"  @click="jdetail(item.id)"></div>
                 </b>
               </div>
+            
+              <div v-if="is_mine || verified" style="display: inline-block;float: right;">
+                <div style="display: inline-block;margin-right:2vh;float: right;" @click="paperDown(item.id)" >
+                  <el-tooltip content="下移文章" placement="top" effect="light">
+                    <img src="../../assets/Vector (2).svg"/>
+                  </el-tooltip>
+                </div>
+                <div  style="display: inline-block;margin-right:2vh;float: right;" @click="paperUp(item.id)">
+                  <el-tooltip content="上移文章" placement="top" effect="light">
+                    <img src="../../assets/Vector (1).svg"/>
+                  </el-tooltip>
+                </div>
+                <div  style="display: inline-block;margin-right:2vh;float: right;" >
 
-              <div style="display: inline-block;margin-right:2vh;float: right;" @click="paperDown(item.id)" >
-                <el-tooltip content="下移文章" placement="top" effect="light">
-                  <img src="../../assets/Vector (2).svg"/>
-                </el-tooltip>
-              </div>
-              <div style="display: inline-block;margin-right:2vh;float: right;" @click="paperUp(item.id)">
-                <el-tooltip content="上移文章" placement="top" effect="light">
-                  <img src="../../assets/Vector (1).svg"/>
-                </el-tooltip>
-              </div>
-              <div style="display: inline-block;margin-right:2vh;float: right;" >
+                  <el-tooltip v-if="item.isTop==-1" content="置顶文章" placement="top" effect="light">
+                    <img src="../../assets/Vector.svg" @click="paperTop(item)"/>
+                  </el-tooltip>
+                  <el-tooltip v-if="item.isTop==1" content="取消置顶" placement="top" effect="light">
+                    <img src="../../assets/Vector (3).svg" @click="paperTopCancel(item)"/>
+                  </el-tooltip>
+                </div>
+                
+                <div v-if="item.pdf===0" style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;" >
+                  <el-upload
+                    accept=".pdf"
+                    :show-file-list="false"
+                    slot="append"
+                    ref="upload"
+                    name="file"
+                    :multiple="false"
+                    action="htttps://ishare.horik.cn/api/"
+                    :on-change="onChange"
+                    :auto-upload="false"
+                  >
+                    <el-tag class="item-type3" style="display: inline-block;vertical-align: middle;" @click="setpdfid(item.id)">
+                      上传原文
+                    </el-tag>
+                  </el-upload>
+                </div>
 
-                <el-tooltip v-if="item.isTop==-1" content="置顶文章" placement="top" effect="light">
-                  <img src="../../assets/Vector.svg" @click="paperTop(item)"/>
-                </el-tooltip>
-                <el-tooltip v-if="item.isTop==1" content="取消置顶" placement="top" effect="light">
-                  <img src="../../assets/Vector (3).svg" @click="paperTopCancel(item)"/>
-                </el-tooltip>
+                <div v-if="item.pdf===1" style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;" >
+                  <el-tag class="item-type4" style="display: inline-block;vertical-align: middle;" @click="delePdf(item.id)">
+                      删除原文
+                    </el-tag>
+                </div>
+
               </div>
               
-              <div v-if="item.pdf===0" style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;" >
-                <el-upload
-                  accept=".pdf"
-                  :show-file-list="false"
-                  slot="append"
-                  ref="upload"
-                  name="file"
-                  :multiple="false"
-                  action="htttps://ishare.horik.cn/api/"
-                  :on-change="onChange"
-                  :auto-upload="false"
-                >
-                  <el-tag class="item-type3" style="display: inline-block;vertical-align: middle;" @click="setpdfid(item.id)">
-                    上传原文
-                  </el-tag>
-                </el-upload>
-              </div>
-
-              <div v-if="item.pdf===1" style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;" >
-                <el-tag class="item-type4" style="display: inline-block;vertical-align: middle;" @click="delePdf(item.id)">
-                    删除原文
-                  </el-tag>
-              </div>
-
               <div>
                 <div style="display: inline-block;margin-top: 1vh;color: grey" v-for="(aus,index) in item.authors">
                   <div style="display: inline-block" v-if="index<item.author.length-1"><b>{{aus}}</b>&nbsp;;&nbsp;&nbsp</div>
@@ -170,6 +173,9 @@ export default {
       total: 1000,//返回的检索结果的总量
       total_page:0,
       now_page:1,
+      verified:false,
+      is_mine:false,
+      is_Display:false,
       //id: "A4261893083",
       id: window.localStorage.getItem('SID'),
       scholarInfo: {
@@ -599,14 +605,23 @@ export default {
       method:'get',
       url:'/es/get2',
       params:{
-        id: this.id
+        id: this.id,
         // id: "A4221478216"
+        userid: window.localStorage.getItem("uid"),
       }
     }).then(
         response=> {
             console.log("is mine")
             console.log("userinfo",response.data);
             this.scholarInfo = response.data.data;
+            this.verified = response.data.info.verified;
+            this.is_mine=response.data.info.is_mine;
+            console.log("verified",this.verified);
+            console.log("is_mine",this.is_mine);
+            // if(this.verified===ture && this.is_mine ===ture){
+            //   this.is_Display = ture;
+            // }
+            // console.log("isDisplay",this.is_Display);
             if(this.scholarInfo.last_known_institution===null){
               this.scholarInfo.last_known_institution ="No belonged institution";
             }
