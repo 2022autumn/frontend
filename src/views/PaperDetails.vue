@@ -70,10 +70,13 @@
             <div class="like2" @click="addTagdialog = true" style="cursor:pointer;">
               {{ this.isCollectionTxt }}
             </div>
+<!--            <div class="like2" v-else @click="addTagdialog = true" style="cursor:pointer;">-->
+<!--              {{ this.notCollectionTxt }}-->
+<!--            </div>-->
             <!--是否被收藏的样式-->
             <div class="like1" v-model="key" style="cursor:pointer;">
               <span class="iconfont">
-                  <i v-if="myTagCnt === 0" class="el-icon-star-off" :key="0" @click="addTagdialog = true"></i>
+                  <i v-if="!isCollection" class="el-icon-star-off" :key="0" @click="addTagdialog = true"></i>
                   <i v-else class="el-icon-star-on" :key="1" @click="addTagdialog = true"></i>
               </span>
             </div>
@@ -210,7 +213,8 @@
 <!--          </el-menu>-->
         <div class="box-set" v-infinite-scroll="load">
           <div class="keyword-box" v-for="(item,index) in tags" :key="index">
-            <div class="keyword"  @click="addTagToFile(item)">{{item.tag_name}}</div>
+            <div class="kk keyword" v-if="item.isCollect === false"  @click="addTagToFile(item)">{{item.tag_name}}</div>
+            <div class="kk keyword1" v-else  @click="removeCollection(item)">{{item.tag_name}}</div>
 <!--            <div class="keyword1"  v-if="item.islike===true" @click="concern(item)">{{item.display_name}}</div>-->
 <!--            <div class="keyword"  v-else @click="concern(item)">{{item.display_name}}</div>-->
           </div>
@@ -260,7 +264,7 @@ export default {
     return {
       tags: [],
       myTag: "",
-      myTagCnt: "",
+      myTagCnt: 0,
       addTagdialog: false,//添加到我的收藏 控制dialog
       createCite: false,
       selectedTag: "",
@@ -345,7 +349,12 @@ export default {
           response =>{
             console.log("tags", response.data);
             this.tags = response.data.data;
-            this.myTagCnt = this.tags.length;
+            for(var i = 0; i < this.tags.length; i++) {
+              if(this.tags[i].isCollect == true) {
+                this.myTagCnt++;
+              }
+            }
+            this.updateTxt();
           }
       )
     },
@@ -360,9 +369,10 @@ export default {
           user_id: parseInt(window.localStorage.getItem('uid')),
         }
       }).then(res => {
-        this.isCollection = true;
         this.myTagCnt++;
+        console.log("cnt", this.myTagCnt);
         this.updateTxt();
+        this.getTagList()
         this.$message({
           type: "success",
           message: res.data.msg,
@@ -387,7 +397,9 @@ export default {
           user_id: parseInt(window.localStorage.getItem('uid')),
         }
       }).then(res => {
+        this.getTagList()
         this.myTagCnt--;
+        console.log("cnt", this.myTagCnt);
         this.updateTxt();
         this.$message({
           type: "success",
@@ -485,8 +497,10 @@ export default {
     updateTxt() {
       if(this.myTagCnt > 0) {
         this.isCollectionTxt = "已收藏";
+        this.isCollection = true;
       } else {
-        this.isCollectionTxt = "收藏"
+        this.isCollectionTxt = "收藏";
+        this.isCollection = false;
       }
     },
     pushCommand() {
@@ -1325,6 +1339,8 @@ export default {
   align-items: flex-start;
 }
 .keyword{
+  border-radius: 2px;
+  transition: 0.5s;
   display: flex;
   left: 15px;
   padding-top: 6px;
@@ -1342,6 +1358,31 @@ export default {
   /* identical to box height, or 144% */
   letter-spacing: 0.04em;
   color: #858FA0;
+  cursor:pointer;
+}
+.kk:hover {
+  box-shadow: 0px 0px 8px #C1C9F0;
+}
+.keyword1{
+  border-radius: 2px;
+  transition: 0.5s;
+  display: flex;
+  left: 15px;
+  padding-top: 6px;
+  padding-bottom: 4px;
+  padding-left: 15px;
+  padding-right: 18px;
+  background: #accaf1;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 26px;
+  align-items: center;
+  justify-content: center;
+  /* identical to box height, or 144% */
+  letter-spacing: 0.04em;
+  color: #F5F8FC;
   cursor:pointer;
 }
 </style>
@@ -1387,5 +1428,8 @@ export default {
 }
 .el-menu-vertical-demo .el-submenu__icon-arrow {
   display: none !important;
+}
+.dialog-footer .el-button--primary {
+  color: white !important;
 }
 </style>
