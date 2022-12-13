@@ -66,7 +66,7 @@
           >
             <span
               :class="{ actived: activeIndex === 4 }"
-              class="circular last"
+              class="circular "
             ></span>
             <div class="text1">关注列表</div>
           </div>

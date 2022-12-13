@@ -149,8 +149,8 @@ export default {
   position: absolute;
   width: auto;
   height: 5vh;
-  left: 6vw;
-  top:40px;
+  left: 5.2vw;
+  top:30px;
   white-space: nowrap;
   font-family: 'Nunito Sans';
   font-style: normal;
@@ -169,8 +169,8 @@ export default {
   position: absolute;
   width: 150px;
   height: 26px;
-  left: 770px;
-  top: 50px;
+  left: 730px;
+  top: 30px;
 
   font-family: 'Poppins';
   font-style: normal;
@@ -188,8 +188,9 @@ export default {
   display: flex;
   flex-direction: column;
   width: 98%;
-  margin-top:80px;
+  margin-top:75px;
   margin-bottom: 110px;
+  margin-left:-15px;
 }
 ::-webkit-scrollbar {
 
@@ -206,7 +207,7 @@ export default {
 .ref-box{
   position: relative;
   width: 356px;
-  top:-33px;
+  top:-38px;
 }
 .index-box{
   position: absolute;
@@ -241,7 +242,7 @@ export default {
 .content {
   display: flex;
   width: 800px;
-  margin-left: 50px;
+  margin-left: 65px;
   padding-right:20px;
   margin-top:70px;
   text-align: justify;
@@ -251,7 +252,7 @@ export default {
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 22px;
   /* or 122% */
 
@@ -265,11 +266,11 @@ export default {
 }
 .host_venue{
   padding-right: 30px;
-
+  padding-left: 10px;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 26px;
   /* identical to box height, or 186% */
 
@@ -282,13 +283,13 @@ export default {
   position: relative;
   width: auto;
   height: 26px;
-  left: 52px;
+  left: 55px;
   top: 8px;
   white-space: nowrap;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 26px;
   /* identical to box height, or 186% */
 
@@ -298,9 +299,9 @@ export default {
 }
 .line{
   position: relative;
-  width: 800px;
+  width: 760px;
   height: 0px;
-  left: 50px;
+  left: 60px;
   top: 22px;
 
   border: 1.4px solid rgba(217, 215, 215, 0.58);
@@ -325,14 +326,14 @@ export default {
 }
 .history-icon{
   position: absolute;
-  width: 50px;
-  height: 50px;
-  left:30px;
-  top:30px;
+  width: 40px;
+  height: 40px;
+  left:25px;
+  top:25px;
 }
 .pagination{
   position: absolute;
-  top:620px;
-  left: 220px;
+  top:580px;
+  left: 170px;
 }
 </style>
