@@ -116,7 +116,7 @@ export default {
                 console.log(this.items.at(i).headshot);
               }
             }
-            this.search_word = null;
+           // this.search_word = null;
           }
       )
     },
@@ -297,8 +297,10 @@ export default {
 }
 
 .scholar_name {
-  width: 90vh;
+  width: 96vh;
+  height: 38px;
   float: left;
+  overflow: hidden;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;

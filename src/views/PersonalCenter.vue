@@ -342,6 +342,7 @@
         </div>
         <div v-show="activeIndex == 3" class="center">
           <collect-detail></collect-detail>
+          <！---div style="display:flex;align-items:center;justify-content:space-between">
           -div style="display:flex;align-items:center;justify-content:space-between">
                         <div style="display:flex;align-items:center">
                             <img src="../assets/Star.png" alt="">

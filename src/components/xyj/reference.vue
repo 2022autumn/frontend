@@ -40,7 +40,7 @@ export default {
     console.log(window.localStorage.getItem('WID'))
     this.$axios({//注意是this.$axios
       method:'get',
-      url:'/es/get',
+      url:'/es/get2',
       params:{//get请求这里是param
         id:window.localStorage.getItem('WID'),
       }
@@ -207,5 +207,9 @@ export default {
 }
 .ref{
   cursor: pointer;
+}
+.content:hover {
+  text-decoration: underline;
+  color: #53a2e3;
 }
 </style>

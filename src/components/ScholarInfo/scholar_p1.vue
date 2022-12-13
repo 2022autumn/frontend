@@ -130,19 +130,16 @@ export default {
     },
     getScholarInfo() {
       let that = this;
-      that
-        .$axios({
-          method: "get",
-          url: "/es/get",
-          params: {
-            id: window.localStorage.getItem("SID"),
-          },
-        })
-        .then((response) => {
-          this.userinfo = response.data.info;
-          this.avator_url =
-            "https://ishare.horik.cn/api/media/headshot/" +
-            this.userinfo.headshot;
+      that.$axios({
+        method:'get',
+        url:'/es/get2',
+        params:{
+          id: window.localStorage.getItem('SID'),
+        }
+      }).then(
+          response=> {
+            this.userinfo = response.data.info;
+            this.avator_url = "https://ishare.horik.cn/api/media/headshot/"+this.userinfo.headshot
 
           if (this.userinfo.verified === true) {
             this.isClaim = true;

@@ -36,7 +36,7 @@ export default {
   mounted(){
     this.$axios({//注意是this.$axios
       method:'get',
-      url:'/es/get',
+      url:'/es/get2',
       params:{//get请求这里是params
         id:window.localStorage.getItem('WID'),
       }
@@ -192,6 +192,10 @@ export default {
 
   color: #000000;
 }
+.content:hover {
+  text-decoration: underline;
+  color: #53a2e3;
+}
 .host_venue{
   display: flex;
   position: relative;
@@ -216,7 +220,7 @@ export default {
   position: relative;
   width: 345px;
   height: 26px;
-  left: 27px;
+  left: 29px;
   top: 8px;
 
   font-family: 'Poppins';

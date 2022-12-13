@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <Topbar1></Topbar1>
@@ -156,6 +157,7 @@ export default {
   components: {Testnet, Trycloud, Topbar1, testScolar,PaperManage},
   data(){
     return{
+      detail:"",
       num_exact_page:8,
       total: 1000,//返回的检索结果的总量
       total_page:0,
@@ -497,7 +499,7 @@ export default {
     console.log("id is "+this.id);
     that.$axios({
       method:'get',
-      url:'/es/get',
+      url:'/es/get2',
       params:{
         id: this.id
         // id: "A4221478216"
