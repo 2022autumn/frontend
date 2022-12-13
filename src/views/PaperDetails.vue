@@ -1519,7 +1519,7 @@ export default {
   display: block;
   float: left;
   width: 100%;
-  margin-top: 95vh;
+  margin-top: 800px;
   //height: 383px;
   margin-right: 0vw;
 }
