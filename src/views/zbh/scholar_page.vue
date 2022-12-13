@@ -456,17 +456,18 @@ export default {
                   this.items[i].isTop=response.data.data[i].Top;
                   console.log("1111 this.item[i].isTop",this.items[i].isTop);
                   
-                  // if(response.data.data.docs[i]._source.authorships.length!==0) {
-                  //   this.items[i].author = response.data.data.docs[i]._source.authorships[0].author.display_name;
-                  //   var t = response.data.data.docs[i]._source.authorships.length;
-                  //   if(t>4){
-                  //     t=4;
-                  //   }
-                  //   console.log("jjjjj",t);
-                  //   for(var j=0;j<t;j++){
-                  //     this.items[i].authors[j] = response.data.data.docs[i]._source.authorships[j].author.display_name;
-                  //   }
-                  // }
+                  if(response.data.data[i].authorships.length!==0) {
+                    this.items[i].author = response.data.data[i].authorships[0].author.display_name;
+                    var t = response.data.data[i].authorships.length;
+                    if(t>4){
+                      t=4;
+                    }
+                    console.log("jjjjj",t);
+                    for(var j=0;j<t;j++){
+                      this.items[i].authors[j] = response.data.data[i].authorships[j].author.display_name;
+                    }
+                  }
+                  
                   
                   //this.items[i].numstore = Math.ceil(Math.random()*100);
               }
@@ -651,17 +652,17 @@ export default {
                   this.items[i].isTop=response.data.data[i].Top;
                   console.log("1111 this.item[i].isTop",this.items[i].isTop);
 
-                  // if(response.data.data.docs[i]._source.authorships.length!==0) {
-                  //   this.items[i].author = response.data.data.docs[i]._source.authorships[0].author.display_name;
-                  //   var t = response.data.data.docs[i]._source.authorships.length;
-                  //   if(t>4){
-                  //     t=4;
-                  //   }
-                  //   console.log("jjjjj",t);
-                  //   for(var j=0;j<t;j++){
-                  //     this.items[i].authors[j] = response.data.data.docs[i]._source.authorships[j].author.display_name;
-                  //   }
-                  // }
+                  if(response.data.data[i].authorships.length!==0) {
+                    this.items[i].author = response.data.data[i].authorships[0].author.display_name;
+                    var t = response.data.data[i].authorships.length;
+                    if(t>4){
+                      t=4;
+                    }
+                    console.log("jjjjj",t);
+                    for(var j=0;j<t;j++){
+                      this.items[i].authors[j] = response.data.data[i].authorships[j].author.display_name;
+                    }
+                  }
                   
                   //this.items[i].numstore = Math.ceil(Math.random()*100);
               }
