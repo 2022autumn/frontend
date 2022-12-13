@@ -56,29 +56,23 @@
               </div>
               <!-- 上传照片给服务器，服务器的图片地址 上传前的判断 请求头Tonken 上传成功后的回调-->
               <!-- :action="$http.adornUrl(`/file/uploadFile`)"  -->
-              <div style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;" @click="setpdfid(item.id)">
+              <div style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;" >
                 <el-upload
-                  :https-request="upload_pdf"
                   accept=".pdf"
                   :show-file-list="false"
                   slot="append"
-                  class="uploadbox"
                   ref="upload"
                   name="file"
                   :multiple="false"
                   action="htttps://ishare.horik.cn/api/"
                   :on-change="onChange"
                   :auto-upload="false"
-                  :on-success="handlePDFSuccess"
                 >
-                  <el-tag class="item-type3" style="display: inline-block;vertical-align: middle;">
+                  <el-tag class="item-type3" style="display: inline-block;vertical-align: middle;" @click="setpdfid(item.id)">
                     上传原文
                   </el-tag>
                 </el-upload>
               </div>
-              
-
-              
 
               <div>
                 <div style="display: inline-block;margin-top: 1vh;color: grey" v-for="(aus,index) in item.authors">
@@ -129,10 +123,11 @@
         <el-col :span="16">
             <div class="block">
               <el-pagination
-                  layout="prev, pager, next"
-                  :total=this.total_page
-                  @current-change="handlechange"
-                  background
+                    layout="prev, pager, next"
+                    :total=this.total_page
+                    @current-change="handlechange"
+                    :current-page= this.now_page
+                    background
               >
               </el-pagination>
             </div>
@@ -259,28 +254,6 @@ export default {
       this.pdf_work_id=id;
       console.log("this.pdf_work_id",this.pdf_work_id);
     },
-    upload_pdf(file){
-      console.log("upload_pdf");
-        const formData = new FormData();
-        formData.append('PDF',file.raw);//file.file
-        formData.append("work_id", this.pdf_work_id);
-        formData.append("author_id ", this.id);
-
-        const config = {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        };
-        this.$axios.post("/scholar/works/upload", formData, config)
-        .then(
-              response=> {
-                console.log(message);
-                this.$message({
-                  type:"success",
-                  message: "上传成功",
-                })
-          });
-    },
     onChange(file) {
         // 校验格式
         console.log("OnChange");
@@ -288,8 +261,7 @@ export default {
             this.$message.error('请上传正确的pdf格式');
             return false;
         }
-        //this.productVO.instruction = file.name;
-        //this.productVO.instructionFile = file.raw; //上传文件时需要用到二进制，所以这里文件取值为file.raw
+
         const formData = new FormData();
         formData.append('PDF',file.raw);//file.file
         formData.append("work_id", this.pdf_work_id);
@@ -311,12 +283,7 @@ export default {
           });
     },
     
-    handlePDFSuccess(res, file){
-      console.log("handlePDFSuccess");
-      this.pafeUrl = URL.createObjectURL(file.raw);
-      console.log("上传成功!");
-      //console.log(this.imageUrl);
-    },
+
     handlechange(page){//处理跳转，page为当前选中的页面
           this.now_page = page;
           sessionStorage.setItem('now_page',JSON.stringify(page));
@@ -437,6 +404,9 @@ export default {
               var len = 0;
               len = response.data.data.length;
               console.log("len",len);
+              console.log("response.data.data.pages",response.data.data.pages);
+              this.total_page = response.data.data.pages;
+              console.log("response.data.data.pages",response.data.data.pages);
               for(var i=0;i<len;i++){
                 console.log("iiiii", i);
                 this.items[i].id = response.data.data[i].id;
@@ -489,17 +459,17 @@ export default {
                   this.items[i].isTop=response.data.data[i].Top;
                   console.log("1111 this.item[i].isTop",this.items[i].isTop);
                   
-                  // if(response.data.data.docs[i]._source.authorships.length!==0) {
-                  //   this.items[i].author = response.data.data.docs[i]._source.authorships[0].author.display_name;
-                  //   var t = response.data.data.docs[i]._source.authorships.length;
-                  //   if(t>4){
-                  //     t=4;
-                  //   }
-                  //   console.log("jjjjj",t);
-                  //   for(var j=0;j<t;j++){
-                  //     this.items[i].authors[j] = response.data.data.docs[i]._source.authorships[j].author.display_name;
-                  //   }
-                  // }
+                  if(response.data.data[i].authorships.length!==0) {
+                    this.items[i].author = response.data.data[i].authorships[0].author.display_name;
+                    var t = response.data.data[i].authorships.length;
+                    if(t>4){
+                      t=4;
+                    }
+                    console.log("jjjjj",t);
+                    for(var j=0;j<t;j++){
+                      this.items[i].authors[j] = response.data.data[i].authorships[j].author.display_name;
+                    }
+                  }
                   
                   //this.items[i].numstore = Math.ceil(Math.random()*100);
               }
@@ -672,17 +642,17 @@ export default {
                   this.items[i].isTop=response.data.data[i].Top;
                   console.log("1111 this.item[i].isTop",this.items[i].isTop);
 
-                  // if(response.data.data.docs[i]._source.authorships.length!==0) {
-                  //   this.items[i].author = response.data.data.docs[i]._source.authorships[0].author.display_name;
-                  //   var t = response.data.data.docs[i]._source.authorships.length;
-                  //   if(t>4){
-                  //     t=4;
-                  //   }
-                  //   console.log("jjjjj",t);
-                  //   for(var j=0;j<t;j++){
-                  //     this.items[i].authors[j] = response.data.data.docs[i]._source.authorships[j].author.display_name;
-                  //   }
-                  // }
+                  if(response.data.data[i].authorships.length!==0) {
+                    this.items[i].author = response.data.data[i].authorships[0].author.display_name;
+                    var t = response.data.data[i].authorships.length;
+                    if(t>4){
+                      t=4;
+                    }
+                    console.log("jjjjj",t);
+                    for(var j=0;j<t;j++){
+                      this.items[i].authors[j] = response.data.data[i].authorships[j].author.display_name;
+                    }
+                  }
                   
                   //this.items[i].numstore = Math.ceil(Math.random()*100);
               }

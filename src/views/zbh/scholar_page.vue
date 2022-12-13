@@ -57,16 +57,19 @@
               </div>
               <!-- 上传照片给服务器，服务器的图片地址 上传前的判断 请求头Tonken 上传成功后的回调-->
               <!-- :action="$http.adornUrl(`/file/uploadFile`)"  -->
-              <div style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;">
+              <div style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;" >
                 <el-upload
                   accept=".pdf"
-                  action="123"
-                  :http-request="(res)=>paperUpLoad(item.id,res)"
-                  :file-list="fileArr"
-                  :before-upload="(res)=>beforeStudtUpload(res,1)"
                   :show-file-list="false"
+                  slot="append"
+                  ref="upload"
+                  name="file"
+                  :multiple="false"
+                  action="htttps://ishare.horik.cn/api/"
+                  :on-change="onChange"
+                  :auto-upload="false"
                 >
-                  <el-tag class="item-type3" style="display: inline-block;vertical-align: middle;">
+                  <el-tag class="item-type3" style="display: inline-block;vertical-align: middle;" @click="setpdfid(item.id)">
                     上传原文
                   </el-tag>
                 </el-upload>
@@ -248,6 +251,39 @@ export default {
     }
   },
   methods:{
+    setpdfid(id){
+      console.log("setpdfid1",id);
+      this.pdf_work_id=id;
+      console.log("this.pdf_work_id",this.pdf_work_id);
+    },
+    onChange(file) {
+        // 校验格式
+        console.log("OnChange");
+        if (['application/pdf'].indexOf(file.raw.type) == -1) {
+            this.$message.error('请上传正确的pdf格式');
+            return false;
+        }
+
+        const formData = new FormData();
+        formData.append('PDF',file.raw);//file.file
+        formData.append("work_id", this.pdf_work_id);
+        formData.append("author_id ", this.id);
+
+        const config = {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        };
+        this.$axios.post("/scholar/works/upload", formData, config)
+        .then(
+              response=> {
+                console.log(message);
+                this.$message({
+                  type:"success",
+                  message: "上传成功",
+                })
+          });
+    },
     handlechange(page){//处理跳转，page为当前选中的页面
           this.now_page = page;
           sessionStorage.setItem('now_page',JSON.stringify(page));
