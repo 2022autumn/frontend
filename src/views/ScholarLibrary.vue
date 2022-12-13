@@ -116,7 +116,7 @@ export default {
                 console.log(this.items.at(i).headshot);
               }
             }
-            this.search_word = null;
+           // this.search_word = null;
           }
       )
     },
