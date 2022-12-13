@@ -556,7 +556,7 @@ export default {
     let height = this.$refs.ref.offsetHeight;  //100
     this.$axios({//注意是this.$axios
       method: 'get',
-      url: '/es/get',
+      url: '/es/get2',
       params: {//get请求这里是params
         id: window.localStorage.getItem('WID')
         //id: "W2914747780"
