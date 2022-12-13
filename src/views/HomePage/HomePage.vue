@@ -34,7 +34,7 @@
             <div style="position: absolute;left: 7vw;">
               <img
                   src="../../HomePage_svg/top-icon-1.svg"
-                  style="width: 60px; height: 60px; text-align: bottom"
+                  style="width: 60px; height: 60px; text-align:bottom"
               />
             </div>
 
@@ -121,8 +121,8 @@
                           width="280"
                           height="500"
                           trigger="hover"
-                          open-delay="800"
-                          close-delay="0"
+                          :open-delay=800
+                          :close-delay=0
                       >
                         <div style="margin-left: 10px;cursor: default"><b>关键词描述</b></div>
                         <div style="width: 90%;left:50%;position:absolute;margin-left:-45%;height: 1px;margin-top:10px;background-color:rgba(217, 215, 215, 0.58)"></div>
@@ -249,7 +249,7 @@
           </div>
 
           <!-- 导航栏滚动框 -->
-          <el-carousel height="25vh" interval="2000" style="margin-top: 5vh">
+          <el-carousel height="25vh" :interval=2000 style="margin-top: 5vh">
             <el-carousel-item v-for="item in 4" :key="item">
               <h3 class="slides"><img preview-disabled style="width:23vw;"
                                       src="../../../public/advanced_img/Frame 8.svg"
@@ -449,7 +449,7 @@ export default {
       }).then(
           response => {
             console.log("推荐论文为");
-            console.log(response.data.data);
+            //console.log(response.data.data);
             this.tuijianlist = response.data.data;
             console.log(this.tuijianlist);
             for (var i = 0; i < this.tuijianlist.length; i++) {
@@ -593,9 +593,6 @@ export default {
     }
   },
   created() {
-    //this.gettuijian();
-    console.log("titles为")
-    console.log(this.titles);
     this.oldtime = new Date();
     if (this.total % 4 === 0) {
       this.total_page = this.total / 8 * 10;
