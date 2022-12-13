@@ -15,7 +15,7 @@
                 <!--<template slot="prepend" style="cursor: pointer">
                   <span @click="jadvance" style="width:inherit">高级检索</span>
                 </template>-->
-                <el-select v-model="select" slot="prepend" placeholder="请选择字段" style="width: 10vw">
+                <el-select class="search_header" v-model="select" slot="prepend" placeholder="请选择字段" style="width: 10vw;">
                   <el-option label="标题" value="1"></el-option>
                   <el-option label="摘要" value="2"></el-option>
                   <el-option label="刊物" value="3"></el-option>
@@ -204,7 +204,7 @@
                 <span v-if="index===2" class="hot-number" style="color: #F6DA95">03</span>
                 <span v-if="index>2 && index!=9" class="hot-number">{{ "0"+(index+1) }}</span>
                 <span v-if="index===9" class="hot-number"> {{ (index+1) }} </span>
-                <span class="hot-content" @click="jpaper(index)"> {{ item.work_title }}.</span>
+                <span class="hot-content" @click="jpaper(index)" v-html="item.work_title+'.'">.</span>
               </div>
             </div>
           </div>
@@ -642,7 +642,7 @@ export default {
   height: auto;
   min-height: 80px;
   padding-bottom: 10px;
-  padding-left: 10px;
+  padding-left: 15px;
   padding-right: 10px;
 
   background:#FFFFFF;
@@ -673,7 +673,7 @@ export default {
   text-align: left;
 }
 .hot-number{
-  padding-left: 10px;
+  /*padding-left: 10px;*/
   font-weight: 800;
   font-size: 18px;
   line-height: 180%;
@@ -682,7 +682,8 @@ export default {
   color: rgba(86, 72, 72, 0.67);
 }
 .hot-content{
-  padding: 10px,10px;
+  padding-left: 10px;
+  padding: 10px 10px;
   cursor: pointer;
   font-weight: 700;
   font-size: 16px;
@@ -745,5 +746,11 @@ export default {
 .el-pagination.is-background .btn-prev,
 .el-pagination.is-background .el-pager li {
   background-color: #fff; /*进行修改未选中背景和字体*/
+}
+
+</style>
+<style>
+.search_header input.el-input__inner {
+  text-align: center !important;
 }
 </style>
