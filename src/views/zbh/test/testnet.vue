@@ -467,9 +467,17 @@ export default {
           item.title = item.full
         });
         this.edgesArray = res.data.res.Edge_set;
+        var max = 0;
         this.edgesArray.forEach(item => {
           item.id = item.from + "-" + item.to;
           item.label = item.weight.toString();
+          if (item.weight > max) {
+            max = item.weight;
+          }
+        })
+        // 计算边的宽度
+        this.edgesArray.forEach(item => {
+          item.width = item.weight / max * 15;
         })
         console.log("this.nodesArray", this.nodesArray);
         console.log("this.edgesArray", this.edgesArray);
