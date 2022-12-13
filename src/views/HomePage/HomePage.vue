@@ -121,7 +121,7 @@
                           width="280"
                           height="500"
                           trigger="hover"
-                          open-delay="600"
+                          open-delay="800"
                           close-delay="0"
                       >
                         <div style="margin-left: 10px;cursor: default"><b>关键词描述</b></div>
