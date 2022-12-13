@@ -22,7 +22,7 @@
       </div>
       <div class="cloud_top">. 词云图 .</div>
       <div>
-        <trycloud style="height: 40vh;position: absolute;top:220vh"></trycloud>
+        <trycloud style="height: 40vh;position: absolute;top:220vh" v-if="is_ready" :concepts="scholarInfo.x_concepts"></trycloud>
       </div>
       <div class="wenxian_top">. 已发表文献 .</div>
 
@@ -177,7 +177,7 @@ export default {
         x_concepts: [
         ]
       },
-
+      is_ready: false,// 是否已经获取到数据,用于判断是否显示加载子组件
       items: [
         {
           type: "期刊",
@@ -538,7 +538,7 @@ export default {
         if (this.scholarInfo.last_known_institution === null) {
           this.scholarInfo.last_known_institution = "No belonged institution";
         }
-        //console.log("get userInfo", this.scholarInfo);
+        console.log("get scholarInfo", this.scholarInfo);
         //获取领域字符串
         for (var i = 0; i < this.scholarInfo.x_concepts.length; i++) {
           this.areas = this.areas + this.scholarInfo.x_concepts[i].display_name;
@@ -557,6 +557,7 @@ export default {
             this.counts2[this.scholarInfo.counts_by_year[i].year - 2013] = this.scholarInfo.counts_by_year[i].cited_by_count;
           }
         }
+        this.is_ready = true;
         //console.log("counts",this.counts);
         //("counts2",this.counts2);
       }

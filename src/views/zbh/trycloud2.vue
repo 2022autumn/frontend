@@ -7,6 +7,7 @@ import "echarts-wordcloud/dist/echarts-wordcloud";
 import "echarts-wordcloud/dist/echarts-wordcloud.min.js";
 
 export default {
+  props: ["concepts"],
   name: "WordCloudChart",
   data() {
     return {
@@ -52,6 +53,16 @@ export default {
   },
   mounted() {
     setTimeout(() => {
+      console.log("=====>");
+      console.log(this.concepts);
+      this.worddata = new Array();
+      for (var i = 0; i < this.concepts.length; i++) {
+        this.worddata.push({
+          id: this.concepts[i].id,
+          name: this.concepts[i].display_name,
+          value: this.concepts[i].score,
+        });
+      }
       this.initCharts(); //初始化
     }, 0);
   },
@@ -62,10 +73,18 @@ export default {
     // this.chart.dispose();
     // this.chart = null;
   },
+  // // 监听父组件传递的数据 concepts不为空时，才执行初始化
+  // watch: {
+  //   concepts: {
+  //     handler: function (val, oldVal) {
+  //       console.log("监听到父组件传值", this.concepts);
+  //       this.initCharts(); //初始化
+  //     },
+  //     deep: true,
+  //   },
+  // },
   methods: {
     initCharts() {
-      console.log(this.worddata);
-
       let a = this.$refs.chart;
 
       let myChart2 = this.$echarts.init(a);
@@ -128,7 +147,7 @@ export default {
       });
       //点击事件
       myChart2.on('click', function (params) {
-        alert(params.name);
+        console.log(params.data.id);
       });
     },
   },
