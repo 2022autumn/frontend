@@ -126,7 +126,7 @@ export default {
             this.userinfo = response.data.info;
             this.avator_url = "https://ishare.horik.cn/api/media/headshot/"+this.userinfo.headshot
 
-            if(this.userinfo.verified === true) {
+            if(this.userinfo.verified === 1) {
               this.isClaim = true;
               this.loadClaim()
             } else {
