@@ -16,10 +16,12 @@
         width="100"
         trigger="hover"
     >
-      <div style="margin-bottom: 1vh;">
+
+      <div>
         <el-button style="display:block;margin:0 auto" @click="logout()" type="text">退出登录</el-button>
       </div>
-      <div v-show="isAdmin">
+      <div  style="margin-top: 1vh;" v-show="isAdmin">
+
         <el-button style="display:block;margin:0 auto" @click="gotoAdmin()" type="text">管理中心</el-button>
       </div>
     <img slot="reference" v-if="this.iflogin===1" :src="this.photourl" style="top: 1.5vh;width: 40px;height: 40px;border-radius: 50px;left: 90.5vw;position: absolute" alt="">
@@ -62,6 +64,7 @@ export default {
       userid:window.localStorage.getItem('uid'),
       iflogin:JSON.parse(window.localStorage.getItem('iflogin')),
       oldtime:'',
+
     }
   },
   methods:{
@@ -145,7 +148,9 @@ export default {
             console.log(response.data);
             this.photourl = response.data.data.head_shot
             this.photourl = 'https://ishare.horik.cn/api/media/headshot/'+this.photourl;
+
             this.username = response.data.data.username;
+
             if(response.data.data.user_type === 1){
               this.isAdmin = true;
             }
