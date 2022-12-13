@@ -141,12 +141,12 @@ export default {
             this.userinfo = response.data.info;
             this.avator_url = "https://ishare.horik.cn/api/media/headshot/"+this.userinfo.headshot
 
-          if (this.userinfo.verified === true) {
-            this.isClaim = true;
-            this.loadClaim();
-          } else {
-            this.loadClaim();
-          }
+            if(this.userinfo.verified === 1) {
+              this.isClaim = true;
+              this.loadClaim()
+            } else {
+              this.loadClaim()
+            }
 
           if (this.userinfo.isFollow === true) {
             this.isFollow = true;
