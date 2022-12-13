@@ -112,7 +112,7 @@ export default {
 .title{
   position: absolute;
   height: 26px;
-  width: 80px;
+  width: 90px;
   top:27px;
   left: 24px;
   font-family:Poppins;
