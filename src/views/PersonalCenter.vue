@@ -597,10 +597,12 @@ export default {
           user_info: this.gexingqianming,
         },
       }).then((res) => {
+        console.log("修改成功!")
         console.log(res.data);
+        //window.location.reload();
       });
       this.ifedit = 0;
-      window.location.reload();
+      //window.location.reload();
       //this.get_data();
     },
     get_data() {

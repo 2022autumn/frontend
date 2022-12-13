@@ -18,10 +18,10 @@
         trigger="hover"
         >
       <div style="margin-bottom: 1vh;">
-        <el-button style="display:block;margin:0 auto" @click="logout()">退出登录</el-button>
+        <el-button style="display:block;margin:0 auto" @click="logout()" type="text">退出登录</el-button>
       </div>
       <div v-show="isAdmin">
-        <el-button style="display:block;margin:0 auto" @click="gotoAdmin()">管理中心</el-button>
+        <el-button style="display:block;margin:0 auto" @click="gotoAdmin()" type="text">管理中心</el-button>
       </div>
     <img slot="reference" v-if="this.iflogin===1" :src="this.photourl" style="top: 1.5vh;width: 40px;height: 40px;border-radius: 50px;left: 90vw;position: absolute" alt="">
     </el-popover>

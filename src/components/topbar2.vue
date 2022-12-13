@@ -16,8 +16,12 @@
         width="100"
         trigger="hover"
     >
-        <el-button @click="logout()" type="text">退出登录</el-button>
-        <el-button type="text">管理员</el-button>
+      <div style="margin-bottom: 1vh;">
+        <el-button style="display:block;margin:0 auto" @click="logout()" type="text">退出登录</el-button>
+      </div>
+      <div v-show="isAdmin">
+        <el-button style="display:block;margin:0 auto" @click="gotoAdmin()" type="text">管理中心</el-button>
+      </div>
     <img slot="reference" v-if="this.iflogin===1" :src="this.photourl" style="top: 1.5vh;width: 40px;height: 40px;border-radius: 50px;left: 90.5vw;position: absolute" alt="">
     </el-popover>
     <div v-if="this.iflogin===1"  style="position: absolute;width: 45px;height:14px;left:94vw;top:3.5vh;font-style: normal;font-weight: 600;font-size: 14px;line-height: 14px;letter-spacing: 0.01em;color: #2B2B39;">{{this.username}}</div>
@@ -44,6 +48,7 @@ export default {
   name: "topbar2",
   data(){
     return{
+      isAdmin:false,
       select:'',
       restaurants: [
         {
@@ -60,6 +65,9 @@ export default {
     }
   },
   methods:{
+    gotoAdmin(){
+      window.open('/admin');
+    },
     logout(){
       this.iflogin=0;
       window.localStorage.setItem('iflogin',JSON.stringify(0));
@@ -137,6 +145,10 @@ export default {
             console.log(response.data);
             this.photourl = response.data.data.head_shot
             this.photourl = 'https://ishare.horik.cn/api/media/headshot/'+this.photourl;
+            this.username = response.data.data.username;
+            if(response.data.data.user_type === 1){
+              this.isAdmin = true;
+            }
           }
       )
     },
