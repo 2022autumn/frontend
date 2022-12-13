@@ -88,7 +88,10 @@ export default {
           data:{
             author_id: window.localStorage.getItem('SID'),
             intro: this.scholar.intro,
-          }
+          },
+          headers: {
+            'token': parseInt(window.localStorage.getItem('uid'))
+          },
         }).then(
             response=> {
               //(this.scholar.intro)

@@ -130,7 +130,7 @@
                         <div v-if="ifhasImage" style="width: 100%;text-align: center;margin-top: 10px">
                           <img :src="image_thumbnail_url" alt="">
                         </div>
-                        <el-button style="width: auto;" @click="choosekey(item)" slot="reference" @mouseenter.native="getDetail(item.concept_id)"  >{{ item.concept_name }}</el-button>
+                        <el-button style="width: auto;" @click="choosekey(item)" slot="reference" @mouseenter.native="showDetail(item.concept_id)"  >{{ item.concept_name }}</el-button>
                       </el-popover>
                     </div>
                     <span style="vertical-align: top;cursor: pointer" slot="reference">
@@ -373,12 +373,11 @@ export default {
       item.isDetail=false;
     },
     showDetail(id){
-      setTimeout();
+      setTimeout(this.getDetail(id),1800);
+
     }
     ,
     getDetail(id) {
-      this.ifhasImage=false;
-      this.detail="";
       this.$axios({//注意是this.$axios
         method: 'get',
         url: '/es/get2',
@@ -387,17 +386,33 @@ export default {
         }
       }).then(
           response => {
-            this.detail = response.data.data.description;
-            if (response.data.data.image_thumbnail_url !== null) {
-              this.ifhasImage=true
-              this.image_thumbnail_url = response.data.data.image_thumbnail_url;
-            }else{
-              this.ifhasImage=false;
-              this.image_thumbnail_url ="";
-            }
+            this.ifhasImage=false;
+            this.detail="";
+            setTimeout(() =>{
+              console.log(response.data.data)
+              this.detail = response.data.data.description;
+              if (response.data.data.image_thumbnail_url !== null) {
+                this.ifhasImage=true
+                this.image_thumbnail_url = response.data.data.image_thumbnail_url;
+              }else{
+                this.ifhasImage=false;
+                this.image_thumbnail_url ="";
+              }
+            },300)
           }
       )
     },
+  setDetails(description,image_thumbnail_url){
+    this.detail = response.data.data.description;
+    if (response.data.data.image_thumbnail_url !== null) {
+      this.ifhasImage=true
+      this.image_thumbnail_url = response.data.data.image_thumbnail_url;
+    }else{
+      this.ifhasImage=false;
+      this.image_thumbnail_url ="";
+    }
+  }
+  ,
     choosekey(item) {
       console.log(item);
       console.log(item.concept_id);
