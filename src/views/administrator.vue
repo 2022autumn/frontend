@@ -5,7 +5,7 @@
     <div class="grid">
       <div></div>
       <div style="text-align: center">
-        <div class="title-personal">管理员界面</div>
+        <div class="title-personal">管理中心</div>
         <div class="left">
           <div
             @click="activeIndex = 1"
@@ -65,6 +65,7 @@
             <div style="display: flex; align-items: center">
               <img src="../assets/Rectangle 2619.png" alt="" />
               <span class="info-title">申请处理</span>
+              <el-badge :value="total" v-show="total"></el-badge>
             </div>
           </div>
           <div class="app-none" v-show="!total">没有待处理的门户申请~</div>
@@ -85,8 +86,13 @@
                     justify-content: flex-end;
                   "
                 >
-                  <el-button size="mini" icon="el-icon-menu" class="btn2"
-                    >详情</el-button
+                  <el-button
+                    size="mini"
+                    icon="el-icon-menu"
+                    class="btn2"
+                    @click="openDetail(item)"
+                  >
+                    详情</el-button
                   >
                   <el-button
                     size="mini"
@@ -110,6 +116,47 @@
       </div>
       <div></div>
     </div>
+
+    <el-dialog
+      custom-class="detail"
+      class="info-title"
+      title="学者门户申请详情"
+      :visible.sync="dialogVisible"
+      width="40%"
+    >
+      <el-row style="width: 80%; margin: auto">
+        <el-col :span="8">
+          <div class="dia-head">真实姓名：</div>
+        </el-col>
+        <el-col :span="16">
+          <div class="dia-content">{{ this.realname }}</div>
+        </el-col>
+      </el-row>
+      <el-row style="width: 80%; margin: auto">
+        <el-col :span="8">
+          <div class="dia-head">工作单位：</div>
+        </el-col>
+        <el-col :span="16">
+          <div class="dia-content">{{ this.institution }}</div>
+        </el-col>
+      </el-row>
+      <el-row style="width: 80%; margin: auto">
+        <el-col :span="8">
+          <div class="dia-head">工作邮箱：</div>
+        </el-col>
+        <el-col :span="16">
+          <div class="dia-content">{{ this.email }}</div>
+        </el-col>
+      </el-row>
+      <el-row style="width: 80%; margin: auto">
+        <el-col :span="8">
+          <div class="dia-head">备注信息：</div>
+        </el-col>
+        <el-col :span="16">
+          <div class="dia-content">{{ this.other }}</div>
+        </el-col>
+      </el-row>
+    </el-dialog>
   </div>
 </template>
 
@@ -124,6 +171,11 @@ export default {
       application: [],
       uid: 0,
       total: 0,
+      dialogVisible: false,
+      realname: "",
+      institution: "",
+      email: "",
+      other: "",
     };
   },
   methods: {
@@ -195,7 +247,7 @@ export default {
           application_id: id,
           content: "拒绝",
           status: 2,
-          user_id: this.uid
+          user_id: this.uid,
         },
       })
         .then((response) => {
@@ -226,13 +278,21 @@ export default {
           }
         });
     },
+    openDetail(item) {
+      this.dialogVisible = true;
+      this.realname = item.real_name;
+      this.institution = item.institution;
+      this.email = item.email;
+      this.other =
+        item.content +
+        "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq";
+    },
   },
   created() {
     var tmpID = window.localStorage.getItem("uid");
     this.uid = parseInt(tmpID);
     console.log("uid is" + this.uid);
     this.get_application();
-    
   },
 };
 </script>
@@ -321,7 +381,7 @@ export default {
   font-size: 20px;
 }
 
-.app-none{
+.app-none {
   width: 100%;
   margin: 2vh auto;
   text-align: center;
@@ -348,7 +408,6 @@ export default {
     #2eddf4 106.16%
   );
 }
-
 .btn2 {
   color: #ffffff;
   background: linear-gradient(
@@ -385,5 +444,45 @@ export default {
   /* or 162% */
 
   color: #2f2c4a;
+}
+/deep/ .el-dialog {
+    --el-bg-color: linear-gradient(
+    90.39deg,
+    #246ef3 -28.26%,
+    #3bbde7 100.2%,
+    #2eddf4 123.43%
+  ) !important;
+}
+
+.detail {
+  background: linear-gradient(
+    90.39deg,
+    #246ef3 -28.26%,
+    #3bbde7 100.2%,
+    #2eddf4 123.43%
+  );
+  border-radius: 6px;
+}
+.dia-head {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 40px;
+  /* or 154% */
+
+  text-align: left;
+  color: #000000;
+}
+.dia-content {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 40px;
+  /* or 154% */
+
+  text-align: left;
+  color: #000000;
 }
 </style>
