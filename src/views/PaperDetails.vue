@@ -242,7 +242,7 @@
     <el-dialog
         title="生成引用格式"
         :visible.sync="createCite"
-        width="35%"
+        width="30%"
     >
       <div>
         <div class="copyText">
@@ -1801,6 +1801,13 @@ export default {
 }
 .copy-button{
   position: relative;
-  left: 150px;
+  left: 35px
+}
+.el-dialog__body{
+  margin-top: -30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 20px;
+  padding-right: 60px;
 }
 </style>
