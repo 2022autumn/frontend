@@ -157,6 +157,7 @@ export default {
   components: {Testnet, Trycloud, Topbar1, testScolar,PaperManage},
   data(){
     return{
+      detail:"",
       num_exact_page:8,
       total: 1000,//返回的检索结果的总量
       total_page:0,
