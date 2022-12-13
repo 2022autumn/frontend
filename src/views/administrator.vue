@@ -36,7 +36,10 @@
               :class="{ actived: activeIndex == 2 }"
               class="circular last"
             ></span>
-            <div class="text1">申请处理</div>
+            <div class="text1">
+              申请处理
+              <el-badge :value="total" v-show="total"></el-badge>
+            </div>
           </div>
         </div>
       </div>
@@ -75,7 +78,7 @@
                 <div style="flex: 1; display: flex; align-items: center">
                   <img src="../assets/Avatar (1).png" alt="" />
                   <span class="app-text"
-                    >用户 {{ item.user_id }} 申请门户： {{ item.real_name }} </span
+                    >用户 {{ item.user_id }} 申请门户： {{ item.real_name }}</span
                   >
                 </div>
                 <div
@@ -283,9 +286,7 @@ export default {
       this.realname = item.real_name;
       this.institution = item.institution;
       this.email = item.email;
-      this.other =
-        item.content +
-        "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq";
+      this.other = item.content;
     },
   },
   created() {

@@ -275,6 +275,7 @@ export default {
     close() {
       console.log("关闭门户申请组件");
       this.dialogVisible = false;
+      this.showTime = true;
     },
 
     sendEmail(email) {
