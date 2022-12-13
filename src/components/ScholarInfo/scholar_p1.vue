@@ -31,13 +31,14 @@
     <span class="claim">
       <el-button
           @click="claim"
+          disabled="judgeClaim()"
           class="claim_btn"
           :style="{backgroundColor:bg_color2, color: ft_color2,}"
           @mouseenter="change2" @mouseleave="goback2">
         {{claimContent}}
       </el-button>
     </span>
-    <Site ref="site"></Site>
+    <Site ref="site" :claim="isClaim" @doClaim="doClaim"></Site>
   </div>
 </template>
 <script>
@@ -88,12 +89,12 @@ export default {
       },
     }).then(
         response =>{
-          console.log(response.data);
+          //console.log(response.data);
           // this.followList = response.data.data;
           // console.log("followList", this.followList);
           for(var i = 0; i < this.followList.length; i++) {
             if(this.followList[i].author_id == this.scholarInfo.id) {
-              console.log("followed")
+              //console.log("followed")
               this.isFollow = true;
               this.followContent="已关注";
               this.bg_color="#0352FF";
@@ -105,6 +106,13 @@ export default {
     )
   },
   methods: {
+    judgeClaim() {
+      if(this.isClaim === true) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     getScholarInfo() {
       let that = this;
       that.$axios({
@@ -172,7 +180,7 @@ export default {
         },
       }).then(
           response =>{
-            console.log(response.data);
+            //console.log(response.data);
             this.$message({
               type:"success",
               message: response.data.msg,
@@ -194,20 +202,30 @@ export default {
       )
     },
     claim() {
-      console.log("去申请门户");
+      //console.log("去申请门户");
       this.$refs.site.init();
+      //这之后无法执行？原因未知
       // this.isClaim=!this.isClaim;
+      // console.log("在学者主页isClaim "+this.isClaim);
+      // if(this.isClaim){
+      //   this.claimContent="审核中";
+      //   this.bg_color2="#0352FF";
+      //   this.ft_color2="#E6EEFF";
+      // }
+
+      // else{
+      //   this.claimContent="+ 认领"
+      //   this.bg_color2="#E6EEFF";
+      //   this.ft_color2="#0352FF";
+      // }
+    },
+    doClaim(status){
+      console.log("into do Claim func")
+      this.isClaim = true;
       if(this.isClaim){
-        this.claimContent="已认领";
+        this.claimContent="申请中";
         this.bg_color2="#0352FF";
         this.ft_color2="#E6EEFF";
-      }
-
-      else{
-        this.claimContent="+ 认领"
-        this.bg_color2="#E6EEFF";
-        this.ft_color2="#0352FF";
-
       }
     },
     change() {
@@ -240,8 +258,8 @@ export default {
     },
     submitAvatarHttp(val) {
       let that=this;
-      console.log("in!");
-      console.log(val.file);
+      // console.log("in!");
+      // console.log(val.file);
       let fd = new FormData();
       fd.append('Headshot', val.file);
       fd.append('author_id', window.localStorage.getItem('SID'))
@@ -251,7 +269,7 @@ export default {
         },
       }
       that.$axios.post('/scholar/author/headshot',fd,config).then((res) => {
-        console.log(res);
+        // console.log(res);
         // this.userinfo.photo= res.data.data.head_shot;
               this.$message({
                 type: "success",
@@ -260,11 +278,11 @@ export default {
               });
               // that.updateAvator();
         that.getScholarInfo()
-            console.log("avatar!");
+            // console.log("avatar!");
           })
           .catch((err) => {
             this.$message.error("上传失败ww");
-            console.log(err);
+            // console.log(err);
           });
     },
     handleAvatarSuccess(res, file) {
@@ -273,13 +291,13 @@ export default {
       location.upload();
       this.userinfo.headshot = URL.createObjectURL(file.raw);
       this.avator_url = "https://ishare.horik.cn/api/media/headshot/"+URL.createObjectURL(file.raw);
-      console.log("res", res);
+      // console.log("res", res);
     },
 
     //大图预览
     handlePictureCardPreview(file) {
-      console.log("preview");
-      console.log(file.url);
+      // console.log("preview");
+      // console.log(file.url);
       this.userinfo.photo = file == null ? this.userinfo.photo : file.url;
       this.dialogVisible = true;
     },

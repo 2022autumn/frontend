@@ -92,8 +92,9 @@
         <el-col :span="17">
           <div class="reference">
             <el-row>
-              <el-col :span="6">
-                <div class="button" >{{this.keyname}}</div>
+              <el-col :span="1">
+                <!--<div class="button" >{{this.keyname}}</div>-->
+                <div>&nbsp</div>
               </el-col>
               <el-col :span="18">
                 <div class="ref-tag">
@@ -115,7 +116,7 @@
                     <el-button style="width: auto;" @click="choosekey(item)">{{item.concept_name}}</el-button>
                   </div>
                   <span style="vertical-align: top;cursor: pointer" slot="reference">
-                    选择主题词，相关内容主页推荐~</span></el-popover>
+                    {{ this.keyname }}</span></el-popover>
                 </div>
               </el-col>
             </el-row>
@@ -261,7 +262,7 @@ export default {
         name:"python",
         id:2,}],
       keys:[],
-      keyname:'',
+      keyname:'选择主题词，相关内容主页推荐~',
       keyid:0,
       cid:'C73878792',
     }

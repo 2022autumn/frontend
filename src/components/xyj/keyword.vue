@@ -1,11 +1,11 @@
 <template>
   <div class="key-total">
-    <div class="title">关键词</div>
+    <div class="title">相关领域</div>
     <div class="title-en">Keywords</div>
     <div class="box-set" v-infinite-scroll="load">
       <div class="keyword-box" v-for="(item,index) in keywords" :key="index">
-        <div class="keyword1"  v-if="item.islike===true" @click="concern(item)">{{item.display_name}}</div>
-        <div class="keyword"  v-else @click="concern(item)">{{item.display_name}}</div>
+        <div class="kk keyword1"  v-if="item.islike===true" @click="concern(item)">{{item.display_name}}</div>
+        <div class="kk keyword"  v-else @click="concern(item)">{{item.display_name}}</div>
       </div>
     </div>
     <!--div class="line"></div>
@@ -37,7 +37,7 @@ export default {
     //console.log(wid)
     this.$axios({//注意是this.$axios
       method:'get',
-      url:'/es/get',
+      url:'/es/get2',
       headers:{
         token:this.uid,
       },
@@ -55,7 +55,8 @@ export default {
   },
   methods:{
     concern(item){
-      console.log("cancel"+item.display_name)
+
+      console.log(item.islike+this.uid)
       if(this.uid!=null){
         if(item.islike===false){
           item.islike=true
@@ -170,7 +171,12 @@ export default {
   flex-wrap: wrap;
   align-items: flex-start;
 }
+.kk:hover {
+  box-shadow: 0px 0px 8px #C1C9F0;
+}
 .keyword{
+  border-radius: 2px;
+  transition: 0.5s;
   display: flex;
   left: 15px;
   padding-top: 6px;
@@ -189,16 +195,18 @@ export default {
   letter-spacing: 0.04em;
   color: #858FA0;
   cursor:pointer;
-  z-index: 99;
 }
 .keyword1{
+  border-radius: 2px;
+  transition: 0.5s;
   display: flex;
   left: 15px;
   padding-top: 6px;
   padding-bottom: 4px;
   padding-left: 15px;
   padding-right: 18px;
-  background: #217BF4;
+  /*background: #858FA0;*/
+  background: rgba(67, 127, 236, 0.66);
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
@@ -211,7 +219,6 @@ export default {
   color: #F5F8FC;
   cursor:pointer;
 }
-
 .line{
   position: relative;
   width: 340px;

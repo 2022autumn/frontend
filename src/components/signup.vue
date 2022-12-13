@@ -6,10 +6,9 @@
         :visible.sync="signup_visible"
         :showClose="false"
         :append-to-body="true"
-
         width="53.5vw"
         height="583px"
-      ><!-- :before-close="handleClose" -->
+        ><!-- :before-close="handleClose" -->
         <div
           style="
             width: 327px;
@@ -28,8 +27,15 @@
             vertical-align: top;
           "
         >
-          <div style="float: right" @click="close">
+          <!-- <div style="float: right" @click="close">
             <img src="../HomePage_svg/close.svg" />
+          </div> -->
+          <div
+            class="close"
+            style="float: right; margin: 0 1vh; cursor: pointer"
+            @click="close"
+          >
+            <i class="el-icon-circle-close"></i>
           </div>
           <div class="background">
             <div class="title1">注册</div>
@@ -61,7 +67,10 @@
               style="margin: 5vh auto"
             >
               <el-form-item label="用户名" prop="name" class="sitem">
-                <el-input v-model.number="ruleForm.name" :validate-event="false"></el-input>
+                <el-input
+                  v-model.number="ruleForm.name"
+                  :validate-event="false"
+                ></el-input>
               </el-form-item>
               <el-form-item label="密码" prop="pwd" class="sitem">
                 <el-input
@@ -162,9 +171,9 @@ export default {
         checkPwd: "",
       },
       rules: {
-        pwd: [{ validator: validatePwd}],//, trigger: "blur" 
-        checkPwd: [{ validator: validateCheckPwd}],
-        name: [{ validator: checkName}],
+        pwd: [{ validator: validatePwd }], //, trigger: "blur"
+        checkPwd: [{ validator: validateCheckPwd }],
+        name: [{ validator: checkName }],
       },
     };
   },
@@ -183,32 +192,39 @@ export default {
               password: this.ruleForm.pwd,
               username: this.ruleForm.name,
             },
-          }).then((response) => {
-            // alert("into response");
-            // console.log(this.ruleForm.name);
-            // console.log(this.ruleForm.pwd);
-            console.log("response", response);
-            console.log(response.data);
+          })
+            .then((response) => {
+              // alert("into response");
+              // console.log(this.ruleForm.name);
+              // console.log(this.ruleForm.pwd);
+              console.log("response", response);
+              console.log(response.data);
 
-            if (response.data.status === 200) {
-              this.$message({
-                message: "注册成功",
-                type: "success",
-              });
-              this.signup_visible = false;
-            } else if (response.data.status === 400) {
-              this.$message({
-                message:  response.data.msg,//"用户名已存在",
-                type: "error",
-              });
-              // this.ruleForm.name = "";
-            } else {
-              this.$message({
-                message: response.data.msg,//"注册失败",
-                type: "error",
-              });
-            }
-          });
+              if (response.data.status === 200) {
+                this.$message({
+                  message: "注册成功",
+                  type: "success",
+                });
+                this.signup_visible = false;
+              }
+            })
+            .catch((error) => {
+              console.log("error", error);
+              console.log("error", error.response.status);
+
+              if (error.response.status === 400) {
+                this.$message({
+                  message: error.response.data.msg, //"用户名已存在",
+                  type: "error",
+                });
+                // this.ruleForm.name = "";
+              } else {
+                this.$message({
+                  message: error.response.data.msg, //"注册失败",
+                  type: "error",
+                });
+              }
+            });
         } else {
           console.log("submit signup request error");
           return false;
@@ -254,6 +270,14 @@ export default {
   box-shadow: 0px 2px 18px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
 }
+.close{
+  font-size:48px;
+  color:#217BF4;
+}
+.close:hover{
+  color:rgb(0, 11, 165);
+}
+
 .title1 {
   margin: 1vh;
   text-align: center;
