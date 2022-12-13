@@ -1487,7 +1487,7 @@ export default {
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
-  font-size: 10px;
+  font-size: 14px;
   line-height: 26px;
   align-items: center;
   justify-content: center;
@@ -1512,7 +1512,7 @@ export default {
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
-  font-size: 10px;
+  font-size: 14px;
   line-height: 26px;
   align-items: center;
   justify-content: center;
