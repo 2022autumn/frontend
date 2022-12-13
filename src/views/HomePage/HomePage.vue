@@ -115,7 +115,7 @@
                       trigger="hover"
                   >
                     <div style="margin-left: 10px"><b>我订阅的主题词</b></div>
-                    <div v-for="item in this.keys"  style="display: inline-block;margin-left: 10px;margin-top: 8px">
+                    <div v-for="item in this.keys"  style="display: inline-block;margin-left: 10px;margin-top: 8px" >
                       <el-popover
                           placement="bottom"
                           width="280"
@@ -125,7 +125,10 @@
                         <div style="margin-left: 10px;cursor: default"><b>关键词描述</b></div>
                         <div style="width: 90%;left:50%;position:absolute;margin-left:-45%;height: 1px;margin-top:10px;background-color:rgba(217, 215, 215, 0.58)"></div>
                         <div style="margin-top: 20px;width: 90%;word-break: break-word;text-align: left;margin-left: 5%;cursor: default">{{detail}}</div>
-                        <el-button style="width: auto;" @click="choosekey(item)" slot="reference">{{ item.concept_name }}</el-button>
+                        <div v-if="ifhasImage" style="width: 100%;text-align: center;margin-top: 10px">
+                          <img :src="image_thumbnail_url" alt="">
+                        </div>
+                        <el-button style="width: auto;" @click="choosekey(item)" slot="reference" @mouseenter.native="getDetail(item.concept_id)"  @mouseleave.native="test">{{ item.concept_name }}</el-button>
                       </el-popover>
                     </div>
                     <span style="vertical-align: top;cursor: pointer" slot="reference">
@@ -141,6 +144,7 @@
                        :jigou="this.tuijianlist[0].work.host_venue.display_name"
                        :time="this.tuijianlist[0].work.publication_date" :abstract="this.tuijianlist[0].work.abstract"
                        :type="this.tuijianlist[0].work.type" :key1="this.tuijianlist[0].work.concepts[0].display_name"
+                       :keyid1="this.tuijianlist[0].work.concepts[0].id"
                        :key2="this.tuijianlist[0].work.concepts[1].display_name"
                        :key3="this.tuijianlist[0].work.concepts[2].display_name"
                        :num="this.tuijianlist[0].work.cited_by_count"></PaperItem>
@@ -149,6 +153,7 @@
                        :jigou="this.tuijianlist[1].work.host_venue.display_name"
                        :time="this.tuijianlist[1].work.publication_date" :abstract="this.tuijianlist[1].work.abstract"
                        :type="this.tuijianlist[1].work.type" :key1="this.tuijianlist[1].work.concepts[0].display_name"
+                       :keyid1="this.tuijianlist[0].work.concepts[0].id"
                        :key2="this.tuijianlist[1].work.concepts[1].display_name"
                        :key3="this.tuijianlist[1].work.concepts[2].display_name"
                        :num="this.tuijianlist[1].work.cited_by_count"></PaperItem>
@@ -157,6 +162,7 @@
                        :jigou="this.tuijianlist[2].work.host_venue.display_name"
                        :time="this.tuijianlist[2].work.publication_date" :abstract="this.tuijianlist[2].work.abstract"
                        :type="this.tuijianlist[2].work.type" :key1="this.tuijianlist[2].work.concepts[0].display_name"
+                       :keyid1="this.tuijianlist[0].work.concepts[0].id"
                        :key2="this.tuijianlist[2].work.concepts[1].display_name"
                        :key3="this.tuijianlist[2].work.concepts[2].display_name"
                        :num="this.tuijianlist[2].work.cited_by_count"></PaperItem>
@@ -165,6 +171,7 @@
                        :jigou="this.tuijianlist[3].work.host_venue.display_name"
                        :time="this.tuijianlist[3].work.publication_date" :abstract="this.tuijianlist[3].work.abstract"
                        :type="this.tuijianlist[3].work.type" :key1="this.tuijianlist[3].work.concepts[0].display_name"
+                       :keyid1="this.tuijianlist[0].work.concepts[0].id"
                        :key2="this.tuijianlist[3].work.concepts[1].display_name"
                        :key3="this.tuijianlist[3].work.concepts[2].display_name"
                        :num="this.tuijianlist[3].work.cited_by_count"></PaperItem>
@@ -173,6 +180,7 @@
                        :jigou="this.tuijianlist[4].work.host_venue.display_name"
                        :time="this.tuijianlist[4].work.publication_date" :abstract="this.tuijianlist[4].work.abstract"
                        :type="this.tuijianlist[4].work.type" :key1="this.tuijianlist[4].work.concepts[0].display_name"
+                       :keyid1="this.tuijianlist[0].work.concepts[0].id"
                        :key2="this.tuijianlist[4].work.concepts[1].display_name"
                        :key3="this.tuijianlist[4].work.concepts[2].display_name"
                        :num="this.tuijianlist[4].work.cited_by_count"></PaperItem>
@@ -278,6 +286,9 @@ export default {
   data() {
     return {
       select: '',
+      detail: "origin",
+      image_thumbnail_url: "",
+      ifhasImage: false,
       restaurants: [
         {
           "value": "java"
@@ -354,7 +365,34 @@ export default {
     this.gettuijian();
   },
   methods: {
+    test(){
+      console.log("whywhy===================");
+      this.detail="";
+      this.ifhasImage=false;
+    },
+    getDetail(id) {
+      this.detail = "";
+      this.image_thumbnail_url = "";
+      this.ifhasImage = false;
+      this.$axios({//注意是this.$axios
+        method: 'get',
+        url: '/es/get2',
+        params: {
+          id: id,
+        }
+      }).then(
+          response => {
+            console.log("============begin")
+            this.detail = response.data.data.description;
+            if (response.data.data.image_thumbnail_url !== null) {
+              this.ifhasImage=true
+              this.image_thumbnail_url = response.data.data.image_thumbnail_url;
+            }
+          }
+      )
+    },
     choosekey(item) {
+      console.log(item);
       console.log(item.concept_id);
       console.log(item.concept_name);
       this.cid = item.concept_id;

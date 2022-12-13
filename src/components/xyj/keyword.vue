@@ -25,7 +25,7 @@
             <div v-if="ifhasImage" style="width: 100%;text-align: center;margin-top: 10px">
               <img :src="image_thumbnail_url" alt="">
             </div>
-            <div class="kk keyword1" @click="concern(item)" slot="reference" v-on:mouseover="getDetail(item.id)">
+            <div class="kk keyword1" @click="concern(item)" slot="reference" v-on:mouseenter="getDetail(item.id)">
               {{ item.display_name }}
             </div>
           </el-popover>
@@ -51,7 +51,7 @@
             <div v-if="ifhasImage" style="width: 100%;text-align: center;margin-top: 10px">
               <img :src="image_thumbnail_url" alt="">
             </div>
-            <div class="kk keyword" @click="concern(item)" slot="reference" v-on:mouseover="getDetail(item.id)">
+            <div class="kk keyword" @click="concern(item)" slot="reference" v-on:mouseenter="getDetail(item.id)">
               {{ item.display_name }}
             </div>
           </el-popover>
