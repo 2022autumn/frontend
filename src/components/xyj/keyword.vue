@@ -10,7 +10,8 @@
               width="280"
               height="500"
               trigger="hover"
-              open-delay="600"
+              open-delay="800"
+              close-delay="0"
           >
             <div style="height: 30px">
               <div style="margin-left: 10px;cursor: default;float: left"><b>关键词描述</b></div>
@@ -26,7 +27,7 @@
             <div v-if="ifhasImage" style="width: 100%;text-align: center;margin-top: 10px">
               <img :src="image_thumbnail_url" alt="">
             </div>
-            <div class="kk keyword1" @click="concern(item)" slot="reference" v-on:mouseenter="getDetail(item.id)">
+            <div class="kk keyword1" @click="concern(item)" slot="reference" v-on:mouseenter="getDetail(item.id)" >
               {{ item.display_name }}
             </div>
           </el-popover>
@@ -37,7 +38,7 @@
               width="280"
               height="500"
               trigger="hover"
-              open-delay="600"
+              open-delay="800"
               close-delay="0"
           >
             <div style="height: 30px">
@@ -108,9 +109,13 @@ export default {
 
   },
   methods: {
-    getDetail(id) {
-      this.ifhasImage=false;
+    test(){
+      clearTimeout();
       this.detail="";
+      this.ifhasImage=false;
+      item.isDetail=false;
+    },
+    getDetail(id) {
       this.$axios({//注意是this.$axios
         method: 'get',
         url: '/es/get2',
@@ -119,14 +124,19 @@ export default {
         }
       }).then(
           response => {
-            this.detail = response.data.data.description;
-            if (response.data.data.image_thumbnail_url !== null) {
-              this.ifhasImage=true
-              this.image_thumbnail_url = response.data.data.image_thumbnail_url;
-            }else{
-              this.ifhasImage=false;
-              this.image_thumbnail_url ="";
-            }
+            this.ifhasImage=false;
+            this.detail="";
+            setTimeout(() =>{
+              console.log(response.data.data)
+              this.detail = response.data.data.description;
+              if (response.data.data.image_thumbnail_url !== null) {
+                this.ifhasImage=true
+                this.image_thumbnail_url = response.data.data.image_thumbnail_url;
+              }else{
+                this.ifhasImage=false;
+                this.image_thumbnail_url ="";
+              }
+            },200)
           }
       )
     },

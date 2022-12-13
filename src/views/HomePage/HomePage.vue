@@ -130,7 +130,7 @@
                         <div v-if="ifhasImage" style="width: 100%;text-align: center;margin-top: 10px">
                           <img :src="image_thumbnail_url" alt="">
                         </div>
-                        <el-button style="width: auto;" @click="choosekey(item)" slot="reference" @mouseenter.native="showDetail(item.concept_id)"  >{{ item.concept_name }}</el-button>
+                        <el-button style="width: auto;" @click="choosekey(item)" slot="reference" @mouseenter.native="getDetail(item.concept_id)"  >{{ item.concept_name }}</el-button>
                       </el-popover>
                     </div>
                     <span style="vertical-align: top;cursor: pointer" slot="reference">
@@ -368,12 +368,13 @@ export default {
   },
   methods: {
     test(item){
+      clearTimeout();
       this.detail="";
       this.ifhasImage=false;
       item.isDetail=false;
     },
     showDetail(id){
-      setTimeout(this.getDetail(id),1800);
+      setTimeout(this.getDetail(id),600);
 
     }
     ,
@@ -398,7 +399,7 @@ export default {
                 this.ifhasImage=false;
                 this.image_thumbnail_url ="";
               }
-            },300)
+            },200)
           }
       )
     },
