@@ -5,7 +5,7 @@
     <div class="title-en">总浏览{{this.total}}条</div>
     <div class="ref-box-set" v-if="have_refer===true">
       <div class="ref-box" v-for="(item,index) in refer" :key="index">
-        <div class="ref" @click="jdetail(item.id)">
+        <div class="ref" @click="jdetail(item.work_id)">
           <div class="content" v-html="item.title"></div>
           <!---div class="host_venue" v-show="item.host_venue!=null">{{item.host_venue}}</div--->
           <div class="publication_year">
@@ -97,6 +97,8 @@ export default {
           console.log(response.data);
           this.total=response.data.count;
           this.refer = response.data.data;
+          console.log("历史记录为")
+          console.log(this.refer)
           for(var i=0;i<this.refer.length;i++){
             if(this.refer[i].title.length>80){
               this.refer[i].title= this.refer[i].title.substring(0,80)+"...";

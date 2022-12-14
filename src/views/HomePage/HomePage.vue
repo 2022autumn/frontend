@@ -124,7 +124,7 @@
                           :open-delay=800
                           :close-delay=0
                       >
-                        <div style="margin-left: 10px;cursor: default"><b>关键词描述</b></div>
+                        <div style="margin-left: 10px;cursor: default"><b>领域描述</b></div>
                         <div style="width: 90%;left:50%;position:absolute;margin-left:-45%;height: 1px;margin-top:10px;background-color:rgba(217, 215, 215, 0.58)"></div>
                         <div style="margin-top: 20px;width: 90%;word-break: break-word;text-align: left;margin-left: 5%;cursor: default">{{detail}}</div>
                         <div v-if="ifhasImage" style="width: 100%;text-align: center;margin-top: 10px">
@@ -453,18 +453,25 @@ export default {
             this.tuijianlist = response.data.data;
             console.log(this.tuijianlist);
             for (var i = 0; i < this.tuijianlist.length; i++) {
-              console.log(this.tuijianlist[i].work.title.length);
-              if (this.tuijianlist[i].work.title.length > 55) {//处理一下过长的题目
-                //console.log(this.items[i].zhaiyao);
-                console.log("过长")
-                this.tuijianlist[i].work.title = this.tuijianlist[i].work.title.substring(0, 55) + "...";
+              //console.log(this.tuijianlist[i].work.title.length);
+              if(this.tuijianlist[i].work.title === null){
+                this.tuijianlist[i].work.title = "No title";
               }
-              if (this.tuijianlist[i].work.abstract.length > 230) {
-                this.tuijianlist[i].work.abstract = this.tuijianlist[i].work.abstract.substring(0, 230) + "...";
+              else {
+                if (this.tuijianlist[i].work.title.length > 55) {//处理一下过长的题目
+                  //console.log(this.items[i].zhaiyao);
+                  console.log("过长")
+                  this.tuijianlist[i].work.title = this.tuijianlist[i].work.title.substring(0, 55) + "...";
+                }
               }
               console.log(this.tuijianlist[i].work.abstract)
               if (this.tuijianlist[i].work.abstract === "") {
                 this.tuijianlist[i].work.abstract = "This paper has no abstract."
+              }
+              else{
+                if (this.tuijianlist[i].work.abstract.length > 230) {
+                  this.tuijianlist[i].work.abstract = this.tuijianlist[i].work.abstract.substring(0, 230) + "...";
+                }
               }
               if (this.tuijianlist[i].work.authorships.length === 0) {
                 var tmp1 = {};
@@ -481,6 +488,7 @@ export default {
               if (this.tuijianlist[i].work.host_venue.display_name === null) {
                 this.tuijianlist[i].work.host_venue.display_name = "unknown";
               }
+              console.log()
               if (this.tuijianlist[i].work.concepts.length < 3) {
                 console.log("发现问题")
                 if (this.tuijianlist[i].work.concepts.length === 0) {

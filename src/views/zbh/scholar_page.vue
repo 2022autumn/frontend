@@ -37,7 +37,7 @@
                   <div style="display: inline-block;" v-html="item.title"  @click="jdetail(item.id)"></div>
                 </b>
               </div>
-            
+
               <div v-if="is_mine || verified" style="display: inline-block;float: right;">
                 <div style="display: inline-block;margin-right:2vh;float: right;" @click="paperDown(item.id)" >
                   <el-tooltip content="下移文章" placement="top" effect="light">
@@ -58,7 +58,7 @@
                     <img src="../../assets/Vector (3).svg" @click="paperTopCancel(item)"/>
                   </el-tooltip>
                 </div>
-                
+
                 <div v-if="item.pdf===0" style="display: inline-block;margin-right:2vh;margin-top:-1vh;float: right;" >
                   <el-upload
                     accept=".pdf"
@@ -84,7 +84,7 @@
                 </div>
 
               </div>
-              
+
               <div>
                 <div style="display: inline-block;margin-top: 1vh;color: grey" v-for="(aus,index) in item.authors">
                   <div style="display: inline-block" v-if="index<item.author.length-1"><b>{{aus}}</b>&nbsp;;&nbsp;&nbsp</div>
@@ -109,7 +109,7 @@
                   &nbsp;
                 </div>
               </div>
-              
+
               <div style="display: inline-block;color: rgba(96, 96, 96, 0.69);">
                 <div style="display: inline-block;top:3vh">
                 <img src="../../img/yinhao.svg" style="width: 2vw;height: 2vh">
@@ -169,6 +169,7 @@ export default {
   components: {Testnet, Trycloud, Topbar1, testScolar,PaperManage},
   data(){
     return{
+      is_ready:false,
       detail:"",
       num_exact_page:8,
       ture_len:5,
@@ -199,13 +200,9 @@ export default {
         x_concepts: [
         ]
       },
-<<<<<<< HEAD
-      is_ready: false,// 是否已经获取到数据,用于判断是否显示加载子组件
-      items: [
-=======
 
       items:[
->>>>>>> f9ed0cc1c6140614bd0bb819e4c971b2288b5f37
+
         {
           type:"期刊",
             title:"疫情冲击下2020年中国新经济形势与政策",
@@ -615,7 +612,10 @@ export default {
         id: this.id,
         // id: "A4221478216"
         userid: window.localStorage.getItem("uid"),
-      }
+      },
+      headers: {
+        'token': parseInt(window.localStorage.getItem('uid'))
+      },
     }).then(
         response=> {
             console.log("is mine")
@@ -652,36 +652,11 @@ export default {
               }
             }
             //console.log("counts",this.counts);
-            //("counts2",this.counts2);
+            //
+            this.is_ready = true;
         }
-<<<<<<< HEAD
-        console.log("get scholarInfo", this.scholarInfo);
-        //获取领域字符串
-        for (var i = 0; i < this.scholarInfo.x_concepts.length; i++) {
-          this.areas = this.areas + this.scholarInfo.x_concepts[i].display_name;
-          this.areas = this.areas + ", ";
-        }
-        var l = this.areas.length;
-        var str = this.areas.substring(0, l - 2)
-        this.areas = str;
-        //console.log("areas", this.areas)
-        //获取近十年引用、发表
-        for (var i = 0; i < this.scholarInfo.counts_by_year.length; i++) {
-          if (this.scholarInfo.counts_by_year[i].works_count != 0) {
-            this.counts[this.scholarInfo.counts_by_year[i].year - 2013] = this.scholarInfo.counts_by_year[i].works_count;
-          }
-          if (this.scholarInfo.counts_by_year[i].cited_by_count != 0) {
-            this.counts2[this.scholarInfo.counts_by_year[i].year - 2013] = this.scholarInfo.counts_by_year[i].cited_by_count;
-          }
-        }
-        this.is_ready = true;
-        //console.log("counts",this.counts);
-        //("counts2",this.counts2);
-      }
-    ).catch(error => {
-=======
+
     ).catch(error=> {
->>>>>>> f9ed0cc1c6140614bd0bb819e4c971b2288b5f37
       // console.log("error", error)
       // console.log("error", error.response.status)
       if(error.response.status === 404) {
@@ -690,7 +665,7 @@ export default {
     })
     // sessionStorage.setItem('now_page',JSON.stringify(1));
     // this.now_page=1;
-    
+
     this.$axios({
 
             method:'post',

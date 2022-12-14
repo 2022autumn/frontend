@@ -11,7 +11,7 @@
       :http-request="submitAvatarHttp"
       accept=".jpg"
     >
-      <el-button class="upload_btn" size="small" v-if="this.userinfo.verified"
+      <el-button class="upload_btn" size="small" v-if="this.userinfo.verified&&ismy"
         >点击上传照片</el-button
       >
     </el-upload>
@@ -32,7 +32,7 @@
         {{ followContent }}
       </el-button>
     </span>
-    
+
     <span class="claim">
       <el-button
         @click="claim"
@@ -70,6 +70,7 @@ export default {
     //   }
     // };
     return {
+      ismy: false,
       userinfo: {},
       avator_url: "",
       followList: [],
@@ -138,11 +139,16 @@ export default {
         url:'/es/get2',
         params:{
           id: window.localStorage.getItem('SID'),
-        }
+        },
+        headers: {
+          'token': parseInt(window.localStorage.getItem('uid'))
+        },
       }).then(
           response=> {
             this.userinfo = response.data.info;
+            this.ismy = response.data.info.is_mine;
             console.log(this.userinfo)
+            console.log("ismy?",this.ismy)
             this.avator_url = "https://ishare.horik.cn/api/media/headshot/"+this.userinfo.headshot
             if(this.userinfo.verified === true) {
               this.isClaim = true;
@@ -272,6 +278,7 @@ export default {
       }
     },
     submitAvatarHttp(val) {
+      console.log("请求上传照片")
       let that = this;
       // console.log("in!");
       // console.log(val.file);
@@ -281,11 +288,12 @@ export default {
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
+          "token": parseInt(window.localStorage.getItem('uid'))
         },
       };
       that.$axios
         .post("/scholar/author/headshot", fd, config, {
-          'token': parseInt(window.localStorage.getItem('uid'))
+         // 'token':parseInt(window.localStorage.getItem('uid'))
         })
         .then((res) => {
           // console.log(res);

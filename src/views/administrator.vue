@@ -50,7 +50,7 @@
             <img src="../assets/Vector.png" alt="" />
             <span class="info-title">数据信息</span>
           </div>
-          <div>
+          <div style="margin-left: 3vw">
             <!-- 放置内容 -->
             <div class="data-title" >注册信息</div>
             <div style="margin: 1vh auto">
@@ -62,24 +62,28 @@
               <div class="data-content">{{ this.verifiedNum }}</div>
             </div>
 
-            <div class="line"></div>
+            <div class="line" style="margin-left: -3vw"></div>
 
             <div class="data-title">公开数据</div>
             <div style="margin: 1vh auto">
               <div class="data-tag">学者数量</div>
-              <div class="data-content">{{ this.authorNum }}</div>
+              <div class="data-content">216,389,416</div>
+              <!-- {{ this.authorNum }} -->
             </div>
             <div style="margin: 1vh auto">
               <div class="data-tag">论文数量</div>
-              <div class="data-content">{{ this.workNum }}</div>
+              <div class="data-content">170,358,065</div>
+              <!-- {{ this.workNum }} -->
             </div>
             <div style="margin: 1vh auto">
               <div class="data-tag">期刊数量</div>
-              <div class="data-content">{{ this.venueNum }}</div>
+              <div class="data-content">226,726</div>
+              <!-- {{ this.venueNum }} -->
             </div>
             <div style="margin: 1vh auto">
               <div class="data-tag">组织数量</div>
-              <div class="data-content">{{ this.institutionNum }}</div>
+              <div class="data-content">108,618</div>
+              <!-- {{ this.institutionNum }} -->
             </div>
           </div>
         </div>
@@ -101,12 +105,12 @@
           </div>
           <div class="app-none" v-show="!total">没有待处理的门户申请~</div>
           <div style="width: 80%; margin: 0 10%">
-            <div v-for="item in application" :key="item">
+            <div v-for="item in application" :key="item.application_id">
               <div class="application">
                 <div style="flex: 1; display: flex; align-items: center">
                   <img src="../assets/Avatar (1).png" alt="" />
                   <span class="app-text"
-                    >用户 {{ item.user_id }} 申请门户：
+                    >用户 {{ item.username }} 申请门户：
                     {{ item.real_name }}</span
                   >
                 </div>
@@ -464,7 +468,7 @@ export default {
   font-family: "Nunito Sans";
   font-style: normal;
   font-weight: 700;
-  font-size: 28px;
+  font-size: 24px;
 }
 
 .app-none {
@@ -568,30 +572,30 @@ export default {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 20px;
 
   color: #246ef3;
 }
 .data-tag{
   display: inline-block;
-  width: 30%;
+  width: 20%;
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 16px;
   color: #000000;
 }
 .data-content{
   display: inline-block;
   font-family: "Poppins";
   font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  color:#246ef3;
+  font-weight: 500;
+  font-size: 16px;
+  color:#000000;
 }
 .line{
   margin-top: 3vh;
-  width: 100%;
+  width: 107%;
   height: 1px;
   background-color: rgba(96, 96, 96, 0.69);
 }
