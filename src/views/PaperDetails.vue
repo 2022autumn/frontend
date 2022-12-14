@@ -801,7 +801,12 @@ export default {
   },
   // 挂载时获取
   mounted() {
-    this.get_data();
+    console.log("iflogin",window.localStorage.getItem('iflogin'))
+    if(window.localStorage.getItem('iflogin') === "0") {
+      this.photourl="https://bbs.pediy.com/view/img/avatar.png";
+    }else {
+      this.get_data();
+    }
     this.getTagList();
     let height = this.$refs.ref.offsetHeight;  //100
     if(this.xData === ""){
