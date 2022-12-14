@@ -57,6 +57,7 @@ export default {
       url: '/es/get2',
       params: {
         id: window.localStorage.getItem('SID'),
+        userid: window.localStorage.getItem('uid'),
         // id: this.id
         // id: "A4220294553"
       },

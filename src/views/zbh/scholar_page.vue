@@ -701,6 +701,9 @@ export default {
                 this.items[i].id = response.data.data[i].id;
                 this.items[i].zhaiyao = response.data.data[i].abstract;
                 //console.log("zhaiyao", this.items[i].zhaiyao);
+                if(this.items[i].zhaiyao === ""){
+                  this.items[i].zhaiyao = "This article has no abstract";
+                }
                 if(this.items[i].zhaiyao.length>400){//处理一下过长的摘要
                   //console.log(this.items[i].zhaiyao);
                   this.items[i].zhaiyao = this.items[i].zhaiyao.substring(0,400)+"...";
