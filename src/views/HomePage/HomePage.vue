@@ -435,6 +435,9 @@ export default {
             console.log("关键词列表为");
             //console.log(response.data.data);
             this.keys = response.data.data;
+            for(var i=0;i<this.keys.length;i++){
+              this.keys[i].isLike=true;
+            }
             console.log(this.keys);
           }
       )

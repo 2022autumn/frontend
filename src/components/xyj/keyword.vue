@@ -11,7 +11,7 @@
               height="500"
               trigger="hover"
               :open-delay=800
-              :close-delay=0
+              :close-delay=200
           >
             <div style="height: 30px">
               <div style="margin-left: 10px;cursor: default;float: left"><b>领域描述</b></div>
@@ -39,7 +39,7 @@
               height="500"
               trigger="hover"
               :open-delay=800
-              :close-delay=0
+              :close-delay=200
           >
             <div style="height: 30px">
               <div style="margin-left: 10px;cursor: default;float: left"><b>领域描述</b></div>
@@ -136,12 +136,11 @@ export default {
                 this.ifhasImage=false;
                 this.image_thumbnail_url ="";
               }
-            },200)
+            },400)
           }
       )
     },
     concern(item) {
-
       console.log(item.islike + this.uid)
       if (this.uid != null) {
         if (item.islike === false) {
