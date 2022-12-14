@@ -152,7 +152,7 @@
           <div class="conmmending">
           <span style="width: 100%">
             <div class="avators">
-            <el-avatar></el-avatar>
+            <el-avatar :src="this.photourl"></el-avatar>
           </div>
           <div class="right_comment">
             <el-input
@@ -361,6 +361,7 @@ export default {
       activeName:"first",
       cited:"",
       key:"",
+      photourl: "https://bbs.pediy.com/view/img/avatar.png"
     };
   },
   components: {
@@ -382,6 +383,22 @@ export default {
     }
   },
   methods: {
+    get_data(){
+      this.$axios({//注意是this.$axios
+        method:'get',
+        url:'/user/info',
+        params:{//get请求这里是params
+          user_id:parseInt(window.localStorage.getItem('uid'))
+        }
+      }).then(
+          response =>{
+            console.log("得到个人信息1")
+            console.log(response.data);
+            this.photourl = response.data.data.head_shot;
+            this.photourl = 'https://ishare.horik.cn/api/media/headshot/'+this.photourl;
+          }
+      )
+    },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
     },
@@ -784,6 +801,7 @@ export default {
   },
   // 挂载时获取
   mounted() {
+    this.get_data();
     this.getTagList();
     let height = this.$refs.ref.offsetHeight;  //100
     if(this.xData === ""){
