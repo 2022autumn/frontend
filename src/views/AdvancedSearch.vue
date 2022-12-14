@@ -25,20 +25,71 @@
                     </div>
                     <div>
                       <div>
-                        <FilterBar ref="bar1" :iftop="1"/>
+                        <el-row :gutter="0" style="margin-top: 10px;">
+                          <el-col :span="22">
+                            <FilterBar ref="bar1" :iftop="1" v-show="total_num>0"/>
+                          </el-col>
+                          <el-col :span="1" style="margin-top: 16px;">
+                            <i class="el-icon-plus" style="display: inline-block;float: left;" @click="addNum" v-show="total_num>0"></i>
+                          </el-col>
+                          <el-col :span="1" style="margin-top: 16px;">
+                            <i class="el-icon-minus" style="display: inline-block;float: left;" @click="minuNum" v-show="total_num>0"></i>
+                          </el-col>
+                        </el-row>
                       </div>
+                      
                     </div>
                     <div>
-                        <FilterBar ref="bar2"/>
+                      <el-row :gutter="0" style="margin-top: 10px;">
+                        <el-col :span="22">
+                          <FilterBar ref="bar2" v-show="total_num>1"/>
+                        </el-col>
+                        <el-col :span="1" style="margin-top: 16px;">
+                          <i class="el-icon-plus" style="display: inline-block;float: left;" @click="addNum"  v-show="total_num>1"></i>
+                        </el-col>
+                        <el-col :span="1" style="margin-top: 16px;">
+                          <i class="el-icon-minus" style="display: inline-block;float: left;" @click="minuNum" v-show="total_num>1"></i>
+                        </el-col>
+                      </el-row>
                     </div>
                     <div>
-                        <FilterBar ref="bar3"/>
+                      <el-row :gutter="0" style="margin-top: 10px;">
+                        <el-col :span="22">
+                          <FilterBar ref="bar3" v-show="total_num>2"/>
+                        </el-col>
+                        <el-col :span="1" style="margin-top: 16px;">
+                          <i class="el-icon-plus" style="display: inline-block;float: left;" @click="addNum" v-show="total_num>2"></i>
+                        </el-col>
+                        <el-col :span="1" style="margin-top: 16px;">
+                          <i class="el-icon-minus" style="display: inline-block;float: left;" @click="minuNum" v-show="total_num>2"></i>
+                        </el-col>
+                      </el-row>
                     </div>
                   <div>
-                    <FilterBar ref="bar4"/>
+                    <el-row :gutter="0" style="margin-top: 10px;">
+                      <el-col :span="22">
+                        <FilterBar ref="bar4" v-show="total_num>3"/>
+                      </el-col>
+                      <el-col :span="1" style="margin-top: 16px;">
+                        <i class="el-icon-plus" style="display: inline-block;float: left;" @click="addNum" v-show="total_num>3"></i>
+                      </el-col>
+                      <el-col :span="1" style="margin-top: 16px;">
+                        <i class="el-icon-minus" style="display: inline-block;float: left;" @click="minuNum" v-show="total_num>3"></i>
+                      </el-col>
+                    </el-row>
                   </div>
                   <div>
-                    <FilterBar ref="bar5"/>
+                    <el-row :gutter="0" style="margin-top: 10px;">
+                      <el-col :span="22">
+                        <FilterBar ref="bar5" v-show="total_num>4" />
+                      </el-col>
+                      <el-col :span="1" style="margin-top: 16px;">
+                        <i class="el-icon-plus" style="display: inline-block;float: left;" @click="addNum" v-show="total_num>4"></i>
+                      </el-col>
+                      <el-col :span="1" style="margin-top: 16px;">
+                        <i class="el-icon-minus" style="display: inline-block;float: left;" @click="minuNum" v-show="total_num>4"></i>
+                      </el-col>
+                    </el-row>
                   </div>
                    <div class="box-word" style="margin-top: 4%;margin-left: 6%;">
                             设定时间范围
@@ -97,6 +148,7 @@ export default {
   components: {Topbar2, Topbar1,FilterBar},
   data() {
     return {
+        total_num:1,
         start:'',
         end:'',
         options: [{
@@ -124,6 +176,14 @@ export default {
     };
   },
   methods: {
+    addNum(){
+      this.total_num++;
+      console.log("total_num",this.total_num)
+    },
+    minuNum(){
+      this.total_num--;
+      console.log("total_num",this.total_num)
+    },
     handleClick() {
         alert('button click');
       },
