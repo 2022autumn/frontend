@@ -288,7 +288,7 @@ export default {
   components: {Topbar1, PaperItem},
   data() {
     return {
-      select: '标题',
+      select: '篇关摘',
       detail: "origin",
       image_thumbnail_url: "",
       ifhasImage: false,

@@ -52,7 +52,7 @@ export default {
   data(){
     return{
       isAdmin:false,
-      select:'标题',
+      select:'篇关摘',
       restaurants: [
         {
           "value":"java"
