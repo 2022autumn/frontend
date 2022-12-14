@@ -1,9 +1,9 @@
 <template>
   <div>
     <!--width,height 画布的宽度，高度。 可以是百分比或像素，一般在dom元素上设置 -->
-    <div id="network_id" class="network" style="position: absolute;top:140vh;width: 100vw;height: 70vh"></div>
+    <div id="network_id" class="network" style="position: absolute;top:190vh;width: 100vw;height: 70vh"></div>
     <!-- 添加一个dialog, 里面装一个列表 -->
-    <el-card class="box-card" shadow="hover" style="position:absolute;top:140vh;width:60vw;height: 70vh;margin-left:20vw"
+    <el-card class="box-card" shadow="hover" style="position:absolute;top:190vh;width:60vw;height: 70vh;margin-left:20vw"
       v-if="CardVisible">
       <div slot="header" class="clearfix">
         <span><b>{{ author_name }}</b> 与 <b>{{ co_author_name }}</b> 的合作作品</span>
