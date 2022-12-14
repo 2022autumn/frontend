@@ -418,7 +418,7 @@ export default {
 .domain_boxs {
   display: flex;
   max-height: 153px;
-  padding-top: 10px;
+  padding-top: 13px;
   padding-right: 12px;
   flex-wrap: wrap;
   cursor: default;
