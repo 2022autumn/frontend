@@ -140,6 +140,7 @@ export default {
   components: {Topbar2, Topbar1,avc},
   data(){
     return{
+      total_filter:5,
       checklist:[],
       checklist_author:[],
       checklist_institutions:[],
@@ -578,6 +579,7 @@ export default {
     this.conds = JSON.parse(sessionStorage.getItem('Cond'));
     this.now_page = JSON.parse(sessionStorage.getItem('now_page'));
     this.query = JSON.parse(sessionStorage.getItem('query'));
+    this.total_filter = JSON.parse(sessionStorage.getItem('total_filter'));
     this.openFullScreen2();
     this.search();
     /*if(this.total%4===0){

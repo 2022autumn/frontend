@@ -189,6 +189,7 @@ export default {
       },
     search(){
       var cond = {};
+      sessionStorage.setItem('total_filter',JSON.stringify(this.total_num));
       sessionStorage.setItem('Cond',JSON.stringify(cond));
       sessionStorage.setItem('now_page',JSON.stringify(1));
       sessionStorage.setItem('start', this.start);

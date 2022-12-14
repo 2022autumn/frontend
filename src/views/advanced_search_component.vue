@@ -3,19 +3,70 @@
         <div class="hot-list" style="margin-top: 13vh">
           <div>&nbsp;</div>
           <div>
-            <FilterBar ref="bar1"  :iftop="1" :logic="this.params0.logic" :field="this.params0.field" :content="this.params0.content" :tiaojian="this.tioajian[0]"/>
+            <el-row :gutter="0" style="margin-top: 10px;" v-show="total_num>0">
+              <el-col :span="22">
+                <FilterBar ref="bar1"  :iftop="1" :logic="this.params0.logic" :field="this.params0.field" :content="this.params0.content" :tiaojian="this.tioajian[0]"/>
+              </el-col>
+              <el-col :span="1" style="margin-top: 16px;">
+                <i class="el-icon-plus" style="display: inline-block;float: left;" @click="addNum" v-show="total_num>0"></i>
+              </el-col>
+              <el-col :span="1" style="margin-top: 16px;">
+                <i class="el-icon-minus" style="display: inline-block;float: left;" @click="minuNum" v-show="total_num>0"></i>
+              </el-col>
+            </el-row>
+            
           </div>
           <div>
-            <FilterBar ref="bar2" :logic="this.params1.logic" :field="this.params1.field" :content="this.params1.content" :tiaojian="this.tioajian[1]"/>
+            <el-row :gutter="0" style="margin-top: 10px;" v-show="total_num>1">
+              <el-col :span="22">
+                <FilterBar ref="bar2" :logic="this.params1.logic" :field="this.params1.field" :content="this.params1.content" :tiaojian="this.tioajian[1]"/>
+              </el-col>
+              <el-col :span="1" style="margin-top: 16px;">
+                <i class="el-icon-plus" style="display: inline-block;float: left;" @click="addNum" v-show="total_num>1"></i>
+              </el-col>
+              <el-col :span="1" style="margin-top: 16px;">
+                <i class="el-icon-minus" style="display: inline-block;float: left;" @click="minuNum" v-show="total_num>1"></i>
+              </el-col>
+            </el-row>
           </div>
           <div>
-            <FilterBar ref="bar3" :logic="this.params2.logic" :field="this.params2.field" :content="this.params2.content" :tiaojian="this.tioajian[2]"/>
+            <el-row :gutter="0" style="margin-top: 10px;" v-show="total_num>2">
+              <el-col :span="22">
+                <FilterBar ref="bar3" :logic="this.params2.logic" :field="this.params2.field" :content="this.params2.content" :tiaojian="this.tioajian[2]"/>
+              </el-col>
+              <el-col :span="1" style="margin-top: 16px;">
+                <i class="el-icon-plus" style="display: inline-block;float: left;" @click="addNum" v-show="total_num>2"></i>
+              </el-col>
+              <el-col :span="1" style="margin-top: 16px;">
+                <i class="el-icon-minus" style="display: inline-block;float: left;" @click="minuNum" v-show="total_num>2"></i>
+              </el-col>
+            </el-row>
           </div>
           <div>
-            <FilterBar ref="bar4" :logic="this.params3.logic" :field="this.params3.field" :content="this.params3.content" :tiaojian="this.tioajian[3]"/>
+            <el-row :gutter="0" style="margin-top: 10px;" v-show="total_num>3">
+              <el-col :span="22">
+                <FilterBar ref="bar4" :logic="this.params3.logic" :field="this.params3.field" :content="this.params3.content" :tiaojian="this.tioajian[3]"/>
+              </el-col>
+              <el-col :span="1" style="margin-top: 16px;">
+                <i class="el-icon-plus" style="display: inline-block;float: left;" @click="addNum" v-show="total_num>3"></i>
+              </el-col>
+              <el-col :span="1" style="margin-top: 16px;">
+                <i class="el-icon-minus" style="display: inline-block;float: left;" @click="minuNum" v-show="total_num>3"></i>
+              </el-col>
+            </el-row>
           </div>
           <div>
-            <FilterBar ref="bar5" :logic="this.params4.logic" :field="this.params4.field" :content="this.params4.content" :tiaojian="this.tioajian[4]"/>
+            <el-row :gutter="0" style="margin-top: 10px;" v-show="total_num>4">
+              <el-col :span="22">
+                <FilterBar ref="bar5" :logic="this.params4.logic" :field="this.params4.field" :content="this.params4.content" :tiaojian="this.tioajian[4]"/>
+              </el-col>
+              <el-col :span="1" style="margin-top: 16px;">
+                <i class="el-icon-plus" style="display: inline-block;float: left;" @click="addNum" v-show="total_num>4"></i>
+              </el-col>
+              <el-col :span="1" style="margin-top: 16px;">
+                <i class="el-icon-minus" style="display: inline-block;float: left;" @click="minuNum" v-show="total_num>4"></i>
+              </el-col>
+            </el-row>
           </div>
           <!--<div class="box-word" style="margin-top: 4%;margin-left: 6%;">
             设定时间范围
@@ -134,6 +185,7 @@ export default {
   components: {Topbar2, Topbar1,FilterBar},
   data() {
     return {
+      total_num:3,
       start:sessionStorage.getItem('start'),
       end:sessionStorage.getItem('end'),
       options: [{
@@ -222,6 +274,9 @@ export default {
   mounted() {
   },
   created() {
+    this.total_num = JSON.parse(sessionStorage.getItem('total_filter'));
+    console.log("this.total_num")
+    console.log("this.total_num",this.total_num)
     this.tioajian = JSON.parse(sessionStorage.getItem('tiaojian'));
     var query = JSON.parse(sessionStorage.getItem('query'));
     this.params0 = query[0];
