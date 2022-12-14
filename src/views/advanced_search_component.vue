@@ -3,9 +3,9 @@
         <div class="hot-list" style="margin-top: 13vh">
           <div>&nbsp;</div>
           <div>
-            <el-row :gutter="0" style="margin-top: 10px;" v-show="total_num>0">
+            <el-row :gutter="0" style="margin-top: 10px;" >
               <el-col :span="22">
-                <FilterBar ref="bar1"  :iftop="1" :logic="this.params0.logic" :field="this.params0.field" :content="this.params0.content" :tiaojian="this.tioajian[0]"/>
+                <FilterBar ref="bar1"  :iftop="1" :logic="this.params0.logic" :field="this.params0.field" :content="this.params0.content" :tiaojian="this.tioajian[0]" v-show="total_num>0"/>
               </el-col>
               <el-col :span="1" style="margin-top: 16px;">
                 <i class="el-icon-plus" style="display: inline-block;float: left;" @click="addNum" v-show="total_num>0"></i>
@@ -17,9 +17,9 @@
             
           </div>
           <div>
-            <el-row :gutter="0" style="margin-top: 10px;" v-show="total_num>1">
+            <el-row :gutter="0" style="margin-top: 10px;" >
               <el-col :span="22">
-                <FilterBar ref="bar2" :logic="this.params1.logic" :field="this.params1.field" :content="this.params1.content" :tiaojian="this.tioajian[1]"/>
+                <FilterBar ref="bar2" :logic="this.params1.logic" :field="this.params1.field" :content="this.params1.content" :tiaojian="this.tioajian[1]" v-show="total_num>1"/>
               </el-col>
               <el-col :span="1" style="margin-top: 16px;">
                 <i class="el-icon-plus" style="display: inline-block;float: left;" @click="addNum" v-show="total_num>1"></i>
@@ -30,9 +30,9 @@
             </el-row>
           </div>
           <div>
-            <el-row :gutter="0" style="margin-top: 10px;" v-show="total_num>2">
+            <el-row :gutter="0" style="margin-top: 10px;" >
               <el-col :span="22">
-                <FilterBar ref="bar3" :logic="this.params2.logic" :field="this.params2.field" :content="this.params2.content" :tiaojian="this.tioajian[2]"/>
+                <FilterBar ref="bar3" :logic="this.params2.logic" :field="this.params2.field" :content="this.params2.content" :tiaojian="this.tioajian[2]" v-show="total_num>2"/>
               </el-col>
               <el-col :span="1" style="margin-top: 16px;">
                 <i class="el-icon-plus" style="display: inline-block;float: left;" @click="addNum" v-show="total_num>2"></i>
@@ -43,9 +43,9 @@
             </el-row>
           </div>
           <div>
-            <el-row :gutter="0" style="margin-top: 10px;" v-show="total_num>3">
+            <el-row :gutter="0" style="margin-top: 10px;" >
               <el-col :span="22">
-                <FilterBar ref="bar4" :logic="this.params3.logic" :field="this.params3.field" :content="this.params3.content" :tiaojian="this.tioajian[3]"/>
+                <FilterBar ref="bar4" :logic="this.params3.logic" :field="this.params3.field" :content="this.params3.content" :tiaojian="this.tioajian[3]" v-show="total_num>3"/>
               </el-col>
               <el-col :span="1" style="margin-top: 16px;">
                 <i class="el-icon-plus" style="display: inline-block;float: left;" @click="addNum" v-show="total_num>3"></i>
@@ -56,9 +56,9 @@
             </el-row>
           </div>
           <div>
-            <el-row :gutter="0" style="margin-top: 10px;" v-show="total_num>4">
+            <el-row :gutter="0" style="margin-top: 10px;" >
               <el-col :span="22">
-                <FilterBar ref="bar5" :logic="this.params4.logic" :field="this.params4.field" :content="this.params4.content" :tiaojian="this.tioajian[4]"/>
+                <FilterBar ref="bar5" :logic="this.params4.logic" :field="this.params4.field" :content="this.params4.content" :tiaojian="this.tioajian[4]" v-show="total_num>4"/>
               </el-col>
               <el-col :span="1" style="margin-top: 16px;">
                 <i class="el-icon-plus" style="display: inline-block;float: left;" @click="addNum" v-show="total_num>4"></i>
@@ -220,6 +220,14 @@ export default {
     };
   },
   methods: {
+    addNum(){
+      this.total_num++;
+      console.log("total_num",this.total_num)
+    },
+    minuNum(){
+      this.total_num--;
+      console.log("total_num",this.total_num)
+    },
     handleClick() {
       alert('button click');
     },
