@@ -453,18 +453,25 @@ export default {
             this.tuijianlist = response.data.data;
             console.log(this.tuijianlist);
             for (var i = 0; i < this.tuijianlist.length; i++) {
-              console.log(this.tuijianlist[i].work.title.length);
-              if (this.tuijianlist[i].work.title.length > 55) {//处理一下过长的题目
-                //console.log(this.items[i].zhaiyao);
-                console.log("过长")
-                this.tuijianlist[i].work.title = this.tuijianlist[i].work.title.substring(0, 55) + "...";
+              //console.log(this.tuijianlist[i].work.title.length);
+              if(this.tuijianlist[i].work.title === null){
+                this.tuijianlist[i].work.title = "No title";
               }
-              if (this.tuijianlist[i].work.abstract.length > 230) {
-                this.tuijianlist[i].work.abstract = this.tuijianlist[i].work.abstract.substring(0, 230) + "...";
+              else {
+                if (this.tuijianlist[i].work.title.length > 55) {//处理一下过长的题目
+                  //console.log(this.items[i].zhaiyao);
+                  console.log("过长")
+                  this.tuijianlist[i].work.title = this.tuijianlist[i].work.title.substring(0, 55) + "...";
+                }
               }
               console.log(this.tuijianlist[i].work.abstract)
               if (this.tuijianlist[i].work.abstract === "") {
                 this.tuijianlist[i].work.abstract = "This paper has no abstract."
+              }
+              else{
+                if (this.tuijianlist[i].work.abstract.length > 230) {
+                  this.tuijianlist[i].work.abstract = this.tuijianlist[i].work.abstract.substring(0, 230) + "...";
+                }
               }
               if (this.tuijianlist[i].work.authorships.length === 0) {
                 var tmp1 = {};
