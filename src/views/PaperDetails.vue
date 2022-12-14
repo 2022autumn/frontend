@@ -361,7 +361,7 @@ export default {
       activeName:"first",
       cited:"",
       key:"",
-      photourl: "https://bbs.pediy.com/view/img/avatar.png"
+      photourl: "https://ishare.horik.cn/api/media/headshot/default.jpg"
     };
   },
   components: {
@@ -803,7 +803,7 @@ export default {
   mounted() {
     console.log("iflogin",window.localStorage.getItem('iflogin'))
     if(window.localStorage.getItem('iflogin') === "0") {
-      this.photourl="https://bbs.pediy.com/view/img/avatar.png";
+      this.photourl="https://ishare.horik.cn/api/media/headshot/default.jpg";
     }else {
       this.get_data();
     }
