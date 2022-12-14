@@ -611,7 +611,10 @@ export default {
         id: this.id,
         // id: "A4221478216"
         userid: window.localStorage.getItem("uid"),
-      }
+      },
+      headers: {
+        'token': parseInt(window.localStorage.getItem('uid'))
+      },
     }).then(
         response=> {
             console.log("is mine")

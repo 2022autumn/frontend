@@ -11,7 +11,7 @@
     <div class="info_title">
       个人简介
       <i id="editIcon"
-         v-if="this.scholar.verified"
+         v-if="this.scholar.verified&&ismy"
           :class="{'el-icon-edit': !edit, 'el-icon-check': edit}"
           @click="this.editInfo"
       ></i>
@@ -44,7 +44,8 @@ export default {
       scholar: {},
       edit: false,
       description: "",
-      institution: "No belonged institution"
+      institution: "No belonged institution",
+      ismy: false,
     }
   },
   created() {
@@ -58,12 +59,16 @@ export default {
         id: window.localStorage.getItem('SID'),
         // id: this.id
         // id: "A4220294553"
-      }
+      },
+      headers: {
+        'token': parseInt(window.localStorage.getItem('uid'))
+      },
     }).then(
         response => {
           // console.log("userinfo",response.data);
           this.info = response.data.data;
           this.scholar = response.data.info;
+          this.ismy = response.data.info.is_mine;
           //console.log("get useInfo", this.info);
           //console.log("get data", response.data);info
           //console.log("get info", this.scholar);
