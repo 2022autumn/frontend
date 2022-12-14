@@ -481,6 +481,7 @@ export default {
               if (this.tuijianlist[i].work.host_venue.display_name === null) {
                 this.tuijianlist[i].work.host_venue.display_name = "unknown";
               }
+              console.log()
               if (this.tuijianlist[i].work.concepts.length < 3) {
                 console.log("发现问题")
                 if (this.tuijianlist[i].work.concepts.length === 0) {

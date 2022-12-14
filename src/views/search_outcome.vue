@@ -616,7 +616,7 @@
                   var author_len = response.data.res.Aggs.authors.length;
                   if(this.if_authors===0) {//如果本来没有选择这个条件就进行更新
                     this.authors.length=0;
-                    for (var i = 0; i < author_len && i < 5; i++) {
+                    for (var i = 0; i < author_len && i < 10; i++) {
                       var obj = {};
                       obj.key = response.data.res.Aggs.authors[i].key;
                       obj.ifchoose = false;
@@ -629,7 +629,7 @@
                   var institution_len = response.data.res.Aggs.institutions.length;
                   if(this.if_institutions===0) {
                     this.institutions.length=0;
-                    for (var i = 0; i < institution_len && i < 5; i++) {
+                    for (var i = 0; i < institution_len && i < 10; i++) {
                       this.institutions[i] = response.data.res.Aggs.institutions [i].key;
                     }
                   }
@@ -639,7 +639,7 @@
                   var year_len = response.data.res.Aggs.publication_years.length;
                   if(this.if_publish_years===0) {
                     this.publish_years.length=0;
-                    for (var i = 0; i < year_len && i < 5; i++) {
+                    for (var i = 0; i < year_len && i < 10; i++) {
                       this.publish_years[i] = response.data.res.Aggs.publication_years [i].key;
                     }
                   }
@@ -649,7 +649,7 @@
                   var publisher_len = response.data.res.Aggs.publishers.length;
                   if(this.if_publishers===0) {
                     this.publishers.length=0;
-                    for (var i = 0; i < publisher_len && i < 5; i++) {
+                    for (var i = 0; i < publisher_len && i < 10; i++) {
                       this.publishers[i] = response.data.res.Aggs.publishers [i].key;
                     }
                   }
@@ -662,7 +662,7 @@
                   }
                   if(this.if_venues===0) {
                     this.venues.length=0;
-                    for (var i = 0; i < venues_len && i < 5; i++) {
+                    for (var i = 0; i < venues_len && i < 10; i++) {
                       this.venues[i] = response.data.res.Aggs.venues [i].key;
                     }
                   }

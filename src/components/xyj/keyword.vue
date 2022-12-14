@@ -10,8 +10,8 @@
               width="280"
               height="500"
               trigger="hover"
-              open-delay="800"
-              close-delay="0"
+              :open-delay=800
+              :close-delay=0
           >
             <div style="height: 30px">
               <div style="margin-left: 10px;cursor: default;float: left"><b>关键词描述</b></div>
@@ -38,8 +38,8 @@
               width="280"
               height="500"
               trigger="hover"
-              open-delay="800"
-              close-delay="0"
+              :open-delay=800
+              :close-delay=0
           >
             <div style="height: 30px">
               <div style="margin-left: 10px;cursor: default;float: left"><b>关键词描述</b></div>
