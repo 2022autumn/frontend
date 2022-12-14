@@ -38,7 +38,7 @@
               </b>
             </div>
 
-            <div v-if="is_mine || verified" style="display: inline-block;float: right;">
+            <div v-if="is_mine && verified" style="display: inline-block;float: right;">
               <div style="display: inline-block;margin-right:2vh;float: right;" @click="paperDown(item.id)">
                 <el-tooltip content="下移文章" placement="top" effect="light">
                   <img src="../../assets/Vector (2).svg" />
@@ -703,6 +703,7 @@ export default {
             if (this.items[i].zhaiyao === -1) {
               this.items[i].zhaiyao = oldzhaiyao;
             }
+
           }
           this.items[i].title = response.data.data[i].title;
           //console.log("title",this.items[i].title)
@@ -739,7 +740,6 @@ export default {
           //console.log("response.data.data[i].Top",response.data.data[i].Top);
           this.items[i].isTop = response.data.data[i].Top;
           //console.log("1111 this.item[i].isTop",this.items[i].isTop);
-
 
           if (response.data.data[i].authorships.length !== 0) {
             this.items[i].author = response.data.data[i].authorships[0].author.display_name;
