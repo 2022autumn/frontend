@@ -37,10 +37,14 @@
               width="280"
               height="500"
               trigger="hover"
-              :open-delay=900
-              :close-delay=0
+              :open-delay=1100
+              :close-delay=200
           >
-            <div style="margin-left: 10px;cursor: default"><b>领域描述</b></div>
+            <div style="height: 20px">
+              <div style="margin-left: 10px;cursor: default;float: left"><b>领域描述</b></div>
+              <div class="follow_keyword" v-if="item.islike===false" @click="concern(item)">关注</div>
+              <div class="unfollow_keyword" v-else @click="concern(item)">已关注</div>
+            </div>
             <div style="width: 90%;left:50%;position:absolute;margin-left:-45%;height: 1px;margin-top:10px;background-color:rgba(217, 215, 215, 0.58)"></div>
             <div style="margin-top: 20px;width: 90%;word-break: break-word;text-align: left;margin-left: 5%;cursor: default">{{detail}}</div>
             <div v-if="ifhasImage" style="width: 100%;text-align: center;margin-top: 10px">
@@ -100,6 +104,7 @@ export default {
       detail: "origin",
       image_thumbnail_url: "",
       ifhasImage: false,
+      uid:null,
     }
   },
   watch:{
@@ -125,6 +130,7 @@ export default {
     }
   },
   mounted() {
+    this.uid=window.localStorage.getItem("uid");
     if(this.xData === ""){
       this.xData = [ '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'];
     }
@@ -138,6 +144,36 @@ export default {
     test(item){
       console.log("waht")
       console.log(item)
+    },
+    concern(item) {
+      if (this.uid != null) {
+        if (item.islike === false) {
+          item.islike = true
+        } else if (item.islike === true) {
+          item.islike = false
+        }
+        console.log(item.display_name)
+        this.$axios({//注意是this.$axios
+          method: 'post',
+          url: '/scholar/concept',
+          headers: {
+            //token:3,
+            token: this.uid,
+          },
+          data: {//get请求这里是params
+            concept_id: item.id,
+            //user_id: window.localStorage.getItem('SID'),
+          }
+        }).then(
+            response => {
+              console.log(response.data);
+              console.log(response)
+            }
+        )
+      } else {
+        this.$message.error("请登录后再操作！");
+        console.log("未登录");
+      }
     },
     getDetail(id) {
       this.$axios({//注意是this.$axios
@@ -160,7 +196,7 @@ export default {
                 this.ifhasImage=false;
                 this.image_thumbnail_url ="";
               }
-            },200)
+            },400)
           }
       )
     },
@@ -400,7 +436,6 @@ export default {
   align-items: center;
   justify-content: center;
   line-height: 27px;
-
   color: #0352FF;
   background: #DFE7F6;
   border-radius: 2px
@@ -437,5 +472,50 @@ export default {
 }
 .graph. .canvas {
   width: 100% !important;
+}
+.follow_keyword {
+  background-color: #458CEB;
+  width: 50px;
+  float: left;
+  margin-left: 110px;
+  margin-top: -2px;
+  height: 24px;
+  color: #FFFFFF;
+  line-height: 24px;
+  vertical-align: center;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0px 2px 10px rgba(27, 83, 158, 0.25);
+}
+
+.follow_keyword:hover {
+  box-shadow: 0px 2px 4px rgba(27, 83, 158, 0.25);
+  background-color: #82B7FF;
+}
+
+.unfollow_keyword {
+  background-color: #F5F8FC;
+  width: 58px;
+  float: left;
+  margin-left: 105px;
+  margin-top: -2px;
+  height: 24px;
+  color: #72819B;
+  line-height: 24px;
+  vertical-align: center;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px rgba(118, 131, 191, 0.25);
+}
+
+.unfollow_keyword:hover {
+  box-shadow: 0px 1px 4px rgba(118, 131, 191, 0.25);
+  background-color: #D0DCEC;
 }
 </style>
