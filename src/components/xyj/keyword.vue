@@ -1,6 +1,9 @@
 <template>
   <div class="key-total">
     <div class="title">相关领域</div>
+    <el-tooltip class="tip_message" effect="dark" content="鼠标移至单词上方可看详细信息" placement="right-end">
+      <i class="el-icon-warning-outline"></i>
+    </el-tooltip>
     <div class="title-en">Fields</div>
     <div class="box-set">
       <div class="keyword-box" v-for="(item,index) in keywords" :key="index">
@@ -451,5 +454,10 @@ export default {
 .unfollow_keyword:hover {
   box-shadow: 0px 1px 4px rgba(118, 131, 191, 0.25);
   background-color: #D0DCEC;
+}
+.tip_message{
+  position: absolute;
+  left: 110px;
+  top:32px;
 }
 </style>

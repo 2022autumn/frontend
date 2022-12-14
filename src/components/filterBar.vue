@@ -105,7 +105,7 @@ data() {
         },
           {
             value: 'concept',
-            label: '概念'
+            label: '领域'
           }],
         options1:[
           {
