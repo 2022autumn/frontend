@@ -18,8 +18,8 @@
       </div>
 
       <div class="cloud_top">. 研究领域 .</div>
-      <div>
-        <trycloud style="height: 40vh;position: absolute;top:140vh" v-if="is_ready" :concepts="scholarInfo.x_concepts">
+      <div class="clouds">
+        <trycloud style="height: 40vh;position: absolute;top:142vh" v-if="is_ready" :concepts="scholarInfo.x_concepts">
         </trycloud>
       </div>
       <div class="net_top">. 专家关系网络 .</div>
@@ -820,6 +820,7 @@ export default {
 }
 
 .cloud_top {
+  margin-top: 20px;
   position: absolute;
   width: 196px;
   height: 36px;
