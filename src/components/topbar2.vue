@@ -37,6 +37,7 @@
             <el-option label="摘要" value="2"></el-option>
             <el-option label="刊物" value="3"></el-option>
             <el-option label="机构" value="4"></el-option>
+            <el-option label="篇关摘" value="5"></el-option>
           </el-select>
         <el-button slot="append" icon="el-icon-search" style="color:#ffffff;background-color: #217bf4; border-radius: 0;border-color: whitesmoke" @click="do_search" ></el-button>
       </el-autocomplete>
@@ -51,7 +52,7 @@ export default {
   data(){
     return{
       isAdmin:false,
-      select:'',
+      select:'标题',
       restaurants: [
         {
           "value":"java"

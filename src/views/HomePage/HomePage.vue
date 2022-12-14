@@ -17,12 +17,13 @@
                 <!--<template slot="prepend" style="cursor: pointer">
                   <span @click="jadvance" style="width:inherit">高级检索</span>
                 </template>-->
-                <el-select class="search_header" v-model="select" slot="prepend" placeholder="请选择字段"
+                <el-select class="search_header" v-model="select" slot="prepend" placeholder=""
                            style="width: 10vw;">
                   <el-option label="标题" value="1"></el-option>
                   <el-option label="摘要" value="2"></el-option>
                   <el-option label="刊物" value="3"></el-option>
                   <el-option label="机构" value="4"></el-option>
+                  <el-option label="篇关摘" value="5"></el-option>
                 </el-select>
                 <i slot="suffix" class="el-input__icon el-icon-search" @click="j_search_outcome"></i>
               </el-autocomplete>
@@ -287,7 +288,7 @@ export default {
   components: {Topbar1, PaperItem},
   data() {
     return {
-      select: '',
+      select: '标题',
       detail: "origin",
       image_thumbnail_url: "",
       ifhasImage: false,
