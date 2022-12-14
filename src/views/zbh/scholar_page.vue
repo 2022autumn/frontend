@@ -16,13 +16,14 @@
         <testScolar v-if="this.show" :scholar-info="scholarInfo" :areas="areas" :counts="counts" :counts2="counts2">
         </testScolar>
       </div>
-      <div class="net_top">. 专家关系网络 .</div>
-      <div>
-        <testnet></testnet>
-      </div>
+      
       <div class="cloud_top">. 词云图 .</div>
       <div>
         <trycloud style="height: 40vh;position: absolute;top:220vh" v-if="is_ready" :concepts="scholarInfo.x_concepts"></trycloud>
+      </div>
+      <div class="net_top">. 专家关系网络 .</div>
+      <div>
+        <testnet></testnet>
       </div>
       <div class="wenxian_top">. 已发表文献 .</div>
 
@@ -839,7 +840,7 @@ export default {
   width: 196px;
   height: 36px;
   left: 645px;
-  top: 135vh;
+  top: 215vh;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 600;
@@ -853,7 +854,7 @@ export default {
   width: 196px;
   height: 36px;
   left: 675px;
-  top: 215vh;
+  top: 135vh;
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 600;
