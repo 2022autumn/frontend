@@ -25,7 +25,7 @@
               {{ detail }}
             </div>
             <div v-if="ifhasImage" style="width: 100%;text-align: center;margin-top: 10px">
-              <img :src="image_thumbnail_url" alt="">
+              <img :src="image_thumbnail_url" alt="" style="width: 100%">
             </div>
             <div class="kk keyword1" @click="concern(item)" slot="reference" v-on:mouseenter="getDetail(item.id)" >
               {{ item.display_name }}
@@ -53,7 +53,7 @@
               {{ detail }}
             </div>
             <div v-if="ifhasImage" style="width: 100%;text-align: center;margin-top: 10px">
-              <img :src="image_thumbnail_url" alt="">
+              <img :src="image_thumbnail_url" alt="" style="width: 100%">
             </div>
             <div class="kk keyword" @click="concern(item)" slot="reference" v-on:mouseenter="getDetail(item.id)">
               {{ item.display_name }}
@@ -129,9 +129,9 @@ export default {
             setTimeout(() =>{
               console.log(response.data.data)
               this.detail = response.data.data.description;
-              if (response.data.data.image_thumbnail_url !== null) {
+              if (response.data.data.image_url !== null) {
                 this.ifhasImage=true
-                this.image_thumbnail_url = response.data.data.image_thumbnail_url;
+                this.image_thumbnail_url = response.data.data.image_url;
               }else{
                 this.ifhasImage=false;
                 this.image_thumbnail_url ="";
@@ -179,6 +179,7 @@ export default {
       definekey: ["经济报告", "疫情相关", "能源经济", "换行测试"],
       detail: "origin",
       image_thumbnail_url: "",
+      image_url:"",
       ifhasImage: false,
     }
   }
