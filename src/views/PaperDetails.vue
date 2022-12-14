@@ -195,40 +195,6 @@
     >
     <div>
       <span>
-<!--        <el-menu-->
-<!--            mode="vertical"-->
-<!--            class="el-menu-vertical-demo"-->
-<!--            @open="handleOpen"-->
-<!--            @close="handleClose"-->
-<!--            @select="handleSelect"-->
-<!--            :collapse=false-->
-
-<!--        >-->
-<!--&lt;!&ndash;          <el-submenu @click="joinVisible = true" index="create_team">&ndash;&gt;-->
-<!--&lt;!&ndash;            <template slot="title">&ndash;&gt;-->
-<!--&lt;!&ndash;              <i class="el-icon-plus icons"></i>&ndash;&gt;-->
-<!--&lt;!&ndash;                <span slot="title" class="text">新建收藏夹</span>&ndash;&gt;-->
-<!--&lt;!&ndash;            </template>&ndash;&gt;-->
-<!--&lt;!&ndash;          </el-submenu>&ndash;&gt;-->
-<!--          <el-scrollbar>-->
-<!--            <el-submenu-->
-<!--                v-for="(item, i) in tags"-->
-<!--                :key="i"-->
-<!--                :index="item.tag_id"-->
-<!--                @click="addTagToFile(item)"-->
-<!--            >-->
-<!--              <span slot="title" class="text">{{ item.tag_name }}-->
-<!--              <el-button-->
-<!--                  @click="onCollect(item)"-->
-<!--                  class="collect_btn"-->
-<!--                  :style="{backgroundColor:bg_color, color: ft_color,}"-->
-<!--              >-->
-<!--                {{collectContent}}-->
-<!--              </el-button>-->
-<!--              </span>-->
-<!--            </el-submenu>-->
-<!--          </el-scrollbar>-->
-<!--          </el-menu>-->
         <div class="box-set">
           <div class="keyword-box" v-for="(item,index) in tags" :key="index">
             <div class="kk keyword" v-if="item.isCollect === false"  @click="addTagToFile(item)">{{item.tag_name}}</div>
