@@ -1,6 +1,6 @@
 <template>
     <div style="z-index: 9999">
-        <el-row style="margin-top: 10px; margin-left: 10%;margin-right: 10%">
+        <el-row style=" margin-left: 10%;margin-right: 0%">
             <!--<el-col :span="4">
                 <div style="margin-top: 10px; margin-left: 5%">
                     <el-dropdown @command = "handleCommand" >
@@ -67,6 +67,7 @@
               </el-select>
             </div>
           </el-col>
+          
             <!--<el-col :span="1">
                 <i class="el-icon-delete" style="margin-top: 70%;margin-left: 70%;color:darkgray" ></i>
             </el-col>-->
