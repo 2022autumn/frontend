@@ -32,7 +32,7 @@
         {{ followContent }}
       </el-button>
     </span>
-    
+
     <span class="claim">
       <el-button
         @click="claim"
@@ -272,6 +272,7 @@ export default {
       }
     },
     submitAvatarHttp(val) {
+      console.log("请求上传照片")
       let that = this;
       // console.log("in!");
       // console.log(val.file);
@@ -281,11 +282,12 @@ export default {
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
+          "token": parseInt(window.localStorage.getItem('uid'))
         },
       };
       that.$axios
         .post("/scholar/author/headshot", fd, config, {
-          'token': parseInt(window.localStorage.getItem('uid'))
+         // 'token':parseInt(window.localStorage.getItem('uid'))
         })
         .then((res) => {
           // console.log(res);
