@@ -129,7 +129,7 @@
                         <div style="width: 90%;left:50%;position:absolute;margin-left:-45%;height: 1px;margin-top:10px;background-color:rgba(217, 215, 215, 0.58)"></div>
                         <div style="margin-top: 20px;width: 90%;word-break: break-word;text-align: left;margin-left: 5%;cursor: default">{{detail}}</div>
                         <div v-if="ifhasImage" style="width: 100%;text-align: center;margin-top: 10px">
-                          <img :src="image_thumbnail_url" alt="">
+                          <img :src="image_thumbnail_url" alt="" style="width: 100%">
                         </div>
                         <el-button style="width: auto;" @click="choosekey(item)" slot="reference" @mouseenter.native="getDetail(item.concept_id)"  >{{ item.concept_name }}</el-button>
                       </el-popover>
@@ -393,9 +393,9 @@ export default {
             setTimeout(() =>{
               console.log(response.data.data)
               this.detail = response.data.data.description;
-              if (response.data.data.image_thumbnail_url !== null) {
+              if (response.data.data.image_url !== null) {
                 this.ifhasImage=true
-                this.image_thumbnail_url = response.data.data.image_thumbnail_url;
+                this.image_thumbnail_url = response.data.data.image_url;
               }else{
                 this.ifhasImage=false;
                 this.image_thumbnail_url ="";

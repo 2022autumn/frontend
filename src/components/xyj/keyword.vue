@@ -1,6 +1,9 @@
 <template>
   <div class="key-total">
     <div class="title">相关领域</div>
+    <el-tooltip class="tip_message" effect="dark" content="鼠标移至单词上方可看详细信息" placement="right-end">
+      <i class="el-icon-warning-outline"></i>
+    </el-tooltip>
     <div class="title-en">Fields</div>
     <div class="box-set">
       <div class="keyword-box" v-for="(item,index) in keywords" :key="index">
@@ -25,7 +28,7 @@
               {{ detail }}
             </div>
             <div v-if="ifhasImage" style="width: 100%;text-align: center;margin-top: 10px">
-              <img :src="image_thumbnail_url" alt="">
+              <img :src="image_thumbnail_url" alt="" style="width: 100%">
             </div>
             <div class="kk keyword1" @click="concern(item)" slot="reference" v-on:mouseenter="getDetail(item.id)" >
               {{ item.display_name }}
@@ -53,7 +56,7 @@
               {{ detail }}
             </div>
             <div v-if="ifhasImage" style="width: 100%;text-align: center;margin-top: 10px">
-              <img :src="image_thumbnail_url" alt="">
+              <img :src="image_thumbnail_url" alt="" style="width: 100%">
             </div>
             <div class="kk keyword" @click="concern(item)" slot="reference" v-on:mouseenter="getDetail(item.id)">
               {{ item.display_name }}
@@ -129,9 +132,9 @@ export default {
             setTimeout(() =>{
               console.log(response.data.data)
               this.detail = response.data.data.description;
-              if (response.data.data.image_thumbnail_url !== null) {
+              if (response.data.data.image_url !== null) {
                 this.ifhasImage=true
-                this.image_thumbnail_url = response.data.data.image_thumbnail_url;
+                this.image_thumbnail_url = response.data.data.image_url;
               }else{
                 this.ifhasImage=false;
                 this.image_thumbnail_url ="";
@@ -179,6 +182,7 @@ export default {
       definekey: ["经济报告", "疫情相关", "能源经济", "换行测试"],
       detail: "origin",
       image_thumbnail_url: "",
+      image_url:"",
       ifhasImage: false,
     }
   }
@@ -450,5 +454,10 @@ export default {
 .unfollow_keyword:hover {
   box-shadow: 0px 1px 4px rgba(118, 131, 191, 0.25);
   background-color: #D0DCEC;
+}
+.tip_message{
+  position: absolute;
+  left: 110px;
+  top:32px;
 }
 </style>
