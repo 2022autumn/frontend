@@ -1,7 +1,7 @@
 <template>
   <div class="key-total">
     <div class="title">相关领域</div>
-    <div class="title-en">Keywords</div>
+    <div class="title-en">Fields</div>
     <div class="box-set">
       <div class="keyword-box" v-for="(item,index) in keywords" :key="index">
         <div v-if="item.islike===true" style="cursor: pointer">
@@ -14,7 +14,7 @@
               :close-delay=0
           >
             <div style="height: 30px">
-              <div style="margin-left: 10px;cursor: default;float: left"><b>关键词描述</b></div>
+              <div style="margin-left: 10px;cursor: default;float: left"><b>领域描述</b></div>
               <div class="follow_keyword" v-if="item.islike===false" @click="concern(item)">关注</div>
               <div class="unfollow_keyword" v-else @click="concern(item)">已关注</div>
             </div>
@@ -42,7 +42,7 @@
               :close-delay=0
           >
             <div style="height: 30px">
-              <div style="margin-left: 10px;cursor: default;float: left"><b>关键词描述</b></div>
+              <div style="margin-left: 10px;cursor: default;float: left"><b>领域描述</b></div>
               <div class="follow_keyword" v-if="item.islike===false" @click="concern(item)">关注</div>
               <div class="unfollow_keyword" v-else @click="concern(item)">已关注</div>
             </div>
@@ -217,7 +217,7 @@ export default {
   position: absolute;
   width: 80px;
   height: 26px;
-  left: 288px;
+  left: 310px;
   top: 27px;
 
   font-family: 'Poppins';
