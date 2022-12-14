@@ -313,9 +313,9 @@ export default {
       dateTime,
       author_len: 0,
       citation:"",
-      counts:[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
+      counts:[0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
       xData: "",
-      yData: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
+      yData: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1],
       myChartStyle: { float: "left", width: "90%", height: "120px"}, //图表样式
       BibTex:"",
       MLA:"",
