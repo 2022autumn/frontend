@@ -63,11 +63,24 @@
                    style="margin-left: 0vw">
               暂无原文地址
             </el-button>
-            <el-button class="original3" v-if="this.paper.haspdf" @click="downloadPDF">
+            <el-popover
+                placement="bottom"
+                width="150"
+                height="500"
+                trigger="hover"
+                v-if="this.paper.haspdf"
+            >
+              <div v-for="(item,index) in this.paper.pdf_urls">
+              <div class="pdf_button"  @click="downloadPDF(index)">
+                pdf地址{{index+1}}
+              </div>
+              </div>
+            <el-button class="original3"  @click="downloadPDF(0)" slot="reference" >
               <img src="../assets/paperDetailsImg/pdf.png"
                    style="margin-left: 0vw">
               下载pdf
             </el-button>
+            </el-popover>
 
             <!--被收藏的次数-->
             <div class="like2" @click="addTagdialog = true" style="cursor:pointer;">
@@ -316,8 +329,11 @@ export default {
         doi: "",
         type: "unknown",
         pdf_ids: {},
+        pdf_links:{},
         haspdf: false,
         pdf_url: "",
+        pdf_urls:{},
+        pdfGT1:"false",
       },
       author_name: '',
       author_id: 0,
@@ -474,32 +490,11 @@ export default {
       window.open(this.paper.url, '_blank');
       // this.$router.push(this.paper.url);
     },
-    downloadPDF() {
-      window.open(this.paper.pdf_url, '_blank');
-      /*
-      let url = this.paper.pdf_url;
-      let fileName = "hello";
-      let reg = /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\/])+$/
-      if (!reg.test(url)) {
-        throw new Error('传入参数不合法,不是标准的文件链接')
-      } else {
-        let xhr = new XMLHttpRequest()
-        xhr.open('get', url, true)
-        xhr.setRequestHeader('Content-Type', `application/pdf`)
-        console.log("ds")
-        xhr.responseType = 'blob'
-        let that = this
-        xhr.onload = function () {
-          if (this.status == 200) {
-            //接受二进制文件流
-            var blob = this.response
-            that.downloadExportFile(blob, fileName)
-          }
-        }
-        xhr.send()
-      }
-
-       */
+    downloadPDF(index) {
+      console.log("allPDFS");
+      console.log(this.paper.pdf_urls);
+      console.log("index is "+index);
+      window.open(this.paper.pdf_urls[index], '_blank');
     },
     downloadExportFile(blob, tagFileName) {
       let downloadElement = document.createElement('a')
@@ -798,12 +793,12 @@ export default {
       method: 'get',
       url: '/es/get2',
       params: {//get请求这里是params
-        id: window.localStorage.getItem('WID')
-        //id: "W2914747780"
+       // id: window.localStorage.getItem('WID')
+        id: "W1982891627"
       }
     }).then(
         response => {
-          console.log("test " + response.data.data.open_access.oa_url);
+          console.log(response.data.data);
           this.paper.paperTitle = response.data.data.title
           this.paper.type = response.data.data.type
           this.paper.authors = response.data.data.authorships
@@ -847,12 +842,22 @@ export default {
             this.paper.hasIds = false;
           }
           this.paper.pdf_ids = response.data.data.open_access;
+          this.paper.pdf_links=response.data.data.pdflinks;
+          if(this.paper.pdf_links.length!==0){
+            this.paper.haspdf=true;
+           // this.paper.pdf_url=this.paper.pdf_links[0];
+            this.paper.pdf_urls=this.paper.pdf_links;
+            console.log(this.paper.pdf_urls);
+
+          }
+          /*
           if ('oa_url' in this.paper.pdf_ids) {
             this.paper.haspdf = response.data.data.open_access.is_oa;
             if (this.paper.haspdf) {
               this.paper.pdf_url = response.data.data.open_access.oa_url;
             }
           }
+          */
           console.log("this.paper.pdf_ids "+this.paper.pdf_ids.oa_url);
           console.log("author institution is:")
           console.log(this.paper.authors[0].institutions)
@@ -1066,6 +1071,7 @@ export default {
 
 .original3 {
   float: left;
+  margin-left: 1vw;
   align-items: center;
   vertical-align: center;
   justify-content: center;
@@ -1646,7 +1652,24 @@ export default {
 .original3 {
   padding: 0 2px 2px 0 !important;
 }
-
+.pdf_button{
+  width: 100%;
+  height: 36px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 36px;
+  vertical-align: center;
+  letter-spacing: 1px;
+  color: #6D6D6D;
+}
+.pdf_button:hover{
+  background-color: #F5F8FC;
+}
+.underline{
+  width: 100%;
+  height: 2px;
+  background-color: #2eddf4;
+}
 .submit-btn {
   padding: 0 2px 2px 0 !important;
 }
