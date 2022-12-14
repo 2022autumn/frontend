@@ -168,6 +168,7 @@ export default {
   components: {Testnet, Trycloud, Topbar1, testScolar,PaperManage},
   data(){
     return{
+      is_ready:false,
       detail:"",
       num_exact_page:8,
       ture_len:5,
@@ -647,7 +648,8 @@ export default {
               }
             }
             //console.log("counts",this.counts);
-            //("counts2",this.counts2);
+            //
+            this.is_ready = true;
         }
 
     ).catch(error=> {

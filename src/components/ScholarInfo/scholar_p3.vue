@@ -37,8 +37,8 @@
               width="280"
               height="500"
               trigger="hover"
-              open-delay="900"
-              close-delay="0"
+              :open-delay=900
+              :close-delay=0
           >
             <div style="margin-left: 10px;cursor: default"><b>关键词描述</b></div>
             <div style="width: 90%;left:50%;position:absolute;margin-left:-45%;height: 1px;margin-top:10px;background-color:rgba(217, 215, 215, 0.58)"></div>
